@@ -21,5 +21,4 @@ class LastNewComments
         return $this->commentsRepository->findLatest();
     }
 
-}
 
