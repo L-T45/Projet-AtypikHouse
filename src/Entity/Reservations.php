@@ -8,10 +8,28 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ReservationsRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ * normalizationContext={"groups"={"reservations:read"}},
+ *      denormalizationContext={"groups"={"reservations:write"}},
+ *      collectionOperations={
+ *            "get"={},
+ *            "post"={},
+ *                "lastnewreservations"={
+ *                  "method"="GET",
+ *                  "path"="reservations/lastnewreservations",
+ *                  "controller"=App\Controller\LastNewReservations::class
+ *          },
+ *          },
+ *      itemOperations={
+ * 
+ *          "get"={},
+ *          "put"={},
+ *          "delete"={},
+ *          })
  */
 class Reservations
 {
@@ -19,51 +37,61 @@ class Reservations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"reservations:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"reservations:read"})
      */
     private $startdate;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"reservations:read"})
      */
     private $end_date;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"reservations:read"})
      */
     private $is_approuved;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"reservations:read"})
      */
     private $is_cancelled;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"reservations:read"})
      */
     private $is_paid;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"reservations:read"})
      */
     private $participants_nbr;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"reservations:read"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"reservations:read"})
      */
     private $updated_at;
 
     /**
      * @ORM\ManyToMany(targetEntity=Comments::class, inversedBy="reservations")
+     * @Groups({"reservations:read"})
      */
     private $comments;
 
@@ -80,8 +108,8 @@ class Reservations
     public function __construct()
     {
         $this->comments = new ArrayCollection();
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        $this->created_at = new \DateTime();
+        $this->updated_at = new \DateTime();
     }
 
     public function getId(): ?int

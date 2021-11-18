@@ -8,10 +8,28 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CommentsRepository::class)
- * @ApiResource()
+ * @ApiResource( normalizationContext={"groups"={"comments:read"}},
+ *      denormalizationContext={"groups"={"comments:write"}},
+ *      collectionOperations={
+ *            "get"={},
+ *            "post"={},
+ *                "lastnewcomments"={
+ *                  "method"="GET",
+ *                  "path"="comments/lastnewcomments",
+ *                  "controller"=App\Controller\LastNewComments::class
+ *          },
+ *          },
+ *      itemOperations={
+ * 
+ *          "get"={},
+ *          "put"={},
+ *          "delete"={},
+ *          }
+ * )
  */
 class Comments
 {
@@ -19,41 +37,49 @@ class Comments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"comments:read"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"comments:read","comments:write"})
      */
     private $body;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"comments:read","comments:write"})
      */
     private $value;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"comments:read","comments:write"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"comments:read","comments:write"})
      */
     private $userpicture;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"comments:read","comments:write"})
      */
     private $propertypicture;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"comments:read"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"comments:read"})
      */
     private $updated_at;
 
@@ -65,8 +91,8 @@ class Comments
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        $this->created_at = new \DateTime();
+        $this->updated_at = new \DateTime();
     }
 
     public function getId(): ?int

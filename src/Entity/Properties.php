@@ -18,14 +18,20 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
- *          },
- *      itemOperations={
- *          "get"={},
- *          "lastnewproperties"={
+ *                "lastnewproperties"={
  *                  "method"="GET",
  *                  "path"="properties/lastnewproperties",
  *                  "controller"=App\Controller\LastNewProperties::class
  *          },
+ *              "propertiesbycategory"={
+ *                  "method"="GET",
+ *                  "path"="properties/propertiesbycategory",
+ *                  "controller"=App\Controller\LastNewProperties::class
+ *          },
+ *          },
+ *      itemOperations={
+ * 
+ *          "get"={},
  *          "put"={},
  *          "delete"={},
  *          }
@@ -50,31 +56,31 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $rooms;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $booking;
 
@@ -87,7 +93,7 @@ class Properties
 
     /**
      * @ORM\Column(type="decimal", precision=8, scale=5)
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      * 
      */
     private $lat;
@@ -180,8 +186,8 @@ class Properties
     {
         $this->equipements = new ArrayCollection();
         $this->reservations = new ArrayCollection();
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        $this->created_at = new \DateTime();
+        $this->updated_at = new \DateTime();
 
     }
 

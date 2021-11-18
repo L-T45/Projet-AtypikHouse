@@ -1,22 +1,23 @@
 <?php
 
 namespace App\Controller;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Properties;
+use App\Repository\PropertiesRepository;
 
 class LastNewProperties
 {
 
-   protected $em;
+   private $propertiesRepository;
    
-   public function __construct(EntityManagerInterface $em)
+   public function __construct(PropertiesRepository $propertiesRepository)
    {
-       $this->em = $em;
+       $this->propertiesRepository = $propertiesRepository; 
    }
 
-   public function __invoke(Properties $data)
+   public function __invoke()
    {
       
-      dd($data);
+      return $this->propertiesRepository->findLatest();
    }
 
 

@@ -14,9 +14,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PropertiesRepository extends ServiceEntityRepository
 {
+    
     public function __construct(ManagerRegistry $registry)
     {
+        
         parent::__construct($registry, Properties::class);
+        
     }
 
     // /**
@@ -36,7 +39,20 @@ class PropertiesRepository extends ServiceEntityRepository
     }
     */
 
-    /*
+      /**
+      * @return Properties[] Returns an array of Properties objects
+      */
+
+    public function findLatest():array
+    {
+        return $this->createQueryBuilder('p')
+        ->orderBy('p.id', 'DESC')
+        ->setMaxResults(10)
+        ->getQuery()
+        ->getResult();
+    }
+
+    
     public function findOneBySomeField($value): ?Properties
     {
         return $this->createQueryBuilder('p')
@@ -46,5 +62,5 @@ class PropertiesRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
-    */
+    
 }
