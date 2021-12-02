@@ -85,7 +85,7 @@ class Properties
      */
     private $booking;
 
-    /**
+    /*%*
      * @ORM\Column(type="string", length=255)
      * @Groups({"properties:item", "properties:write"})
      * 
