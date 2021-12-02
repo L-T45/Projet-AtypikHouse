@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Properties;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method Properties|null find($id, $lockMode = null, $lockVersion = null)
@@ -51,6 +52,21 @@ class PropertiesRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
     }
+
+     /**
+      * @return Properties[] Returns an array of Properties objects
+      */
+
+    public function findCategorybyProperties():array
+    {
+        $qb = $this->createQueryBuilder('p');
+        $qb->select('p,c.title')
+      ->innerJoin('p.categories', 'c');
+      $query = $qb->getQuery();
+      return $query->getResult();
+    }
+
+    
 
     
     public function findOneBySomeField($value): ?Properties

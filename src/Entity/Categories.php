@@ -8,10 +8,29 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
+
 
 /**
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *      normalizationContext={"groups"={"categories:collection"}},
+ *      collectionOperations={
+ *            "get"={},
+ *            "post"={},
+ *               
+ *          },
+ *      itemOperations={
+ *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},
+ *              "listpropertiesbycategory"={
+ *                  "method"="GET",
+ *                  "normalization_context"={"groups"={"categories:collection", "categories:item"}},
+ *                  "path"="categories/listpropertiesbycategory/{id}",
+ *                  "controller"=App\Controller\ListPropertiesByCategory::class
+ *          },
+ *          "put"={},
+ *          "delete"={},
+ *          })
  */
 class Categories
 {
@@ -19,31 +38,39 @@ class Categories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"categories:collection"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"categories:collection"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"categories:item"})
+     * 
      */
     private $picture;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"categories:item"})
+     * 
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"categories:item"})
      */
     private $updated_at;
 
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="categories")
+     * @Groups({"categories:item"})
      */
     private $properties;
 
@@ -55,8 +82,8 @@ class Categories
     public function __construct()
     {
         $this->categoriesattributes = new ArrayCollection();
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        $this->created_at = new \DateTime();
+        $this->updated_at = new \DateTime();
     }
 
 

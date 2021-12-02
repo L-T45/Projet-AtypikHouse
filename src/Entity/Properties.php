@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=PropertiesRepository::class)
  * @ApiResource(
- *      normalizationContext={"groups"={"properties:read"}},
+ *      normalizationContext={"groups"={"properties:collection"}},
  *      denormalizationContext={"groups"={"properties:write"}},
  *      collectionOperations={
  *            "get"={},
@@ -23,15 +23,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "path"="properties/lastnewproperties",
  *                  "controller"=App\Controller\LastNewProperties::class
  *          },
- *              "propertiesbycategory"={
- *                  "method"="GET",
- *                  "path"="properties/propertiesbycategory",
- *                  "controller"=App\Controller\LastNewProperties::class
- *          },
+ *              
  *          },
  *      itemOperations={
  * 
- *          "get"={},
+ *          "get"={"normalization_context"={"groups"={"properties:collection", "properties:item","read:properties"}}},
+ *          "categoriesbyproperty"={
+ *                  "method"="GET",
+ *                  "path"="properties/categoriesbyproperty/{id}",
+ *                  "controller"=App\Controller\CategoriesByProperty::class
+ *          },
  *          "put"={},
  *          "delete"={},
  *          }
@@ -43,14 +44,14 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"properties:read"})
+     * @Groups({"properties:collection"})
      * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     *@Groups({"properties:read", "properties:write"})
+     *@Groups({"properties:collection", "properties:write"})
      */
     private $title;
 
@@ -74,7 +75,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:write"})
+     * @Groups({"properties:item","properties:write"})
      */
     private $address;
 
@@ -86,7 +87,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:item", "properties:write"})
      * 
      */
     private $city;
@@ -100,85 +101,85 @@ class Properties
 
     /**
      * @ORM\Column(type="decimal", precision=8, scale=5)
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $bedrooms;
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=3)
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $surface;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $reference;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:item", "properties:write"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $capacity;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $zipCode;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $updated_at;
 
     /**
      * @ORM\ManyToMany(targetEntity=Equipements::class, inversedBy="properties")
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $equipements;
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="properties")
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:item", "properties:write"})
      */
     private $categories;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="properties")
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $reservations;
 
     /**
      * @ORM\ManyToOne(targetEntity=PropertiesGallery::class, inversedBy="properties")
-     * @Groups({"properties:read", "properties:write"})
+     * @Groups({"properties:write"})
      */
     private $propertiesgallery;
 
