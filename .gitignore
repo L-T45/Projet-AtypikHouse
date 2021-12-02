@@ -1,7 +1,7 @@
-<<<<<<< HEAD
 
 ###> symfony/framework-bundle ###
 /.env.local
+/.env
 /.env.local.php
 /.env.*.local
 /config/secrets/prod/prod.decrypt.private.php
@@ -9,18 +9,3 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
-=======
-###> symfony/framework-bundle ###
-.env
-.env.local
-
-/config/secrets/prod/prod.decrypt.private.php
-
-/public/bundles/
-
-/var/
-
-/vendor/
-
-###< symfony/framework-bundle ###
->>>>>>> 0b4c2a57ba558c57b1d3343dd88c2930a2a9b628
