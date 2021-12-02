@@ -69,7 +69,7 @@ class Properties
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write"})
+     * @Groups({"properties:write", "categories:item"})
      */
     private $rooms;
 
@@ -81,7 +81,7 @@ class Properties
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write"})
+     * @Groups({"properties:write", "categories:item"})
      */
     private $booking;
 

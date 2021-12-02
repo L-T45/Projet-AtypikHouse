@@ -11,6 +11,7 @@ use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 
+
 /**
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
  * @ApiResource(
@@ -71,7 +72,7 @@ class Categories
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="categories")
      * @Groups({"categories:item"})
-     */
+     */ 
     private $properties;
 
     /**

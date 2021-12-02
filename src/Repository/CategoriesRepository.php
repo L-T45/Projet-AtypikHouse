@@ -45,7 +45,7 @@ class CategoriesRepository extends ServiceEntityRepository
       public function findPropertiesByCategory($id)
       {
           $qb = $this->createQueryBuilder('c');
-          $qb->select('c,p.id,p.title')
+          $qb->select('c,p.title')
              ->innerJoin('c.properties', 'p')
              ->where('c.id = :id')
              ->setParameter('id', $id);
