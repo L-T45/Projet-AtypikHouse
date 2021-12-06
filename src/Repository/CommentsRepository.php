@@ -37,10 +37,10 @@ class CommentsRepository extends ServiceEntityRepository
     */
 
        /**
-      * @return Comments[] Returns an array of Properties objects
+      * @return Comments[] Returns an array of Comments objects
       */
 
-      public function findLatest()
+      public function findLatest():array
       {
           return $this->createQueryBuilder('c')
           ->orderBy('c.id', 'DESC')
