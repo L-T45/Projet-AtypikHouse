@@ -15,6 +15,7 @@ security:
                 property: email
     firewalls:
 
+        # Utilisation de la route users obligatoire pour faire référence à l'enregistrement d'un nouvel utilisateur suivant l'entité User
         registration:
             pattern: ^/api/users
             stateless: true
@@ -51,7 +52,10 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
+        # Paramétrage des droits d'accès au login 
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        # Paramétrage des droits d'accès à l'inscription 
         - { path: ^/api/users, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
         - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY, methods: [GET, PUT, DELETE, PATCH] }
-        - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        # Paramétrage des droits d'accès à l'api 
+        #- { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
