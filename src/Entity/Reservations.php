@@ -13,7 +13,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 /**
  * @ORM\Entity(repositoryClass=ReservationsRepository::class)
  * @ApiResource(
- * normalizationContext={"groups"={"reservations:read"}},
+ * normalizationContext={"groups"={"reservations:collection"}},
  *      denormalizationContext={"groups"={"reservations:write"}},
  *      collectionOperations={
  *            "get"={},
@@ -26,7 +26,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          },
  *      itemOperations={
  * 
- *          "get"={},
+ *          "get"={"normalization_context"={"groups"={"reservations:collection", "reservations:item"}}},
  *          "put"={},
  *          "delete"={},
  *          })
@@ -37,61 +37,61 @@ class Reservations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:read"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:read"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item"})
      */
     private $startdate;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:read"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item"})
      */
     private $end_date;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:read"})
+     * @Groups({"reservations:item", "comments:item", "properties:item"})
      */
     private $is_approuved;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:read"})
+     * @Groups({"reservations:item", "comments:item", "properties:item"})
      */
     private $is_cancelled;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:read"})
+     * @Groups({"reservations:item", "comments:item", "properties:item"})
      */
     private $is_paid;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:read"})
+     * @Groups({"reservations:item", "comments:item", "properties:item"})
      */
     private $participants_nbr;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reservations:read"})
+     * @Groups({"reservations:item", "comments:item", "properties:item"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reservations:read"})
+     * @Groups({"reservations:item", "comments:item", "properties:item"})
      */
     private $updated_at;
 
     /**
      * @ORM\ManyToMany(targetEntity=Comments::class, inversedBy="reservations")
-     * @Groups({"reservations:read"})
+     * @Groups({"reservations:item", "properties:item", "categories:item"})
      */
     private $comments;
 
@@ -102,6 +102,7 @@ class Reservations
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reservations")
+     * @Groups({"reservations:item"})
      */
     private $properties;
 
