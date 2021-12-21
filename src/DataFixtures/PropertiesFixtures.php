@@ -34,7 +34,7 @@ class PropertiesFixtures extends Fixture
             $properties[$i]->setLongitude($faker->longitude($min = -180, $max = 180));
             $properties[$i]->setBedrooms($faker->randomDigitNotNull);
             $properties[$i]->setSurface($faker->randomFloat);
-            $properties[$i]->setReference('Categorries '.$i);
+            $properties[$i]->setReference('Categories '.$i);
             $properties[$i]->setPicture($faker->imageUrl($width = 640, $height = 480));
             $properties[$i]->setCountry($faker->country);
             $properties[$i]->setCapacity($faker->randomDigitNotNull);

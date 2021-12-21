@@ -80,6 +80,11 @@ class Categories
      */
     private $categoriesattributes;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $description;
+
     public function __construct()
     {
         $this->categoriesattributes = new ArrayCollection();
@@ -192,6 +197,18 @@ class Categories
     public function removeCategoriesattribute(Categoriesattributes $categoriesattribute): self
     {
         $this->categoriesattributes->removeElement($categoriesattribute);
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }
