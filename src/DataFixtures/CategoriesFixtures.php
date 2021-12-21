@@ -25,6 +25,7 @@ class CategoriesFixtures extends Fixture
             $categories[$i] = new Categories();
             $categories[$i]->setTitle($faker->text);
             $categories[$i]->setPicture($faker->imageUrl($width = 640, $height = 480));
+            $categories[$i]->setDescription($faker->text);
             $manager->persist($categories[$i]);
         }
 
