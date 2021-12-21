@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -103,6 +105,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="boolean", nullable=true)
      */
     private $is_blocked;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user")
+     */
+    private $properties;
+
+    public function __construct()
+    {
+        $this->properties = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -345,6 +357,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsBlocked(?bool $is_blocked): self
     {
         $this->is_blocked = $is_blocked;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Properties[]
+     */
+    public function getProperties(): Collection
+    {
+        return $this->properties;
+    }
+
+    public function addProperty(Properties $property): self
+    {
+        if (!$this->properties->contains($property)) {
+            $this->properties[] = $property;
+            $property->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProperty(Properties $property): self
+    {
+        if ($this->properties->removeElement($property)) {
+            // set the owning side to null (unless already changed)
+            if ($property->getUser() === $this) {
+                $property->setUser(null);
+            }
+        }
 
         return $this;
     }
