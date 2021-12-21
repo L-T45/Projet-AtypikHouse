@@ -36,6 +36,20 @@ class ReservationsRepository extends ServiceEntityRepository
     }
     */
 
+    /**
+      * @return Reservations[] Returns an array of Comments objects
+      */
+
+      public function findLatest():array
+      {
+          return $this->createQueryBuilder('r')
+          ->orderBy('r.id', 'DESC')
+          ->setMaxResults(10)
+          ->getQuery()
+          ->getResult();
+      }
+
+
     /*
     public function findOneBySomeField($value): ?Reservations
     {

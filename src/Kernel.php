@@ -12,6 +12,7 @@ use Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle;
 class Kernel extends BaseKernel
 {
     use MicroKernelTrait;
+   
 
     protected function configureContainer(ContainerConfigurator $container): void
     {

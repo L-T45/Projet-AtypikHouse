@@ -59,3 +59,4 @@ security:
         - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY, methods: [GET, PUT, DELETE, PATCH] }
         # Paramétrage des droits d'accès à l'api 
         #- { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+

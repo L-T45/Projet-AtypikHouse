@@ -9,12 +9,20 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ORM\Entity(repositoryClass=PropertiesRepository::class)
  * @ApiResource(
  *      normalizationContext={"groups"={"properties:collection"}},
  *      denormalizationContext={"groups"={"properties:write"}},
+ *      paginationItemsPerPage= 2,
+ *      paginationMaximumItemsPerPage= 2,
+ *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
@@ -27,16 +35,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          },
  *      itemOperations={
  * 
- *          "get"={"normalization_context"={"groups"={"properties:collection", "properties:item","read:properties"}}},
- *          "categoriesbyproperty"={
- *                  "method"="GET",
- *                  "path"="properties/categoriesbyproperty/{id}",
- *                  "controller"=App\Controller\CategoriesByProperty::class
- *          },
+ *          "get"={"normalization_context"={"groups"={"properties:collection", "properties:item"}}},
+ *        
  *          "put"={},
  *          "delete"={},
  *          }
  * )
+ * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "partial", "price": "exact", "capacity": "exact", "lat": "exact", "longitude": "exact", "reservations.comments.value": "exact"})
+ * @ApiFilter(RangeFilter::class, properties= {"surface", "rooms", "bedrooms"})
+ * @ApiFilter(DateFilter::class, properties= {"reservations.startdate"})
+ * @ApiFilter(OrderFilter::class, properties= {"id": "DESC", "price": "ASC", "price": "DESC", "reservations.comments.value": "ASC", "reservations.comments.value": "DESC"})
+ * 
  */
 class Properties
 {
@@ -44,124 +53,124 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"properties:collection"})
+     * @Groups({"properties:collection", "categories:item"})
      * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     *@Groups({"properties:collection", "properties:write"})
+     *@Groups({"properties:collection", "properties:write", "categories:item"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:write"})
+     * @Groups({"properties:write", "properties:item"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"properties:write"})
+     * @Groups({"properties:write", "properties:item", "categories:item"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write", "categories:item"})
+     * @Groups({"properties:write", "properties:item"})
      */
     private $rooms;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:item","properties:write"})
+     * @Groups({"properties:collection","properties:write"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write", "categories:item"})
+     * @Groups({"properties:item", "properties:write", "categories:item"})
      */
     private $booking;
 
     /*%*
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:item", "properties:write"})
+     * @Groups({"properties:collection", "properties:write", "categories:item"})
      * 
      */
     private $city;
 
     /**
      * @ORM\Column(type="decimal", precision=8, scale=5)
-     * @Groups({"properties:write"})
+     * @Groups({"properties:write", "properties:item"})
      * 
      */
     private $lat;
 
     /**
      * @ORM\Column(type="decimal", precision=8, scale=5)
-     * @Groups({"properties:write"})
+     * @Groups({"properties:write", "properties:item"})
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write"})
+     * @Groups({"properties:write", "properties:item"})
      */
     private $bedrooms;
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=3)
-     * @Groups({"properties:write"})
+     * @Groups({"properties:write", "properties:item"})
      */
     private $surface;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:write"})
+     * @Groups({"properties:write", "properties:item"})
      */
     private $reference;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:item", "properties:write"})
+     * @Groups({"properties:collection", "properties:write", "categories:item"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:write"})
+     * @Groups({"properties:write", "properties:item"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write"})
+     * @Groups({"properties:item", "properties:write", "categories:item"})
      */
     private $capacity;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write"})
+     * @Groups({"properties:write", "properties:item"})
      */
     private $zipCode;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"properties:write"})
+     * @Groups({"properties:write", "properties:item"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"properties:write"})
+     * @Groups({"properties:write", "properties:item"})
      */
     private $updated_at;
 
     /**
      * @ORM\ManyToMany(targetEntity=Equipements::class, inversedBy="properties")
-     * @Groups({"properties:write"})
+     * @Groups({"properties:write", "properties:item"})
      */
     private $equipements;
 
@@ -173,13 +182,13 @@ class Properties
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="properties")
-     * @Groups({"properties:write"})
+     * @Groups({"properties:item", "properties:write", "categories:item"})
      */
     private $reservations;
 
     /**
      * @ORM\ManyToOne(targetEntity=PropertiesGallery::class, inversedBy="properties")
-     * @Groups({"properties:write"})
+     * @Groups({"properties:item", "properties:write"})
      */
     private $propertiesgallery;
 

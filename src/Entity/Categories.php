@@ -16,6 +16,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
  * @ApiResource(
  *      normalizationContext={"groups"={"categories:collection"}},
+ *      denormalizationContext={"groups"={"categories:write"}},
+ *      paginationItemsPerPage= 2,
+ *      paginationMaximumItemsPerPage= 2,
+ *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
@@ -23,12 +27,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          },
  *      itemOperations={
  *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},
- *              "listpropertiesbycategory"={
- *                  "method"="GET",
- *                  "normalization_context"={"groups"={"categories:collection", "categories:item"}},
- *                  "path"="categories/listpropertiesbycategory/{id}",
- *                  "controller"=App\Controller\ListPropertiesByCategory::class
- *          },
+ *           
  *          "put"={},
  *          "delete"={},
  *          })
@@ -45,38 +44,39 @@ class Categories
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection"})
+     * @Groups({"categories:collection","categories:write", "properties:item"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:item"})
+     * @Groups({"categories:collection", "categories:write"})
      * 
      */
     private $picture;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"categories:item"})
+     * @Groups({"categories:item", "categories:write"})
      * 
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"categories:item"})
+     * @Groups({"categories:item", "categories:write"})
      */
     private $updated_at;
 
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="categories")
-     * @Groups({"categories:item"})
+     * @Groups({"categories:item", "categories:write"})
      */ 
     private $properties;
 
     /**
      * @ORM\ManyToMany(targetEntity=CategoriesAttributes::class, inversedBy="categories")
+     * @Groups({"categories:item", "categories:write"})
      */
     private $categoriesattributes;
 

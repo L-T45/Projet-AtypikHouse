@@ -12,8 +12,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CommentsRepository::class)
- * @ApiResource( normalizationContext={"groups"={"comments:read"}},
+ * @ApiResource( normalizationContext={"groups"={"comments:collection"}},
  *      denormalizationContext={"groups"={"comments:write"}},
+ *      paginationItemsPerPage= 2,
+ *      paginationMaximumItemsPerPage= 2,
+ *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
@@ -25,7 +28,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          },
  *      itemOperations={
  * 
- *          "get"={},
+ *          "get"={"normalization_context"={"groups"={"comments:collection", "comments:item"}}},
  *          "put"={},
  *          "delete"={},
  *          }
@@ -37,54 +40,55 @@ class Comments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"comments:read"})
+     * @Groups({"comments:collection", "reservations:item", "properties:item", "categories:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"comments:read","comments:write"})
+     * @Groups({"comments:collection", "reservations:item", "properties:item"})
      */
     private $body;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"comments:read","comments:write"})
+     * @Groups({"comments:item", "reservations:item", "categories:item"})
      */
     private $value;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:read","comments:write"})
+     * @Groups({"comments:item", "reservations:item"})
      */
     private $username;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:read","comments:write"})
+     * @Groups({"comments:item", "reservations:item"})
      */
     private $userpicture;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:read","comments:write"})
+     * @Groups({"comments:item", "reservations:item"})
      */
     private $propertypicture;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"comments:read"})
+     * @Groups({"comments:item", "reservations:item"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"comments:read"})
+     * @Groups({"comments:item", "reservations:item"})
      */
     private $updated_at;
 
     /**
      * @ORM\ManyToMany(targetEntity=Reservations::class, mappedBy="comments")
+     * @Groups({"comments:item"})
      */
     private $reservations;
 

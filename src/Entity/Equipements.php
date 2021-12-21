@@ -8,10 +8,34 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=EquipementsRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *      normalizationContext={"groups"={"equipements:collection"}},
+ *      denormalizationContext={"groups"={"equipements:write"}},
+ *      paginationItemsPerPage= 2,
+ *      paginationMaximumItemsPerPage= 2,
+ *      paginationClientItemsPerPage= true,
+ *      collectionOperations={
+ *            "get"={},
+ *            "post"={},
+ *                "lastnewequipements"={
+ *                  "method"="GET",
+ *                  "path"="equipements/lastnewequipements",
+ *                  "controller"=App\Controller\LastNewequipements::class
+ *          },
+ *              
+ *          },
+ *      itemOperations={
+ * 
+ *          "get"={"normalization_context"={"groups"={"equipements:collection", "equipements:item","read:equipements"}}},
+ * 
+ *          "put"={},
+ *          "delete"={},
+ *          }
+ * )
  */
 class Equipements
 {
@@ -19,34 +43,39 @@ class Equipements
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"equipements:collection"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"equipements:collection", "equipements:write"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"equipements:item", "equipements:write"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"equipements:item", "equipements:write"})
      */
     private $updated_at;
 
     /**
      * @ORM\ManyToMany(targetEntity=Properties::class, mappedBy="equipements")
+     * @Groups({"equipements:item", "equipements:write"})
      */
     private $properties;
 
     public function __construct()
     {
         $this->properties = new ArrayCollection();
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        $this->created_at = new \DateTime();
+        $this->updated_at = new \DateTime();
     }
 
     public function getId(): ?int
