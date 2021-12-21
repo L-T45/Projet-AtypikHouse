@@ -31,11 +31,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"equipements:collection", "equipements:item","read:equipements"}}},
- *          "categoriesbyproperty"={
- *                  "method"="GET",
- *                  "path"="equipements/categoriesbyproperty/{id}",
- *                  "controller"=App\Controller\CategoriesByProperty::class
- *          },
+ * 
  *          "put"={},
  *          "delete"={},
  *          }

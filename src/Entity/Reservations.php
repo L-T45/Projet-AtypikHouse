@@ -15,6 +15,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  * normalizationContext={"groups"={"reservations:collection"}},
  *      denormalizationContext={"groups"={"reservations:write"}},
+ *      paginationItemsPerPage= 2,
+ *      paginationMaximumItemsPerPage= 2,
+ *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},

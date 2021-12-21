@@ -27,12 +27,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          },
  *      itemOperations={
  *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},
- *              "listpropertiesbycategory"={
- *                  "method"="GET",
- *                  "normalization_context"={"groups"={"categories:collection", "categories:item"}},
- *                  "path"="categories/listpropertiesbycategory/{id}",
- *                  "controller"=App\Controller\ListPropertiesByCategory::class
- *          },
+ *           
  *          "put"={},
  *          "delete"={},
  *          })

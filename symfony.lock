@@ -37,6 +37,9 @@
     "doctrine/common": {
         "version": "3.2.0"
     },
+    "doctrine/data-fixtures": {
+        "version": "1.5.1"
+    },
     "doctrine/dbal": {
         "version": "3.1.4"
     },
@@ -57,6 +60,18 @@
             "./config/packages/test/doctrine.yaml",
             "./src/Repository/.gitignore",
             "./src/Entity/.gitignore"
+        ]
+    },
+    "doctrine/doctrine-fixtures-bundle": {
+        "version": "3.4",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "3.0",
+            "ref": "1f5514cfa15b947298df4d771e694e578d4c204d"
+        },
+        "files": [
+            "./src/DataFixtures/AppFixtures.php"
         ]
     },
     "doctrine/doctrine-migrations-bundle": {
@@ -105,17 +120,41 @@
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.5"
     },
+    "fzaninotto/faker": {
+        "version": "v1.5.0"
+    },
     "jms/metadata": {
         "version": "2.6.1"
     },
     "laminas/laminas-code": {
         "version": "4.4.3"
     },
+    "lcobucci/clock": {
+        "version": "2.1.0"
+    },
+    "lcobucci/jwt": {
+        "version": "4.0.4"
+    },
+    "lexik/jwt-authentication-bundle": {
+        "version": "2.14",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "2.5",
+            "ref": "5b2157bcd5778166a5696e42f552ad36529a07a6"
+        },
+        "files": [
+            "./config/packages/lexik_jwt_authentication.yaml"
+        ]
+    },
     "monolog/monolog": {
         "version": "2.3.5"
     },
     "myclabs/deep-copy": {
         "version": "1.10.2"
+    },
+    "namshi/jose": {
+        "version": "7.2.3"
     },
     "nelmio/cors-bundle": {
         "version": "2.1",
@@ -252,18 +291,6 @@
         },
         "files": [
             "./config/packages/sensio_framework_extra.yaml"
-        ]
-    },
-    "symfony/apache-pack": {
-        "version": "1.0",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "master",
-            "version": "1.0",
-            "ref": "9d254a22efca7264203eea98b866f16f944b2f09"
-        },
-        "files": [
-            "./public/.htaccess"
         ]
     },
     "symfony/asset": {
@@ -479,6 +506,9 @@
     },
     "symfony/polyfill-mbstring": {
         "version": "v1.23.1"
+    },
+    "symfony/polyfill-php56": {
+        "version": "v1.20.0"
     },
     "symfony/polyfill-php73": {
         "version": "v1.23.0"

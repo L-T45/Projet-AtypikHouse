@@ -14,6 +14,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=CommentsRepository::class)
  * @ApiResource( normalizationContext={"groups"={"comments:collection"}},
  *      denormalizationContext={"groups"={"comments:write"}},
+ *      paginationItemsPerPage= 2,
+ *      paginationMaximumItemsPerPage= 2,
+ *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},

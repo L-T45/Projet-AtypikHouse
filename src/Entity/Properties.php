@@ -35,12 +35,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *          },
  *      itemOperations={
  * 
- *          "get"={"normalization_context"={"groups"={"properties:collection", "properties:item","read:properties"}}},
- *          "categoriesbyproperty"={
- *                  "method"="GET",
- *                  "path"="properties/categoriesbyproperty/{id}",
- *                  "controller"=App\Controller\CategoriesByProperty::class
- *          },
+ *          "get"={"normalization_context"={"groups"={"properties:collection", "properties:item"}}},
+ *        
  *          "put"={},
  *          "delete"={},
  *          }
