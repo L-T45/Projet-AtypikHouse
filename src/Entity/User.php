@@ -72,12 +72,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $zipCode;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $created_at;
 
     /**
-     * @ORM\Column(type="datetime_immutable")
+     * @ORM\Column(type="datetime")
      */
     private $updated_at;
 
@@ -106,6 +106,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $is_blocked;
 
+
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user")
      */
@@ -126,6 +127,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->properties = new ArrayCollection();
         $this->reservations = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->created_at = new \DateTime();
+        $this->updated_at = new \DateTime();
+
     }
 
     public function getId(): ?int

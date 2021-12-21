@@ -39,8 +39,8 @@ class Reports
     public function __construct()
     {
         
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        $this->created_at = new \DateTime();
+
     }
 
    

@@ -46,10 +46,8 @@ class Payments
     private $created_at;
 
     public function __construct()
-    {
-        
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+    {       
+        $this->created_at = new \DateTime();
     }
 
     public function getId(): ?int

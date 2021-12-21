@@ -51,8 +51,8 @@ class PropertiesGallery
     public function __construct()
     {
         $this->properties = new ArrayCollection();
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        $this->created_at = new \DateTime();
+        $this->updated_at = new \DateTime();
     }
 
     public function getId(): ?int

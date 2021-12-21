@@ -36,10 +36,8 @@ class Messages
     private $conversations;
 
     public function __construct()
-    {
-        
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+    {      
+        $this->created_at = new \DateTime();
     }
 
     public function getId(): ?int
