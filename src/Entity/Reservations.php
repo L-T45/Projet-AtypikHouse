@@ -109,6 +109,11 @@ class Reservations
      */
     private $properties;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
@@ -261,6 +266,18 @@ class Reservations
     public function setProperties(?Properties $properties): self
     {
         $this->properties = $properties;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

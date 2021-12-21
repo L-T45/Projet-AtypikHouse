@@ -92,6 +92,11 @@ class Comments
      */
     private $reservations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->reservations = new ArrayCollection();
@@ -211,6 +216,18 @@ class Comments
         if ($this->reservations->removeElement($reservation)) {
             $reservation->removeComment($this);
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
