@@ -38,7 +38,7 @@ class PropertiesFixtures extends Fixture
             $properties[$i]->setPicture($faker->imageUrl($width = 640, $height = 480));
             $properties[$i]->setCountry($faker->country);
             $properties[$i]->setCapacity($faker->randomDigitNotNull);
-            $properties[$i]->setZipCode($faker->numberBetween($min = 1000, $max = 9999));
+            $properties[$i]->setZipCode($faker->numberBetween($min = 10000, $max = 99999));
             $manager->persist($properties[$i]);
         }
 
