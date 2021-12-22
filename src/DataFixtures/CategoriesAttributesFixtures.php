@@ -22,9 +22,15 @@ class CategoriesAttributesFixtures extends Fixture
          $categories_attributes = Array();
         // create 20 Categories! Bam!
         for ($i = 0; $i < 21; $i++) {
+            
+            
+
             $categories_attributes[$i] = new CategoriesAttributes();
             $categories_attributes[$i]->setTitle($faker->text);
             $manager->persist($categories_attributes[$i]);
+
+            // On enregistre les catégories attributes dans une référence
+            //$this->addReference('categories_attributes_'. $i, $categories_attributes[$i]);
         }
 
         $manager->flush();

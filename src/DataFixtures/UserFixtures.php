@@ -38,6 +38,9 @@ class UserFixtures extends Fixture
             $user[$i]->setPicture($faker->imageUrl($width = 640, $height = 480));
             $user[$i]->setIsBlocked($faker->numberBetween($min = 0, $max = 1));
             $manager->persist($user[$i]);
+
+            // On enregistre les catégories dans une référence 
+            //$this->addReference('user_'. $i, $user[$i]);
         }
 
         $manager->flush();

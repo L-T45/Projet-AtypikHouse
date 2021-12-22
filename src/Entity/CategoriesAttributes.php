@@ -66,10 +66,12 @@ class CategoriesAttributes
     private $updated_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Categories::class, mappedBy="categoriesattributes")
+     * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="categoriesAttributes")
      * @Groups({"categoriesattributes:item", "categoriesattributes:write"})
      */
     private $categories;
+
+
 
     public function __construct()
     {
@@ -142,6 +144,13 @@ class CategoriesAttributes
         if ($this->categories->removeElement($category)) {
             $category->removeCategoriesattribute($this);
         }
+
+        return $this;
+    }
+
+    public function setCategories(?Categories $categories): self
+    {
+        $this->categories = $categories;
 
         return $this;
     }
