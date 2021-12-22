@@ -90,11 +90,7 @@ class Reservations
      * @ORM\Column(type="datetime")
      * @Groups({"reservations:item", "comments:item", "properties:item"})
      */
-    private $updated_at;
-
-    /**
-     * @Groups({"reservations:item", "properties:item", "categories:item"})
-     */
+    private $updated_at;    
 
     /**
      * @ORM\OneToOne(targetEntity=Payments::class, inversedBy="reservations", cascade={"persist", "remove"})
@@ -109,6 +105,7 @@ class Reservations
 
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
+     * @Groups({"reservations:item", "properties:item", "categories:item"})
      */
     private $comments;
 
