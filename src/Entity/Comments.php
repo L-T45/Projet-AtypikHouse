@@ -92,6 +92,11 @@ class Comments
      */
     private $reservations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
+     */
+    private $user;
+
     public function __construct()
     {
         $this->created_at = new \DateTime();
@@ -217,6 +222,15 @@ class Comments
     public function setReservations(?Reservations $reservations): self
     {
         $this->reservations = $reservations;
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

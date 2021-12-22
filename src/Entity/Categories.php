@@ -21,6 +21,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      paginationMaximumItemsPerPage= 2,
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
+ * 
+ * 
  *            "get"={},
  *            "post"={},
  *               

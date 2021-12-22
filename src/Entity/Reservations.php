@@ -108,6 +108,11 @@ class Reservations
      * @Groups({"reservations:item", "properties:item", "categories:item"})
      */
     private $comments;
+      
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
+     */
+    private $user;
 
     public function __construct()
     {
@@ -260,6 +265,18 @@ class Reservations
     public function setProperties(?Properties $properties): self
     {
         $this->properties = $properties;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
