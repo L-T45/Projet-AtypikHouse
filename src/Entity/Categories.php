@@ -76,20 +76,21 @@ class Categories
      */ 
     private $properties;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=CategoriesAttributes::class, inversedBy="categories")
-     * @Groups({"categories:item", "categories:write"})
-     */
-    private $categoriesattributes;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"categories:item", "categories:write"})
      */
     private $description;
 
+    /**
+     * @ORM\OneToMany(targetEntity=CategoriesAttributes::class, mappedBy="categories")
+     * @Groups({"categories:item", "categories:write"})
+     */
+    private $categoriesAttributes;
+
     public function __construct()
     {
-        $this->categoriesattributes = new ArrayCollection();
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
     }

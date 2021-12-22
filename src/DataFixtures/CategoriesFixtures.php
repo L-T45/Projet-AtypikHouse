@@ -27,6 +27,9 @@ class CategoriesFixtures extends Fixture
             $categories[$i]->setPicture($faker->imageUrl($width = 640, $height = 480));
             $categories[$i]->setDescription($faker->text);
             $manager->persist($categories[$i]);
+
+            // On enregistre les catégories dans une référence 
+            $this->addReference('categories_'. $i, $categories[$i]);
         }
 
         $manager->flush();

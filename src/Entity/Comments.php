@@ -87,7 +87,7 @@ class Comments
     private $updated_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Reservations::class, mappedBy="comments")
+     * @ORM\ManyToOne(targetEntity=Reservations::class, inversedBy="comments")
      * @Groups({"comments:item"})
      */
     private $reservations;
@@ -99,7 +99,6 @@ class Comments
 
     public function __construct()
     {
-        $this->reservations = new ArrayCollection();
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
     }
@@ -219,6 +218,10 @@ class Comments
 
         return $this;
     }
+
+    public function setReservations(?Reservations $reservations): self
+    {
+        $this->reservations = $reservations;
 
     public function getUser(): ?User
     {
