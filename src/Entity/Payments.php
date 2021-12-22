@@ -45,6 +45,11 @@ class Payments
      */
     private $created_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="payments")
+     */
+    private $user;
+
     public function __construct()
     {       
         $this->created_at = new \DateTime();
@@ -121,6 +126,18 @@ class Payments
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
