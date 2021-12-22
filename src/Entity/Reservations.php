@@ -90,13 +90,7 @@ class Reservations
      * @ORM\Column(type="datetime")
      * @Groups({"reservations:item", "comments:item", "properties:item"})
      */
-    private $updated_at;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Comments::class, inversedBy="reservations")
-     * @Groups({"reservations:item", "properties:item", "categories:item"})
-     */
-    private $comments;
+    private $updated_at;    
 
     /**
      * @ORM\OneToOne(targetEntity=Payments::class, inversedBy="reservations", cascade={"persist", "remove"})
@@ -110,13 +104,18 @@ class Reservations
     private $properties;
 
     /**
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
+     * @Groups({"reservations:item", "properties:item", "categories:item"})
+     */
+    private $comments;
+      
+    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
      */
     private $user;
 
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
     }

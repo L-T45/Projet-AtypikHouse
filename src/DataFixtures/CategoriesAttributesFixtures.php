@@ -11,8 +11,9 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Faker;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class CategoriesAttributesFixtures extends Fixture
+class CategoriesAttributesFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -22,11 +23,21 @@ class CategoriesAttributesFixtures extends Fixture
          $categories_attributes = Array();
         // create 20 Categories! Bam!
         for ($i = 0; $i < 21; $i++) {
+            
+            $categories[$i] =  $this->getReference('categories_'. $faker->numberBetween(1,20));
+
             $categories_attributes[$i] = new CategoriesAttributes();
             $categories_attributes[$i]->setTitle($faker->text);
+            $categories_attributes[$i]->setCategories($categories[$i]);
             $manager->persist($categories_attributes[$i]);
         }
 
         $manager->flush();
+        }
+
+        public function getDependencies(){
+            return [
+                CategoriesFixtures::class,
+            ];
         }
 }
