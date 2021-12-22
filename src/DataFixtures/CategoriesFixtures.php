@@ -22,9 +22,6 @@ class CategoriesFixtures extends Fixture
          $categories = Array();
         // create 20 Categories! Bam!
         for ($i = 0; $i < 21; $i++) {
-
-            //$categories_attributes[$i] =  $this->getReference('categories_attributes_'. $faker->numberBetween(1,20));
-
             $categories[$i] = new Categories();
             $categories[$i]->setTitle($faker->text);
             $categories[$i]->setPicture($faker->imageUrl($width = 640, $height = 480));
@@ -32,7 +29,7 @@ class CategoriesFixtures extends Fixture
             $manager->persist($categories[$i]);
 
             // On enregistre les catégories dans une référence 
-            //$this->addReference('categories_'. $i, $categories[$i]);
+            $this->addReference('categories_'. $i, $categories[$i]);
         }
 
         $manager->flush();

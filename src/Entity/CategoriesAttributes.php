@@ -75,7 +75,6 @@ class CategoriesAttributes
 
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
     }

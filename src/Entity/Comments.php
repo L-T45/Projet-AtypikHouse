@@ -88,17 +88,12 @@ class Comments
 
     /**
      * @ORM\ManyToOne(targetEntity=Reservations::class, inversedBy="comments")
+     * @Groups({"comments:item"})
      */
     private $reservations;
 
-    /**
-     * @Groups({"comments:item"})
-     */
- 
-
     public function __construct()
     {
-        $this->reservations = new ArrayCollection();
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
     }
