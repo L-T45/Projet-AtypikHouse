@@ -87,10 +87,14 @@ class Comments
     private $updated_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Reservations::class, mappedBy="comments")
-     * @Groups({"comments:item"})
+     * @ORM\ManyToOne(targetEntity=Reservations::class, inversedBy="comments")
      */
     private $reservations;
+
+    /**
+     * @Groups({"comments:item"})
+     */
+ 
 
     public function __construct()
     {
@@ -211,6 +215,13 @@ class Comments
         if ($this->reservations->removeElement($reservation)) {
             $reservation->removeComment($this);
         }
+
+        return $this;
+    }
+
+    public function setReservations(?Reservations $reservations): self
+    {
+        $this->reservations = $reservations;
 
         return $this;
     }

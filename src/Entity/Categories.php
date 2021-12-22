@@ -77,11 +77,13 @@ class Categories
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"categories:item", "categories:write"})
      */
     private $description;
 
     /**
      * @ORM\OneToMany(targetEntity=CategoriesAttributes::class, mappedBy="categories")
+     * @Groups({"categories:item", "categories:write"})
      */
     private $categoriesAttributes;
 

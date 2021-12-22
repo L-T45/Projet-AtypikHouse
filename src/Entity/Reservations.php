@@ -93,10 +93,8 @@ class Reservations
     private $updated_at;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Comments::class, inversedBy="reservations")
      * @Groups({"reservations:item", "properties:item", "categories:item"})
      */
-    private $comments;
 
     /**
      * @ORM\OneToOne(targetEntity=Payments::class, inversedBy="reservations", cascade={"persist", "remove"})
@@ -108,6 +106,11 @@ class Reservations
      * @Groups({"reservations:item"})
      */
     private $properties;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
+     */
+    private $comments;
 
     public function __construct()
     {
