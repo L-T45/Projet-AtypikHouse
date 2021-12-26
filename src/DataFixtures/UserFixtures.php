@@ -39,8 +39,8 @@ class UserFixtures extends Fixture
             $user[$i]->setIsBlocked($faker->numberBetween($min = 0, $max = 1));
             $manager->persist($user[$i]);
 
-            // On enregistre les catégories dans une référence 
-            //$this->addReference('user_'. $i, $user[$i]);
+             // On enregistre les utilisateurs dans une référence 
+             $this->addReference('user_'. $i, $user[$i]);
         }
 
         $manager->flush();

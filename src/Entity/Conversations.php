@@ -35,8 +35,8 @@ class Conversations
     public function __construct()
     {
         $this->messages = new ArrayCollection();
-        $this->createdAt = new \DateTime();
-        $this->updatedAt = new \DateTime();
+        $this->created_at = new \DateTime();
+        
     }
 
     public function getId(): ?int
