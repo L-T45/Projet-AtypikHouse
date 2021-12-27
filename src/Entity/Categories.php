@@ -50,12 +50,24 @@ class Categories
      */
     private $title;
 
+     /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"categories:collection","categories:write", "properties:item"})
+     */
+    private $slug;
+
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"categories:collection", "categories:write"})
      * 
      */
     private $picture;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"categories:item", "categories:write"})
+     */
+    private $description;
 
     /**
      * @ORM\Column(type="datetime")
@@ -76,18 +88,12 @@ class Categories
      */ 
     private $properties;
 
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:item", "categories:write"})
-     */
-    private $description;
-
     /**
      * @ORM\OneToMany(targetEntity=CategoriesAttributes::class, mappedBy="categories")
      * @Groups({"categories:item", "categories:write"})
      */
     private $categoriesAttributes;
+  
 
     public function __construct()
     {
@@ -100,18 +106,6 @@ class Categories
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
     }
 
     public function getPicture(): ?string
@@ -215,4 +209,30 @@ class Categories
 
         return $this;
     }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+
 }
