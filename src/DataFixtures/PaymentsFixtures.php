@@ -11,8 +11,9 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Faker;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class PaymentsFixtures extends Fixture
+class PaymentsFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -22,13 +23,26 @@ class PaymentsFixtures extends Fixture
          $payments = Array();
         // create 20 Payments! Bam!
         for ($i = 0; $i < 21; $i++) {
+
+            $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,20));
+
             $payments[$i] = new Payments();
             $payments[$i]->setAmount($faker->numberBetween($min = 1, $max = 9999));
             $payments[$i]->setIsPaidback($faker->numberBetween($min = 0, $max = 1));
             $payments[$i]->setPaidbackState($faker->text);
+            $payments[$i]->setUser($user[$i]);
             $manager->persist($payments[$i]);
+
+             // On enregistre les paiements dans une référence 
+             $this->addReference('payments_'. $i, $payments[$i]);
         }
 
         $manager->flush();
+        }
+
+        public function getDependencies(){
+            return [
+                UserFixtures::class,
+            ];                                                                                                                                                                                                                                    
         }
 }
