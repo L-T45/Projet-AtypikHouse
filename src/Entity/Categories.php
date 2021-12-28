@@ -21,8 +21,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      paginationMaximumItemsPerPage= 2,
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
- * 
- * 
  *            "get"={},
  *            "post"={},
  *               
@@ -94,8 +92,6 @@ class Categories
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
     }
-
-
 
     public function getId(): ?int
     {
