@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class SendEmail extends AbstractController {
 
@@ -17,7 +18,8 @@ class SendEmail extends AbstractController {
             ->text('Sending emails is fun again!');
             //->->html('<p>See Twig integration for better HTML integration!</p>');
 
-        $mailer->send($email);
+		// Ajouter le RedirectResponse pour rediriger à une page sinon message d'erreur !
+		return $mailer->send($email)?: new RedirectResponse('/api');
 
     }
 }
