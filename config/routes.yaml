@@ -4,4 +4,8 @@
 api_login_check:
     path: /api/login_check
 
+api_mail_send:
+    path: /api/mail_send
+    controller: App\Email\SendEmail::sendEmail
+
     
