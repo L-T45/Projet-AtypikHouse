@@ -222,6 +222,7 @@ class Comments
     public function setReservations(?Reservations $reservations): self
     {
         $this->reservations = $reservations;
+    }
 
     public function getUser(): ?User
     {
