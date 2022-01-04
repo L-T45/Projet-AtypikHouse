@@ -21,26 +21,44 @@ class SendEmail extends AbstractController {
     public $objet;
     public $message;
 
-    public function sendEmailFormContact(MailerInterface $mailer/*, string $forname*/): Response{
+    // pour ne concerver que ce que l'on souhaite après avoir serialize une variable de type array 
+    public function cutChaine($string, $start, $end){
+        $string = ' ' . $string;   
+        $ini = strpos($string, $start);  
+        if ($ini == 0) return '';   
+        $ini += strlen($start);  
+        $len = strpos($string, $end, $ini) - $ini;
+        return substr($string, $ini, $len);
+    
+    }
+
+    public function sendEmailFormContact(MailerInterface $mailer): Response{
 
         // Données du formulaire   
         $forname = $_POST["forname"];
+        dump($forname);
         $forname = serialize($forname); 
+        $forname = $this->cutChaine($forname, ':"', '";'); 
 
         $lastname = $_POST["lastname"];
         $lastname = serialize($lastname);
+        $lastname = $this->cutChaine($lastname, ':"', '";'); 
 
         $phone = $_POST["phone"];
         $phone = serialize($phone);
+        $phone = $this->cutChaine($phone, ':"', '";'); 
 
         $email = $_POST["email"];
         $email = serialize($email);
+        $email = $this->cutChaine($email, ':"', '";'); 
 
         $objet = $_POST["objet"];
         $objet = serialize($objet);
+        $objet = $this->cutChaine($objet, ':"', '";'); 
 
         $message = $_POST["message"]; 
         $message = serialize($message);
+        $message = $this->cutChaine($message, ':"', '";'); 
 
         $email = (new Email())
             ->from('atypikhouse.communication@gmail.com')
