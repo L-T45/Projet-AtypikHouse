@@ -4,4 +4,6 @@
 api_login_check:
     path: /api/login_check
 
-    
+api_send_payment:
+    path: /api/send_payment
+    controller: App\Controller\SendPayment::PayoutAction
