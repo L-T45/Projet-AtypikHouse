@@ -26,7 +26,7 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
 
             $categories[$i] =  $this->getReference('categories_'. $faker->numberBetween(1,20));
             $properties_gallery[$i] =  $this->getReference('properties_gallery_'. $faker->numberBetween(1,20));
-            $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,20));
+            $user[$i] =  $this->getReference('user_'. $i, $faker->numberBetween(1,20));
 
             $properties[$i] = new Properties();
             $properties[$i]->setTitle($faker->text);
