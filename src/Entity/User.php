@@ -201,6 +201,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder) {
+        $old_pwd = $request->get('old_password'); 
+        $new_pwd = $request->get('new_password'); 
+        $new_pwd_confirm = $request->get('new_password_confirm');
+
+        $user = $this->getUser();
+        $checkPass = $passwordEncoder->isPasswordValid($user, $old_pwd);
+
+        if($checkPass === true) {    
+                            
+        } else {
+            return new jsonresponse(array('error' => 'The current password is incorrect.'));
+        }
+    }
+   
+
     /**
      * Returning a salt is only needed, if you are not using a modern
      * hashing algorithm (e.g. bcrypt or sodium) in your security.yaml.
