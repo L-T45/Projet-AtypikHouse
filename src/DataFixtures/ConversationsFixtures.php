@@ -21,7 +21,7 @@ class ConversationsFixtures extends Fixture
          $faker = Faker\Factory::create('fr_FR');
          $conversations = Array();
         // create 20 Equipements! Bam!
-        for ($i = 0; $i < 21; $i++) {
+        for ($i = 0; $i < 9; $i++) {
             $conversations[$i] = new Conversations();
             $manager->persist($conversations[$i]);
 

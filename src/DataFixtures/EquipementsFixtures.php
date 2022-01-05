@@ -21,7 +21,7 @@ class EquipementsFixtures extends Fixture
          $faker = Faker\Factory::create('fr_FR');
          $equipements = Array();
         // create 20 Equipements! Bam!
-        for ($i = 0; $i < 21; $i++) {
+        for ($i = 0; $i < 9; $i++) {
             $equipements[$i] = new Equipements();
             $equipements[$i]->setTitle($faker->text);;
             $manager->persist($equipements[$i]);

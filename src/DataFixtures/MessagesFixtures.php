@@ -22,9 +22,9 @@ class MessagesFixtures extends Fixture implements DependentFixtureInterface
          $faker = Faker\Factory::create('fr_FR');
          $messages = Array();
         // create 20 Messages! Bam!
-        for ($i = 0; $i < 21; $i++) {
+        for ($i = 0; $i < 9; $i++) {
 
-            $conversations[$i] =  $this->getReference('conversations_'. $faker->numberBetween(1,20));
+            $conversations[$i] =  $this->getReference('conversations_'. $faker->numberBetween(1,8));
 
             $messages[$i] = new Messages();
             $messages[$i]->setBody($faker->text);

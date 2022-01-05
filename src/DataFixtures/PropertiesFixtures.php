@@ -22,9 +22,9 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
          $faker = Faker\Factory::create('fr_FR');
          $properties = Array();
         // create 20 Properties! Bam!
-        for ($i = 0; $i < 21; $i++) {
+        for ($i = 0; $i < 9; $i++) {
 
-            $categories[$i] =  $this->getReference('categories_'. $faker->numberBetween(1,20));
+            $categories[$i] =  $this->getReference('categories_'. $faker->numberBetween(1,8));
             $properties_gallery[$i] =  $this->getReference('properties_gallery_'. $faker->numberBetween(1,20));
             $user[$i] =  $this->getReference('user_'. $i, $faker->numberBetween(1,20));
 

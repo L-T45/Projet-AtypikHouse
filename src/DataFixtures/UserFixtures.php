@@ -21,7 +21,7 @@ class UserFixtures extends Fixture
          $faker = Faker\Factory::create('fr_FR');
          $user = Array();
         // create 20 User! Bam!
-        for ($i = 0; $i < 21; $i++) {
+        for ($i = 0; $i < 9; $i++) {
             $user[$i] = new User();
             $user[$i]->setEmail($faker->email);        
             $user[$i]->setRoles([]);     
