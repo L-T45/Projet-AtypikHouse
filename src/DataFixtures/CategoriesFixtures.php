@@ -40,8 +40,8 @@ $tab = array(
             $categorie->setDescription($categories['description']);
             $manager->persist($categorie);
 
-            // On enregistre les catégories dans une référence 
-            //$this->addReference('categories_'. $i, $categories[$i]);
+            //On enregistre les catégories dans une référence 
+            $this->addReference('categories_'. $i, $categories[$i]);
         }
 
         $manager->flush();

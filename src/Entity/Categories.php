@@ -52,7 +52,7 @@ class Categories
 
      /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection","categories:write", "properties:item"})
+     * @Groups({"categories:write", "properties:item"})
      */
     private $slug;
 
@@ -71,14 +71,14 @@ class Categories
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"categories:item", "categories:write"})
+     * @Groups({"categories:write"})
      * 
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"categories:item", "categories:write"})
+     * @Groups({"categories:write"})
      */
     private $updated_at;
 

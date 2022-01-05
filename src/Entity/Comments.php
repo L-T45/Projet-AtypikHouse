@@ -24,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "method"="GET",
  *                  "path"="comments/lastnewcomments",
  *                  "controller"=App\Controller\LastNewComments::class
+ *                 
  *          },
  *          },
  *      itemOperations={
@@ -94,6 +95,7 @@ class Comments
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
+     * @Groups({"comments:item", "reservations:item"})
      */
     private $user;
 

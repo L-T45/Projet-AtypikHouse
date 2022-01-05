@@ -24,7 +24,7 @@ class CategoriesAttributesFixtures extends Fixture implements DependentFixtureIn
         // create 20 Categories! Bam!
         for ($i = 0; $i < 21; $i++) {
             
-            $categories[$i] =  $this->getReference('categories_'. $faker->numberBetween(1,20));
+            $categories[$i] =  $this->getReference('categories_'. $i);
 
             $categories_attributes[$i] = new CategoriesAttributes();
             $categories_attributes[$i]->setTitle($faker->text);

@@ -134,7 +134,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "properties:write", "categories:item"})
+     * @Groups({"properties:collection", "properties:write", "categories:item", "comments:item"})
      */
     private $picture;
 
