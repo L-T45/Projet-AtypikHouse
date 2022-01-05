@@ -12,3 +12,7 @@ api_formulaire_send:
     path: /api/formulaire_send
     controller: App\Email\SendEmail::sendEmailFormContact
     
+
+ap_test_send:
+    path: /api/test
+    controller: App\Email\SendEmail::api_test

@@ -98,4 +98,9 @@ class SendEmail extends AbstractController {
 		return $mailer->send($email)?: new RedirectResponse('/api');
 
     }*/
+
+    public function api_test(){
+        var_dump($_POST);
+        var_dump($_GET);
+    }
 }
