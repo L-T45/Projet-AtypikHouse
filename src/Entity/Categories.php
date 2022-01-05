@@ -88,7 +88,7 @@ class Categories
 
     /**
      * @ORM\OneToMany(targetEntity=CategoriesAttributes::class, mappedBy="categories")
-     * @Groups({"categories:item", "categories:write"})
+     * @Groups({"categories:write"})
      */
     private $categoriesAttributes;
   
