@@ -17,16 +17,15 @@ class CategoriesFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
 
+        $titles=[
+            'Château hanté','Cabanes suspendues','Container','Palais','Grotte','Igloo','Maison de hobbit','Maisons bulles','Tipi'
+        ];
 
-$titles=[
-     'Château hanté','Cabanes suspendues','Container','Palais','Grotte','Igloo','Maison de hobbit','Maisons bulles','Tipi'
-];
+        $slug=[
+            'chateaux-hantees','cabanes-suspendues','container','palais','grotte','igloo','maison-de-hobbit','maisons-bulles','tipi'
+        ];
 
-$slug=[
-    'chateaux-hantees','cabanes-suspendues','container','palais','grotte','igloo','maison-de-hobbit','maisons-bulles','tipi'
-];
-
-$n=1;
+        $n=1;
 
        // initialisation de l'objet Faker
        $faker = Faker\Factory::create('fr_FR');
@@ -43,6 +42,6 @@ $n=1;
           // On enregistre les catégories dans une référence 
           $this->addReference('categories_'. $i, $categories[$i]);
       }
-        $manager->flush();
-        }
+    $manager->flush();
+    }
 }
