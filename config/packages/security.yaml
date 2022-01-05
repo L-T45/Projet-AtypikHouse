@@ -13,17 +13,11 @@ security:
             entity:
                 class: App\Entity\User
                 property: email
+                
     firewalls:
-
         # Utilisation de la route users obligatoire pour faire référence à l'enregistrement d'un nouvel utilisateur suivant l'entité User
         registration:
             pattern: ^/api/users
-            stateless: true
-            methods: [POST]
-
-        # Pour l'envoie de mail 
-        mail:
-            pattern: ^/mail_send
             stateless: true
             methods: [POST]
             
@@ -63,9 +57,6 @@ security:
         # Paramétrage des droits d'accès à l'inscription 
         - { path: ^/api/users, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
         - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY, methods: [GET, PUT, DELETE, PATCH] }
-        # Paramétrage des droits d'envoie de mail
-        - { path: ^/api/mail_send, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
-        - { path: ^/api/mail_send, roles: IS_AUTHENTICATED_FULLY, methods: [GET, PUT, DELETE, PATCH] }
         # Paramétrage des droits d'accès à l'api 
         #- { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
