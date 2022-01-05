@@ -8,7 +8,7 @@ api_send_payment:
     path: /api/send_payment
     controller: App\Controller\SendPayment::PayoutAction
 
- api_last_properties:
+api_last_properties:
     path: /api/home/last_properties
     controller: App\Controller\LastNewProperties::class
     

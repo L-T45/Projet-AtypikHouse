@@ -53,7 +53,7 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"properties:collection", "categories:item"})
+     * @Groups({"properties:collection", "categories:item", "comments:item"})
      * 
      */
     private $id;

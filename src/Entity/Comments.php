@@ -70,21 +70,22 @@ class Comments
     private $updated_at;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
+     * @Groups({"comments:item","reservations:item"})
+     */
+    private $user;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Reservations::class, inversedBy="comments")
      * @Groups({"comments:item"})
      */
     private $reservations;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
-     * @Groups({"comments:item", "reservations:item"})
-     */
-    private $user;
-
     public function __construct()
     {
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+        
     }
 
     public function getId(): ?int
@@ -176,10 +177,8 @@ class Comments
         return $this;
     }
 
-    /**
-     * @return Collection|Reservations[]
-     */
-    public function getReservations(): Collection
+   
+    public function getReservations(): ?Reservations
     {
         return $this->reservations;
     }

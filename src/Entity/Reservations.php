@@ -58,37 +58,37 @@ class Reservations
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "comments:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item"})
      */
     private $is_approuved;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "comments:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item"})
      */
     private $is_cancelled;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "comments:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item"})
      */
     private $is_paid;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:item", "comments:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item"})
      */
     private $participants_nbr;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reservations:item", "comments:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reservations:item", "comments:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item"})
      */
     private $updated_at;    
 
@@ -99,25 +99,27 @@ class Reservations
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reservations")
-     * @Groups({"reservations:item"})
+     * @Groups({"reservations:item", "comments:item"})
      */
     private $properties;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
-     * @Groups({"reservations:item", "properties:item", "categories:item"})
-     */
-    private $comments;
       
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
+     * @Groups({"reservations:item"})
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -221,29 +223,7 @@ class Reservations
         return $this;
     }
 
-    /**
-     * @return Collection|Comments[]
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comments $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comments $comment): self
-    {
-        $this->comments->removeElement($comment);
-
-        return $this;
-    }
+    
 
     public function getPayments(): ?Payments
     {
@@ -277,6 +257,36 @@ class Reservations
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comments[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setReservations($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getReservations() === $this) {
+                $comment->setReservations(null);
+            }
+        }
 
         return $this;
     }

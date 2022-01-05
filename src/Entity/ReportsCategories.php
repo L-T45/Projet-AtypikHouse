@@ -8,10 +8,27 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ReportsCategoriesRepository::class)
- * @ApiResource()
+ * @ApiResource( normalizationContext={"groups"={"reportscategories:collection"}},
+ *      denormalizationContext={"groups"={"reportscategories:write"}},
+ *      paginationItemsPerPage= 2,
+ *      paginationMaximumItemsPerPage= 2,
+ *      paginationClientItemsPerPage= true,
+ *      collectionOperations={
+ *            "get"={},
+ *            "post"={},
+ *               
+ *          },
+ *      itemOperations={
+ * 
+ *          "get"={"normalization_context"={"groups"={"reportscategories:collection", "reportscategories:item"}}},
+ *          "put"={},
+ *          "delete"={},
+ *          }
+ * )
  */
 class ReportsCategories
 {
@@ -19,21 +36,25 @@ class ReportsCategories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"reportscategories:collection", "reports:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"reportscategories:collection","reports:item"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"reportscategories:item"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"reportscategories:item"})
      */
     private $updated_at;
 

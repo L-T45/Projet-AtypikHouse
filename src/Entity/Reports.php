@@ -6,10 +6,27 @@ use App\Repository\ReportsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ReportsRepository::class)
- * @ApiResource()
+ * @ApiResource( normalizationContext={"groups"={"reports:collection"}},
+ *      denormalizationContext={"groups"={"reports:write"}},
+ *      paginationItemsPerPage= 2,
+ *      paginationMaximumItemsPerPage= 2,
+ *      paginationClientItemsPerPage= true,
+ *      collectionOperations={
+ *            "get"={},
+ *            "post"={},
+ *               
+ *          },
+ *      itemOperations={
+ * 
+ *          "get"={"normalization_context"={"groups"={"reports:collection", "reports:item"}}},
+ *          "put"={},
+ *          "delete"={},
+ *          }
+ * )
  */
 class Reports
 {
@@ -17,21 +34,25 @@ class Reports
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"reports:collection"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"reports:collection", "reports:write"})
      */
     private $reportstate;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"reports:item"})
      */
     private $created_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=ReportsCategories::class, inversedBy="reports")
+     * @Groups({"reports:item"})
      */
     private $reportscategories;
 
@@ -52,12 +73,12 @@ class Reports
 
     public function getReportState(): ?string
     {
-        return $this->report_state;
+        return $this->reportstate;
     }
 
-    public function setReportState(string $report_state): self
+    public function setReportState(string $reportstate): self
     {
-        $this->report_state = $report_state;
+        $this->reportstate = $reportstate;
 
         return $this;
     }
