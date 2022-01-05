@@ -22,9 +22,9 @@ class CategoriesAttributesFixtures extends Fixture implements DependentFixtureIn
          $faker = Faker\Factory::create('fr_FR');
          $categories_attributes = Array();
         // create 20 Categories! Bam!
-        for ($i = 0; $i < 21; $i++) {
+        for ($i = 0; $i < 9; $i++) {
             
-            $categories[$i] =  $this->getReference('categories_'. $i);
+            $categories[$i] =  $this->getReference('categories_'. $faker->numberBetween(1,8));
 
             $categories_attributes[$i] = new CategoriesAttributes();
             $categories_attributes[$i]->setTitle($faker->text);

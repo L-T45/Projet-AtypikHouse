@@ -21,8 +21,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      paginationMaximumItemsPerPage= 2,
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
- * 
- * 
  *            "get"={},
  *            "post"={},
  *               
@@ -90,7 +88,7 @@ class Categories
 
     /**
      * @ORM\OneToMany(targetEntity=CategoriesAttributes::class, mappedBy="categories")
-     * @Groups({"categories:item", "categories:write"})
+     * @Groups({"categories:write"})
      */
     private $categoriesAttributes;
   
@@ -100,8 +98,6 @@ class Categories
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
     }
-
-
 
     public function getId(): ?int
     {

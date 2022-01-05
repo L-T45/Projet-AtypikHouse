@@ -11,3 +11,11 @@ api_send_payment:
  api_last_properties:
     path: /api/home/last_properties
     controller: App\Controller\LastNewProperties::class
+    
+api_formulaire_send:
+    path: /api/formulaire_send
+    controller: App\Email\SendEmail::sendEmailFormContact
+
+api_test_send:
+    path: /api/test
+    controller: App\Email\SendEmail::api_test

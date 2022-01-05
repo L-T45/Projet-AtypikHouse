@@ -24,18 +24,19 @@ class ReservationsFixtures extends Fixture implements DependentFixtureInterface
         // create 20 Reservations! Bam!
         for ($i = 0; $i < 21; $i++) {
 
-            //$payments[$i] =  $this->getReference('payments_'. $faker->numberBetween(1,20));
+            $payments[$i] =  $this->getReference('payments_'. $i);
             $properties[$i] =  $this->getReference('properties_'. $faker->numberBetween(1,20));
             $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,20));
+            $startDate = $faker->dateTime($max = 'now'); 
 
             $reservations[$i] = new Reservations();
-            $reservations[$i]->setStartdate($faker->dateTime($max = 'now'));     
-            $reservations[$i]->setEndDate($faker->dateTime($max = 'now'));
-            $reservations[$i]->setIsApprouved($faker->numberBetween($min = 0, $max = 1));
-            $reservations[$i]->setIsCancelled($faker->numberBetween($min = 0, $max = 1));
-            $reservations[$i]->setIsPaid($faker->numberBetween($min = 0, $max = 1));
+            $reservations[$i]->setStartdate($startDate);     
+            $reservations[$i]->setEndDate($faker->dateTimeBetween($startDate, $endDate = 'now'));
+            $reservations[$i]->setIsApprouved($faker->boolean());
+            $reservations[$i]->setIsCancelled($faker->boolean());
+            $reservations[$i]->setIsPaid($faker->boolean());
             $reservations[$i]->setParticipantsNbr($faker->randomDigitNotNull);
-            //$reservations[$i]->setPayments($payments[$i]);
+            $reservations[$i]->setPayments($payments[$i]);
             $reservations[$i]->setProperties($properties[$i]);
             $reservations[$i]->setUser($user[$i]);
             $manager->persist($reservations[$i]);
@@ -52,7 +53,7 @@ class ReservationsFixtures extends Fixture implements DependentFixtureInterface
                
                 PropertiesFixtures::class,
                 UserFixtures::class,
-                //PaymentsFixtures::class,
+                PaymentsFixtures::class,
             ];
         }
 

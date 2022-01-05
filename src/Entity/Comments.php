@@ -58,24 +58,6 @@ class Comments
     private $value;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item"})
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item"})
-     */
-    private $userpicture;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item"})
-     */
-    private $propertypicture;
-
-    /**
      * @ORM\Column(type="datetime")
      * @Groups({"comments:item", "reservations:item"})
      */
