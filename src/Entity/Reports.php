@@ -23,7 +23,7 @@ class Reports
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $report_state;
+    private $reportstate;
 
     /**
      * @ORM\Column(type="datetime")
