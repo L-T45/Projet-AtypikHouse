@@ -12,9 +12,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class SendEmail extends AbstractController {
 
-    // Pour le formulaire
+    // Pour le formulaire de contact
     public $forname;
-    public $forname1;
     public $lastname;
     public $phone;
     public $email;
@@ -28,13 +27,12 @@ class SendEmail extends AbstractController {
         if ($ini == 0) return '';   
         $ini += strlen($start);  
         $len = strpos($string, $end, $ini) - $ini;
-        return substr($string, $ini, $len);
-    
+        return substr($string, $ini, $len);   
     }
 
     public function sendEmailFormContact(MailerInterface $mailer): Response{
 
-        // Données du formulaire  
+        // Données du formulaire de contact
         $forname = $_POST["forname"];   
         $forname = serialize($forname); 
         $forname = $this->cutChaine($forname, ':"', '";'); 
@@ -69,35 +67,6 @@ class SendEmail extends AbstractController {
 		return $mailer->send($email)?: new RedirectResponse('/api'); 
 
     }
-    /*
-    // Validation Location bien 
-    public function sendEmailValidationLocation(MailerInterface $mailer): Response{
-
-        $email = (new Email())
-            ->from('atypikhouse.communication@gmail.com')
-            ->to('atypikhouse.communication@gmail.com')
-            ->subject($objet)
-            ->text($forname+' '+$lastname+' '+$message+' Contact :'+$phone+' '+$email);
-
-
-		// Ajouter le RedirectResponse pour rediriger à une page sinon message d'erreur !
-		return $mailer->send($email)?: new RedirectResponse('/api');
-
-    }
-
-    // Refus Location Bien 
-    public function sendEmailRefusLocation(MailerInterface $mailer): Response{
-
-        $email = (new Email())
-            ->from('atypikhouse.communication@gmail.com')
-            ->to('atypikhouse.communication@gmail.com')
-            ->subject($objet)
-            ->text($forname+' '+$lastname+' '+$message+' Contact :'+$phone+' '+$email);
-
-		// Ajouter le RedirectResponse pour rediriger à une page sinon message d'erreur !
-		return $mailer->send($email)?: new RedirectResponse('/api');
-
-    }*/
 
     public function api_test(){
         var_dump($_POST);
