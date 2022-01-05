@@ -20,6 +20,12 @@ security:
             pattern: ^/api/users
             stateless: true
             methods: [POST]
+
+        # Pour l'envoie de mail 
+        mail:
+            pattern: ^/mail_send
+            stateless: true
+            methods: [POST]
             
         login:
             pattern: ^/api/login
@@ -57,6 +63,9 @@ security:
         # Paramétrage des droits d'accès à l'inscription 
         - { path: ^/api/users, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
         - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY, methods: [GET, PUT, DELETE, PATCH] }
+        # Paramétrage des droits d'envoie de mail
+        - { path: ^/api/mail_send, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
+        - { path: ^/api/mail_send, roles: IS_AUTHENTICATED_FULLY, methods: [GET, PUT, DELETE, PATCH] }
         # Paramétrage des droits d'accès à l'api 
         #- { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
