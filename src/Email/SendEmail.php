@@ -34,9 +34,8 @@ class SendEmail extends AbstractController {
 
     public function sendEmailFormContact(MailerInterface $mailer): Response{
 
-        // Données du formulaire   
-        $forname = $_POST["forname"];
-        dump($forname);
+        // Données du formulaire  
+        $forname = $_POST["forname"];   
         $forname = serialize($forname); 
         $forname = $this->cutChaine($forname, ':"', '";'); 
 
@@ -67,7 +66,7 @@ class SendEmail extends AbstractController {
             ->text($forname.' '.$lastname."\n"."\n".'Message: '.$message."\n"."\n".'Contact: '.$phone.' '.$email);
 
 		// Ajouter le RedirectResponse pour rediriger à une page sinon message d'erreur !
-		return $mailer->send($email)?: new RedirectResponse('/api');
+		return $mailer->send($email)?: new RedirectResponse('/api'); 
 
     }
     /*
