@@ -21,7 +21,7 @@ class ReportsCategoriesFixtures extends Fixture
          $faker = Faker\Factory::create('fr_FR');
          $reports_categories = Array();
         // create 20 Reports! Bam!
-        for ($i = 0; $i < 21; $i++) {
+        for ($i = 0; $i < 9; $i++) {
             $reports_categories[$i] = new ReportsCategories();
             $reports_categories[$i]->setTitle($faker->text);
             $manager->persist($reports_categories[$i]);

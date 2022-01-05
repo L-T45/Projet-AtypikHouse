@@ -22,9 +22,9 @@ class ReportsFixtures extends Fixture implements DependentFixtureInterface
          $faker = Faker\Factory::create('fr_FR');
          $reports = Array();
         // create 20 Reports! Bam!
-        for ($i = 0; $i < 21; $i++) {
+        for ($i = 0; $i < 9; $i++) {
 
-            $reports_categories[$i] =  $this->getReference('reports_categories_'. $faker->numberBetween(1,20));
+            $reports_categories[$i] =  $this->getReference('reports_categories_'. $faker->numberBetween(1,8));
 
             $reports[$i] = new Reports();
             $reports[$i]->setReportState($faker->text);

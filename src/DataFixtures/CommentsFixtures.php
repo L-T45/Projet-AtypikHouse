@@ -22,9 +22,9 @@ class CommentsFixtures extends Fixture implements DependentFixtureInterface
          $faker = Faker\Factory::create('fr_FR');
          $comments = Array();
         // create 20 Comments! Bam!
-        for ($i = 0; $i < 21; $i++) {
+        for ($i = 0; $i < 9; $i++) {
 
-            $reservations[$i] =  $this->getReference('reservations_'. $faker->numberBetween(1,20));
+            $reservations[$i] =  $this->getReference('reservations_'. $faker->numberBetween(1,8));
             $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,20));
 
             $comments[$i] = new Comments();
