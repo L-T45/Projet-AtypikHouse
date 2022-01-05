@@ -4,4 +4,10 @@
 api_login_check:
     path: /api/login_check
 
-    
+api_formulaire_send:
+    path: /api/formulaire_send
+    controller: App\Email\SendEmail::sendEmailFormContact
+
+api_test_send:
+    path: /api/test
+    controller: App\Email\SendEmail::api_test
