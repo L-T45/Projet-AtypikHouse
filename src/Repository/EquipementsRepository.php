@@ -47,4 +47,17 @@ class EquipementsRepository extends ServiceEntityRepository
         ;
     }
     */
+
+      /**
+      * @return Equipements[] Returns an array of Equipements objects
+      */
+
+      public function findLatest():array
+      {
+          return $this->createQueryBuilder('e')
+          ->orderBy('e.id', 'DESC')
+          ->setMaxResults(10)
+          ->getQuery()
+          ->getResult();
+      }
 }

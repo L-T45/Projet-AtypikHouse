@@ -10,6 +10,8 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+// Ajout route personalisé ici (lastnewequipements) car pas possible à un autre endroit visiblement.
+
 /**
  * @ORM\Entity(repositoryClass=EquipementsRepository::class)
  * @ApiResource(
@@ -22,11 +24,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *            "get"={},
  *            "post"={},
  *                "lastnewequipements"={
- *                  "method"="GET",
- *                  "path"="equipements/lastnewequipements",
- *                  "controller"=App\Controller\LastNewequipements::class
- *          },
- *              
+ *                   "method"="GET",
+ *                   "path"="dashboard/admin/equipements",
+ *                   "controller"=App\Controller\LastNewEquipements::class,
+ *                   "normalization_context"={"groups"={"equipements:collection"}}
+ *                 },       
  *          },
  *      itemOperations={
  * 
