@@ -31,7 +31,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              }, 
  *               "api_categories_id"={
  *                  "method"="GET",
- *                  "path"="api/categories/{id}",
+ *                  "path"="/categories/{id}",
  *                  "normalization_context"={"groups"={"categories:collection","categories:item"}},              
  *              }, 
  *          },
