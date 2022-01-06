@@ -21,25 +21,25 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
- *            "post"={},
- *                "lastnewreservations"={
- *                  "method"="GET",
- *                  "path"="dashboard/user/reservations",
- *                  "controller"=App\Controller\LastNewReservations::class,
- *                  "normalization_context"={"groups"={"reservations:collection"}}
- *                 },
- *                  "reservationid"={
- *                  "method"="GET",
- *                  "path"="dashboard/user/reservations/{id}",
- *                  "controller"=App\Controller\LastNewReservations::class,
- *                  "normalization_context"={"groups"={"reservations:collection", "reservations:item"}}
- *                 },
+ *            "post"={},      
  *          },
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"reservations:collection", "reservations:item"}}},
  *          "put"={},
  *          "delete"={},
+ *              "lastnewreservations"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/{id}/reservations",
+ *                  "controller"=App\Controller\LastNewReservations::class,
+ *                  "normalization_context"={"groups"={"reservations:collection"}}
+ *                 },
+ *               "reservationid"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/reservations/{id}",
+ *                  "controller"=App\Controller\LastNewReservations::class,
+ *                  "normalization_context"={"groups"={"reservations:collection", "reservations:item"}}
+ *                 },
  *          })
  */
 class Reservations

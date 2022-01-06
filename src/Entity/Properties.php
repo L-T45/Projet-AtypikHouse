@@ -38,33 +38,29 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "path"= "dashboard/admin/properties",
  *                      "controller"=App\Controller\LastNewProperties::class,
  *                      "normalization_context"={"groups"={"properties:collection"}}
- *                 }, 
- *                  "dashboard_user_properties"={
- *                      "method"="GET",
- *                      "path"= "dashboard/user/properties",
- *                      "controller"=App\Controller\LastNewProperties::class,
- *                      "normalization_context"={"groups"={"properties:collection"}}
- *                 }, 
- *                  "dashboard_admin_properties_id"={
- *                      "method"="GET",
- *                      "path"= "dashboard/admin/properties/{id}",
- *                      "controller"=App\Controller\LastNewProperties::class,
- *                      "normalization_context"={"groups"={"properties:collection", "properties:item"}}
- *                 },
- *                  "dashboard_user_properties_id"={
- *                      "method"="GET",
- *                      "path"= "dashboard/user/properties/{id}",
- *                      "controller"=App\Controller\LastNewProperties::class,
- *                      "normalization_context"={"groups"={"properties:collection", "properties:item"}}
- *                 },
- * 
+ *                 },              
  *          },
  *      itemOperations={
  * 
- *          "get"={"normalization_context"={"groups"={"properties:collection", "properties:item"}}},
- *        
+ *          "get"={"normalization_context"={"groups"={"properties:collection", "properties:item"}}},       
  *          "put"={},
  *          "delete"={},
+ *               "dashboard_user_properties"={
+ *                      "method"="GET",
+ *                      "path"= "dashboard/user/{id}/properties",
+ *                      "controller"=App\Controller\LastNewProperties::class,
+ *                      "normalization_context"={"groups"={"properties:collection"}}
+ *                 }, 
+ *               "dashboard_admin_properties_id"={
+ *                      "method"="GET",
+ *                      "path"= "dashboard/admin/properties/{id}",
+ *                      "normalization_context"={"groups"={"properties:collection", "properties:item"}}
+ *                 },
+ *                "dashboard_user_properties_id"={
+ *                      "method"="GET",
+ *                      "path"= "dashboard/user/properties/{id}",
+ *                      "normalization_context"={"groups"={"properties:collection", "properties:item"}}
+ *                 },
  *          }
  * )
  * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "partial", "price": "exact", "capacity": "exact", "lat": "exact", "longitude": "exact", "reservations.comments.value": "exact"})
