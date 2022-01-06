@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 
-// Ajout route personalisé ici (lastnewreservations, api_dashboard_user_payments, dashboard_user_properties) car pas possible à un autre endroit visiblement.
+// Ajout route personalisé ici (lastnewreservations, api_dashboard_user_payments, dashboard_user_properties, delete_user) car pas possible à un autre endroit visiblement.
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -55,6 +55,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *                     "force_eager"=false,
  *                     "normalization_context"={"groups"={"user:reservations", "enable_max_depth"=true}}
  *                 },
+ *                  "delete_user"={
+ *                     "method"="DELETE",
+ *                     "path"="dashboard/user/{id}/personnal-infos/delete-account",
+ *                 },
+ *                  
  *          }
  * )
  */
