@@ -24,7 +24,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                "lastnewreservations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/reservations",
- *                  "controller"=App\Controller\LastNewReservations::class
+ *                  "controller"=App\Controller\LastNewReservations::class,
+ *                  "normalization_context"={"groups"={"reservations:collection"}}
  *                 },
  *          },
  *      itemOperations={
