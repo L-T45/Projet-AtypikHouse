@@ -15,6 +15,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
+// Ajout route personalisé ici (lastnewproperties) car pas possible à un autre endroit visiblement.
 /**
  * @ORM\Entity(repositoryClass=PropertiesRepository::class)
  * @ApiResource(

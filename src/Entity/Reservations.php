@@ -10,6 +10,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+// Ajout route personalisé ici (lastnewreservations, reservationid) car pas possible à un autre endroit visiblement.
 /**
  * @ORM\Entity(repositoryClass=ReservationsRepository::class)
  * @ApiResource(
@@ -26,6 +27,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "path"="dashboard/user/reservations",
  *                  "controller"=App\Controller\LastNewReservations::class,
  *                  "normalization_context"={"groups"={"reservations:collection"}}
+ *                 },
+ *                  "reservationid"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/reservations/{id}",
+ *                  "controller"=App\Controller\LastNewReservations::class,
+ *                  "normalization_context"={"groups"={"reservations:collection", "reservations:item"}}
  *                 },
  *          },
  *      itemOperations={
