@@ -45,7 +45,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"read:payments", "enable_max_depth"=true}},    
  *               },
-<<<<<<< HEAD
  *                 "dashboard_user_properties"={
  *                      "method"="GET",
  *                      "path"= "dashboard/user/{id}/properties",
@@ -63,14 +62,12 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *                     "path"="dashboard/user/{id}/personnal-infos/delete-account",
  *                 },
  *                  
-=======
  *               "api_dashboard_user_messages"={
  *                  "method"="GET",
  *                  "path"="/dashboard/user/{id}/messages",
  *                  "normalization_context"={"groups"={"read:messages"}},
  *                 
  *               },
->>>>>>> master
  *          }
  * )
  */
@@ -80,11 +77,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-<<<<<<< HEAD
-     * @Groups({"user:collection", "properties:user", "reservations:user"})
-=======
-     * @Groups({"user:collection", "user:payments", "user:messages", "read:messages"})
->>>>>>> master
+     * @Groups({"user:collection", "properties:user", "reservations:user", "user:payments", "user:messages", "read:messages"})
      */
     private $id;
 
@@ -162,11 +155,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-<<<<<<< HEAD
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user", "reservations:user"})
-=======
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "user:messages", "read:messages"})
->>>>>>> master
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user", "reservations:user", "user:messages", "read:messages"})
      */
     private $firstname;
 
