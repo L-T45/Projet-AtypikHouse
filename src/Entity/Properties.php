@@ -28,7 +28,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *            "post"={},
  *                "lastnewproperties"={
  *                  "method"="GET",
- *                  "path"="properties/lastnewproperties",
+ *                  "path"="home/lastnewproperties",
  *                  "controller"=App\Controller\LastNewProperties::class
  *          },
  *              
