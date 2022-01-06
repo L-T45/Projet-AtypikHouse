@@ -15,7 +15,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
-// Ajout route personalisé ici (lastnewproperties, dashboard_admin_properties, dashboard_user_properties) car pas possible à un autre endroit visiblement.
+// Ajout route personalisé ici (lastnewproperties, dashboard_admin_properties, dashboard_user_properties, dashboard_admin_properties_id, dashboard_user_properties_id) car pas possible à un autre endroit visiblement.
 /**
  * @ORM\Entity(repositoryClass=PropertiesRepository::class)
  * @ApiResource(
@@ -45,6 +45,19 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "controller"=App\Controller\LastNewProperties::class,
  *                      "normalization_context"={"groups"={"properties:collection"}}
  *                 }, 
+ *                  "dashboard_admin_properties_id"={
+ *                      "method"="GET",
+ *                      "path"= "dashboard/admin/properties/{id}",
+ *                      "controller"=App\Controller\LastNewProperties::class,
+ *                      "normalization_context"={"groups"={"properties:collection", "properties:item"}}
+ *                 },
+ *                  "dashboard_user_properties_id"={
+ *                      "method"="GET",
+ *                      "path"= "dashboard/user/properties/{id}",
+ *                      "controller"=App\Controller\LastNewProperties::class,
+ *                      "normalization_context"={"groups"={"properties:collection", "properties:item"}}
+ *                 },
+ * 
  *          },
  *      itemOperations={
  * 
