@@ -9,7 +9,29 @@ use \DateTime;
 
 /**
  * @ORM\Entity(repositoryClass=PaymentsRepository::class)
- * @ApiResource()
+ *  @ApiResource( normalizationContext={"groups"={"payments:collection"}},
+ *      denormalizationContext={"groups"={"payments:write"}},
+ *      paginationItemsPerPage= 2,
+ *      paginationMaximumItemsPerPage= 2,
+ *      paginationClientItemsPerPage= true,
+ *      collectionOperations={
+ *            "get"={},
+ *            "post"={},
+ *                "api_send_payment"={
+ *                  "method"="POST",
+ *                  "path"="/send_payment",
+ *                  "controller"=App\Controller\SendPayment::class
+ *                 
+ *               },
+ *             
+ *          },
+ *      itemOperations={
+ * 
+ *          "get"={"normalization_context"={"groups"={"payments:collection", "payments:item"}}},
+ *          "put"={},
+ *          "delete"={},
+ *          }
+ * )
  */
 class Payments
 {
@@ -17,36 +39,43 @@ class Payments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"payments:collection"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"payments:collection"})
      */
     private $amount;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"payments:item"})
      */
     private $is_paidback;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"payments:item"})
      */
     private $paidback_state;
 
     /**
      * @ORM\OneToOne(targetEntity=Reservations::class, mappedBy="payments", cascade={"persist", "remove"})
+     * @Groups({"payments:item"})
      */
     private $reservations;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"payments:item"})
      */
     private $created_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="payments")
+     * @Groups({"payments:item"})
      */
     private $user;
 

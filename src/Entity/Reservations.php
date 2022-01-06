@@ -40,19 +40,19 @@ class Reservations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:collection", "comments:item", "properties:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "properties:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item"})
      */
     private $startdate;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "properties:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item"})
      */
     private $end_date;
 

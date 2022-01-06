@@ -44,7 +44,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item"})
+     * @Groups({"comments:item", "reservations:item", "payments:item"})
      */
     private $lastname;
 
@@ -90,7 +90,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item"})
+     * @Groups({"comments:item", "reservations:item", "payments:item"})
      */
     private $firstname;
 
@@ -101,7 +101,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "reservations:item"})
+     * @Groups({"comments:item", "reservations:item", "payments:item"})
      */
     private $picture;
 
