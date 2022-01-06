@@ -10,7 +10,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-// Ajout route personalisé ici (lastnewequipements) car pas possible à un autre endroit visiblement.
+// Ajout route personalisé ici (lastnewequipements, ) car pas possible à un autre endroit visiblement.
 
 /**
  * @ORM\Entity(repositoryClass=EquipementsRepository::class)
