@@ -27,7 +27,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                   "method"="GET",
  *                   "path"="dashboard/admin/equipements",
  *                   "controller"=App\Controller\LastNewEquipements::class,
- *                   "normalization_context"={"groups"={"equipements:collection"}}
+ *                   "force_eager"=false,
+ *                   "normalization_context"={"groups"={"equipements:collection", "enable_max_depth"=true}}
  *                 },      
  *          },
  *      itemOperations={
@@ -38,7 +39,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "equipements_id"={
  *                   "method"="GET",
  *                   "path"="dashboard/admin/equipements/{id}",
- *                   "normalization_context"={"groups"={"equipements:collection", "equipements:item"}}
+ *                   "force_eager"=false,
+ *                   "normalization_context"={"groups"={"equipements:collection", "equipements:item", "enable_max_depth"=true}}
  *                 }, 
  *          }
  * )

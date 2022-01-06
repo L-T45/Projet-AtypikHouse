@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 
-// Ajout route personalisé ici (api_dashboard_user_payments, dashboard_user_properties) car pas possible à un autre endroit visiblement.
+// Ajout route personalisé ici (lastnewreservations, api_dashboard_user_payments, dashboard_user_properties) car pas possible à un autre endroit visiblement.
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -39,13 +39,21 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *               "api_dashboard_user_payments"={
  *                  "method"="GET",
  *                  "path"="/dashboard/user/{id}/payments",
- *                  "normalization_context"={"groups"={"read:payments"}},
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"read:payments", "enable_max_depth"=true}},
  *                 
  *               },
  *                 "dashboard_user_properties"={
  *                      "method"="GET",
  *                      "path"= "dashboard/user/{id}/properties",
- *                      "normalization_context"={"groups"={"user:properties"}}
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"user:properties", "enable_max_depth"=true}}
+ *                 },
+ *                 "lastnewreservations"={
+ *                     "method"="GET",
+ *                     "path"="dashboard/user/{id}/reservations",
+ *                     "force_eager"=false,
+ *                     "normalization_context"={"groups"={"user:reservations", "enable_max_depth"=true}}
  *                 },
  *          }
  * )
@@ -56,7 +64,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "properties:user"})
+     * @Groups({"user:collection", "properties:user", "reservations:user"})
      */
     private $id;
 
@@ -80,7 +88,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user" })
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user", "reservations:user"})
      */
     private $lastname;
 
@@ -134,7 +142,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user"})
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user", "reservations:user"})
      */
     private $firstname;
 
@@ -146,7 +154,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user"})
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user", "reservations:user"})
      */
     private $picture;
 
@@ -165,7 +173,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user")
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "user:reservations"})
      */
     private $reservations;
 

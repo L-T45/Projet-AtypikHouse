@@ -31,13 +31,15 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "method"="GET",
  *                      "path"="home/lastnewproperties",
  *                      "controller"=App\Controller\LastNewProperties::class,
- *                      "normalization_context"={"groups"={"properties:collection"}}
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
  *                 }, 
  *                 "dashboard_admin_properties"={
  *                      "method"="GET",
  *                      "path"= "dashboard/admin/properties",
  *                      "controller"=App\Controller\LastNewProperties::class,
- *                      "normalization_context"={"groups"={"properties:collection"}}
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
  *                 },              
  *          },
  *      itemOperations={
@@ -48,12 +50,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               "dashboard_admin_properties_id"={
  *                      "method"="GET",
  *                      "path"= "dashboard/admin/properties/{id}",
- *                      "normalization_context"={"groups"={"properties:collection", "properties:item"}}
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"properties:collection", "properties:item", "enable_max_depth"=true}}
  *                 },
  *                "dashboard_user_properties_id"={
  *                      "method"="GET",
  *                      "path"= "dashboard/user/properties/{id}",
- *                      "normalization_context"={"groups"={"properties:user"}}
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"properties:user", "enable_max_depth"=true}}
  *                 },
  *          }
  * )

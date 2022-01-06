@@ -10,7 +10,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-// Ajout route personalisé ici (lastnewreservations, reservationid) car pas possible à un autre endroit visiblement.
+// Ajout route personalisé ici (reservationid) car pas possible à un autre endroit visiblement.
 /**
  * @ORM\Entity(repositoryClass=ReservationsRepository::class)
  * @ApiResource(
@@ -28,17 +28,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get"={"normalization_context"={"groups"={"reservations:collection", "reservations:item"}}},
  *          "put"={},
  *          "delete"={},
- *              "lastnewreservations"={
- *                  "method"="GET",
- *                  "path"="dashboard/user/{id}/reservations",
- *                  "controller"=App\Controller\LastNewReservations::class,
- *                  "normalization_context"={"groups"={"reservations:collection"}}
- *                 },
  *               "reservationid"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/reservations/{id}",
- *                  "controller"=App\Controller\LastNewReservations::class,
- *                  "normalization_context"={"groups"={"reservations:collection", "reservations:item"}}
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"reservations:user", "enable_max_depth"=true}}
  *                 },
  *          })
  */
@@ -48,19 +42,19 @@ class Reservations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations"})
      */
     private $startdate;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations"})
      */
     private $end_date;
 
@@ -114,6 +108,7 @@ class Reservations
       
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
+     * @Groups({"reservations:user"})
      */
     private $user;
 
