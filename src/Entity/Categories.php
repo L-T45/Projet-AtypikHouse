@@ -11,6 +11,7 @@ use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 
+// Ajout d'une route personnalisé ("api_categories") pour l'entité catégories 
 
 /**
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
@@ -22,9 +23,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
- *            "post"={},
- *               
+ *            "post"={},        
+ *              "api_categories"={
+ *                  "method"="GET",
+ *                  "path"="api/categories",
+ *                  "normalization_context"={"groups"={"categories:collection"}},              
+ *              }, 
  *          },
+ * 
  *      itemOperations={
  *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},
  *           
