@@ -29,9 +29,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                "lastnewproperties"={
  *                  "method"="GET",
  *                  "path"="home/lastnewproperties",
- *                  "controller"=App\Controller\LastNewProperties::class
- *          },
- *              
+ *                  "controller"=App\Controller\LastNewProperties::class,
+ *                  "normalization_context"={"groups"={"properties:collection"}}
+ *             },    
  *          },
  *      itemOperations={
  * 

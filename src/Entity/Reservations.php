@@ -23,9 +23,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *            "post"={},
  *                "lastnewreservations"={
  *                  "method"="GET",
- *                  "path"="reservations/lastnewreservations",
+ *                  "path"="dashboard/user/reservations",
  *                  "controller"=App\Controller\LastNewReservations::class
- *          },
+ *                 },
  *          },
  *      itemOperations={
  * 
