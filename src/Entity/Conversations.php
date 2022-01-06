@@ -8,10 +8,27 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=ConversationsRepository::class)
- * @ApiResource()
+ * @ApiResource( normalizationContext={"groups"={"conversations:collection"}},
+ *      denormalizationContext={"groups"={"conversations:write"}},
+ *      paginationItemsPerPage= 2,
+ *      paginationMaximumItemsPerPage= 2,
+ *      paginationClientItemsPerPage= true,
+ *      collectionOperations={
+ *            "get"={},
+ *            "post"={},
+ *             
+ *          },
+ *      itemOperations={
+ * 
+ *          "get"={"normalization_context"={"groups"={"conversations:collection", "conversations:item"}}},
+ *          "put"={},
+ *          "delete"={},
+ *          }
+ * )
  */
 class Conversations
 {
@@ -19,11 +36,13 @@ class Conversations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"conversations:collection", "read:messages", "user:messages"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"conversations:collection", "user:messages"})
      */
     private $created_at;
 
