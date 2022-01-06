@@ -12,7 +12,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 
-// Ajout route personalisé ici (lastnewreservations, api_dashboard_user_payments, dashboard_user_properties, delete_user) car pas possible à un autre endroit visiblement.
+// Ajout route personalisé ici (lastnewreservations, api_dashboard_user_payments, dashboard_user_properties, delete_user, api_sign_up) car pas possible à un autre endroit visiblement.
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -27,9 +27,12 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *                "api_send_payment"={
  *                  "method"="POST",
  *                  "path"="/send_payment",
- *                  "controller"=App\Controller\SendPayment::class
- *                 
- *               },       
+ *                  "controller"=App\Controller\SendPayment::class 
+ *               }, 
+ *                 "api_sign_up"={
+ *                  "method"="POST",
+ *                  "path"="sign_up",
+ *               },      
  *          },
  *      itemOperations={
  * 
@@ -40,8 +43,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *                  "method"="GET",
  *                  "path"="/dashboard/user/{id}/payments",
  *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"read:payments", "enable_max_depth"=true}},
- *                 
+ *                  "normalization_context"={"groups"={"read:payments", "enable_max_depth"=true}},    
  *               },
  *                 "dashboard_user_properties"={
  *                      "method"="GET",
