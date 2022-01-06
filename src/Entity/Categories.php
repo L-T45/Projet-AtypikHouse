@@ -29,6 +29,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "path"="api/categories",
  *                  "normalization_context"={"groups"={"categories:collection"}},              
  *              }, 
+ *               "api_categories_id"={
+ *                  "method"="GET",
+ *                  "path"="api/categories/{id}",
+ *                  "normalization_context"={"groups"={"categories:collection","categories:item"}},              
+ *              }, 
  *          },
  * 
  *      itemOperations={
@@ -94,7 +99,7 @@ class Categories
 
     /**
      * @ORM\OneToMany(targetEntity=CategoriesAttributes::class, mappedBy="categories")
-     * @Groups({"categories:write"})
+     * @Groups({"categories:item", "categories:write"})
      */
     private $categoriesAttributes;
   
