@@ -22,10 +22,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *            "post"={},
  *                "lastnewcomments"={
  *                  "method"="GET",
- *                  "path"="comments/lastnewcomments",
+ *                  "path"="/home/lastnewcomments",
  *                  "controller"=App\Controller\LastNewComments::class
  *                 
- *          },
+ *               },
+ *             
  *          },
  *      itemOperations={
  * 

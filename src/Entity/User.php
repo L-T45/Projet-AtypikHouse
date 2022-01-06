@@ -14,8 +14,36 @@ use ApiPlatform\Core\Annotation\ApiResource;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ *  @ApiResource( normalizationContext={"groups"={"user:collection"}},
+ *      denormalizationContext={"groups"={"user:write"}},
+ *      paginationItemsPerPage= 2,
+ *      paginationMaximumItemsPerPage= 2,
+ *      paginationClientItemsPerPage= true,
+ *      collectionOperations={
+ *            "get"={},
+ *            "post"={},
+ *                "api_send_payment"={
+ *                  "method"="POST",
+ *                  "path"="/send_payment",
+ *                  "controller"=App\Controller\SendPayment::class
+ *                 
+ *               },
+ *              
+ *             
+ *          },
+ *      itemOperations={
  * 
- * @ApiResource()
+ *          "get"={"normalization_context"={"groups"={"user:collection", "user:item"}}},
+ *          "put"={},
+ *          "delete"={},
+ *               "api_dashboard_user_payments"={
+ *                  "method"="GET",
+ *                  "path"="/dashboard/user/{id}/payments",
+ *                  "normalization_context"={"groups"={"read:payments"}},
+ *                 
+ *               },
+ *          }
+ * )
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -23,16 +51,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"user:collection"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"user:collection"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"user:item"})
      */
     private $roles = [];
 
@@ -44,81 +75,96 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item"})
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item" })
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"user:item"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user:item"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user:item"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"user:item"})
      */
     private $birthdate;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"user:item"})
      */
     private $zipCode;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"user:item"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"user:item"})
      */
     private $updated_at;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"user:item"})
      */
     private $emailvalidated;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item"})
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user:item"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "reservations:item"})
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"user:item"})
      */
     private $is_blocked;
 
 
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user")
+<<<<<<< HEAD
      * @Groups({"properties:read"})
+=======
+     * 
+>>>>>>> master
      */
     private $properties;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user")
+     * @Groups({"user:item"})
      */
     private $reservations;
 
@@ -129,6 +175,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Payments::class, mappedBy="user")
+     * @Groups({"read:payments"})
      */
     private $payments;
 

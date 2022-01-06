@@ -48,55 +48,55 @@ class Reservations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:collection", "comments:item", "properties:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "properties:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item"})
      */
     private $startdate;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "properties:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item"})
      */
     private $end_date;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item"})
      */
     private $is_approuved;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item"})
      */
     private $is_cancelled;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item"})
      */
     private $is_paid;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item"})
      */
     private $participants_nbr;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reservations:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reservations:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item"})
      */
     private $updated_at;    
 
