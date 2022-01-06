@@ -6,6 +6,7 @@ use App\Repository\PaymentsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=PaymentsRepository::class)
@@ -39,25 +40,25 @@ class Payments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"payments:collection"})
+     * @Groups({"payments:collection", "read:payments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"payments:collection"})
+     * @Groups({"payments:collection", "read:payments"})
      */
     private $amount;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"payments:item"})
+     * @Groups({"payments:item", "read:payments"})
      */
     private $is_paidback;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"payments:item"})
+     * @Groups({"payments:item", "read:payments"})
      */
     private $paidback_state;
 
@@ -69,7 +70,7 @@ class Payments
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"payments:item"})
+     * @Groups({"payments:item", "read:payments"})
      */
     private $created_at;
 
