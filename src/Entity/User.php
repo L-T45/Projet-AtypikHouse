@@ -113,6 +113,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user")
+     * @Groups({"properties:read"})
      */
     private $properties;
 

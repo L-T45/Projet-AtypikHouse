@@ -48,8 +48,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               "dashboard_user_properties"={
  *                      "method"="GET",
  *                      "path"= "dashboard/user/{id}/properties",
- *                      "controller"=App\Controller\LastNewProperties::class,
- *                      "normalization_context"={"groups"={"properties:collection"}}
+ *                      "normalization_context"={"groups"={"properties:collection", "properties:read"}}
  *                 }, 
  *               "dashboard_admin_properties_id"={
  *                      "method"="GET",
