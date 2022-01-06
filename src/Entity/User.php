@@ -51,7 +51,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection"})
+     * @Groups({"user:collection", "user:payments"})
      */
     private $id;
 
