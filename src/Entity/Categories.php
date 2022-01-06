@@ -10,9 +10,6 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-
-// Ajout d'une route personnalisé ("api_categories") pour l'entité catégories 
-
 /**
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
  * @ApiResource(
@@ -24,11 +21,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},        
- *              "api_categories"={
- *                  "method"="GET",
- *                  "path"="/categories",
- *                  "normalization_context"={"groups"={"categories:collection"}},              
- *              }, 
  *          },
  * 
  *      itemOperations={
