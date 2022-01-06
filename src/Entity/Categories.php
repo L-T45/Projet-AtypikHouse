@@ -21,15 +21,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},        
-<<<<<<< HEAD
-=======
- *              "api_categories"={
- *                  "method"="GET",
- *                  "path"="api/categories",
- *                  "normalization_context"={"groups"={"categories:collection"}},              
- *              }, 
- *            
->>>>>>> master
  *          },
  * 
  *      itemOperations={

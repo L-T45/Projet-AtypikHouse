@@ -12,6 +12,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 
+// Ajout route personalisé ici (api_dashboard_user_payments, dashboard_user_properties) car pas possible à un autre endroit visiblement.
+
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  *  @ApiResource( normalizationContext={"groups"={"user:collection"}},
@@ -27,9 +29,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *                  "path"="/send_payment",
  *                  "controller"=App\Controller\SendPayment::class
  *                 
- *               },
- *              
- *             
+ *               },       
  *          },
  *      itemOperations={
  * 
@@ -42,6 +42,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *                  "normalization_context"={"groups"={"read:payments"}},
  *                 
  *               },
+ *                 "dashboard_user_properties"={
+ *                      "method"="GET",
+ *                      "path"= "dashboard/user/{id}/properties",
+ *                      "normalization_context"={"groups"={"user:properties"}}
+ *                 },
  *          }
  * )
  */
@@ -51,7 +56,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection"})
+     * @Groups({"user:collection", "properties:user"})
      */
     private $id;
 
@@ -75,7 +80,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item" })
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user" })
      */
     private $lastname;
 
@@ -129,7 +134,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item"})
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user"})
      */
     private $firstname;
 
@@ -141,7 +146,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item"})
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user"})
      */
     private $picture;
 
@@ -154,11 +159,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user")
-<<<<<<< HEAD
-     * @Groups({"properties:read"})
-=======
-     * 
->>>>>>> master
+     * @Groups({"user:properties"})
      */
     private $properties;
 

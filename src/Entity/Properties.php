@@ -15,7 +15,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
-// Ajout route personalisé ici (lastnewproperties, dashboard_admin_properties, dashboard_user_properties, dashboard_admin_properties_id, dashboard_user_properties_id) car pas possible à un autre endroit visiblement.
+// Ajout route personalisé ici (lastnewproperties, dashboard_admin_properties, dashboard_admin_properties_id, dashboard_user_properties_id) car pas possible à un autre endroit visiblement.
 /**
  * @ORM\Entity(repositoryClass=PropertiesRepository::class)
  * @ApiResource(
@@ -45,11 +45,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *          "get"={"normalization_context"={"groups"={"properties:collection", "properties:item"}}},       
  *          "put"={},
  *          "delete"={},
- *               "dashboard_user_properties"={
- *                      "method"="GET",
- *                      "path"= "dashboard/user/{id}/properties",
- *                      "normalization_context"={"groups"={"properties:collection", "properties:read"}}
- *                 }, 
  *               "dashboard_admin_properties_id"={
  *                      "method"="GET",
  *                      "path"= "dashboard/admin/properties/{id}",
@@ -58,7 +53,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                "dashboard_user_properties_id"={
  *                      "method"="GET",
  *                      "path"= "dashboard/user/properties/{id}",
- *                      "normalization_context"={"groups"={"properties:collection", "properties:item"}}
+ *                      "normalization_context"={"groups"={"properties:user"}}
  *                 },
  *          }
  * )
@@ -74,20 +69,20 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"properties:collection", "categories:item", "comments:item"})
+     * @Groups({"properties:collection", "categories:item", "comments:item", "user:properties"})
      * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     *@Groups({"properties:collection", "properties:write", "categories:item"})
+     *@Groups({"properties:collection", "properties:write", "categories:item", "user:properties"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:write", "properties:item"})
+     * @Groups({"properties:write", "properties:item", "user:properties"})
      */
     private $slug;
 
@@ -105,7 +100,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection","properties:write"})
+     * @Groups({"properties:collection","properties:write", "user:properties"})
      */
     private $address;
 
@@ -117,7 +112,7 @@ class Properties
 
     /*%*
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "properties:write", "categories:item"})
+     * @Groups({"properties:collection", "properties:write", "categories:item", "user:properties"})
      * 
      */
     private $city;
@@ -155,7 +150,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "properties:write", "categories:item", "comments:item"})
+     * @Groups({"properties:collection", "properties:write", "categories:item", "comments:item", "user:properties"})
      */
     private $picture;
 
@@ -215,6 +210,7 @@ class Properties
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="properties")
+     * @Groups({"properties:user"})
      */
     private $user;
 
