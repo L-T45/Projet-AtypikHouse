@@ -21,11 +21,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
- *                "lastnewcategoriesattributes"={
+ *                "dashboard_admin_categories_attributes"={
  *                  "method"="GET",
- *                  "path"="categoriesattributes/lastnewcategoriesattributes",
- *                  "controller"=App\Controller\LastNewcategoriesattributes::class
- *          },
+ *                  "path"="/dashboard/admin/categories_attributes"
+ *               },
  *              
  *          },
  *      itemOperations={
@@ -34,6 +33,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *        
  *          "put"={},
  *          "delete"={},
+ *               "dashboard_admin_categories_attributes"={
+ *                  "method"="GET",
+ *                  "path"="/dashboard/admin/categories_attributes/{id}",
+ *                  "normalization_context"={"groups"={"categoriesattributes:collection", "categoriesattributes:item"}},
+ *               },
  *          }
  * )
  */
@@ -123,7 +127,7 @@ class CategoriesAttributes
     /**
      * @return Collection|Categories[]
      */
-    public function getCategories(): Collection
+    public function getCategories(): ?Categories
     {
         return $this->categories;
     }

@@ -36,13 +36,13 @@ class Categories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"categories:collection"})
+     * @Groups({"categories:collection","categoriesattributes:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection","categories:write", "properties:item"})
+     * @Groups({"categories:collection","categories:write", "properties:item", "categoriesattributes:item"})
      */
     private $title;
 
