@@ -51,7 +51,7 @@ class Categories
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "categories:write"})
+     * @Groups({ "categories:write"})
      * 
      */
     private $picture;
