@@ -21,8 +21,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  * @ApiResource(
  *      normalizationContext={"groups"={"properties:collection"}},
  *      denormalizationContext={"groups"={"properties:write"}},
- *      paginationItemsPerPage= 2,
- *      paginationMaximumItemsPerPage= 2,
+ *      paginationItemsPerPage= 20,
+ *      paginationMaximumItemsPerPage= 20,
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
