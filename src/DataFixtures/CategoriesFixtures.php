@@ -17,21 +17,31 @@ class CategoriesFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
 
-         // initialisation de l'objet Faker
-         $faker = Faker\Factory::create('fr_FR');
-         $categories = Array();
-        // create 20 Categories! Bam!
-        for ($i = 0; $i < 21; $i++) {
-            $categories[$i] = new Categories();
-            $categories[$i]->setTitle($faker->text);
-            $categories[$i]->setPicture($faker->imageUrl($width = 640, $height = 480));
-            $categories[$i]->setDescription($faker->text);
-            $manager->persist($categories[$i]);
+        $titles=[
+            'Château hanté','Cabanes suspendues','Container','Palais','Grotte','Igloo','Maison de hobbit','Maisons bulles','Tipi'
+        ];
 
-            // On enregistre les catégories dans une référence 
-            $this->addReference('categories_'. $i, $categories[$i]);
-        }
+        $slug=[
+            'chateaux-hantees','cabanes-suspendues','container','palais','grotte','igloo','maison-de-hobbit','maisons-bulles','tipi'
+        ];
 
-        $manager->flush();
-        }
+        $n=1;
+
+       // initialisation de l'objet Faker
+       $faker = Faker\Factory::create('fr_FR');
+       $categories = Array();
+      // create 20 Categories! Bam!
+      for ($i = 0; $i < 9; $i++) {
+          $categories[$i] = new Categories();
+          $categories[$i]->setTitle($titles[$i]);
+          $categories[$i]->setSlug($slug[$i]);
+          $categories[$i]->setPicture($i+$n.".webp");
+          $categories[$i]->setDescription($faker->text);
+          $manager->persist($categories[$i]);
+
+          // On enregistre les catégories dans une référence 
+          $this->addReference('categories_'. $i, $categories[$i]);
+      }
+    $manager->flush();
+    }
 }

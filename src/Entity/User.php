@@ -8,13 +8,68 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 use ApiPlatform\Core\Annotation\ApiResource;
 
+// Ajout route personalisé ici (lastnewreservations, api_dashboard_user_payments, dashboard_user_properties, delete_user, api_sign_up) car pas possible à un autre endroit visiblement.
+
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ *  @ApiResource( normalizationContext={"groups"={"user:collection"}},
+ *      denormalizationContext={"groups"={"user:write"}},
+ *      paginationItemsPerPage= 20,
+ *      paginationMaximumItemsPerPage= 20,
+ *      paginationClientItemsPerPage= true,
+ *      collectionOperations={
+ *            "get"={},
+ *            "post"={},
+ *                "api_send_payment"={
+ *                  "method"="POST",
+ *                  "path"="/send_payment",
+ *                  "controller"=App\Controller\SendPayment::class 
+ *               }, 
+ *                 "api_sign_up"={
+ *                  "method"="POST",
+ *                  "path"="sign_up",
+ *               },      
+ *          },
+ *      itemOperations={
  * 
- * @ApiResource()
+ *          "get"={"normalization_context"={"groups"={"user:collection", "user:item"}}},
+ *          "put"={},
+ *          "delete"={},
+ *               "api_dashboard_user_payments"={
+ *                  "method"="GET",
+ *                  "path"="/dashboard/user/{id}/payments",
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"read:payments", "enable_max_depth"=true}},    
+ *               },
+ *                 "dashboard_user_properties"={
+ *                      "method"="GET",
+ *                      "path"= "dashboard/user/{id}/properties",
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"user:properties", "enable_max_depth"=true}}
+ *                 },
+ *                 "lastnewreservations"={
+ *                     "method"="GET",
+ *                     "path"="dashboard/user/{id}/reservations",
+ *                     "force_eager"=false,
+ *                     "normalization_context"={"groups"={"user:reservations", "enable_max_depth"=true}}
+ *                 },
+ *                  "delete_user"={
+ *                     "method"="DELETE",
+ *                     "path"="dashboard/user/{id}/personnal-infos/delete-account",
+ *                 },
+ *                  
+ *               "api_dashboard_user_messages"={
+ *                  "method"="GET",
+ *                  "path"="/dashboard/user/{id}/messages",
+ *                  "normalization_context"={"groups"={"read:messages"}},
+ *                 
+ *               },
+ *          }
+ * )
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -22,16 +77,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"user:collection", "properties:user", "reservations:user", "user:payments", "user:messages", "read:messages"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Groups({"user:collection"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
+     * @Groups({"user:item"})
      */
     private $roles = [];
 
@@ -43,77 +101,92 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user", "reservations:user", "user:messages", "read:messages"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"user:item"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user:item"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user:item"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="date")
+     * @Groups({"user:item"})
      */
     private $birthdate;
 
     /**
      * @ORM\Column(type="integer")
+     * @Groups({"user:item"})
      */
     private $zipCode;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"user:item"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"user:item"})
      */
     private $updated_at;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"user:item"})
      */
     private $emailvalidated;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user", "reservations:user", "user:messages", "read:messages"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"user:item"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user", "reservations:user"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"user:item"})
      */
     private $is_blocked;
 
 
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user")
+     * @Groups({"user:properties"})
      */
     private $properties;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user")
+     * @Groups({"user:item", "user:reservations"})
      */
     private $reservations;
 
@@ -122,6 +195,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $comments;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Payments::class, mappedBy="user")
+     * @Groups({"read:payments"})
+     */
+    private $payments;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="user")
+     * @Groups({"read:messages"})
+     */
+    private $messages;
+
     public function __construct()
     {
         $this->properties = new ArrayCollection();
@@ -129,6 +214,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->comments = new ArrayCollection();
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+        $this->payments = new ArrayCollection();
+        $this->messages = new ArrayCollection();
 
     }
 
@@ -477,6 +564,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($comment->getUser() === $this) {
                 $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Payments[]
+     */
+    public function getPayments(): Collection
+    {
+        return $this->payments;
+    }
+
+    public function addPayment(Payments $payment): self
+    {
+        if (!$this->payments->contains($payment)) {
+            $this->payments[] = $payment;
+            $payment->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePayment(Payments $payment): self
+    {
+        if ($this->payments->removeElement($payment)) {
+            // set the owning side to null (unless already changed)
+            if ($payment->getUser() === $this) {
+                $payment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Messages[]
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Messages $message): self
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages[] = $message;
+            $message->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Messages $message): self
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getUser() === $this) {
+                $message->setUser(null);
             }
         }
 

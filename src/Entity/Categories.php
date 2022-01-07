@@ -10,23 +10,16 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-
-
 /**
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
  * @ApiResource(
  *      normalizationContext={"groups"={"categories:collection"}},
  *      denormalizationContext={"groups"={"categories:write"}},
- *      paginationItemsPerPage= 2,
- *      paginationMaximumItemsPerPage= 2,
- *      paginationClientItemsPerPage= true,
  *      collectionOperations={
- * 
- * 
  *            "get"={},
- *            "post"={},
- *               
+ *            "post"={},        
  *          },
+ * 
  *      itemOperations={
  *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},
  *           
@@ -40,33 +33,45 @@ class Categories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"categories:collection"})
+     * @Groups({"categories:collection","attributes:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection","categories:write", "properties:item"})
+     * @Groups({"categories:collection","categories:write", "properties:item", "attributes:item"})
      */
     private $title;
 
+     /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"categories:collection", "categories:write", "properties:item"})
+     */
+    private $slug;
+
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "categories:write"})
+     * @Groups({ "categories:write"})
      * 
      */
     private $picture;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="string", length=255)
      * @Groups({"categories:item", "categories:write"})
+     */
+    private $description;
+
+    /**
+     * @ORM\Column(type="datetime")
+     * @Groups({"categories:write"})
      * 
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"categories:item", "categories:write"})
+     * @Groups({"categories:write"})
      */
     private $updated_at;
 
@@ -76,42 +81,25 @@ class Categories
      */ 
     private $properties;
 
-
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:item", "categories:write"})
+     * @ORM\OneToMany(targetEntity=Attributes::class, mappedBy="categories")
+     * @Groups({"categories:item"})
      */
-    private $description;
+    private $attributes;
 
-    /**
-     * @ORM\OneToMany(targetEntity=CategoriesAttributes::class, mappedBy="categories")
-     * @Groups({"categories:item", "categories:write"})
-     */
-    private $categoriesAttributes;
+  
 
     public function __construct()
     {
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+        $this->attributes = new ArrayCollection();
+       
     }
-
-
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getTitle(): ?string
-    {
-        return $this->title;
-    }
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-
-        return $this;
     }
 
     public function getPicture(): ?string
@@ -180,29 +168,6 @@ class Categories
         return $this;
     }
 
-    /**
-     * @return Collection|Categoriesattributes[]
-     */
-    public function getCategoriesattributes(): Collection
-    {
-        return $this->categoriesattributes;
-    }
-
-    public function addCategoriesattribute(Categoriesattributes $categoriesattribute): self
-    {
-        if (!$this->categoriesattributes->contains($categoriesattribute)) {
-            $this->categoriesattributes[] = $categoriesattribute;
-        }
-
-        return $this;
-    }
-
-    public function removeCategoriesattribute(Categoriesattributes $categoriesattribute): self
-    {
-        $this->categoriesattributes->removeElement($categoriesattribute);
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -215,4 +180,60 @@ class Categories
 
         return $this;
     }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Attributes[]
+     */
+    public function getAttributes(): Collection
+    {
+        return $this->attributes;
+    }
+
+    public function addAttribute(Attributes $attribute): self
+    {
+        if (!$this->attributes->contains($attribute)) {
+            $this->attributes[] = $attribute;
+            $attribute->setCategories($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttribute(Attributes $attribute): self
+    {
+        if ($this->attributes->removeElement($attribute)) {
+            // set the owning side to null (unless already changed)
+            if ($attribute->getCategories() === $this) {
+                $attribute->setCategories(null);
+            }
+        }
+
+        return $this;
+    }
+
+
 }

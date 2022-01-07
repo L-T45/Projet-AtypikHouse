@@ -21,7 +21,7 @@ class UserFixtures extends Fixture
          $faker = Faker\Factory::create('fr_FR');
          $user = Array();
         // create 20 User! Bam!
-        for ($i = 0; $i < 21; $i++) {
+        for ($i = 0; $i < 9; $i++) {
             $user[$i] = new User();
             $user[$i]->setEmail($faker->email);        
             $user[$i]->setRoles([]);     
@@ -39,8 +39,8 @@ class UserFixtures extends Fixture
             $user[$i]->setIsBlocked($faker->numberBetween($min = 0, $max = 1));
             $manager->persist($user[$i]);
 
-            // On enregistre les catégories dans une référence 
-            //$this->addReference('user_'. $i, $user[$i]);
+             // On enregistre les utilisateurs dans une référence 
+             $this->addReference('user_'. $i, $user[$i]);
         }
 
         $manager->flush();

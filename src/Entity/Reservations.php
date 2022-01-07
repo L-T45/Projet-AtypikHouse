@@ -10,28 +10,30 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+// Ajout route personalisé ici (reservationid) car pas possible à un autre endroit visiblement.
 /**
  * @ORM\Entity(repositoryClass=ReservationsRepository::class)
  * @ApiResource(
  * normalizationContext={"groups"={"reservations:collection"}},
  *      denormalizationContext={"groups"={"reservations:write"}},
- *      paginationItemsPerPage= 2,
- *      paginationMaximumItemsPerPage= 2,
+ *      paginationItemsPerPage= 20,
+ *      paginationMaximumItemsPerPage= 20,
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
- *            "post"={},
- *                "lastnewreservations"={
- *                  "method"="GET",
- *                  "path"="reservations/lastnewreservations",
- *                  "controller"=App\Controller\LastNewReservations::class
- *          },
+ *            "post"={},      
  *          },
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"reservations:collection", "reservations:item"}}},
  *          "put"={},
  *          "delete"={},
+ *               "reservationid"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/reservations/{id}",
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"reservations:user", "enable_max_depth"=true}}
+ *                 },
  *          })
  */
 class Reservations
@@ -40,55 +42,55 @@ class Reservations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:collection", "comments:item", "properties:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "properties:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations"})
      */
     private $startdate;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "properties:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations"})
      */
     private $end_date;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "comments:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item"})
      */
     private $is_approuved;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "comments:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item"})
      */
     private $is_cancelled;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "comments:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item"})
      */
     private $is_paid;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:item", "comments:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item"})
      */
     private $participants_nbr;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reservations:item", "comments:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reservations:item", "comments:item", "properties:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item"})
      */
     private $updated_at;    
 
@@ -99,25 +101,28 @@ class Reservations
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reservations")
-     * @Groups({"reservations:item"})
+     * @Groups({"reservations:item", "comments:item"})
      */
     private $properties;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
-     * @Groups({"reservations:item", "properties:item", "categories:item"})
-     */
-    private $comments;
       
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
+     * @Groups({"reservations:user"})
      */
     private $user;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
+     * @Groups({"reservations:item"})
+     */
+    private $comments;
 
     public function __construct()
     {
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -221,29 +226,7 @@ class Reservations
         return $this;
     }
 
-    /**
-     * @return Collection|Comments[]
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comments $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comments $comment): self
-    {
-        $this->comments->removeElement($comment);
-
-        return $this;
-    }
+    
 
     public function getPayments(): ?Payments
     {
@@ -277,6 +260,36 @@ class Reservations
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comments[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setReservations($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getReservations() === $this) {
+                $comment->setReservations(null);
+            }
+        }
 
         return $this;
     }

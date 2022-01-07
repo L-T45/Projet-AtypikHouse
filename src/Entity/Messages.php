@@ -6,10 +6,34 @@ use App\Repository\MessagesRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=MessagesRepository::class)
- * @ApiResource()
+ *@ApiResource( normalizationContext={"groups"={"messages:collection"}},
+ *      denormalizationContext={"groups"={"messages:write"}},
+ *      paginationItemsPerPage= 20,
+ *      paginationMaximumItemsPerPage= 20,
+ *      paginationClientItemsPerPage= true,
+ *      collectionOperations={
+ *            "get"={},
+ *            "post"={},
+ *             
+ *          },
+ *      itemOperations={
+ * 
+ *          "get"={"normalization_context"={"groups"={"messages:collection", "messages:item"}}},
+ *          "put"={},
+ *          "delete"={},
+ *                  "api_dashboard_user_messages"={
+ *                  "method"="GET",
+ *                  "path"="/dashboard/user/messages/{id}",
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"user:messages"},"enable_max_depth"=true},
+ *                 
+ *               },
+ *          }
+ * )
  */
 class Messages
 {
@@ -17,23 +41,33 @@ class Messages
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"messages:collection", "read:messages", "user:messages", "conversations:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"messages:collection", "read:messages", "user:messages", "conversations:item"})
      */
     private $body;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"messages:item", "read:messages", "user:messages", "conversations:item"})
      */
     private $created_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=Conversations::class, inversedBy="messages")
+     * @Groups({"messages:item", "read:messages", "user:messages"})
      */
     private $conversations;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
+     * @Groups({"user:messages"})
+     */
+    private $user;
 
     public function __construct()
     {      
@@ -77,6 +111,18 @@ class Messages
     public function setConversations(?Conversations $conversations): self
     {
         $this->conversations = $conversations;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

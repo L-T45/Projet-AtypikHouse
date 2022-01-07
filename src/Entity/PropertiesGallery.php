@@ -8,10 +8,30 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=PropertiesGalleryRepository::class)
- * @ApiResource()
+ *  @ApiResource(
+ *      normalizationContext={"groups"={"propertiesgallery:collection"}},
+ *      denormalizationContext={"groups"={"propertiesgallery:write"}},
+ *      paginationItemsPerPage= 20,
+ *      paginationMaximumItemsPerPage= 20,
+ *      paginationClientItemsPerPage= true,
+ *      collectionOperations={
+ *            "get"={},
+ *            "post"={},
+ *              
+ *              
+ *          },
+ *      itemOperations={
+ * 
+ *          "get"={"normalization_context"={"groups"={"propertiesgallery:collection", "propertiesgallery:item"}}},
+ *        
+ *          "put"={},
+ *          "delete"={},
+ *          }
+ * )
  */
 class PropertiesGallery
 {
@@ -19,31 +39,37 @@ class PropertiesGallery
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"propertiesgallery:collection"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"propertiesgallery:collection"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"propertiesgallery:item"})
      */
     private $alt;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"propertiesgallery:item"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"propertiesgallery:item"})
      */
     private $updated_at;
 
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="propertiesgallery")
+     *  @Groups({"propertiesgallery:item"})
      */
     private $properties;
 

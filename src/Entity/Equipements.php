@@ -10,30 +10,34 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+// Ajout route personalisé ici (lastnewequipements, equipements_id) car pas possible à un autre endroit visiblement.
+
 /**
  * @ORM\Entity(repositoryClass=EquipementsRepository::class)
  * @ApiResource(
  *      normalizationContext={"groups"={"equipements:collection"}},
  *      denormalizationContext={"groups"={"equipements:write"}},
- *      paginationItemsPerPage= 2,
- *      paginationMaximumItemsPerPage= 2,
- *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
  *                "lastnewequipements"={
- *                  "method"="GET",
- *                  "path"="equipements/lastnewequipements",
- *                  "controller"=App\Controller\LastNewequipements::class
- *          },
- *              
+ *                   "method"="GET",
+ *                   "path"="dashboard/admin/equipements",
+ *                   "force_eager"=false,
+ *                   "normalization_context"={"groups"={"equipements:collection", "enable_max_depth"=true}}
+ *                 },      
  *          },
  *      itemOperations={
- * 
+ *          
  *          "get"={"normalization_context"={"groups"={"equipements:collection", "equipements:item","read:equipements"}}},
- * 
  *          "put"={},
  *          "delete"={},
+ *              "equipements_id"={
+ *                   "method"="GET",
+ *                   "path"="dashboard/admin/equipements/{id}",
+ *                   "force_eager"=false,
+ *                   "normalization_context"={"groups"={"equipements:collection", "equipements:item", "enable_max_depth"=true}}
+ *                 }, 
  *          }
  * )
  */

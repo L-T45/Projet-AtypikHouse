@@ -6,10 +6,40 @@ use App\Repository\PaymentsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=PaymentsRepository::class)
- * @ApiResource()
+ *  @ApiResource( normalizationContext={"groups"={"payments:collection"}},
+ *      denormalizationContext={"groups"={"payments:write"}},
+ *      paginationItemsPerPage= 20,
+ *      paginationMaximumItemsPerPage= 20,
+ *      paginationClientItemsPerPage= true,
+ *      collectionOperations={
+ *            "get"={},
+ *            "post"={},
+ *                "api_send_payment"={
+ *                  "method"="POST",
+ *                  "path"="/send_payment",
+ *                  "controller"=App\Controller\SendPayment::class
+ *                 
+ *               },
+ *             
+ *          },
+ *      itemOperations={
+ * 
+ *          "get"={"normalization_context"={"groups"={"payments:collection", "payments:item"}}},
+ *          "put"={},
+ *          "delete"={},
+ *               "api_dashboard_user_payments"={
+ *                  "method"="GET",
+ *                  "path"="/dashboard/user/payments/{id}",
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"user:payments"},"enable_max_depth"=true},
+ *                 
+ *               },
+ *          }
+ * )
  */
 class Payments
 {
@@ -17,33 +47,45 @@ class Payments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"payments:collection", "read:payments", "user:payments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
+     * @Groups({"payments:collection", "read:payments", "user:payments"})
      */
     private $amount;
 
     /**
      * @ORM\Column(type="boolean")
+     * @Groups({"payments:item", "read:payments", "user:payments"})
      */
     private $is_paidback;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"payments:item", "read:payments", "user:payments"})
      */
     private $paidback_state;
 
     /**
      * @ORM\OneToOne(targetEntity=Reservations::class, mappedBy="payments", cascade={"persist", "remove"})
+     * @Groups({"payments:item"})
      */
     private $reservations;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"payments:item", "read:payments", "user:payments"})
      */
     private $created_at;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="payments")
+     * @Groups({"payments:item", "user:payments"})
+     */
+    private $user;
 
     public function __construct()
     {       
@@ -121,6 +163,18 @@ class Payments
     public function setCreatedAt(\DateTimeInterface $created_at): self
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

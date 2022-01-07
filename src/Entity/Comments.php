@@ -14,17 +14,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=CommentsRepository::class)
  * @ApiResource( normalizationContext={"groups"={"comments:collection"}},
  *      denormalizationContext={"groups"={"comments:write"}},
- *      paginationItemsPerPage= 2,
- *      paginationMaximumItemsPerPage= 2,
+ *      paginationItemsPerPage= 20,
+ *      paginationMaximumItemsPerPage= 20,
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
  *                "lastnewcomments"={
  *                  "method"="GET",
- *                  "path"="comments/lastnewcomments",
+ *                  "path"="/home/lastnewcomments",
  *                  "controller"=App\Controller\LastNewComments::class
- *          },
+ *                 
+ *               },
+ *             
  *          },
  *      itemOperations={
  * 
@@ -57,24 +59,6 @@ class Comments
     private $value;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item"})
-     */
-    private $username;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item"})
-     */
-    private $userpicture;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item"})
-     */
-    private $propertypicture;
-
-    /**
      * @ORM\Column(type="datetime")
      * @Groups({"comments:item", "reservations:item"})
      */
@@ -87,20 +71,22 @@ class Comments
     private $updated_at;
 
     /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
+     * @Groups({"comments:item","reservations:item"})
+     */
+    private $user;
+
+    /**
      * @ORM\ManyToOne(targetEntity=Reservations::class, inversedBy="comments")
      * @Groups({"comments:item"})
      */
     private $reservations;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
-     */
-    private $user;
-
     public function __construct()
     {
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+        
     }
 
     public function getId(): ?int
@@ -192,10 +178,8 @@ class Comments
         return $this;
     }
 
-    /**
-     * @return Collection|Reservations[]
-     */
-    public function getReservations(): Collection
+   
+    public function getReservations(): ?Reservations
     {
         return $this->reservations;
     }
@@ -222,6 +206,11 @@ class Comments
     public function setReservations(?Reservations $reservations): self
     {
         $this->reservations = $reservations;
+<<<<<<< HEAD
+=======
+        
+        return $this;
+>>>>>>> master
     }
 
     public function getUser(): ?User

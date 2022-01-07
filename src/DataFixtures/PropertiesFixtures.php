@@ -11,8 +11,9 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Faker;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class PropertiesFixtures extends Fixture
+class PropertiesFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
@@ -21,7 +22,12 @@ class PropertiesFixtures extends Fixture
          $faker = Faker\Factory::create('fr_FR');
          $properties = Array();
         // create 20 Properties! Bam!
-        for ($i = 0; $i < 21; $i++) {
+        for ($i = 0; $i < 9; $i++) {
+
+            $categories[$i] =  $this->getReference('categories_'. $faker->numberBetween(1,8));
+            $properties_gallery[$i] =  $this->getReference('properties_gallery_'. $faker->numberBetween(1,8));
+            $user[$i] =  $this->getReference('user_'. $i, $faker->numberBetween(1,8));
+
             $properties[$i] = new Properties();
             $properties[$i]->setTitle($faker->text);
             $properties[$i]->setSlug($faker->text);
@@ -39,9 +45,23 @@ class PropertiesFixtures extends Fixture
             $properties[$i]->setCountry($faker->country);
             $properties[$i]->setCapacity($faker->randomDigitNotNull);
             $properties[$i]->setZipCode($faker->numberBetween($min = 10000, $max = 99999));
+            $properties[$i]->setCategories($categories[$i]);
+            $properties[$i]->setPropertiesgallery($properties_gallery[$i]);
+            $properties[$i]->setUser($user[$i]);
             $manager->persist($properties[$i]);
+
+             // On enregistre les propriétés dans une référence 
+             $this->addReference('properties_'. $i, $properties[$i]);
         }
 
         $manager->flush();
+        }
+
+        public function getDependencies(){
+            return [
+                CategoriesFixtures::class,
+                PropertiesGalleryFixtures::class,
+                UserFixtures::class,
+            ];
         }
 }

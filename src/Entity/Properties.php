@@ -15,30 +15,50 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
+// Ajout route personalisé ici (lastnewproperties, dashboard_admin_properties, dashboard_admin_properties_id, dashboard_user_properties_id) car pas possible à un autre endroit visiblement.
 /**
  * @ORM\Entity(repositoryClass=PropertiesRepository::class)
  * @ApiResource(
  *      normalizationContext={"groups"={"properties:collection"}},
  *      denormalizationContext={"groups"={"properties:write"}},
- *      paginationItemsPerPage= 2,
- *      paginationMaximumItemsPerPage= 2,
+ *      paginationItemsPerPage= 20,
+ *      paginationMaximumItemsPerPage= 20,
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
- *                "lastnewproperties"={
- *                  "method"="GET",
- *                  "path"="properties/lastnewproperties",
- *                  "controller"=App\Controller\LastNewProperties::class
- *          },
- *              
+ *                 "lastnewproperties"={
+ *                      "method"="GET",
+ *                      "path"="home/lastnewproperties",
+ *                      "controller"=App\Controller\LastNewProperties::class,
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
+ *                 }, 
+ *                 "dashboard_admin_properties"={
+ *                      "method"="GET",
+ *                      "path"= "dashboard/admin/properties",
+ *                      "controller"=App\Controller\LastNewProperties::class,
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
+ *                 },              
  *          },
  *      itemOperations={
  * 
- *          "get"={"normalization_context"={"groups"={"properties:collection", "properties:item"}}},
- *        
+ *          "get"={"normalization_context"={"groups"={"properties:collection", "properties:item"}}},       
  *          "put"={},
  *          "delete"={},
+ *               "dashboard_admin_properties_id"={
+ *                      "method"="GET",
+ *                      "path"= "dashboard/admin/properties/{id}",
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"properties:collection", "properties:item", "enable_max_depth"=true}}
+ *                 },
+ *                "dashboard_user_properties_id"={
+ *                      "method"="GET",
+ *                      "path"= "dashboard/user/properties/{id}",
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"properties:user", "enable_max_depth"=true}}
+ *                 },
  *          }
  * )
  * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "partial", "price": "exact", "capacity": "exact", "lat": "exact", "longitude": "exact", "reservations.comments.value": "exact"})
@@ -53,20 +73,22 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"properties:collection", "categories:item"})
+     * @Groups({"properties:collection", "categories:item", "comments:item", "user:properties", "propertiesgallery:item"})
+     * 
      * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     *@Groups({"properties:collection", "properties:write", "categories:item"})
+     * @Groups({"properties:collection", "properties:write", "categories:item", "user:properties", "propertiesgallery:item"})
+     *
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:write", "properties:item"})
+     * @Groups({"properties:write", "properties:item", "user:properties"})
      */
     private $slug;
 
@@ -84,7 +106,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection","properties:write"})
+     * @Groups({"properties:collection","properties:write", "user:properties"})
      */
     private $address;
 
@@ -96,7 +118,7 @@ class Properties
 
     /*%*
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "properties:write", "categories:item"})
+     * @Groups({"properties:collection", "properties:write", "categories:item", "user:properties"})
      * 
      */
     private $city;
@@ -134,7 +156,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "properties:write", "categories:item"})
+     * @Groups({"properties:collection", "properties:write", "categories:item", "comments:item", "user:properties", "propertiesgallery:item"})
      */
     private $picture;
 
@@ -182,7 +204,7 @@ class Properties
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="properties")
-     * @Groups({"properties:item", "properties:write", "categories:item"})
+     * @Groups({"properties:item", "properties:write"})
      */
     private $reservations;
 
@@ -194,6 +216,7 @@ class Properties
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="properties")
+     * @Groups({"properties:user"})
      */
     private $user;
 
