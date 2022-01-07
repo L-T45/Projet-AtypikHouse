@@ -206,11 +206,8 @@ class Comments
     public function setReservations(?Reservations $reservations): self
     {
         $this->reservations = $reservations;
-<<<<<<< HEAD
-=======
         
         return $this;
->>>>>>> master
     }
 
     public function getUser(): ?User
