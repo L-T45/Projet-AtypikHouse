@@ -15,9 +15,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *      normalizationContext={"groups"={"categories:collection"}},
  *      denormalizationContext={"groups"={"categories:write"}},
- *      paginationItemsPerPage= 2,
- *      paginationMaximumItemsPerPage= 2,
- *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},        
@@ -48,7 +45,7 @@ class Categories
 
      /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:write", "properties:item"})
+     * @Groups({"categories:collection", "categories:write", "properties:item"})
      */
     private $slug;
 

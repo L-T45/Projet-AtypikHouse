@@ -17,9 +17,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *      normalizationContext={"groups"={"equipements:collection"}},
  *      denormalizationContext={"groups"={"equipements:write"}},
- *      paginationItemsPerPage= 2,
- *      paginationMaximumItemsPerPage= 2,
- *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
