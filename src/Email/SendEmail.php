@@ -68,8 +68,4 @@ class SendEmail extends AbstractController {
 
     }
 
-    public function api_test(){
-        var_dump($_POST);
-        var_dump($_GET);
-    }
 }
