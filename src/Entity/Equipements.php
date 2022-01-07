@@ -26,7 +26,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                "lastnewequipements"={
  *                   "method"="GET",
  *                   "path"="dashboard/admin/equipements",
- *                   "controller"=App\Controller\LastNewEquipements::class,
  *                   "force_eager"=false,
  *                   "normalization_context"={"groups"={"equipements:collection", "enable_max_depth"=true}}
  *                 },      
