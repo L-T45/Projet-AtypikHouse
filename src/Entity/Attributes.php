@@ -2,85 +2,86 @@
 
 namespace App\Entity;
 
-use App\Repository\CategoriesAttributesRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\AttributesRepository;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
- * @ORM\Entity(repositoryClass=CategoriesAttributesRepository::class)
+ * @ORM\Entity(repositoryClass=AttributesRepository::class)
  * @ApiResource(
- *      normalizationContext={"groups"={"categoriesattributes:collection"}},
- *      denormalizationContext={"groups"={"categoriesattributes:write"}},
+ *      normalizationContext={"groups"={"attributes:collection"}},
+ *      denormalizationContext={"groups"={"attributes:write"}},
  *      paginationItemsPerPage= 2,
  *      paginationMaximumItemsPerPage= 2,
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
- *                "dashboard_admin_categories_attributes"={
+ *                
+ *                  "dashboard_admin_attributes"={
  *                  "method"="GET",
- *                  "path"="/dashboard/admin/categories_attributes"
+ *                  "path"="/dashboard/admin/attributes"
  *               },
  *              
  *          },
  *      itemOperations={
  * 
- *          "get"={"normalization_context"={"groups"={"categoriesattributes:collection", "categoriesattributes:item","read:categoriesattributes"}}},
+ *          "get"={"normalization_context"={"groups"={"attributes:collection", "attributes:item"}}},
  *        
  *          "put"={},
  *          "delete"={},
- *               "dashboard_admin_categories_attributes"={
+ * 
+ *              "dashboard_admin_attributes"={
  *                  "method"="GET",
- *                  "path"="/dashboard/admin/categories_attributes/{id}",
- *                  "normalization_context"={"groups"={"categoriesattributes:collection", "categoriesattributes:item"}},
+ *                  "path"="/dashboard/admin/attributes/{id}",
+ *                  "normalization_context"={"groups"={"attributes:collection", "attributes:item"}},
  *               },
  *          }
  * )
  */
-class CategoriesAttributes
+class Attributes
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"categoriesattributes:collection", "categories:item"})
+     * @Groups({"attributes:collection", "categories:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categoriesattributes:collection", "categoriesattributes:write", "categories:item"})
+     * @Groups({"attributes:collection", "categories:item"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"categoriesattributes:item", "categoriesattributes:write"})
+     * @Groups({"attributes:item"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"categoriesattributes:item", "categoriesattributes:write"})
+     * @Groups({"attributes:item"})
      */
     private $updated_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="categoriesAttributes")
-     * @Groups({"categoriesattributes:item", "categoriesattributes:write"})
+     * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="attributes")
+     * @Groups({"attributes:item"})
      */
     private $categories;
 
 
-
     public function __construct()
     {
+       
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+
     }
 
     public function getId(): ?int
@@ -124,31 +125,9 @@ class CategoriesAttributes
         return $this;
     }
 
-    /**
-     * @return Collection|Categories[]
-     */
     public function getCategories(): ?Categories
     {
         return $this->categories;
-    }
-
-    public function addCategory(Categories $category): self
-    {
-        if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
-            $category->addCategoriesattribute($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCategory(Categories $category): self
-    {
-        if ($this->categories->removeElement($category)) {
-            $category->removeCategoriesattribute($this);
-        }
-
-        return $this;
     }
 
     public function setCategories(?Categories $categories): self
