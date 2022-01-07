@@ -39,26 +39,26 @@ class Categories
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection","categories:write", "properties:item", "attributes:item"})
+     * @Groups({"categories:collection", "categories:item", "categories:write", "properties:item", "attributes:item"})
      */
     private $title;
 
      /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "categories:write", "properties:item"})
+     * @Groups({"categories:collection", "categories:item","categories:write", "properties:item"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({ "categories:write"})
+     * @Groups({"categories:item", "categories:write"})
      * 
      */
     private $picture;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:item", "categories:write"})
+     /**
+     * @ORM\Column(type="text")
+     * @Groups({"categories:item","categories:write"})
      */
     private $description;
 
@@ -86,6 +86,8 @@ class Categories
      * @Groups({"categories:item"})
      */
     private $attributes;
+
+   
 
   
 

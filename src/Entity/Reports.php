@@ -44,6 +44,11 @@ class Reports
      */
     private $reportstate;
 
+      /**
+     * @ORM\Column(type="text")
+     */
+    private $description;
+
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"reports:item"})
@@ -55,6 +60,8 @@ class Reports
      * @Groups({"reports:item"})
      */
     private $reportscategories;
+
+  
 
     
     public function __construct()
@@ -103,6 +110,18 @@ class Reports
     public function setReportscategories(?Reportscategories $reportscategories): self
     {
         $this->reportscategories = $reportscategories;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

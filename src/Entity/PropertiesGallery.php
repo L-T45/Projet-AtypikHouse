@@ -51,19 +51,19 @@ class PropertiesGallery
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:item"})
+     * @Groups({"propertiesgallery:collection"})
      */
     private $alt;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"propertiesgallery:item"})
+     *
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"propertiesgallery:item"})
+     *
      */
     private $updated_at;
 
@@ -72,6 +72,7 @@ class PropertiesGallery
      *  @Groups({"propertiesgallery:item"})
      */
     private $properties;
+
 
 
     public function __construct()
@@ -160,6 +161,18 @@ class PropertiesGallery
                 $property->setPropertiesgallery(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(string $description): self
+    {
+        $this->description = $description;
 
         return $this;
     }

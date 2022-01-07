@@ -18,30 +18,35 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
 
+       // $n=1;
+
+       
+       $titles=['maison', 'cabane', 'palais', 'maisonnette'];
+
          // initialisation de l'objet Faker
          $faker = Faker\Factory::create('fr_FR');
          $properties = Array();
         // create 20 Properties! Bam!
-        for ($i = 0; $i < 9; $i++) {
+        for ($i = 1; $i < 150; $i++) {
 
             $categories[$i] =  $this->getReference('categories_'. $faker->numberBetween(1,8));
-            $properties_gallery[$i] =  $this->getReference('properties_gallery_'. $faker->numberBetween(1,8));
-            $user[$i] =  $this->getReference('user_'. $i, $faker->numberBetween(1,8));
+            $properties_gallery[$i] =  $this->getReference('properties_gallery_'. $faker->numberBetween(1,499));
+            $user[$i] =  $this->getReference('user_'.$faker->numberBetween(1,29));
 
             $properties[$i] = new Properties();
-            $properties[$i]->setTitle($faker->text);
+            $properties[$i]->setTitle($faker->randomElement($titles));
             $properties[$i]->setSlug($faker->text);
             $properties[$i]->setPrice($faker->numberBetween($min = 20, $max = 200));
             $properties[$i]->setRooms($faker->randomDigitNotNull);
             $properties[$i]->setAddress($faker->address);
             $properties[$i]->setBooking($faker->randomDigitNotNull);
             $properties[$i]->setCity($faker->city);
-            $properties[$i]->setLat($faker->latitude($min = -90, $max = 90));
-            $properties[$i]->setLongitude($faker->longitude($min = -180, $max = 180));
+            $properties[$i]->setLat($faker->latitude($min = 48.212, $max = 48.089));
+            $properties[$i]->setLongitude($faker->longitude($min = 3.91, $max = 4.158));
             $properties[$i]->setBedrooms($faker->randomDigitNotNull);
             $properties[$i]->setSurface($faker->randomFloat);
             $properties[$i]->setReference('Categories '.$i);
-            $properties[$i]->setPicture($faker->imageUrl($width = 640, $height = 480));
+            $properties[$i]->setPicture($i.".webp");
             $properties[$i]->setCountry($faker->country);
             $properties[$i]->setCapacity($faker->randomDigitNotNull);
             $properties[$i]->setZipCode($faker->numberBetween($min = 10000, $max = 99999));

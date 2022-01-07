@@ -18,6 +18,8 @@ class ReportsFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
 
+        $states=['accepté', 'rejeté', 'en attente'];
+
          // initialisation de l'objet Faker
          $faker = Faker\Factory::create('fr_FR');
          $reports = Array();
@@ -27,7 +29,8 @@ class ReportsFixtures extends Fixture implements DependentFixtureInterface
             $reports_categories[$i] =  $this->getReference('reports_categories_'. $faker->numberBetween(1,8));
 
             $reports[$i] = new Reports();
-            $reports[$i]->setReportState($faker->text);
+            $reports[$i]->setReportState($faker->randomElement($states));
+            $reports[$i]->setDescription($faker->text(500));
             $reports[$i]->setReportscategories($reports_categories[$i]);
             $manager->persist($reports[$i]);
         }

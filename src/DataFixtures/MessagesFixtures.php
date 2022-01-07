@@ -25,10 +25,12 @@ class MessagesFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 9; $i++) {
 
             $conversations[$i] =  $this->getReference('conversations_'. $faker->numberBetween(1,8));
+            $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,8));
 
             $messages[$i] = new Messages();
             $messages[$i]->setBody($faker->text);
             $messages[$i]->setConversations($conversations[$i]);
+            $messages[$i]->setUser($user[$i]);
             $manager->persist($messages[$i]);
         }
 
@@ -38,6 +40,7 @@ class MessagesFixtures extends Fixture implements DependentFixtureInterface
         public function getDependencies(){
             return [
                 ConversationsFixtures::class,
+                UserFixtures::class,
             ];
         }
 }

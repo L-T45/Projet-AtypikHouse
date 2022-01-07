@@ -42,19 +42,19 @@ class Reservations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations", "reservations:user", "properties:comments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations", "properties:comments"})
      */
-    private $startdate;
+    private $start_date;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations"})
      */
     private $end_date;
 
@@ -101,7 +101,7 @@ class Reservations
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reservations")
-     * @Groups({"reservations:item", "comments:item"})
+     * @Groups({"reservations:item", "comments:item", "read:reservations"})
      */
     private $properties;
 
@@ -114,7 +114,7 @@ class Reservations
 
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
-     * @Groups({"reservations:item"})
+     * @Groups({"reservations:item", "properties:comments"})
      */
     private $comments;
 
@@ -132,12 +132,12 @@ class Reservations
 
     public function getStartdate(): ?\DateTimeInterface
     {
-        return $this->startdate;
+        return $this->start_date;
     }
 
-    public function setStartdate(\DateTimeInterface $startdate): self
+    public function setStartdate(\DateTimeInterface $start_date): self
     {
-        $this->startdate = $startdate;
+        $this->start_date = $start_date;
 
         return $this;
     }

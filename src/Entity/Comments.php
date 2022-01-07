@@ -20,10 +20,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
- *                "lastnewcomments"={
+ *                "lastcomments"={
  *                  "method"="GET",
- *                  "path"="/home/lastnewcomments",
- *                  "controller"=App\Controller\LastNewComments::class
+ *                  "path"="/home/lastcomments",
+ *                  "controller"=App\Controller\LastNewComments::class,
+ *                  "normalization_context"={"groups"={"lastcomments:collection"}},
  *                 
  *               },
  *             
@@ -33,6 +34,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get"={"normalization_context"={"groups"={"comments:collection", "comments:item"}}},
  *          "put"={},
  *          "delete"={},
+ *                
  *          }
  * )
  */
@@ -42,25 +44,25 @@ class Comments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"comments:collection", "reservations:item", "properties:item", "categories:item"})
+     * @Groups({"comments:collection", "lastcomments:collection", "reservations:item", "properties:item", "categories:item", "properties:comments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"comments:collection", "reservations:item", "properties:item"})
+     * @Groups({"comments:collection", "lastcomments:collection", "reservations:item", "properties:item", "properties:comments"})
      */
     private $body;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"comments:item", "reservations:item", "categories:item"})
+     * @Groups({"comments:item", "reservations:item", "categories:item", "properties:comments", "lastcomments:collection"})
      */
     private $value;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"comments:item", "reservations:item"})
+     * @Groups({"comments:item", "reservations:item", "properties:comments"})
      */
     private $created_at;
 
@@ -72,7 +74,7 @@ class Comments
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
-     * @Groups({"comments:item","reservations:item"})
+     * @Groups({"comments:item","reservations:item", "lastcomments:collection"})
      */
     private $user;
 

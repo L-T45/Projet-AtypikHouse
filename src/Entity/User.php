@@ -68,6 +68,12 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *                  "normalization_context"={"groups"={"read:messages"}},
  *                 
  *               },
+ *               "api_dashboard_user_reservations"={
+ *                  "method"="GET",
+ *                  "path"="/dashboard/user/{id}/reservations",
+ *                  "normalization_context"={"groups"={"read:reservations"}},
+ *                 
+ *               },
  *          }
  * )
  */
@@ -77,7 +83,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "properties:user", "reservations:user", "user:payments", "user:messages", "read:messages"})
+     * @Groups({"user:collection", "lastcomments:collection", "reservations:user", "user:payments", "user:messages", "read:messages"})
      */
     private $id;
 
@@ -101,7 +107,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user", "reservations:user", "user:messages", "read:messages"})
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "reservations:user", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
      */
     private $lastname;
 
@@ -155,7 +161,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user", "reservations:user", "user:messages", "read:messages"})
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "reservations:user", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
      */
     private $firstname;
 
@@ -167,7 +173,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user", "reservations:user"})
+     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "reservations:user", "conversations:item", "user:messages", "lastcomments:collection"})
      */
     private $picture;
 
@@ -186,7 +192,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user")
-     * @Groups({"user:item", "user:reservations"})
+     * @Groups({"user:item", "user:reservations", "read:reservations"})
      */
     private $reservations;
 
@@ -207,6 +213,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $messages;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Conversations::class, inversedBy="users")
+     */
+    private $conversations;
+
     public function __construct()
     {
         $this->properties = new ArrayCollection();
@@ -216,6 +227,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->updated_at = new \DateTime();
         $this->payments = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->conversations = new ArrayCollection();
 
     }
 
@@ -610,6 +622,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $message->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Conversations[]
+     */
+    public function getConversations(): Collection
+    {
+        return $this->conversations;
+    }
+
+    public function addConversation(Conversations $conversation): self
+    {
+        if (!$this->conversations->contains($conversation)) {
+            $this->conversations[] = $conversation;
+        }
+
+        return $this;
+    }
+
+    public function removeConversation(Conversations $conversation): self
+    {
+        $this->conversations->removeElement($conversation);
 
         return $this;
     }

@@ -17,11 +17,13 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
 
+       // $n=1;
+
          // initialisation de l'objet Faker
          $faker = Faker\Factory::create('fr_FR');
          $user = Array();
         // create 20 User! Bam!
-        for ($i = 0; $i < 9; $i++) {
+        for ($i = 1; $i < 32; $i++) {
             $user[$i] = new User();
             $user[$i]->setEmail($faker->email);        
             $user[$i]->setRoles([]);     
@@ -35,7 +37,7 @@ class UserFixtures extends Fixture
             $user[$i]->setEmailvalidated($faker->numberBetween($min = 0, $max = 1));
             $user[$i]->setFirstname($faker->firstName($gender = 'male'|'female'));
             $user[$i]->setCountry($faker->country);
-            $user[$i]->setPicture($faker->imageUrl($width = 640, $height = 480));
+            $user[$i]->setPicture($i.".webp");
             $user[$i]->setIsBlocked($faker->numberBetween($min = 0, $max = 1));
             $manager->persist($user[$i]);
 

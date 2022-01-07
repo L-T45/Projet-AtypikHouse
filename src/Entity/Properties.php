@@ -29,7 +29,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *            "post"={},
  *                 "lastnewproperties"={
  *                      "method"="GET",
- *                      "path"="home/lastnewproperties",
+ *                      "path"="home/lastproperties",
  *                      "controller"=App\Controller\LastNewProperties::class,
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
@@ -44,7 +44,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *          },
  *      itemOperations={
  * 
- *          "get"={"normalization_context"={"groups"={"properties:collection", "properties:item"}}},       
+ *          "get"={"normalization_context"={"groups"={"propertiesid:item"}}},       
  *          "put"={},
  *          "delete"={},
  *               "dashboard_admin_properties_id"={
@@ -58,6 +58,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "path"= "dashboard/user/properties/{id}",
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"properties:user", "enable_max_depth"=true}}
+ *                 },
+ *                   "comments_properties_id"={
+ *                      "method"="GET",
+ *                      "path"= "comments/properties/{id}",
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"properties:comments", "enable_max_depth"=true}}
  *                 },
  *          }
  * )
@@ -73,7 +79,7 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"properties:collection", "categories:item", "comments:item", "user:properties", "propertiesgallery:item"})
+     * @Groups({"properties:collection", "propertiesid:item", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user"})
      * 
      * 
      */
@@ -81,26 +87,26 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "properties:write", "categories:item", "user:properties", "propertiesgallery:item"})
+     * @Groups({"properties:collection", "propertiesid:item", "properties:write", "categories:item", "user:properties", "propertiesgallery:item", "properties:user" })
      *
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:write", "properties:item", "user:properties"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "user:properties"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"properties:write", "properties:item", "categories:item"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write", "properties:item"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item"})
      */
     private $rooms;
 
@@ -112,7 +118,7 @@ class Properties
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:item", "properties:write", "categories:item"})
+     * @Groups({"properties:item", "propertiesid:item", "properties:write"})
      */
     private $booking;
 
@@ -125,26 +131,26 @@ class Properties
 
     /**
      * @ORM\Column(type="decimal", precision=8, scale=5)
-     * @Groups({"properties:write", "properties:item"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item"})
      * 
      */
     private $lat;
 
     /**
      * @ORM\Column(type="decimal", precision=8, scale=5)
-     * @Groups({"properties:write", "properties:item"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item"})
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write", "properties:item"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item"})
      */
     private $bedrooms;
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=3)
-     * @Groups({"properties:write", "properties:item"})
+     * @Groups({"properties:write", "properties:item","categories:item"})
      */
     private $surface;
 
@@ -156,7 +162,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "properties:write", "categories:item", "comments:item", "user:properties", "propertiesgallery:item"})
+     * @Groups({"properties:collection", "properties:write", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "lastcomments:collection", "read:reservations"})
      */
     private $picture;
 
@@ -204,7 +210,7 @@ class Properties
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="properties")
-     * @Groups({"properties:item", "properties:write"})
+     * @Groups({"properties:item", "properties:write", "properties:comments"})
      */
     private $reservations;
 

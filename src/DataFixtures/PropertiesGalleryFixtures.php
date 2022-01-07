@@ -21,9 +21,9 @@ class PropertiesGalleryFixtures extends Fixture
          $faker = Faker\Factory::create('fr_FR');
          $properties_gallery = Array();
         // create 20 PropertiesGallery! Bam!
-        for ($i = 0; $i < 9; $i++) {
+        for ($i = 1; $i < 500; $i++) {
             $properties_gallery[$i] = new PropertiesGallery();
-            $properties_gallery[$i]->setPicture($faker->imageUrl($width = 640, $height = 480));
+            $properties_gallery[$i]->setPicture($faker->numberbetween(200,250).".webp");
             $properties_gallery[$i]->setAlt($faker->text);
             $manager->persist($properties_gallery[$i]);
 
