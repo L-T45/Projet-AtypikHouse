@@ -48,6 +48,7 @@ class Conversations
 
     /**
      * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="conversations")
+     * @Groups({"conversations:item"})
      */
     private $messages;
 

@@ -36,13 +36,13 @@ class Categories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"categories:collection","categoriesattributes:item"})
+     * @Groups({"categories:collection","attributes:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection","categories:write", "properties:item", "categoriesattributes:item"})
+     * @Groups({"categories:collection","categories:write", "properties:item", "attributes:item"})
      */
     private $title;
 
@@ -85,16 +85,19 @@ class Categories
     private $properties;
 
     /**
-     * @ORM\OneToMany(targetEntity=CategoriesAttributes::class, mappedBy="categories")
-     * @Groups({"categories:item", "categories:write"})
+     * @ORM\OneToMany(targetEntity=Attributes::class, mappedBy="categories")
+     * @Groups({"categories:item"})
      */
-    private $categoriesAttributes;
+    private $attributes;
+
   
 
     public function __construct()
     {
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+        $this->attributes = new ArrayCollection();
+       
     }
 
     public function getId(): ?int
@@ -168,29 +171,6 @@ class Categories
         return $this;
     }
 
-    /**
-     * @return Collection|Categoriesattributes[]
-     */
-    public function getCategoriesattributes(): Collection
-    {
-        return $this->categoriesattributes;
-    }
-
-    public function addCategoriesattribute(Categoriesattributes $categoriesattribute): self
-    {
-        if (!$this->categoriesattributes->contains($categoriesattribute)) {
-            $this->categoriesattributes[] = $categoriesattribute;
-        }
-
-        return $this;
-    }
-
-    public function removeCategoriesattribute(Categoriesattributes $categoriesattribute): self
-    {
-        $this->categoriesattributes->removeElement($categoriesattribute);
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -224,6 +204,36 @@ class Categories
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Attributes[]
+     */
+    public function getAttributes(): Collection
+    {
+        return $this->attributes;
+    }
+
+    public function addAttribute(Attributes $attribute): self
+    {
+        if (!$this->attributes->contains($attribute)) {
+            $this->attributes[] = $attribute;
+            $attribute->setCategories($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttribute(Attributes $attribute): self
+    {
+        if ($this->attributes->removeElement($attribute)) {
+            // set the owning side to null (unless already changed)
+            if ($attribute->getCategories() === $this) {
+                $attribute->setCategories(null);
+            }
+        }
 
         return $this;
     }

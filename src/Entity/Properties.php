@@ -73,14 +73,16 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"properties:collection", "categories:item", "comments:item", "user:properties"})
+     * @Groups({"properties:collection", "categories:item", "comments:item", "user:properties", "propertiesgallery:item"})
+     * 
      * 
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     *@Groups({"properties:collection", "properties:write", "categories:item", "user:properties"})
+     * @Groups({"properties:collection", "properties:write", "categories:item", "user:properties", "propertiesgallery:item"})
+     *
      */
     private $title;
 
@@ -154,7 +156,11 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
+<<<<<<< HEAD
      * @Groups({"properties:collection", "properties:write", "categories:item", "comments:item", "user:properties"})
+=======
+     * @Groups({"properties:collection", "properties:write", "categories:item", "comments:item", "propertiesgallery:item"})
+>>>>>>> Routesv2
      */
     private $picture;
 
@@ -202,7 +208,7 @@ class Properties
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="properties")
-     * @Groups({"properties:item", "properties:write", "categories:item"})
+     * @Groups({"properties:item", "properties:write"})
      */
     private $reservations;
 
