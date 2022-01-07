@@ -156,11 +156,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-<<<<<<< HEAD
-     * @Groups({"properties:collection", "properties:write", "categories:item", "comments:item", "user:properties"})
-=======
-     * @Groups({"properties:collection", "properties:write", "categories:item", "comments:item", "propertiesgallery:item"})
->>>>>>> Routesv2
+     * @Groups({"properties:collection", "properties:write", "categories:item", "comments:item", "user:properties", "propertiesgallery:item"})
      */
     private $picture;
 
