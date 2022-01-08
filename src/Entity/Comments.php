@@ -84,6 +84,12 @@ class Comments
      */
     private $reservations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="comments")
+     * @Groups({"lastcomments:collection"})
+     */
+    private $properties;
+
     public function __construct()
     {
         $this->created_at = new \DateTime();
@@ -220,6 +226,18 @@ class Comments
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getProperties(): ?Properties
+    {
+        return $this->properties;
+    }
+
+    public function setProperties(?Properties $properties): self
+    {
+        $this->properties = $properties;
 
         return $this;
     }

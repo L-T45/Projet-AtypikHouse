@@ -79,7 +79,7 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"properties:collection", "propertiesid:item", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user"})
+     * @Groups({"properties:collection", "lastcomments:collection", "propertiesid:item", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user"})
      * 
      * 
      */
@@ -226,12 +226,18 @@ class Properties
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="properties")
+     */
+    private $comments;
+
     public function __construct()
     {
         $this->equipements = new ArrayCollection();
         $this->reservations = new ArrayCollection();
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+        $this->comments = new ArrayCollection();
 
     }
 
@@ -542,6 +548,36 @@ class Properties
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comments[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comments $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setProperties($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getProperties() === $this) {
+                $comment->setProperties(null);
+            }
+        }
 
         return $this;
     }
