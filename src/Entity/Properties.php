@@ -79,7 +79,7 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"properties:collection", "lastcomments:collection", "propertiesid:item", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user"})
+     * @Groups({"properties:collection", "lastcomments:collection", "propertiesid:item", "reservations:user", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user"})
      * 
      * 
      */
@@ -87,7 +87,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "propertiesid:item", "properties:write", "categories:item", "user:properties", "propertiesgallery:item", "properties:user" })
+     * @Groups({"properties:collection", "propertiesid:item", "properties:write", "categories:item", "reservations:user", "user:properties", "propertiesgallery:item", "properties:user" })
      *
      */
     private $title;
@@ -100,7 +100,7 @@ class Properties
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item", "reservations:user"})
      */
     private $price;
 
@@ -112,7 +112,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection","properties:write", "user:properties", "categories:item"})
+     * @Groups({"properties:collection","properties:write", "user:properties", "categories:item", "reservations:user"})
      */
     private $address;
 
@@ -124,7 +124,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "properties:write", "user:properties", "categories:item"})
+     * @Groups({"properties:collection", "properties:write", "user:properties", "categories:item", "reservations:user"})
      * 
      */
     private $city;
@@ -162,7 +162,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "properties:write", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "lastcomments:collection", "read:reservations"})
+     * @Groups({"properties:collection", "properties:write", "reservations:user", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "lastcomments:collection", "read:reservations"})
      */
     private $picture;
 
@@ -204,7 +204,7 @@ class Properties
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="properties")
-     * @Groups({"properties:item", "properties:write"})
+     * @Groups({"properties:item", "properties:write", "reservations:user"})
      */
     private $categories;
 
@@ -228,7 +228,7 @@ class Properties
 
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="properties")
-     * @Groups({"properties:item"})
+     * @Groups({"properties:item", "reservations:user"})
      */
     private $comments;
 

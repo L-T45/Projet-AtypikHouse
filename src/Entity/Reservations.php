@@ -48,60 +48,61 @@ class Reservations
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations", "properties:comments"})
+     * @Groups({"reservations:collection", "reservations:user", "comments:item", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations", "properties:comments"})
      */
     private $start_date;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations"})
+     * @Groups({"reservations:collection", "reservations:user", "comments:item", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations"})
      */
     private $end_date;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "properties:item", "user:item"})
+     * @Groups({"reservations:item", "properties:item", "reservations:user", "user:item"})
      */
     private $is_approuved;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "properties:item", "user:item", "read:reservperso"})
+     * @Groups({"reservations:item", "properties:item", "user:item", "reservations:user", "read:reservperso"})
      */
     private $is_cancelled;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "properties:item", "user:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item", "reservations:user"})
      */
     private $is_paid;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:item", "properties:item", "user:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item", "reservations:user"})
      */
     private $participants_nbr;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reservations:item", "properties:item", "user:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item", "reservations:user"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reservations:item", "properties:item", "user:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item", "reservations:user"})
      */
     private $updated_at;    
 
     /**
      * @ORM\OneToOne(targetEntity=Payments::class, inversedBy="reservations", cascade={"persist", "remove"})
+     * @Groups({"reservations:user"})
      */
     private $payments;
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reservations")
-     * @Groups({"reservations:item", "comments:item", "read:reservations"})
+     * @Groups({"reservations:item", "comments:item", "read:reservations", "reservations:user"})
      */
     private $properties;
 
