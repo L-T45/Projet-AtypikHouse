@@ -10,28 +10,30 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+// Ajout route personalisé ici (reservationid) car pas possible à un autre endroit visiblement.
 /**
  * @ORM\Entity(repositoryClass=ReservationsRepository::class)
  * @ApiResource(
  * normalizationContext={"groups"={"reservations:collection"}},
  *      denormalizationContext={"groups"={"reservations:write"}},
- *      paginationItemsPerPage= 2,
- *      paginationMaximumItemsPerPage= 2,
+ *      paginationItemsPerPage= 20,
+ *      paginationMaximumItemsPerPage= 20,
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
- *            "post"={},
- *                "lastnewreservations"={
- *                  "method"="GET",
- *                  "path"="reservations/lastnewreservations",
- *                  "controller"=App\Controller\LastNewReservations::class
- *          },
+ *            "post"={},      
  *          },
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"reservations:collection", "reservations:item"}}},
  *          "put"={},
  *          "delete"={},
+ *               "reservationid"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/reservations/{id}",
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"reservations:user", "enable_max_depth"=true}}
+ *                 },
  *          })
  */
 class Reservations
@@ -40,19 +42,19 @@ class Reservations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations", "reservations:user", "properties:comments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations", "properties:comments"})
      */
-    private $startdate;
+    private $start_date;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item"})
+     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations"})
      */
     private $end_date;
 
@@ -99,19 +101,20 @@ class Reservations
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reservations")
-     * @Groups({"reservations:item", "comments:item"})
+     * @Groups({"reservations:item", "comments:item", "read:reservations"})
      */
     private $properties;
 
       
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
+     * @Groups({"reservations:user"})
      */
     private $user;
 
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
-     * @Groups({"reservations:item"})
+     * @Groups({"reservations:item", "properties:comments"})
      */
     private $comments;
 
@@ -129,12 +132,12 @@ class Reservations
 
     public function getStartdate(): ?\DateTimeInterface
     {
-        return $this->startdate;
+        return $this->start_date;
     }
 
-    public function setStartdate(\DateTimeInterface $startdate): self
+    public function setStartdate(\DateTimeInterface $start_date): self
     {
-        $this->startdate = $startdate;
+        $this->start_date = $start_date;
 
         return $this;
     }

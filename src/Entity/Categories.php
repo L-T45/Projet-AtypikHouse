@@ -10,26 +10,14 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-
-// Ajout d'une route personnalisé ("api_categories") pour l'entité catégories 
-
 /**
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
  * @ApiResource(
  *      normalizationContext={"groups"={"categories:collection"}},
  *      denormalizationContext={"groups"={"categories:write"}},
- *      paginationItemsPerPage= 2,
- *      paginationMaximumItemsPerPage= 2,
- *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},        
- *              "api_categories"={
- *                  "method"="GET",
- *                  "path"="api/categories",
- *                  "normalization_context"={"groups"={"categories:collection"}},              
- *              }, 
- *            
  *          },
  * 
  *      itemOperations={
@@ -51,26 +39,26 @@ class Categories
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection","categories:write", "properties:item", "attributes:item"})
+     * @Groups({"categories:collection", "categories:item", "categories:write", "properties:item", "attributes:item"})
      */
     private $title;
 
      /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:write", "properties:item"})
+     * @Groups({"categories:collection", "categories:item","categories:write", "properties:item"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "categories:write"})
+     * @Groups({"categories:item", "categories:write"})
      * 
      */
     private $picture;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:item", "categories:write"})
+     /**
+     * @ORM\Column(type="text")
+     * @Groups({"categories:item","categories:write"})
      */
     private $description;
 
@@ -98,6 +86,8 @@ class Categories
      * @Groups({"categories:item"})
      */
     private $attributes;
+
+   
 
   
 

@@ -14,8 +14,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=ConversationsRepository::class)
  * @ApiResource( normalizationContext={"groups"={"conversations:collection"}},
  *      denormalizationContext={"groups"={"conversations:write"}},
- *      paginationItemsPerPage= 2,
- *      paginationMaximumItemsPerPage= 2,
+ *      paginationItemsPerPage= 20,
+ *      paginationMaximumItemsPerPage= 20,
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
@@ -52,10 +52,17 @@ class Conversations
      */
     private $messages;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="conversations")
+     * @Groups({"conversations:item"})
+     */
+    private $users;
+
     public function __construct()
     {
         $this->messages = new ArrayCollection();
         $this->created_at = new \DateTime();
+        $this->users = new ArrayCollection();
         
     }
 
@@ -101,6 +108,33 @@ class Conversations
             if ($message->getConversations() === $this) {
                 $message->setConversations(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addConversation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeConversation($this);
         }
 
         return $this;
