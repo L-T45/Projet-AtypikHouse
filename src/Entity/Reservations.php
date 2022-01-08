@@ -114,7 +114,7 @@ class Reservations
 
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
-     * @Groups({"reservations:item", "properties:comments"})
+     * @Groups({"reservations:item"})
      */
     private $comments;
 

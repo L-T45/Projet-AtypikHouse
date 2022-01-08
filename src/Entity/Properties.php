@@ -112,7 +112,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection","properties:write", "user:properties"})
+     * @Groups({"properties:collection","properties:write", "user:properties", "categories:item"})
      */
     private $address;
 
@@ -122,9 +122,9 @@ class Properties
      */
     private $booking;
 
-    /*%*
+    /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "properties:write", "categories:item", "user:properties"})
+     * @Groups({"properties:collection", "properties:write", "user:properties", "categories:item"})
      * 
      */
     private $city;
@@ -210,7 +210,7 @@ class Properties
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="properties")
-     * @Groups({"properties:item", "properties:write", "properties:comments"})
+     * @Groups({"properties:item", "properties:write"})
      */
     private $reservations;
 
@@ -228,6 +228,7 @@ class Properties
 
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="properties")
+     * @Groups({"properties:item"})
      */
     private $comments;
 
