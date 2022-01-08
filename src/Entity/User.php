@@ -33,6 +33,11 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *                  "method"="POST",
  *                  "path"="sign_up",
  *               },      
+ *                  "Dashboard/user/infos-personnelles"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/user/{id}/infos-personnelles",
+ *                  "normalization_context"={"groups"={"read:infosperso", "enable_max_depth"=true}},  
+ *               },     
  *          },
  *      itemOperations={
  * 
@@ -83,13 +88,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "lastcomments:collection", "reservations:user", "user:payments", "user:messages", "read:messages"})
+     * @Groups({"user:collection", "lastcomments:collection", "read:infosperso", "reservations:user", "user:payments", "user:messages", "read:messages"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user:collection"})
+     * @Groups({"user:collection", "read:infosperso"})
      */
     private $email;
 
@@ -107,37 +112,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "reservations:user", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
+     * @Groups({"comments:item", "reservations:item", "read:infosperso", "payments:item", "user:item", "reservations:user", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "read:infosperso"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "read:infosperso"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "read:infosperso"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "read:infosperso"})
      */
     private $birthdate;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "read:infosperso"})
      */
     private $zipCode;
 
@@ -161,19 +166,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "reservations:user", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
+     * @Groups({"comments:item", "reservations:item", "read:infosperso", "payments:item", "user:item", "reservations:user", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "read:infosperso"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "reservations:user", "conversations:item", "user:messages", "lastcomments:collection"})
+     * @Groups({"comments:item", "reservations:item", "read:infosperso", "payments:item", "user:item", "reservations:user", "conversations:item", "user:messages", "lastcomments:collection"})
      */
     private $picture;
 
