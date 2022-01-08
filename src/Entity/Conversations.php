@@ -27,6 +27,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get"={"normalization_context"={"groups"={"conversations:collection", "conversations:item"}}},
  *          "put"={},
  *          "delete"={},
+ *                   
+ *                  "Dashboard/user/conversations/{id}"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/user/conversations/{id}",
+ *                  
+ *               },  
  *          }
  * )
  */

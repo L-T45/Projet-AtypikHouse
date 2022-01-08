@@ -34,18 +34,19 @@ class Reports
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reports:collection"})
+     * @Groups({"reports:collection", "read:reports"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"reports:collection", "reports:write"})
+     * @Groups({"reports:collection", "reports:write", "read:reports"})
      */
     private $reportstate;
 
       /**
      * @ORM\Column(type="text")
+     * @Groups({"reports:collection", "reports:write", "read:reports"})
      */
     private $description;
 
@@ -57,9 +58,14 @@ class Reports
 
     /**
      * @ORM\ManyToOne(targetEntity=ReportsCategories::class, inversedBy="reports")
-     * @Groups({"reports:item"})
+     * @Groups({"reports:item", "read:reports"})
      */
     private $reportscategories;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
+     */
+    private $user;
 
   
 
@@ -122,6 +128,18 @@ class Reports
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

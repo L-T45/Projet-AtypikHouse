@@ -82,6 +82,17 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *                  "path"="Dashboard/user/{id}/comments",
  *                  "normalization_context"={"groups"={"read:commentsperso", "enable_max_depth"=true}},  
  *               },  
+ *                  "Dashboard/user/{id}/conversations"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/user/{id}/conversations",
+ *                  
+ *               },  
+ *                  "Dashboard/user/{id}/reports"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/user/{id}/reports",
+ *                  "normalization_context"={"groups"={"read:reports", "enable_max_depth"=true}}, 
+ *                  
+ *               },  
  *          }
  * )
  * 
@@ -229,6 +240,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $conversations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="user")
+     * @Groups({"read:reports"})
+     */
+    private $reports;
+
     public function __construct()
     {
         $this->properties = new ArrayCollection();
@@ -239,6 +256,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->payments = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->conversations = new ArrayCollection();
+        $this->reports = new ArrayCollection();
 
     }
 
@@ -657,6 +675,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removeConversation(Conversations $conversation): self
     {
         $this->conversations->removeElement($conversation);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reports[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
+    }
+
+    public function addReport(Reports $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReport(Reports $report): self
+    {
+        if ($this->reports->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getUser() === $this) {
+                $report->setUser(null);
+            }
+        }
 
         return $this;
     }
