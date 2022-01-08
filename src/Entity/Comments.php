@@ -44,25 +44,25 @@ class Comments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"comments:collection", "lastcomments:collection", "reservations:user", "reservations:item", "properties:item", "categories:item", "properties:comments"})
+     * @Groups({"comments:collection", "lastcomments:collection", "read:commentsperso", "reservations:user", "reservations:item", "properties:item", "categories:item", "properties:comments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"comments:collection", "lastcomments:collection", "reservations:item", "reservations:user", "properties:item", "properties:comments"})
+     * @Groups({"comments:collection", "lastcomments:collection", "read:commentsperso", "reservations:item", "reservations:user", "properties:item", "properties:comments"})
      */
     private $body;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"comments:item", "reservations:item", "categories:item", "properties:comments", "reservations:user", "lastcomments:collection"})
+     * @Groups({"comments:item", "reservations:item", "categories:item", "read:commentsperso", "properties:comments", "reservations:user", "lastcomments:collection"})
      */
     private $value;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"comments:item", "reservations:item", "properties:comments"})
+     * @Groups({"comments:item", "reservations:item", "properties:comments", "read:commentsperso"})
      */
     private $created_at;
 
@@ -86,7 +86,7 @@ class Comments
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="comments")
-     * @Groups({"lastcomments:collection"})
+     * @Groups({"lastcomments:collection", "read:commentsperso"})
      */
     private $properties;
 

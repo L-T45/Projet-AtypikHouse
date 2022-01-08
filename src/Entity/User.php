@@ -54,12 +54,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"user:properties", "enable_max_depth"=true}}
  *                 },
- *                 "lastnewreservations"={
- *                     "method"="GET",
- *                     "path"="dashboard/user/{id}/reservations",
- *                     "force_eager"=false,
- *                     "normalization_context"={"groups"={"user:reservations", "enable_max_depth"=true}}
- *                 },
+ *                 
  *                  "delete_user"={
  *                     "method"="DELETE",
  *                     "path"="dashboard/user/{id}/personnal-infos/delete-account",
@@ -71,12 +66,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *                  "normalization_context"={"groups"={"read:messages"}},
  *                 
  *               },
- *               "api_dashboard_user_reservations"={
- *                  "method"="GET",
- *                  "path"="/dashboard/user/{id}/reservations",
- *                  "normalization_context"={"groups"={"read:reservations"}},
- *                 
- *               },
+ *            
  *                 "Dashboard/user/{id}/infos-personnelles"={
  *                  "method"="GET",
  *                  "path"="Dashboard/user/{id}/infos-personnelles",
@@ -87,6 +77,11 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *                  "path"="Dashboard/user/{id}/reservations",
  *                  "normalization_context"={"groups"={"read:reservperso", "enable_max_depth"=true}},  
  *               },    
+ *                  "Dashboard/user/{id}/comments"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/user/{id}/comments",
+ *                  "normalization_context"={"groups"={"read:commentsperso", "enable_max_depth"=true}},  
+ *               },  
  *          }
  * )
  * 
@@ -213,6 +208,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="user")
+     * @Groups({"read:commentsperso"})
      */
     private $comments;
 

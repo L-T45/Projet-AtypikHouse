@@ -28,9 +28,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get"={"normalization_context"={"groups"={"reservations:collection", "reservations:item"}}},
  *          "put"={},
  *          "delete"={},
- *               "reservationid"={
+ *               "Dashboard/user/reservations/{id}"={
  *                  "method"="GET",
- *                  "path"="dashboard/user/reservations/{id}",
+ *                  "path"="Dashboard/user/reservations/{id}",
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"reservations:user", "enable_max_depth"=true}}
  *                 },

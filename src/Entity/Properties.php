@@ -79,7 +79,7 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"properties:collection", "lastcomments:collection", "propertiesid:item", "reservations:user", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user"})
+     * @Groups({"properties:collection", "lastcomments:collection", "propertiesid:item", "read:commentsperso", "reservations:user", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user"})
      * 
      * 
      */
@@ -87,7 +87,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "propertiesid:item", "properties:write", "categories:item", "reservations:user", "user:properties", "propertiesgallery:item", "properties:user" })
+     * @Groups({"properties:collection", "propertiesid:item", "properties:write", "read:commentsperso", "categories:item", "reservations:user", "user:properties", "propertiesgallery:item", "properties:user" })
      *
      */
     private $title;
