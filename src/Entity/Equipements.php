@@ -47,13 +47,13 @@ class Equipements
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"equipements:collection"})
+     * @Groups({"equipements:collection", "owner:propertiesid"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"equipements:collection", "equipements:write"})
+     * @Groups({"equipements:collection", "equipements:write", "owner:propertiesid"})
      */
     private $title;
 

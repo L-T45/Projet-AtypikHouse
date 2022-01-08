@@ -93,6 +93,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *                  "normalization_context"={"groups"={"read:reports", "enable_max_depth"=true}}, 
  *                  
  *               },  
+ *                  "Dashboard/owner/{id}/properties"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/owner/{id}/properties",
+ *                  "normalization_context"={"groups"={"owner:properties", "enable_max_depth"=true}}, 
+ *                  
+ *               },  
  *          }
  * )
  * 
@@ -207,7 +213,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user")
-     * @Groups({"user:properties"})
+     * @Groups({"user:properties", "owner:properties"})
      */
     private $properties;
 
