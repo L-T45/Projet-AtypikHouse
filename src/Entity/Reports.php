@@ -25,6 +25,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get"={"normalization_context"={"groups"={"reports:collection", "reports:item"}}},
  *          "put"={},
  *          "delete"={},
+ * 
+ *                  "Dashboard/user/reports/{id}"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/user/reports/{id}",
+ *                  "normalization_context"={"groups"={"read:reportsid", "enable_max_depth"=true}}, 
+ *                  
+ *               },  
  *          }
  * )
  */
@@ -34,36 +41,37 @@ class Reports
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reports:collection", "read:reports"})
+     * @Groups({"reports:collection", "read:reports", "read:reportsid"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"reports:collection", "reports:write", "read:reports"})
+     * @Groups({"reports:collection", "reports:write", "read:reports", "read:reportsid"})
      */
     private $reportstate;
 
       /**
      * @ORM\Column(type="text")
-     * @Groups({"reports:collection", "reports:write", "read:reports"})
+     * @Groups({"reports:collection", "reports:write", "read:reports", "read:reportsid"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reports:item"})
+     * @Groups({"reports:item", "read:reportsid"})
      */
     private $created_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=ReportsCategories::class, inversedBy="reports")
-     * @Groups({"reports:item", "read:reports"})
+     * @Groups({"reports:item", "read:reports", "read:reportsid"})
      */
     private $reportscategories;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
+     * @Groups({"read:reportsid"})
      */
     private $user;
 
