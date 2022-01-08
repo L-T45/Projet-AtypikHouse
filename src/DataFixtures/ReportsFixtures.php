@@ -26,7 +26,7 @@ class ReportsFixtures extends Fixture implements DependentFixtureInterface
         // create 20 Reports! Bam!
         for ($i = 0; $i < 9; $i++) {
 
-            $reports_categories[$i] =  $this->getReference('reports_categories_'. $faker->numberBetween(1,8));
+            $reports_categories[$i] =  $this->getReference('reports_categories_'. $faker->numberBetween(1,4));
 
             $reports[$i] = new Reports();
             $reports[$i]->setReportState($faker->randomElement($states));
