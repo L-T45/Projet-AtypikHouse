@@ -26,6 +26,7 @@ class CommentsFixtures extends Fixture implements DependentFixtureInterface
 
             $reservations[$i] =  $this->getReference('reservations_'. $faker->numberBetween(1,8));
             $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,8));
+            
 
             $comments[$i] = new Comments();
             $comments[$i]->setBody($faker->text);
@@ -35,6 +36,7 @@ class CommentsFixtures extends Fixture implements DependentFixtureInterface
             $comments[$i]->setPropertypicture($faker->imageUrl($width = 640, $height = 480));
             $comments[$i]->setReservations($reservations[$i]);
             $comments[$i]->setUser($user[$i]);
+            $comments[$i]->setProperties($properties[$i]);
             $manager->persist($comments[$i]);
         }
 
@@ -44,7 +46,8 @@ class CommentsFixtures extends Fixture implements DependentFixtureInterface
         public function getDependencies(){
             return [
                 ReservationsFixtures::class,
-                UserFixtures::class
+                UserFixtures::class,
+                
             ];
         }
 }

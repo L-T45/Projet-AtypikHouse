@@ -32,7 +32,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "method"="GET",
  *                  "path"="Dashboard/user/reservations/{id}",
  *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"reservations:user", "enable_max_depth"=true}}
+ *                  "normalization_context"={"groups"={"reservations:user", "reserv:user"}}
  *                 },
  *          })
  */
@@ -102,20 +102,21 @@ class Reservations
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reservations")
-     * @Groups({"reservations:item", "comments:item", "read:reservations", "reservations:user"})
+     * @Groups({"reservations:item", "comments:item", "read:reservations", "reservations:user", "read:commentsid", "read:commentsperso"})
      */
     private $properties;
 
       
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
-     * @Groups({"reservations:user"})
+     * @Groups({"reserv:user"})
+     * 
      */
     private $user;
 
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
-     * @Groups({"reservations:item"})
+     * @Groups({"reservations:item", "reservations:user"})
      */
     private $comments;
 

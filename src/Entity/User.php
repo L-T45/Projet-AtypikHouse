@@ -75,7 +75,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *                  "Dashboard/user/{id}/reservations"={
  *                  "method"="GET",
  *                  "path"="Dashboard/user/{id}/reservations",
- *                  "normalization_context"={"groups"={"read:reservperso", "enable_max_depth"=true}},  
+ *                  "normalization_context"={"groups"={"read:reservperso", "enable_max_depth"=true}},
  *               },    
  *                  "Dashboard/user/{id}/comments"={
  *                  "method"="GET",
@@ -93,7 +93,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "lastcomments:collection", "read:infosperso", "reservations:user", "user:payments", "user:messages", "read:messages"})
+     * @Groups({"user:collection", "lastcomments:collection", "read:infosperso", "user:messages", "read:messages", "reservations:user"})
      */
     private $id;
 
@@ -117,7 +117,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item", "read:infosperso", "payments:item", "user:item", "reservations:user", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
+     * @Groups({"comments:item", "reservations:item", "reservations:user", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
      */
     private $lastname;
 
@@ -171,7 +171,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item", "read:infosperso", "payments:item", "user:item", "reservations:user", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
+     * @Groups({"comments:item", "reservations:item", "reservations:user", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
      */
     private $firstname;
 
@@ -183,7 +183,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "reservations:item", "read:infosperso", "payments:item", "user:item", "reservations:user", "conversations:item", "user:messages", "lastcomments:collection"})
+     * @Groups({"comments:item", "reservations:item", "reservations:user", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection"})
      */
     private $picture;
 

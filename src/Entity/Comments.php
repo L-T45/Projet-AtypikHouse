@@ -34,6 +34,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get"={"normalization_context"={"groups"={"comments:collection", "comments:item"}}},
  *          "put"={},
  *          "delete"={},
+ * 
+ *                   "Dashboard/user/comments/{id}"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/user/comments/{id}",
+ *                  "normalization_context"={"groups"={"read:commentsid", "enable_max_depth"=true}},  
+ *               },  
  *                
  *          }
  * )
@@ -44,25 +50,25 @@ class Comments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"comments:collection", "lastcomments:collection", "read:commentsperso", "reservations:user", "reservations:item", "properties:item", "categories:item", "properties:comments"})
+     * @Groups({"comments:collection", "lastcomments:collection", "reservations:user", "properties:collection", "read:commentsperso", "read:commentsid", "reservations:user", "reservations:item", "properties:item", "categories:item", "properties:comments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"comments:collection", "lastcomments:collection", "read:commentsperso", "reservations:item", "reservations:user", "properties:item", "properties:comments"})
+     * @Groups({"comments:collection", "lastcomments:collection", "reservations:user", "read:commentsperso", "read:commentsid", "reservations:item", "reservations:user", "properties:item", "properties:comments"})
      */
     private $body;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"comments:item", "reservations:item", "categories:item", "read:commentsperso", "properties:comments", "reservations:user", "lastcomments:collection"})
+     * @Groups({"comments:item", "reservations:item", "categories:item", "reservations:user", "properties:collection", "read:commentsperso", "read:commentsid", "properties:comments", "reservations:user", "lastcomments:collection"})
      */
     private $value;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"comments:item", "reservations:item", "properties:comments", "read:commentsperso"})
+     * @Groups({"comments:item", "reservations:item", "properties:comments", "read:commentsperso", "read:commentsid"})
      */
     private $created_at;
 
@@ -74,21 +80,17 @@ class Comments
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
-     * @Groups({"comments:item","reservations:item", "lastcomments:collection"})
+     * @Groups({"comments:item","reservations:item", "lastcomments:collection", "read:commentsid"})
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Reservations::class, inversedBy="comments")
-     * @Groups({"comments:item"})
+     * @Groups({"comments:item", "read:commentsid", "read:commentsperso"})
      */
     private $reservations;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="comments")
-     * @Groups({"lastcomments:collection", "read:commentsperso"})
-     */
-    private $properties;
+  
 
     public function __construct()
     {
@@ -230,15 +232,5 @@ class Comments
         return $this;
     }
 
-    public function getProperties(): ?Properties
-    {
-        return $this->properties;
-    }
-
-    public function setProperties(?Properties $properties): self
-    {
-        $this->properties = $properties;
-
-        return $this;
-    }
+   
 }

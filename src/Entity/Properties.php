@@ -79,7 +79,7 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"properties:collection", "lastcomments:collection", "propertiesid:item", "read:commentsperso", "reservations:user", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user"})
+     * @Groups({"properties:collection", "lastcomments:collection", "read:commentsid", "propertiesid:item", "read:commentsperso", "read:commentsid", "reservations:user", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user"})
      * 
      * 
      */
@@ -87,7 +87,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "propertiesid:item", "properties:write", "read:commentsperso", "categories:item", "reservations:user", "user:properties", "propertiesgallery:item", "properties:user" })
+     * @Groups({"properties:collection", "propertiesid:item", "properties:write", "read:commentsperso", "read:commentsid", "categories:item", "reservations:user", "user:properties", "propertiesgallery:item", "properties:user" })
      *
      */
     private $title;
@@ -100,13 +100,13 @@ class Properties
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item", "reservations:user"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item", "reservations:user", "read:commentsid", "properties:collection"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item", "read:commentsid", "properties:collection"})
      */
     private $rooms;
 
@@ -131,26 +131,26 @@ class Properties
 
     /**
      * @ORM\Column(type="decimal", precision=8, scale=5)
-     * @Groups({"properties:write", "propertiesid:item", "properties:item"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "properties:collection"})
      * 
      */
     private $lat;
 
     /**
      * @ORM\Column(type="decimal", precision=8, scale=5)
-     * @Groups({"properties:write", "propertiesid:item", "properties:item"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "properties:collection"})
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item", "read:commentsid", "properties:collection"})
      */
     private $bedrooms;
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=3)
-     * @Groups({"properties:write", "properties:item","categories:item"})
+     * @Groups({"properties:write", "properties:item","categories:item", "read:commentsid", "properties:collection"})
      */
     private $surface;
 
@@ -162,7 +162,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "properties:write", "reservations:user", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "lastcomments:collection", "read:reservations"})
+     * @Groups({"properties:collection", "read:commentsperso", "properties:write", "reservations:user", "read:commentsid", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "lastcomments:collection", "read:reservations"})
      */
     private $picture;
 
@@ -174,7 +174,7 @@ class Properties
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:item", "properties:write", "categories:item"})
+     * @Groups({"properties:item", "properties:write", "categories:item", "properties:collection"})
      */
     private $capacity;
 
@@ -222,15 +222,11 @@ class Properties
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="properties")
-     * @Groups({"properties:user"})
+     * @Groups({"properties:user", "reservations:user"})
      */
     private $user;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="properties")
-     * @Groups({"properties:item", "reservations:user"})
-     */
-    private $comments;
+   
 
     public function __construct()
     {
@@ -553,33 +549,6 @@ class Properties
         return $this;
     }
 
-    /**
-     * @return Collection|Comments[]
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
+  
 
-    public function addComment(Comments $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setProperties($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comments $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getProperties() === $this) {
-                $comment->setProperties(null);
-            }
-        }
-
-        return $this;
-    }
 }
