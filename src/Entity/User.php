@@ -11,6 +11,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 
 // Ajout route personalisé ici (lastnewreservations, api_dashboard_user_payments, dashboard_user_properties, delete_user, api_sign_up) car pas possible à un autre endroit visiblement.
 
@@ -33,11 +35,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *                  "method"="POST",
  *                  "path"="sign_up",
  *               },      
- *                  "Dashboard/user/infos-personnelles"={
- *                  "method"="GET",
- *                  "path"="Dashboard/user/{id}/infos-personnelles",
- *                  "normalization_context"={"groups"={"read:infosperso", "enable_max_depth"=true}},  
- *               },     
+ *                 
  *          },
  *      itemOperations={
  * 
@@ -79,8 +77,20 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *                  "normalization_context"={"groups"={"read:reservations"}},
  *                 
  *               },
+ *                 "Dashboard/user/{id}/infos-personnelles"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/user/{id}/infos-personnelles",
+ *                  "normalization_context"={"groups"={"read:infosperso", "enable_max_depth"=true}},  
+ *               },     
+ *                  "Dashboard/user/{id}/reservations"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/user/{id}/reservations",
+ *                  "normalization_context"={"groups"={"read:reservperso", "enable_max_depth"=true}},  
+ *               },    
  *          }
  * )
+ * 
+ * @ApiFilter(DateFilter::class, properties= {"reservations.startdate"})
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -197,7 +207,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user")
-     * @Groups({"user:item", "user:reservations", "read:reservations"})
+     * @Groups({"user:item", "user:reservations", "read:reservations", "read:reservperso"})
      */
     private $reservations;
 

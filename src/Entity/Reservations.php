@@ -42,19 +42,19 @@ class Reservations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations", "reservations:user", "properties:comments"})
+     * @Groups({"reservations:collection", "comments:item", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "reservations:user", "properties:comments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations", "properties:comments"})
+     * @Groups({"reservations:collection", "comments:item", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations", "properties:comments"})
      */
     private $start_date;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "comments:item", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations"})
+     * @Groups({"reservations:collection", "comments:item", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations"})
      */
     private $end_date;
 
@@ -66,7 +66,7 @@ class Reservations
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "properties:item", "user:item"})
+     * @Groups({"reservations:item", "properties:item", "user:item", "read:reservperso"})
      */
     private $is_cancelled;
 
