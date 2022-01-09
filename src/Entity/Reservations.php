@@ -21,7 +21,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
- *            "post"={},      
+ *            "post"={},   
+ *                   
+ *                  "Dashboard/admin/reservations"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/admin/reservations",
+ *                  "normalization_context"={"groups"={"admin:reservations", "enable_max_depth"=true}},
+ *                  
+ *               },     
  *          },
  *      itemOperations={
  * 

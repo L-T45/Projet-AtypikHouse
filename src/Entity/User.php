@@ -34,7 +34,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *                 "api_sign_up"={
  *                  "method"="POST",
  *                  "path"="sign_up",
- *               },      
+ *               },  
+ *                 
  *                 
  *          },
  *      itemOperations={
@@ -105,31 +106,15 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *                  "path"="Dashboard/admin/{id}/users",
  *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},
  *                  
- *               },  
- *                  "Dashboard/admin/{id}/reservations"={
- *                  "method"="GET",
- *                  "path"="Dashboard/admin/{id}/reservations",
- *                  "normalization_context"={"groups"={"admin:reservations", "enable_max_depth"=true}},
- *                  
- *               },  
+ *               }, 
  *                  "Dashboard/owner/{id}/reservations"={
  *                  "method"="GET",
  *                  "path"="Dashboard/owner/{id}/reservations",
  *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},
  *                  
  *               },  
- *                  "Dashboard/admin/{id}/properties"={
- *                  "method"="GET",
- *                  "path"="Dashboard/admin/{id}/properties",
- *                  "normalization_context"={"groups"={"admin:properties", "enable_max_depth"=true}},
+ *                 
  *                  
- *               }, 
- *                  "Dashboard/admin/{id}/properties/equipements"={
- *                  "method"="GET",
- *                  "path"="Dashboard/admin/{id}/properties/equipements",
- *                  "normalization_context"={"groups"={"admin:proequip", "enable_max_depth"=true}},
- *                  
- *               }, 
  *          }
  * )
  * 
@@ -141,7 +126,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "lastcomments:collection", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user"})
+     * @Groups({"user:collection", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user"})
      */
     private $id;
 
@@ -165,7 +150,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item", "reservations:user", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
+     * @Groups({"comments:item", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
      */
     private $lastname;
 
@@ -219,7 +204,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item", "reservations:user", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
+     * @Groups({"comments:item", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
      */
     private $firstname;
 
@@ -231,7 +216,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "reservations:item", "reservations:user", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection"})
+     * @Groups({"comments:item", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection"})
      */
     private $picture;
 

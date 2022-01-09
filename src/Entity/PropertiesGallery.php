@@ -39,13 +39,13 @@ class PropertiesGallery
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"propertiesgallery:collection", "owner:propertiesid"})
+     * @Groups({"propertiesgallery:collection", "owner:propertiesid", "properties:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection", "owner:propertiesid"})
+     * @Groups({"propertiesgallery:collection", "owner:propertiesid", "properties:item"})
      */
     private $picture;
 

@@ -25,7 +25,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                   "path"="dashboard/admin/equipements",
  *                   "force_eager"=false,
  *                   "normalization_context"={"groups"={"equipements:collection", "enable_max_depth"=true}}
- *                 },      
+ *                 },    
+ *               
+ *                  "Dashboard/admin/properties/equipements"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/admin/properties/equipements",
+ *                  "normalization_context"={"groups"={"admin:proequip", "enable_max_depth"=true}},
+ *                  
+ *               },   
  *          },
  *      itemOperations={
  *          
@@ -71,7 +78,7 @@ class Equipements
 
     /**
      * @ORM\ManyToMany(targetEntity=Properties::class, mappedBy="equipements")
-     * @Groups({"equipements:item", "equipements:write"})
+     * @Groups({"equipements:item", "equipements:write", "admin:proequip"})
      */
     private $properties;
 

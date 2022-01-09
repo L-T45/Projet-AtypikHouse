@@ -17,7 +17,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      denormalizationContext={"groups"={"categories:write"}},
  *      collectionOperations={
  *            "get"={},
- *            "post"={},        
+ *            "post"={}, 
+ * 
+ *                   "Dashboard/admin/categories"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/admin/categories",
+ *                  "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
+ *                  
+ *               },            
  *          },
  * 
  *      itemOperations={
@@ -25,6 +32,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *           
  *          "put"={},
  *          "delete"={},
+ *                  
+ *                  "Dashboard/admin/categories/{id}"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/admin/categories/{id}",
+ *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
+ *                  
+ *               }, 
+ *                  
  *          })
  */
 class Categories
@@ -33,57 +48,57 @@ class Categories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"categories:collection","attributes:item", "reservations:user", "owner:propertiesid", "owner:reservid"})
+     * @Groups({"categories:collection","attributes:item", "admin:categoriesid", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:categories"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "categories:item", "categories:write", "owner:propertiesid", "owner:reservid", "properties:item", "attributes:item", "reservations:user"})
+     * @Groups({"categories:collection", "categories:item", "admin:categories", "admin:categoriesid", "categories:write", "owner:propertiesid", "owner:reservid", "properties:item", "attributes:item", "reservations:user"})
      */
     private $title;
 
      /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "categories:item","categories:write", "properties:item"})
+     * @Groups({"categories:collection", "categories:item", "admin:categoriesid", "categories:write", "properties:item"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:item", "categories:write"})
+     * @Groups({"categories:item", "categories:write", "admin:categories", "admin:categoriesid"})
      * 
      */
     private $picture;
 
      /**
      * @ORM\Column(type="text")
-     * @Groups({"categories:item","categories:write"})
+     * @Groups({"categories:item","categories:write", "admin:categoriesid"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"categories:write"})
+     * @Groups({"categories:write", "admin:categoriesid"})
      * 
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"categories:write"})
+     * @Groups({"categories:write", "admin:categoriesid"})
      */
     private $updated_at;
 
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="categories")
-     * @Groups({"categories:item", "categories:write"})
+     * @Groups({"categories:item", "categories:write", "admin:categoriesid"})
      */ 
     private $properties;
 
     /**
      * @ORM\OneToMany(targetEntity=Attributes::class, mappedBy="categories")
-     * @Groups({"categories:item"})
+     * @Groups({"categories:item", "admin:categoriesid"})
      */
     private $attributes;
 
