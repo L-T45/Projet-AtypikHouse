@@ -80,7 +80,7 @@ class Comments
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
-     * @Groups({"comments:item","reservations:item", "lastcomments:collection", "read:commentsid"})
+     * @Groups({"comments:item","reservations:item", "lastcomments:collection", "read:commentsid", "properties:item"})
      */
     private $user;
 

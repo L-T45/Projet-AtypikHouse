@@ -34,13 +34,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
  *                 }, 
- *                 "dashboard_admin_properties"={
- *                      "method"="GET",
- *                      "path"= "dashboard/admin/properties",
- *                      "controller"=App\Controller\LastNewProperties::class,
- *                      "force_eager"=false,
- *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
- *                 },              
+ *                        
  *          },
  *      itemOperations={
  * 
@@ -51,7 +45,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "method"="GET",
  *                      "path"= "dashboard/admin/properties/{id}",
  *                      "force_eager"=false,
- *                      "normalization_context"={"groups"={"properties:collection", "properties:item", "enable_max_depth"=true}}
+ *                      "normalization_context"={"groups"={"properties:collection", "properties:item", "admin:propertiesid", "enable_max_depth"=true}}
  *                 },
  *                "dashboard_user_properties_id"={
  *                      "method"="GET",
@@ -71,6 +65,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
  *                 },
+ *                 
  *                  
  *          }
  * )
@@ -205,7 +200,7 @@ class Properties
 
     /**
      * @ORM\ManyToMany(targetEntity=Equipements::class, inversedBy="properties")
-     * @Groups({"properties:write", "properties:item", "owner:propertiesid"})
+     * @Groups({"properties:write", "properties:item", "owner:propertiesid", "admin:proequip"})
      */
     private $equipements;
 
@@ -229,7 +224,7 @@ class Properties
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="properties")
-     * @Groups({"properties:user", "reservations:user", "owner:propertiesid", "owner:reservid"})
+     * @Groups({"properties:user", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:propertiesid"})
      */
     private $user;
 
