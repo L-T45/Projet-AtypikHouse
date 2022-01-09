@@ -99,16 +99,23 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *                  "normalization_context"={"groups"={"owner:properties", "enable_max_depth"=true}}, 
  *                  
  *               },  
- *                  "Dashboard/owner/{id}/reservations"={
- *                  "method"="GET",
- *                  "path"="Dashboard/owner/{id}/reservations",
- *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}}, 
  *                  
- *               },  
  *                  "Dashboard/admin/{id}/users"={
  *                  "method"="GET",
  *                  "path"="Dashboard/admin/{id}/users",
  *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},
+ *                  
+ *               },  
+ *                  "Dashboard/admin/{id}/reservations"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/admin/{id}/reservations",
+ *                  "normalization_context"={"groups"={"admin:reservations", "enable_max_depth"=true}},
+ *                  
+ *               },  
+ *                  "Dashboard/owner/{id}/reservations"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/owner/{id}/reservations",
+ *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},
  *                  
  *               },  
  *          }
@@ -231,7 +238,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user")
-     * @Groups({"user:item", "user:reservations", "read:reservations", "read:reservperso"})
+     * @Groups({"user:item", "user:reservations", "read:reservations", "read:reservperso", "admin:reservations", "owner:reservations"})
      */
     private $reservations;
 

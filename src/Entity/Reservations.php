@@ -41,6 +41,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"owner:reservid", "owner:read"}}
  *                 },
+ *                  "Dashboard/admin/reservations/{id}"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/admin/reservations/{id}",
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"owner:reservid", "owner:read"}}
+ *                 },
  *          })
  */
 class Reservations
@@ -49,19 +55,19 @@ class Reservations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:collection", "comments:item", "read:reservperso", "owner:reservid", "owner:reservations", "owner:propertiesid", "properties:item", "payments:item", "user:item", "user:reservations", "reservations:user", "properties:comments"})
+     * @Groups({"reservations:collection", "comments:item", "read:reservperso", "owner:reservations", "admin:reservations", "owner:reservid", "owner:reserv", "owner:propertiesid", "properties:item", "payments:item", "user:item", "user:reservations", "reservations:user", "properties:comments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "reservations:user", "comments:item", "owner:reservid","owner:reservations", "owner:propertiesid", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations", "properties:comments"})
+     * @Groups({"reservations:collection", "reservations:user", "comments:item", "owner:reservations", "admin:reservations", "owner:reservid","owner:reserv", "owner:propertiesid", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations", "properties:comments"})
      */
     private $start_date;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "reservations:user", "comments:item", "owner:reservid", "owner:reservations", "owner:propertiesid", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations"})
+     * @Groups({"reservations:collection", "reservations:user", "comments:item", "owner:reservations", "admin:reservations", "owner:reservid", "owner:reserv", "owner:propertiesid", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations"})
      */
     private $end_date;
 
@@ -73,7 +79,7 @@ class Reservations
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "properties:item", "user:item", "reservations:user", "owner:reservid", "read:reservperso", "owner:propertiesid", "owner:reservations"})
+     * @Groups({"reservations:item", "properties:item", "user:item", "owner:reservations", "admin:reservations", "reservations:user", "owner:reservid", "read:reservperso", "owner:propertiesid", "owner:reserv"})
      */
     private $is_cancelled;
 
@@ -116,7 +122,7 @@ class Reservations
       
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
-     * @Groups({"reserv:user", "owner:reservations", "owner:reservid"})
+     * @Groups({"reserv:user", "owner:reserv", "owner:reservid", "admin:reserv"})
      * 
      */
     private $user;
