@@ -44,7 +44,6 @@ class SendEmail extends AbstractController {
             ->subject($objet)
             ->text($forname.' '.$lastname."\n"."\n".'Message: '.$message."\n"."\n".'Contact: '.$phone.' '.$email);
 
-		// Ajouter le RedirectResponse pour rediriger à une page sinon message d'erreur !
 	    $mailer->send($email);
         return new JsonResponse( [ 'status' => '200', ], JsonResponse::HTTP_CREATED );
     }
