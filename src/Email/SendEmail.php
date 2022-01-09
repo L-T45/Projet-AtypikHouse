@@ -9,6 +9,9 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Routing\Annotation\Route;
+
 
 class SendEmail extends AbstractController {
 
