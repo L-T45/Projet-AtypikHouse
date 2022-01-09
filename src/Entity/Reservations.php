@@ -47,7 +47,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"owner:reservid", "owner:read"}}
  *                 },
- *          })
+ *          }
+ * )
  */
 class Reservations
 {

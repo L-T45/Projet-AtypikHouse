@@ -107,7 +107,7 @@ class Properties
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"properties:write", "propertiesid:item", "properties:item", "owner:propertiesid", "categories:item", "reservations:user", "read:commentsid", "properties:collection"})
+     * @Groups({"properties:write", "propertiesid:item", "owner:reservid", "properties:item", "owner:propertiesid", "categories:item", "reservations:user", "read:commentsid", "properties:collection"})
      */
     private $price;
 
@@ -229,7 +229,7 @@ class Properties
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="properties")
-     * @Groups({"properties:user", "reservations:user", "owner:propertiesid"})
+     * @Groups({"properties:user", "reservations:user", "owner:propertiesid", "owner:reservid"})
      */
     private $user;
 
