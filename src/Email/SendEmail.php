@@ -11,6 +11,10 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Doctrine\Common\Collections\ArrayCollection;
 use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Routing\Annotation\Route;
+  
+use Symfony\Component\HttpFoundation\Request;    
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 
 class SendEmail extends AbstractController {
@@ -23,42 +27,16 @@ class SendEmail extends AbstractController {
     public $objet;
     public $message;
 
-    // pour ne concerver que ce que l'on souhaite après avoir serialize une variable de type array 
-    public function cutChaine($string, $start, $end){
-        $string = ' ' . $string;   
-        $ini = strpos($string, $start);  
-        if ($ini == 0) return '';   
-        $ini += strlen($start);  
-        $len = strpos($string, $end, $ini) - $ini;
-        return substr($string, $ini, $len);   
-    }
+    public function sendEmailFormContact(MailerInterface $mailer, Request $request): Response{
 
-    public function sendEmailFormContact(MailerInterface $mailer): Response{
-
+        $data = json_decode( $request->getContent(), true );
         // Données du formulaire de contact
-        $forname = $_POST["forname"];   
-        $forname = serialize($forname); 
-        $forname = $this->cutChaine($forname, ':"', '";'); 
-
-        $lastname = $_POST["lastname"];
-        $lastname = serialize($lastname);
-        $lastname = $this->cutChaine($lastname, ':"', '";'); 
-
-        $phone = $_POST["phone"];
-        $phone = serialize($phone);
-        $phone = $this->cutChaine($phone, ':"', '";'); 
-
-        $email = $_POST["email"];
-        $email = serialize($email);
-        $email = $this->cutChaine($email, ':"', '";'); 
-
-        $objet = $_POST["objet"];
-        $objet = serialize($objet);
-        $objet = $this->cutChaine($objet, ':"', '";'); 
-
-        $message = $_POST["message"]; 
-        $message = serialize($message);
-        $message = $this->cutChaine($message, ':"', '";'); 
+        $forname = $data["forname"];   
+        $lastname = $data["lastname"];
+        $phone = $data["phone"];
+        $email = $data["email"];
+        $objet = $data["objet"];
+        $message = $data["message"]; 
 
         $email = (new Email())
             ->from('atypikhouse.communication@gmail.com')
@@ -67,8 +45,8 @@ class SendEmail extends AbstractController {
             ->text($forname.' '.$lastname."\n"."\n".'Message: '.$message."\n"."\n".'Contact: '.$phone.' '.$email);
 
 		// Ajouter le RedirectResponse pour rediriger à une page sinon message d'erreur !
-		return $mailer->send($email)?: new RedirectResponse('/api'); 
-
+	    $mailer->send($email);
+        return new JsonResponse( [ 'status' => '200', ], JsonResponse::HTTP_CREATED );
     }
 
 }
