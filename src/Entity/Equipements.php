@@ -32,9 +32,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get"={"normalization_context"={"groups"={"equipements:collection", "equipements:item","read:equipements"}}},
  *          "put"={},
  *          "delete"={},
- *              "equipements_id"={
+ *              "Dashboard/admin/properties/equipments/{id}"={
  *                   "method"="GET",
- *                   "path"="dashboard/admin/equipements/{id}",
+ *                   "path"="Dashboard/admin/properties/equipments/{id}",
  *                   "force_eager"=false,
  *                   "normalization_context"={"groups"={"equipements:collection", "equipements:item", "enable_max_depth"=true}}
  *                 }, 
@@ -59,13 +59,13 @@ class Equipements
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"equipements:item", "equipements:write"})
+     * @Groups({"equipements:item", "equipements:write", "admin:proequip"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"equipements:item", "equipements:write"})
+     * @Groups({"equipements:item", "equipements:write", "admin:proequip"})
      */
     private $updated_at;
 
