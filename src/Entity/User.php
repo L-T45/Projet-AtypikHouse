@@ -35,6 +35,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *                  "method"="POST",
  *                  "path"="sign_up",
  *               },  
+ * 
+ *                  "dashboard/admin/users"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/admin/users",
+ *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},
+ *                  
+ *               }, 
  *                 
  *                 
  *          },
@@ -101,12 +108,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *                  
  *               },  
  *                  
- *                  "dashboard/admin/{id}/users"={
- *                  "method"="GET",
- *                  "path"="dashboard/admin/{id}/users",
- *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},
- *                  
- *               }, 
+ *                 
  *                  "dashboard/owner/{id}/reservations"={
  *                  "method"="GET",
  *                  "path"="dashboard/owner/{id}/reservations",
