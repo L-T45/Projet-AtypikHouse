@@ -20,10 +20,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *            "get"={},
  *            "post"={},
  *                
- *                  "dashboard_admin_attributes"={
+ *                  "Dashboard/admin/categories/attributes"={
  *                  "method"="GET",
- *                  "path"="/dashboard/admin/attributes"
- *               },
+ *                  "path"="Dashboard/admin/categories/attributes",
+ *                  "normalization_context"={"groups"={"admin:categattributes", "enable_max_depth"=true}},
+ *                  
+ *               },    
  *              
  *          },
  *      itemOperations={
@@ -33,11 +35,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "put"={},
  *          "delete"={},
  * 
- *              "dashboard_admin_attributes"={
+ *              "Dashboard/admin/categories/attributes/{id}"={
  *                  "method"="GET",
- *                  "path"="/dashboard/admin/attributes/{id}",
- *                  "normalization_context"={"groups"={"attributes:collection", "attributes:item"}},
+ *                  "path"="Dashboard/admin/categories/attributes/{id}",
+ *                  "normalization_context"={"groups"={"admin:categattributesid", "attributes:item"}},
  *               },
+ *               
  *          }
  * )
  */
@@ -47,31 +50,31 @@ class Attributes
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"attributes:collection", "categories:item", "admin:categoriesid"})
+     * @Groups({"attributes:collection", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"attributes:collection", "categories:item", "admin:categoriesid"})
+     * @Groups({"attributes:collection", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"attributes:item"})
+     * @Groups({"attributes:item", "admin:categattributes", "admin:categattributesid"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"attributes:item"})
+     * @Groups({"attributes:item", "admin:categattributes", "admin:categattributesid"})
      */
     private $updated_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="attributes")
-     * @Groups({"attributes:item"})
+     * @Groups({"attributes:item", "admin:categattributes", "admin:categattributesid"})
      */
     private $categories;
 
