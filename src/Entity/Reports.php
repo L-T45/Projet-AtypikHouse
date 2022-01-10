@@ -82,7 +82,7 @@ class Reports
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
-     * @Groups({"read:reportsid", "admin:reportsid"})
+     * @Groups({"read:reportsid", "admin:reportsid", "admin:reports"})
      */
     private $user;
 
