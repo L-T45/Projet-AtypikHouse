@@ -42,25 +42,25 @@ class Conversations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"conversations:collection", "read:messages", "user:messages"})
+     * @Groups({"conversations:collection", "read:messages", "user:messages", "user:conversations"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"conversations:collection", "user:messages"})
+     * @Groups({"conversations:collection", "user:messages", "user:conversations"})
      */
     private $created_at;
 
     /**
      * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="conversations")
-     * @Groups({"conversations:item"})
+     * @Groups({"conversations:item", "user:conversations"})
      */
     private $messages;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="conversations")
-     * @Groups({"conversations:item"})
+     * @Groups({"conversations:item", "user:conversations"})
      */
     private $users;
 
