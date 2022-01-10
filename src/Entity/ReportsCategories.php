@@ -36,25 +36,25 @@ class ReportsCategories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reportscategories:collection", "reports:item"})
+     * @Groups({"reportscategories:collection", "reports:item", "read:reports", "read:reportsid"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"reportscategories:collection","reports:item"})
+     * @Groups({"reportscategories:collection","reports:item", "read:reports", "read:reportsid"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reportscategories:item"})
+     * @Groups({"reportscategories:item", "read:reportsid"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reportscategories:item"})
+     * @Groups({"reportscategories:item", "read:reportsid"})
      */
     private $updated_at;
 

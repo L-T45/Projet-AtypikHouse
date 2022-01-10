@@ -25,16 +25,23 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                   "path"="dashboard/admin/equipements",
  *                   "force_eager"=false,
  *                   "normalization_context"={"groups"={"equipements:collection", "enable_max_depth"=true}}
- *                 },      
+ *                 },    
+ *               
+ *                  "Dashboard/admin/properties/equipements"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/admin/properties/equipements",
+ *                  "normalization_context"={"groups"={"admin:proequip", "enable_max_depth"=true}},
+ *                  
+ *               },   
  *          },
  *      itemOperations={
  *          
  *          "get"={"normalization_context"={"groups"={"equipements:collection", "equipements:item","read:equipements"}}},
  *          "put"={},
  *          "delete"={},
- *              "equipements_id"={
+ *              "Dashboard/admin/properties/equipments/{id}"={
  *                   "method"="GET",
- *                   "path"="dashboard/admin/equipements/{id}",
+ *                   "path"="Dashboard/admin/properties/equipments/{id}",
  *                   "force_eager"=false,
  *                   "normalization_context"={"groups"={"equipements:collection", "equipements:item", "enable_max_depth"=true}}
  *                 }, 
@@ -47,31 +54,31 @@ class Equipements
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"equipements:collection"})
+     * @Groups({"equipements:collection", "owner:propertiesid", "admin:proequip"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"equipements:collection", "equipements:write"})
+     * @Groups({"equipements:collection", "equipements:write", "owner:propertiesid", "admin:proequip"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"equipements:item", "equipements:write"})
+     * @Groups({"equipements:item", "equipements:write", "admin:proequip"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"equipements:item", "equipements:write"})
+     * @Groups({"equipements:item", "equipements:write", "admin:proequip"})
      */
     private $updated_at;
 
     /**
      * @ORM\ManyToMany(targetEntity=Properties::class, mappedBy="equipements")
-     * @Groups({"equipements:item", "equipements:write"})
+     * @Groups({"equipements:item", "equipements:write", "admin:proequip"})
      */
     private $properties;
 
