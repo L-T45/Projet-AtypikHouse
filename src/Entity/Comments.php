@@ -27,9 +27,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "normalization_context"={"groups"={"lastcomments:collection"}},
  *                 
  *               },
- *                  "Dashboard/admin/comments"={
+ *                  "dashboard/admin/comments"={
  *                  "method"="GET",
- *                  "path"="Dashboard/admin/comments",
+ *                  "path"="dashboard/admin/comments",
  *                  "normalization_context"={"groups"={"admin:comments", "enable_max_depth"=true}},  
  *               },  
  *             
@@ -40,12 +40,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "put"={},
  *          "delete"={},
  * 
- *                  "Dashboard/user/comments/{id}"={
+ *                  "dashboard/user/comments/{id}"={
  *                  "method"="GET",
  *                  "path"="Dashboard/user/comments/{id}",
  *                  "normalization_context"={"groups"={"read:commentsid", "enable_max_depth"=true}},  
  *               },  
- *                  "Dashboard/admin/comments/{id}"={
+ *                  "dashboard/admin/comments/{id}"={
  *                  "method"="GET",
  *                  "path"="Dashboard/admin/comments/{id}",
  *                  "normalization_context"={"groups"={"admin:commentsid", "enable_max_depth"=true}},  
@@ -61,7 +61,7 @@ class Comments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"comments:collection", "admin:commentsid", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "reservations:user", "reservations:item", "properties:item", "categories:item", "properties:comments"})
+     * @Groups({"comments:collection", "admin:commentsid", "properties:collection", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "reservations:user", "reservations:item", "properties:item", "categories:item", "properties:comments"})
      */
     private $id;
 
@@ -73,7 +73,7 @@ class Comments
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"comments:item", "admin:commentsid", "reservations:item", "admin:comments", "categories:item", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "properties:comments", "reservations:user", "lastcomments:collection"})
+     * @Groups({"comments:item", "properties:collection", "admin:commentsid", "reservations:item", "admin:comments", "categories:item", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "properties:comments", "reservations:user", "lastcomments:collection"})
      */
     private $value;
 
@@ -97,7 +97,7 @@ class Comments
 
     /**
      * @ORM\ManyToOne(targetEntity=Reservations::class, inversedBy="comments")
-     * @Groups({"comments:item", "read:commentsid", "read:commentsperso", "admin:comments", "admin:commentsid"})
+     * @Groups({"comments:item", "read:commentsid", "read:commentsperso", "admin:comments", "admin:commentsid", "lastcomments:collection"})
      */
     private $reservations;
 
