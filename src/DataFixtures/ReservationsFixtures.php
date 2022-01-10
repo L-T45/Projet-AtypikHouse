@@ -30,8 +30,8 @@ class ReservationsFixtures extends Fixture implements DependentFixtureInterface
             $startDate = $faker->dateTime($max = 'now'); 
 
             $reservations[$i] = new Reservations();
-            $reservations[$i]->setStartdate($startDate);     
-            $reservations[$i]->setEndDate($faker->dateTimeInInterval($startDate = $startDate , $interval = "+".$faker->numberBetween(1,20)."days"));
+            $reservations[$i]->setStartdate($faker->dateTimeBetween($startDate = '-20 days', $endDate = '-4 days'));   
+            $reservations[$i]->setEndDate($faker->dateTimeBetween($startDate = '-3 days', $endDate = 'now'));
             $reservations[$i]->setIsApprouved($faker->boolean());
             $reservations[$i]->setIsCancelled($faker->boolean());
             $reservations[$i]->setIsPaid($faker->boolean());

@@ -42,12 +42,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * 
  *                  "dashboard/user/comments/{id}"={
  *                  "method"="GET",
- *                  "path"="Dashboard/user/comments/{id}",
+ *                  "path"="dashboard/user/comments/{id}",
  *                  "normalization_context"={"groups"={"read:commentsid", "enable_max_depth"=true}},  
  *               },  
  *                  "dashboard/admin/comments/{id}"={
  *                  "method"="GET",
- *                  "path"="Dashboard/admin/comments/{id}",
+ *                  "path"="dashboard/admin/comments/{id}",
  *                  "normalization_context"={"groups"={"admin:commentsid", "enable_max_depth"=true}},  
  *               },  
  *                 
