@@ -35,9 +35,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
  *                 }, 
  * 
- *                  "Dashboard/admin/properties"={
+ *                  "dashboard/admin/properties"={
  *                  "method"="GET",
- *                  "path"="Dashboard/admin/properties",
+ *                  "path"="dashboard/admin/properties",
  *                  "normalization_context"={"groups"={"admin:properties", "enable_max_depth"=true}},
  *                  
  *               }, 
@@ -66,9 +66,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"properties:comments", "enable_max_depth"=true}}
  *                 },
- *                   "Dashboard/owner/properties/{id}"={
+ *                   "dashboard/owner/properties/{id}"={
  *                      "method"="GET",
- *                      "path"= "Dashboard/owner/properties/{id}",
+ *                      "path"= "dashboard/owner/properties/{id}",
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
  *                 },
@@ -171,7 +171,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "admin:commentsid", "read:commentsperso", "admin:properties", "owner:propertiesid", "owner:properties", "properties:write", "reservations:user", "read:commentsid", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "lastcomments:collection", "read:reservations"})
+     * @Groups({"properties:collection", "admin:comments", "lastcomments:collection", "admin:commentsid", "read:commentsperso", "admin:properties", "owner:propertiesid", "owner:properties", "properties:write", "reservations:user", "read:commentsid", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "lastcomments:collection", "read:reservations"})
      */
     private $picture;
 
@@ -219,7 +219,7 @@ class Properties
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="properties")
-     * @Groups({"properties:item", "properties:write", "owner:propertiesid"})
+     * @Groups({"properties:item", "properties:write", "owner:propertiesid", "properties:collection"})
      */
     private $reservations;
 

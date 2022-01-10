@@ -20,9 +20,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *            "get"={},
  *            "post"={},
  *                
- *                  "Dashboard/admin/categories/attributes"={
+ *                  "dashboard/admin/categories/attributes"={
  *                  "method"="GET",
- *                  "path"="Dashboard/admin/categories/attributes",
+ *                  "path"="dashboard/admin/categories/attributes",
  *                  "normalization_context"={"groups"={"admin:categattributes", "enable_max_depth"=true}},
  *                  
  *               },    
@@ -35,9 +35,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "put"={},
  *          "delete"={},
  * 
- *              "Dashboard/admin/categories/attributes/{id}"={
+ *              "dashboard/admin/categories/attributes/{id}"={
  *                  "method"="GET",
- *                  "path"="Dashboard/admin/categories/attributes/{id}",
+ *                  "path"="dashboard/admin/categories/attributes/{id}",
  *                  "normalization_context"={"groups"={"admin:categattributesid", "attributes:item"}},
  *               },
  *               

@@ -41,19 +41,19 @@ class Messages
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"messages:collection", "read:messages", "user:messages", "conversations:item"})
+     * @Groups({"messages:collection", "read:messages", "user:messages", "conversations:item", "user:conversations"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"messages:collection", "read:messages", "user:messages", "conversations:item"})
+     * @Groups({"messages:collection", "read:messages", "user:messages", "conversations:item", "user:conversations"})
      */
     private $body;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"messages:item", "read:messages", "user:messages", "conversations:item"})
+     * @Groups({"messages:item", "read:messages", "user:messages", "conversations:item", "user:conversations"})
      */
     private $created_at;
 
