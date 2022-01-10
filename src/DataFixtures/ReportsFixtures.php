@@ -27,11 +27,13 @@ class ReportsFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 9; $i++) {
 
             $reports_categories[$i] =  $this->getReference('reports_categories_'. $faker->numberBetween(1,8));
+            $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,8));
 
             $reports[$i] = new Reports();
             $reports[$i]->setReportState($faker->randomElement($states));
             $reports[$i]->setDescription($faker->text(500));
             $reports[$i]->setReportscategories($reports_categories[$i]);
+            $reports[$i]->setUser($user[$i]);
             $manager->persist($reports[$i]);
         }
 
@@ -41,6 +43,8 @@ class ReportsFixtures extends Fixture implements DependentFixtureInterface
         public function getDependencies(){
             return [
                 ReportsCategoriesFixtures::class,
+                UserFixtures::class,
+                
             ];
         }
 }
