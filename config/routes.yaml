@@ -12,3 +12,6 @@ api_form_contact:
     path: /api/form_contact
     controller: App\Email\SendEmail::sendEmailFormContact
 
+api_recaptcha:
+    path: api/recaptcha
+    controller: App\Recaptcha::verify
