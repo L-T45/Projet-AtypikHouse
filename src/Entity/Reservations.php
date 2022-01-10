@@ -123,7 +123,7 @@ class Reservations
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reservations")
-     * @Groups({"reservations:item", "admin:commentsid", "comments:item", "admin:comments", "read:reservations", "reservations:user", "read:commentsid", "read:commentsperso", "owner:reservid"})
+     * @Groups({"reservations:item", "admin:commentsid", "lastcomments:collection", "comments:item", "admin:comments", "read:reservations", "reservations:user", "read:commentsid", "read:commentsperso", "owner:reservid"})
      */
     private $properties;
 
