@@ -47,25 +47,25 @@ class Payments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"payments:collection", "read:payments", "user:payments"})
+     * @Groups({"payments:collection", "read:payments", "user:payments", "reservations:user", "owner:propertiesid", "owner:reservid"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"payments:collection", "read:payments", "user:payments"})
+     * @Groups({"payments:collection", "read:payments", "user:payments", "reservations:user", "owner:propertiesid", "owner:reservid"})
      */
     private $amount;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"payments:item", "read:payments", "user:payments"})
+     * @Groups({"payments:item", "read:payments", "user:payments", "reservations:user", "owner:propertiesid", "owner:reservid"})
      */
     private $is_paidback;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"payments:item", "read:payments", "user:payments"})
+     * @Groups({"payments:item", "read:payments", "user:payments", "reservations:user", "owner:propertiesid", "owner:reservid"})
      */
     private $paidback_state;
 
@@ -77,7 +77,7 @@ class Payments
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"payments:item", "read:payments", "user:payments"})
+     * @Groups({"payments:item", "read:payments", "user:payments", "owner:propertiesid", "owner:reservid"})
      */
     private $created_at;
 

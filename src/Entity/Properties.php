@@ -34,13 +34,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
  *                 }, 
- *                 "dashboard_admin_properties"={
- *                      "method"="GET",
- *                      "path"= "dashboard/admin/properties",
- *                      "controller"=App\Controller\LastNewProperties::class,
- *                      "force_eager"=false,
- *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
- *                 },              
+ * 
+ *                  "Dashboard/admin/properties"={
+ *                  "method"="GET",
+ *                  "path"="Dashboard/admin/properties",
+ *                  "normalization_context"={"groups"={"admin:properties", "enable_max_depth"=true}},
+ *                  
+ *               }, 
+ *                        
  *          },
  *      itemOperations={
  * 
@@ -51,7 +52,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "method"="GET",
  *                      "path"= "dashboard/admin/properties/{id}",
  *                      "force_eager"=false,
- *                      "normalization_context"={"groups"={"properties:collection", "properties:item", "enable_max_depth"=true}}
+ *                      "normalization_context"={"groups"={"properties:collection", "properties:item", "admin:propertiesid", "enable_max_depth"=true}}
  *                 },
  *                "dashboard_user_properties_id"={
  *                      "method"="GET",
@@ -65,6 +66,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"properties:comments", "enable_max_depth"=true}}
  *                 },
+ *                   "Dashboard/owner/properties/{id}"={
+ *                      "method"="GET",
+ *                      "path"= "Dashboard/owner/properties/{id}",
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
+ *                 },
+ *                 
+ *                  
  *          }
  * )
  * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "partial", "price": "exact", "capacity": "exact", "lat": "exact", "longitude": "exact", "reservations.comments.value": "exact"})
@@ -79,7 +88,7 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"properties:collection", "propertiesid:item", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user"})
+     * @Groups({"properties:collection", "lastcomments:collection", "admin:proequip", "admin:categoriesid", "equipements:item", "admin:properties", "owner:propertiesid", "owner:reservid", "owner:properties", "read:commentsid", "propertiesid:item", "read:commentsperso", "read:commentsid", "reservations:user", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user"})
      * 
      * 
      */
@@ -87,144 +96,146 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "propertiesid:item", "properties:write", "categories:item", "user:properties", "propertiesgallery:item", "properties:user" })
+     * @Groups({"properties:collection", "propertiesid:item", "admin:proequip", "admin:categoriesid", "equipements:item", "admin:properties", "owner:properties", "owner:propertiesid", "owner:reservid", "properties:write", "read:commentsperso", "read:commentsid", "categories:item", "reservations:user", "user:properties", "propertiesgallery:item", "properties:user" })
      *
      */
     private $title;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:write", "propertiesid:item", "properties:item", "user:properties"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "owner:propertiesid", "user:properties"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="float")
-     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item"})
+     * @Groups({"properties:write", "propertiesid:item", "owner:reservid", "properties:item", "owner:propertiesid", "categories:item", "reservations:user", "read:commentsid", "properties:collection"})
      */
     private $price;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "owner:propertiesid", "categories:item", "read:commentsid", "properties:collection"})
      */
     private $rooms;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection","properties:write", "user:properties"})
+     * @Groups({"properties:collection","properties:write", "admin:properties", "owner:properties", "owner:propertiesid", "owner:reservid", "user:properties", "categories:item", "reservations:user"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:item", "propertiesid:item", "properties:write"})
+     * @Groups({"properties:item", "propertiesid:item", "properties:write", "owner:propertiesid"})
      */
     private $booking;
 
-    /*%*
+    /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "properties:write", "categories:item", "user:properties"})
+     * @Groups({"properties:collection", "properties:write", "admin:properties", "owner:properties", "owner:propertiesid", "owner:reservid", "user:properties", "categories:item", "reservations:user"})
      * 
      */
     private $city;
 
     /**
      * @ORM\Column(type="decimal", precision=8, scale=5)
-     * @Groups({"properties:write", "propertiesid:item", "properties:item"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "owner:propertiesid", "properties:collection"})
      * 
      */
     private $lat;
 
     /**
      * @ORM\Column(type="decimal", precision=8, scale=5)
-     * @Groups({"properties:write", "propertiesid:item", "properties:item"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "owner:propertiesid", "properties:collection"})
      */
     private $longitude;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item"})
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "categories:item", "owner:propertiesid", "read:commentsid", "properties:collection"})
      */
     private $bedrooms;
 
     /**
      * @ORM\Column(type="decimal", precision=6, scale=3)
-     * @Groups({"properties:write", "properties:item","categories:item"})
+     * @Groups({"properties:write", "properties:item","categories:item", "read:commentsid", "properties:collection", "owner:propertiesid"})
      */
     private $surface;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:write", "properties:item"})
+     * @Groups({"properties:write", "properties:item", "owner:propertiesid"})
      */
     private $reference;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "properties:write", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "lastcomments:collection", "read:reservations"})
+     * @Groups({"properties:collection", "read:commentsperso", "admin:properties", "owner:propertiesid", "owner:properties", "properties:write", "reservations:user", "read:commentsid", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "lastcomments:collection", "read:reservations"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:write", "properties:item"})
+     * @Groups({"properties:write", "properties:item", "owner:propertiesid"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:item", "properties:write", "categories:item"})
+     * @Groups({"properties:item", "properties:write", "categories:item", "owner:propertiesid", "properties:collection"})
      */
     private $capacity;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write", "properties:item"})
+     * @Groups({"properties:write", "properties:item", "owner:propertiesid"})
      */
     private $zipCode;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"properties:write", "properties:item"})
+     * @Groups({"properties:write", "properties:item", "owner:propertiesid"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"properties:write", "properties:item"})
+     * @Groups({"properties:write", "properties:item", "owner:propertiesid"})
      */
     private $updated_at;
 
     /**
      * @ORM\ManyToMany(targetEntity=Equipements::class, inversedBy="properties")
-     * @Groups({"properties:write", "properties:item"})
+     * @Groups({"properties:write", "properties:item", "owner:propertiesid"})
      */
     private $equipements;
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="properties")
-     * @Groups({"properties:item", "properties:write"})
+     * @Groups({"properties:item", "properties:write", "reservations:user", "owner:propertiesid", "owner:reservid"})
      */
     private $categories;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="properties")
-     * @Groups({"properties:item", "properties:write", "properties:comments"})
+     * @Groups({"properties:item", "properties:write", "owner:propertiesid"})
      */
     private $reservations;
 
     /**
      * @ORM\ManyToOne(targetEntity=PropertiesGallery::class, inversedBy="properties")
-     * @Groups({"properties:item", "properties:write"})
+     * @Groups({"properties:item", "properties:write", "owner:propertiesid"})
      */
     private $propertiesgallery;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="properties")
-     * @Groups({"properties:user"})
+     * @Groups({"properties:user", "reservations:user", "owner:propertiesid", "owner:reservid"})
      */
     private $user;
+
+   
 
     public function __construct()
     {
@@ -232,6 +243,7 @@ class Properties
         $this->reservations = new ArrayCollection();
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+        $this->comments = new ArrayCollection();
 
     }
 
@@ -545,4 +557,7 @@ class Properties
 
         return $this;
     }
+
+  
+
 }
