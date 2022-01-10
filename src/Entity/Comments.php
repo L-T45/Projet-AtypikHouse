@@ -27,9 +27,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "normalization_context"={"groups"={"lastcomments:collection"}},
  *                 
  *               },
- *                  "Dashboard/admin/comments"={
+ *                  "dashboard/admin/comments"={
  *                  "method"="GET",
- *                  "path"="Dashboard/admin/comments",
+ *                  "path"="dashboard/admin/comments",
  *                  "normalization_context"={"groups"={"admin:comments", "enable_max_depth"=true}},  
  *               },  
  *             
@@ -40,12 +40,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "put"={},
  *          "delete"={},
  * 
- *                  "Dashboard/user/comments/{id}"={
+ *                  "dashboard/user/comments/{id}"={
  *                  "method"="GET",
  *                  "path"="Dashboard/user/comments/{id}",
  *                  "normalization_context"={"groups"={"read:commentsid", "enable_max_depth"=true}},  
  *               },  
- *                  "Dashboard/admin/comments/{id}"={
+ *                  "dashboard/admin/comments/{id}"={
  *                  "method"="GET",
  *                  "path"="Dashboard/admin/comments/{id}",
  *                  "normalization_context"={"groups"={"admin:commentsid", "enable_max_depth"=true}},  

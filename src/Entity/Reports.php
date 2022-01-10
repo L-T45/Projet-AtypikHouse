@@ -19,9 +19,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *            "get"={},
  *            "post"={},
  * 
- *                  "Dashboard/admin/reports"={
+ *                  "dashboard/admin/reports"={
  *                  "method"="GET",
- *                  "path"="Dashboard/admin/reports",
+ *                  "path"="dashboard/admin/reports",
  *                  "normalization_context"={"groups"={"admin:reports", "enable_max_depth"=true}},  
  *               },  
  *               
@@ -32,15 +32,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "put"={},
  *          "delete"={},
  * 
- *                  "Dashboard/user/reports/{id}"={
+ *                  "dashboard/user/reports/{id}"={
  *                  "method"="GET",
- *                  "path"="Dashboard/user/reports/{id}",
+ *                  "path"="dashboard/user/reports/{id}",
  *                  "normalization_context"={"groups"={"read:reportsid", "enable_max_depth"=true}}, 
  *                  
  *               },  
- *                  "Dashboard/admin/reports/{id}"={
+ *                  "dashboard/admin/reports/{id}"={
  *                  "method"="GET",
- *                  "path"="Dashboard/admin/reports/{id}",
+ *                  "path"="dashboard/admin/reports/{id}",
  *                  "normalization_context"={"groups"={"admin:reportsid", "enable_max_depth"=true}},  
  *               },  
  *          }

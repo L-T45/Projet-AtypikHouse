@@ -68,48 +68,48 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *                 
  *               },
  *            
- *                 "Dashboard/user/{id}/infos-personnelles"={
+ *                 "dashboard/user/{id}/infos-personnelles"={
  *                  "method"="GET",
- *                  "path"="Dashboard/user/{id}/infos-personnelles",
+ *                  "path"="dashboard/user/{id}/infos-personnelles",
  *                  "normalization_context"={"groups"={"read:infosperso", "enable_max_depth"=true}},  
  *               },     
- *                  "Dashboard/user/{id}/reservations"={
+ *                  "dashboard/user/{id}/reservations"={
  *                  "method"="GET",
- *                  "path"="Dashboard/user/{id}/reservations",
+ *                  "path"="dashboard/user/{id}/reservations",
  *                  "normalization_context"={"groups"={"read:reservperso", "enable_max_depth"=true}},
  *               },    
- *                  "Dashboard/user/{id}/comments"={
+ *                  "dashboard/user/{id}/comments"={
  *                  "method"="GET",
- *                  "path"="Dashboard/user/{id}/comments",
+ *                  "path"="dashboard/user/{id}/comments",
  *                  "normalization_context"={"groups"={"read:commentsperso", "enable_max_depth"=true}},  
  *               },  
- *                  "Dashboard/user/{id}/conversations"={
+ *                  "dashboard/user/{id}/conversations"={
  *                  "method"="GET",
- *                  "path"="Dashboard/user/{id}/conversations",
+ *                  "path"="dashboard/user/{id}/conversations",
  *                  
  *               },  
- *                  "Dashboard/user/{id}/reports"={
+ *                  "dashboard/user/{id}/reports"={
  *                  "method"="GET",
- *                  "path"="Dashboard/user/{id}/reports",
+ *                  "path"="dashboard/user/{id}/reports",
  *                  "normalization_context"={"groups"={"read:reports", "enable_max_depth"=true}}, 
  *                  
  *               },  
- *                  "Dashboard/owner/{id}/properties"={
+ *                  "dashboard/owner/{id}/properties"={
  *                  "method"="GET",
- *                  "path"="Dashboard/owner/{id}/properties",
+ *                  "path"="dashboard/owner/{id}/properties",
  *                  "normalization_context"={"groups"={"owner:properties", "enable_max_depth"=true}}, 
  *                  
  *               },  
  *                  
- *                  "Dashboard/admin/{id}/users"={
+ *                  "dashboard/admin/{id}/users"={
  *                  "method"="GET",
- *                  "path"="Dashboard/admin/{id}/users",
+ *                  "path"="dashboard/admin/{id}/users",
  *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},
  *                  
  *               }, 
- *                  "Dashboard/owner/{id}/reservations"={
+ *                  "dashboard/owner/{id}/reservations"={
  *                  "method"="GET",
- *                  "path"="Dashboard/owner/{id}/reservations",
+ *                  "path"="dashboard/owner/{id}/reservations",
  *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},
  *                  
  *               },  

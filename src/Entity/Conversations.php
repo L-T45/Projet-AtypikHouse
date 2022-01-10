@@ -28,7 +28,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "put"={},
  *          "delete"={},
  *                   
- *                  "Dashboard/user/conversations/{id}"={
+ *                  "dashboard/user/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="Dashboard/user/conversations/{id}",
  *                  

@@ -35,9 +35,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
  *                 }, 
  * 
- *                  "Dashboard/admin/properties"={
+ *                  "dashboard/admin/properties"={
  *                  "method"="GET",
- *                  "path"="Dashboard/admin/properties",
+ *                  "path"="dashboard/admin/properties",
  *                  "normalization_context"={"groups"={"admin:properties", "enable_max_depth"=true}},
  *                  
  *               }, 
@@ -66,9 +66,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"properties:comments", "enable_max_depth"=true}}
  *                 },
- *                   "Dashboard/owner/properties/{id}"={
+ *                   "dashboard/owner/properties/{id}"={
  *                      "method"="GET",
- *                      "path"= "Dashboard/owner/properties/{id}",
+ *                      "path"= "dashboard/owner/properties/{id}",
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
  *                 },

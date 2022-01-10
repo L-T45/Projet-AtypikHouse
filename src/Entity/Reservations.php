@@ -23,7 +23,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *            "get"={},
  *            "post"={},   
  *                   
- *                  "Dashboard/admin/reservations"={
+ *                  "dashboard/admin/reservations"={
  *                  "method"="GET",
  *                  "path"="Dashboard/admin/reservations",
  *                  "normalization_context"={"groups"={"admin:reservations", "enable_max_depth"=true}},
@@ -36,19 +36,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "put"={},
  *          "delete"={},
  * 
- *                  "Dashboard/user/reservations/{id}"={
+ *                  "dashboard/user/reservations/{id}"={
  *                  "method"="GET",
  *                  "path"="Dashboard/user/reservations/{id}",
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"reservations:user", "reserv:user"}}
  *                 },
- *                 "Dashboard/owner/reservations/{id}"={
+ *                 "dashboard/owner/reservations/{id}"={
  *                  "method"="GET",
  *                  "path"="Dashboard/owner/reservations/{id}",
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"owner:reservid", "owner:read"}}
  *                 },
- *                  "Dashboard/admin/reservations/{id}"={
+ *                  "dashboard/admin/reservations/{id}"={
  *                  "method"="GET",
  *                  "path"="Dashboard/admin/reservations/{id}",
  *                  "force_eager"=false,
