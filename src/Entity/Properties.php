@@ -219,7 +219,7 @@ class Properties
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="properties")
-     * @Groups({"properties:item", "properties:write", "owner:propertiesid"})
+     * @Groups({"properties:item", "properties:write", "owner:propertiesid", "properties:collection"})
      */
     private $reservations;
 
