@@ -44,10 +44,6 @@ class ReportsFixtures extends Fixture implements DependentFixtureInterface
             return [
                 ReportsCategoriesFixtures::class,
                 UserFixtures::class,
-<<<<<<< HEAD
-=======
-                
->>>>>>> Routesv2
             ];
         }
 }
