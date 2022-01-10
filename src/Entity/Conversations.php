@@ -30,7 +30,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                   
  *                  "dashboard/user/conversations/{id}"={
  *                  "method"="GET",
- *                  "path"="Dashboard/user/conversations/{id}",
+ *                  "path"="dashboard/user/conversations/{id}",
  *                  
  *               },  
  *          }
