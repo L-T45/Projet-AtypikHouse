@@ -158,7 +158,7 @@ class Properties
     private $bedrooms;
 
     /**
-     * @ORM\Column(type="decimal", precision=6, scale=3)
+     * @ORM\Column(type="integer")
      * @Groups({"properties:write", "admin:commentsid", "properties:item","categories:item", "read:commentsid", "properties:collection", "owner:propertiesid"})
      */
     private $surface;
