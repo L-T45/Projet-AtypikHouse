@@ -88,10 +88,8 @@ class SendEmail extends AbstractController {
         $data = json_decode( $request->getContent(), true );
 
         // Données du formulaire de contact
-
         // On vérifie si les champs sont vides
         if(!empty($data["forname"]) & !empty($data["lastname"]) & !empty($data["email"]) & !empty($data["message"])){
-            //dd(strlen($data["forname"]));
             // On vérifie que les champs réspectent les asserts !
             if(strlen($data["forname"])<60 & strlen($data["forname"])>2 & strlen($data["lastname"])<60 & strlen($data["lastname"])>2 & 
             strlen($data["email"])<80 & strlen($data["email"])>6 & strlen($data["message"])<800 & strlen($data["message"])>6 &
