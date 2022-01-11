@@ -23,9 +23,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *            "get"={},
  *            "post"={},   
  *                   
- *                  "Dashboard/admin/reservations"={
+ *                  "dashboard/admin/reservations"={
  *                  "method"="GET",
- *                  "path"="Dashboard/admin/reservations",
+ *                  "path"="dashboard/admin/reservations",
  *                  "normalization_context"={"groups"={"admin:reservations", "enable_max_depth"=true}},
  *                  
  *               },     
@@ -36,21 +36,21 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "put"={},
  *          "delete"={},
  * 
- *                  "Dashboard/user/reservations/{id}"={
+ *                  "dashboard/user/reservations/{id}"={
  *                  "method"="GET",
- *                  "path"="Dashboard/user/reservations/{id}",
+ *                  "path"="dashboard/user/reservations/{id}",
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"reservations:user", "reserv:user"}}
  *                 },
- *                 "Dashboard/owner/reservations/{id}"={
+ *                 "dashboard/owner/reservations/{id}"={
  *                  "method"="GET",
- *                  "path"="Dashboard/owner/reservations/{id}",
+ *                  "path"="dashboard/owner/reservations/{id}",
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"owner:reservid", "owner:read"}}
  *                 },
- *                  "Dashboard/admin/reservations/{id}"={
+ *                  "dashboard/admin/reservations/{id}"={
  *                  "method"="GET",
- *                  "path"="Dashboard/admin/reservations/{id}",
+ *                  "path"="dashboard/admin/reservations/{id}",
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"owner:reservid", "owner:read"}}
  *                 },
@@ -123,7 +123,7 @@ class Reservations
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reservations")
-     * @Groups({"reservations:item", "comments:item", "read:reservations", "reservations:user", "read:commentsid", "read:commentsperso", "owner:reservid"})
+     * @Groups({"reservations:item", "admin:commentsid", "lastcomments:collection", "comments:item", "admin:comments", "read:reservations", "reservations:user", "read:commentsid", "read:commentsperso", "owner:reservid"})
      */
     private $properties;
 
@@ -137,7 +137,7 @@ class Reservations
 
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
-     * @Groups({"reservations:item", "reservations:user", "owner:propertiesid", "properties:item"})
+     * @Groups({"reservations:item", "reservations:user", "owner:propertiesid", "properties:item", "properties:collection"})
      */
     private $comments;
 

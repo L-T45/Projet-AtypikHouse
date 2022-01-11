@@ -19,12 +19,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *            "get"={},
  *            "post"={}, 
  * 
- *                   "Dashboard/admin/categories"={
+ *                   "dashboard/admin/categories"={
  *                  "method"="GET",
- *                  "path"="Dashboard/admin/categories",
+ *                  "path"="dashboard/admin/categories",
  *                  "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
  *                  
- *               },            
+ *               },     
+ *                       
  *          },
  * 
  *      itemOperations={
@@ -33,9 +34,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "put"={},
  *          "delete"={},
  *                  
- *                  "Dashboard/admin/categories/{id}"={
+ *                  "dashboard/admin/categories/{id}"={
  *                  "method"="GET",
- *                  "path"="Dashboard/admin/categories/{id}",
+ *                  "path"="dashboard/admin/categories/{id}",
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
  *                  
  *               }, 
@@ -48,13 +49,13 @@ class Categories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"categories:collection","attributes:item", "admin:categoriesid", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:categories"})
+     * @Groups({"categories:collection", "admin:commentsid", "attributes:item", "admin:categattributesid", "admin:categattributes", "admin:categoriesid", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:categories"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "categories:item", "admin:categories", "admin:categoriesid", "categories:write", "owner:propertiesid", "owner:reservid", "properties:item", "attributes:item", "reservations:user"})
+     * @Groups({"categories:collection", "admin:commentsid",  "categories:item", "admin:categattributesid", "admin:categattributes", "admin:categories", "admin:categoriesid", "categories:write", "owner:propertiesid", "owner:reservid", "properties:item", "attributes:item", "reservations:user"})
      */
     private $title;
 
@@ -98,7 +99,7 @@ class Categories
 
     /**
      * @ORM\OneToMany(targetEntity=Attributes::class, mappedBy="categories")
-     * @Groups({"categories:item", "admin:categoriesid"})
+     * @Groups({"categories:item", "admin:categoriesid", "admin:categattributes"})
      */
     private $attributes;
 

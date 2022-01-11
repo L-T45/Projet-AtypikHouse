@@ -36,7 +36,6 @@ class CommentsFixtures extends Fixture implements DependentFixtureInterface
             $comments[$i]->setPropertypicture($faker->imageUrl($width = 640, $height = 480));
             $comments[$i]->setReservations($reservations[$i]);
             $comments[$i]->setUser($user[$i]);
-            $comments[$i]->setProperties($properties[$i]);
             $manager->persist($comments[$i]);
         }
 
