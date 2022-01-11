@@ -41,25 +41,25 @@ class Messages
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"messages:collection", "read:messages", "user:messages", "conversations:item", "user:conversations"})
+     * @Groups({"messages:collection", "admin:usersid", "read:messages", "user:messages", "conversations:item", "user:conversations"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"messages:collection", "read:messages", "user:messages", "conversations:item", "user:conversations"})
+     * @Groups({"messages:collection", "admin:usersid", "read:messages", "user:messages", "conversations:item", "user:conversations"})
      */
     private $body;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"messages:item", "read:messages", "user:messages", "conversations:item", "user:conversations"})
+     * @Groups({"messages:item", "admin:usersid", "read:messages", "user:messages", "conversations:item", "user:conversations"})
      */
     private $created_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=Conversations::class, inversedBy="messages")
-     * @Groups({"messages:item", "read:messages", "user:messages"})
+     * @Groups({"messages:item", "read:messages", "user:messages", "admin:usersid"})
      */
     private $conversations;
 
