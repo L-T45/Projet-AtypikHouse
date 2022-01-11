@@ -91,11 +91,11 @@ class SendEmail extends AbstractController {
 
         // On vérifie si les champs sont vides
         if(!empty($data["forname"]) & !empty($data["lastname"]) & !empty($data["email"]) & !empty($data["message"])){
-
+            //dd(strlen($data["forname"]));
             // On vérifie que les champs réspectent les asserts !
-            if(count($data["forname"])<60 & count($data["forname"])>2 & count($data["lastname"])<60 & count($data["lastname"])>2 & 
-            count($data["email"])<80 & count($data["email"])>6 & count($data["message"])<800 & count($data["message"])>6 &
-            count($data["phone"])<15 & count($data["objet"])>60){
+            if(strlen($data["forname"])<60 & strlen($data["forname"])>2 & strlen($data["lastname"])<60 & strlen($data["lastname"])>2 & 
+            strlen($data["email"])<80 & strlen($data["email"])>6 & strlen($data["message"])<800 & strlen($data["message"])>6 &
+            strlen($data["phone"])<15 & strlen($data["objet"])<60){
 
                 $forname = $data["forname"];   
                 $lastname = $data["lastname"];
