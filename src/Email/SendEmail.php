@@ -25,7 +25,6 @@ class SendEmail extends AbstractController {
     private $objet;
     private $message;
     private $token;
-    private $client;
 
     public function sendEmailFormContact(MailerInterface $mailer, Request $request): Response{
 
