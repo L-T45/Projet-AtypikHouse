@@ -13,18 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;    
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-use Symfony\Component\Validator\Constraints as Assert;
-
+use ReCaptcha\ReCaptcha; 
 
 class SendEmail extends AbstractController {
 
     // Pour le formulaire de contact
-    public $forname;
-    public $lastname;
-    public $phone;
-    public $email; 
-    public $objet;
-    public $message;
+    private $forname;
+    private $lastname;
+    private $phone;
+    private $email; 
+    private $objet;
+    private $message;
+    private $token;
+    private $client;
 
     public function sendEmailFormContact(MailerInterface $mailer, Request $request): Response{
 
@@ -38,27 +39,38 @@ class SendEmail extends AbstractController {
             strlen($data["email"])<80 & strlen($data["email"])>6 & strlen($data["message"])<800 & strlen($data["message"])>6 &
             strlen($data["phone"])<15 & strlen($data["objet"])<60){
 
-                $forname = $data["forname"];   
-                $lastname = $data["lastname"];
-                $phone = $data["phone"]; 
-                $email = $data["email"];
-                $objet = $data["objet"];   
-                $message = $data["message"]; 
-
-                $email = (new Email())
+                $forname = htmlentities($data["forname"]);   
+                $lastname = htmlentities($data["lastname"]);
+                $phone = htmlentities($data["phone"]); 
+                $email = htmlentities($data["email"]);
+                $objet = htmlentities($data["objet"]);   
+                $message = htmlentities($data["message"]); 
+                $token = $data['token'];
+                
+                // recaptcha
+                $url = "https://www.google.com/recaptcha/api/siteverify?secret=6LdVoQwdAAAAAOJbRrSpEmpgF08KWwfa_i72cpgF&response=$token";
+                $result_json = file_get_contents($url);
+                $resulting = json_decode($result_json, true);
+                    
+                if($resulting["success"] = true ) {
+                    $email = (new Email())
                     ->from('atypikhouse.communication@gmail.com')
                     ->to('atypikhouse.communication@gmail.com')
                     ->subject($objet)
                     ->text($forname.' '.$lastname."\n"."\n".'Message: '.$message."\n"."\n".'Contact: '.$email.' '.$phone);
 
                 $mailer->send($email);  
-                return new JsonResponse( [ 'status' => '200', 'title' => 'Send'  ], JsonResponse::HTTP_CREATED ); 
+                return new JsonResponse( [ 'status' => '200', 'title' => 'Email envoyé'  ], JsonResponse::HTTP_CREATED ); 
+
+                }else{
+                    return new JsonResponse( [ 'status' => '400', 'title' => 'Bad Request', 'message' => "Erreur d'envoi" ], JsonResponse::HTTP_CREATED ); 
+                }
 
             }else{
-                return new JsonResponse( [ 'status' => '400', 'title' => 'Bad Request', 'message' => 'some informations to short or to long' ], JsonResponse::HTTP_CREATED ); 
+                return new JsonResponse( [ 'status' => '400', 'title' => 'Bad Request', 'message' => 'les informations renseignées sont trop long ou trop court' ], JsonResponse::HTTP_CREATED ); 
             }
         }else{
-            return new JsonResponse( [ 'status' => '400', 'title' => 'Bad Request', 'message' => 'some informations not specified' ], JsonResponse::HTTP_CREATED ); 
+            return new JsonResponse( [ 'status' => '400', 'title' => 'Bad Request', 'message' => 'Certaines informations ne sont pas renseignées' ], JsonResponse::HTTP_CREATED ); 
         }    
         
     }
