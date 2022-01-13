@@ -108,7 +108,7 @@ class Properties
     private $slug;
 
     /**
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="integer")
      * @Groups({"properties:write", "admin:commentsid", "propertiesid:item", "owner:reservid", "properties:item", "owner:propertiesid", "categories:item", "reservations:user", "read:commentsid", "properties:collection"})
      */
     private $price;
