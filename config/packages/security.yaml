@@ -15,17 +15,12 @@ security:
                 property: email
                 
     firewalls:
-        # Utilisation de la route users obligatoire pour faire référence à l'enregistrement d'un nouvel utilisateur suivant l'entité User
-        registration:
-            pattern: ^/api/users
-            stateless: true
-            methods: [POST]
             
         login:
             pattern: ^/api/login
             stateless: true
             json_login:
-                check_path: /api/login_check
+                check_path: /api/login
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
@@ -54,9 +49,6 @@ security:
     access_control:
         # Paramétrage des droits d'accès au login 
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # Paramétrage des droits d'accès à l'inscription 
-        - { path: ^/api/users, roles: IS_AUTHENTICATED_ANONYMOUSLY, methods: [POST] }
-        - { path: ^/api/users, roles: IS_AUTHENTICATED_FULLY, methods: [GET, PUT, DELETE, PATCH] }
         # Paramétrage des droits d'accès à l'api 
         #- { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
