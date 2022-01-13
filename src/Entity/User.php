@@ -31,19 +31,11 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *                  "path"="/send_payment",
  *                  "controller"=App\Controller\SendPayment::class 
  *               }, 
- *                 "api_sign_up"={
- *                  "method"="POST",
- *                  "path"="sign_up",
- *               },  
- * 
- *                  "dashboard/admin/users"={
+ *                 "dashboard/admin/users"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users",
- *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},
- *                  
- *               }, 
- *                 
- *                 
+ *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},                 
+ *               },            
  *          },
  *      itemOperations={
  * 
