@@ -31,16 +31,16 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
  *                  "path"="/send_payment",
  *                  "controller"=App\Controller\SendPayment::class 
  *               }, 
- *                 "dashboard/admin/users"={
+ *                "dashboard/admin/users"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users",
  *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},                 
  *               },
- *                 "api_register"={
+ *                "api_register"={
  *                  "method"="POST",
  *                  "path"="register",
  *                  "denormalization_context"={"groups"={"users:register", "enable_max_depth"=true}},   
- *                  }            
+ *                },                                 
  *          },
  *      itemOperations={
  * 
@@ -133,7 +133,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user:collection", "read:infosperso", "users:register"})
+     * @Groups({"user:collection", "read:infosperso", "users:register", "users:login"})
      */
     private $email;
 
@@ -146,7 +146,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"users:register"})
+     * @Groups({"users:register", "users:login"})
      */
     private $password;
 
