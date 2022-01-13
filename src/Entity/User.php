@@ -140,61 +140,62 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user"})
+     * @Groups({"user:collection", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user:collection", "admin:usersid", "read:infosperso"})
+     * @Groups({"user:collection", "user:write", "admin:usersid", "read:infosperso"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"user:item", "admin:usersid"})
+     * @Groups({"user:item", "admin:usersid", "user:write"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups({"user:write"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
+     * @Groups({"comments:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"user:item", "read:infosperso", "admin:usersid"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item", "read:infosperso", "admin:usersid"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item", "read:infosperso", "admin:usersid"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"user:item", "read:infosperso", "admin:usersid"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $birthdate;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"user:item", "read:infosperso", "admin:usersid"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $zipCode;
 
@@ -218,19 +219,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
+     * @Groups({"comments:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item", "read:infosperso", "admin:usersid"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection"})
+     * @Groups({"comments:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection"})
      */
     private $picture;
 

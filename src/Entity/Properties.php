@@ -76,7 +76,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  
  *          }
  * )
- * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "partial", "capacity": "exact", "lat": "exact", "long": "exact", "reservations.comments.value": "exact"})
+ * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "partial", "capacity": "exact", "lat": "exact", "longitude": "exact", "reservations.comments.value": "exact"})
  * @ApiFilter(RangeFilter::class, properties= {"surface", "rooms", "bedrooms", "price"})
  * @ApiFilter(DateFilter::class, properties= {"reservations.startdate"})
  * @ApiFilter(OrderFilter::class, properties= {"price": "ASC", "price": "DESC", "surface": "ASC", "surface" : "DESC", "rooms": "ASC", "rooms": "DESC"})
@@ -138,18 +138,17 @@ class Properties
      */
     private $city;
 
-    /**
-     * @ORM\Column(type="decimal", precision=8, scale=5)
-     * @Groups({"properties:write", "propertiesid:item", "properties:item", "owner:propertiesid", "properties:collection"})
-     * 
-     */
-    private $lat;
-
-    /**
-     * @ORM\Column(type="decimal", precision=8, scale=5)
+      /**
+     * @ORM\Column(type="float")
      * @Groups({"properties:write", "propertiesid:item", "properties:item", "owner:propertiesid", "properties:collection"})
      */
-    private $long;
+    private $latitude;
+ 
+      /**
+     * @ORM\Column(type="float")
+     * @Groups({"properties:write", "propertiesid:item", "properties:item", "owner:propertiesid", "properties:collection"})
+     */
+    private $longitude;
 
     /**
      * @ORM\Column(type="integer")
@@ -234,6 +233,8 @@ class Properties
      * @Groups({"properties:user", "propertiesid:item", "reservations:user", "owner:propertiesid", "owner:reservid"})
      */
     private $user;
+
+   
 
    
 
@@ -336,30 +337,6 @@ class Properties
         return $this;
     }
 
-    public function getLat(): ?string
-    {
-        return $this->lat;
-    }
-
-    public function setLat(string $lat): self
-    {
-        $this->lat = $lat;
-
-        return $this;
-    }
-
-    public function getLongitude(): ?string
-    {
-        return $this->longitude;
-    }
-
-    public function setLongitude(string $longitude): self
-    {
-        $this->longitude = $longitude;
-
-        return $this;
-    }
-
     public function getBedrooms(): ?int
     {
         return $this->bedrooms;
@@ -372,12 +349,12 @@ class Properties
         return $this;
     }
 
-    public function getSurface(): ?string
+    public function getSurface(): ?int
     {
         return $this->surface;
     }
 
-    public function setSurface(string $surface): self
+    public function setSurface(int $surface): self
     {
         $this->surface = $surface;
 
@@ -554,6 +531,30 @@ class Properties
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getLatitude(): ?float
+    {
+        return $this->latitude;
+    }
+
+    public function setLatitude(float $latitude): self
+    {
+        $this->latitude = $latitude;
+
+        return $this;
+    }
+
+    public function getLongitude(): ?float
+    {
+        return $this->longitude;
+    }
+
+    public function setLongitude(float $longitude): self
+    {
+        $this->longitude = $longitude;
 
         return $this;
     }
