@@ -36,15 +36,15 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
             $properties[$i] = new Properties();
             $properties[$i]->setTitle($faker->randomElement($titles));
             $properties[$i]->setSlug($faker->text);
-            $properties[$i]->setPrice($faker->numberBetween($min = 20, $max = 200));
+            $properties[$i]->setPrice($faker->randomFloat($nbMaxDecimals = 2, $min= 20.00, $max = 200.00));
             $properties[$i]->setRooms($faker->randomDigitNotNull);
             $properties[$i]->setAddress($faker->streetAddress);
             $properties[$i]->setBooking($faker->randomDigitNotNull);
             $properties[$i]->setCity($faker->city);
-            $properties[$i]->setLat($faker->randomFloat($nbMaxDecimals = 8, $min= 48.212, $max = 48.089));
+            $properties[$i]->setLatitude($faker->randomFloat($nbMaxDecimals = 8, $min= 48.212, $max = 48.089));
             $properties[$i]->setLongitude($faker->randomFloat($nbMaxDecimals = 8, $min = 3.91, $max = 4.158));
             $properties[$i]->setBedrooms($faker->randomDigitNotNull);
-            $properties[$i]->setSurface(intval($faker->numberBetween($min = 1, $max = 853)));
+            $properties[$i]->setSurface($faker->numberBetween($min = 1, $max = 853));
             $properties[$i]->setReference('Categories '.$i);
             $properties[$i]->setPicture($i.".webp");
             $properties[$i]->setCountry($faker->country);
