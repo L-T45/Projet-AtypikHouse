@@ -143,11 +143,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-<<<<<<< HEAD
-     * @Groups({"user:collection", "user:write", "admin:usersid", "read:infosperso", "users:register"})
-=======
-     * @Groups({"user:collection", "read:infosperso", "users:register", "users:login"})
->>>>>>> Login
+     * @Groups({"user:collection", "user:write", "admin:usersid", "read:infosperso", "users:register", "users:login"})
      */
     private $email;
 
@@ -160,71 +156,43 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-<<<<<<< HEAD
-     * @Groups({"user:write", "users:register"})
-=======
-     * @Groups({"users:register", "users:login"})
->>>>>>> Login
+     * @Groups({"user:write", "users:register", "users:login"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
-<<<<<<< HEAD
-     * @Groups({"comments:item", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
-=======
-     * @Groups({"comments:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
->>>>>>> fcded9c6682a1ea38c3c141f37423f5b37fc4ea8
+     * @Groups({"comments:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="integer")
-<<<<<<< HEAD
-     * @Groups({"user:item", "read:infosperso", "users:register"})
-=======
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
->>>>>>> fcded9c6682a1ea38c3c141f37423f5b37fc4ea8
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
-<<<<<<< HEAD
-     * @Groups({"user:item", "read:infosperso","users:register"})
-=======
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
->>>>>>> fcded9c6682a1ea38c3c141f37423f5b37fc4ea8
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
-<<<<<<< HEAD
-     * @Groups({"user:item", "read:infosperso", "users:register"})
-=======
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
->>>>>>> fcded9c6682a1ea38c3c141f37423f5b37fc4ea8
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="date")
-<<<<<<< HEAD
-     * @Groups({"user:item", "read:infosperso", "users:register"})
-=======
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
->>>>>>> fcded9c6682a1ea38c3c141f37423f5b37fc4ea8
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
      */
     private $birthdate;
 
     /**
      * @ORM\Column(type="integer")
-<<<<<<< HEAD
-     * @Groups({"user:item", "read:infosperso", "users:register"})
-=======
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
->>>>>>> fcded9c6682a1ea38c3c141f37423f5b37fc4ea8
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
      */
     private $zipCode;
 
