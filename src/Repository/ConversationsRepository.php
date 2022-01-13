@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Conversations;
+use App\Entity\Messages;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method Conversations|null find($id, $lockMode = null, $lockVersion = null)
@@ -35,6 +38,40 @@ class ConversationsRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+    * @return Conversations[] Returns an array of Conversations objects
+    */
+
+    /*
+        SELECT
+ 
+            c,
+        
+            m.id
+        
+        FROM
+        
+        c
+        
+            LEFT JOIN m
+    
+                ON c.id = m.conversations_id
+                    
+        ORDER BY m.id DESC
+    */
+
+    public function findLatest():array
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb ->select('m.id, m.body, m.created_at, u.id, u.lastname, u.firstname, u.picture, c.id')
+            ->leftJoin('c.messages', 'm')
+            ->leftJoin('m.user', 'u')
+            ->orderBy('m.id', 'DESC');
+            // ->setMaxResults(1);
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Conversations

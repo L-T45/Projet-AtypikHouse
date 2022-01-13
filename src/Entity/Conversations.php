@@ -20,6 +20,18 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
+ *                "lastconversations"={
+ *                  "method"="GET",
+ *                  "path"="/home/lastconversations",
+ *                  "controller"=App\Controller\LastNewConversations::class,
+ *                  "normalization_context"={"groups"={"lastconversations:collection"}},
+ *                 
+ *               },
+ *                  "dashboard/admin/conversations"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/admin/conversations",
+ *                  "normalization_context"={"groups"={"admin:conversations", "enable_max_depth"=true}},  
+ *               },  
  *             
  *          },
  *      itemOperations={
@@ -42,7 +54,7 @@ class Conversations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"conversations:collection", "read:messages", "user:messages", "user:conversations"})
+     * @Groups({"conversations:collection", "admin:conversationsid", "users:collection", "read:messages", "admin:conversations", "lastconversations:collection", "user:messages", "user:conversations"})
      */
     private $id;
 
@@ -54,13 +66,13 @@ class Conversations
 
     /**
      * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="conversations")
-     * @Groups({"conversations:item", "user:conversations"})
+     * @Groups({"conversations:item", "admin:conversationsid", "user:conversations"})
      */
     private $messages;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="conversations")
-     * @Groups({"conversations:item", "user:conversations"})
+     * @Groups({"conversations:item", "read:conversationsid", "user:conversations", "admin:conversations", "admin:conversationsid", "lastconversations:collection"})
      */
     private $users;
 
