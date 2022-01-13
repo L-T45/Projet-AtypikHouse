@@ -76,8 +76,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  
  *          }
  * )
- * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "partial", "price": "exact", "capacity": "exact", "lat": "exact", "longitude": "exact", "reservations.comments.value": "exact"})
- * @ApiFilter(RangeFilter::class, properties= {"surface", "rooms", "bedrooms"})
+ * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "partial", "capacity": "exact", "lat": "exact", "longitude": "exact", "reservations.comments.value": "exact"})
+ * @ApiFilter(RangeFilter::class, properties= {"surface", "rooms", "bedrooms", "price"})
  * @ApiFilter(DateFilter::class, properties= {"reservations.startdate"})
  * @ApiFilter(OrderFilter::class, properties= {"id": "DESC", "price": "ASC", "price": "DESC", "reservations.comments.value": "ASC", "reservations.comments.value": "DESC"})
  * 
