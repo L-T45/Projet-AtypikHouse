@@ -17,13 +17,16 @@ class EquipementsFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
 
+
+        $attributes = ['Parking', 'barbecue', 'Animals', 'Transports', 'Wifi', 'Cuisine', 'Mini-bar'];
+
          // initialisation de l'objet Faker
          $faker = Faker\Factory::create('fr_FR');
          $equipements = Array();
         // create 20 Equipements! Bam!
-        for ($i = 0; $i < 9; $i++) {
+        for ($i = 0; $i < 7; $i++) {
             $equipements[$i] = new Equipements();
-            $equipements[$i]->setTitle($faker->text);;
+            $equipements[$i]->setTitle($attributes[$i]);
             $manager->persist($equipements[$i]);
         }
 
