@@ -76,10 +76,10 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  
  *          }
  * )
- * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "partial", "capacity": "exact", "lat": "exact", "longitude": "exact", "reservations.comments.value": "exact"})
+ * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "partial", "capacity": "exact", "lat": "exact", "long": "exact", "reservations.comments.value": "exact"})
  * @ApiFilter(RangeFilter::class, properties= {"surface", "rooms", "bedrooms", "price"})
  * @ApiFilter(DateFilter::class, properties= {"reservations.startdate"})
- * @ApiFilter(OrderFilter::class, properties= {"id": "DESC", "price": "ASC", "price": "DESC", "reservations.comments.value": "ASC", "reservations.comments.value": "DESC"})
+ * @ApiFilter(OrderFilter::class, properties= {"price": "ASC", "price": "DESC", "surface": "ASC", "surface" : "DESC", "rooms": "ASC", "rooms": "DESC"})
  * 
  */
 class Properties
@@ -149,7 +149,7 @@ class Properties
      * @ORM\Column(type="decimal", precision=8, scale=5)
      * @Groups({"properties:write", "propertiesid:item", "properties:item", "owner:propertiesid", "properties:collection"})
      */
-    private $longitude;
+    private $long;
 
     /**
      * @ORM\Column(type="integer")
