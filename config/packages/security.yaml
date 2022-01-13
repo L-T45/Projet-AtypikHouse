@@ -14,13 +14,12 @@ security:
                 class: App\Entity\User
                 property: email
                 
-    firewalls:
-            
+    firewalls:       
         login:
             pattern: ^/api/login
             stateless: true
             json_login:
-                check_path: /api/login
+                check_path: /api/login_check
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
