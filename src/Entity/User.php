@@ -61,17 +61,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"user:properties", "enable_max_depth"=true}}
  *                 },
- *                 
  *                  "delete_user"={
  *                     "method"="DELETE",
  *                     "path"="dashboard/user/{id}/personnal-infos/delete-account",
- *                 },
- *                  
+ *                 },                 
  *               "api_dashboard_user_messages"={
  *                  "method"="GET",
  *                  "path"="/dashboard/user/{id}/messages",
  *                  "normalization_context"={"groups"={"read:messages"}},
- *                 
  *               },
  *            
  *                 "dashboard/user/{id}/infos-personnelles"={
