@@ -283,10 +283,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $conversations;
 
     /**
-     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="user")
-     * @Groups({"read:reports", "admin:users"})
+     * @ORM\ManyToOne(targetEntity=Reports::class, inversedBy="users")
      */
     private $reports;
+
+ 
 
     public function __construct()
     {
@@ -721,33 +722,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Reports[]
-     */
-    public function getReports(): Collection
+    public function getReports(): ?Reports
     {
         return $this->reports;
     }
 
-    public function addReport(Reports $report): self
+    public function setReports(?Reports $reports): self
     {
-        if (!$this->reports->contains($report)) {
-            $this->reports[] = $report;
-            $report->setUser($this);
-        }
+        $this->reports = $reports;
 
         return $this;
     }
 
-    public function removeReport(Reports $report): self
-    {
-        if ($this->reports->removeElement($report)) {
-            // set the owning side to null (unless already changed)
-            if ($report->getUser() === $this) {
-                $report->setUser(null);
-            }
-        }
+   
 
-        return $this;
-    }
 }

@@ -234,6 +234,11 @@ class Properties
      */
     private $propertiesGalleries;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Reports::class, inversedBy="properties")
+     */
+    private $reports;
+
    
 
    
@@ -575,6 +580,18 @@ class Properties
                 $propertiesGallery->setProperties(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReports(): ?Reports
+    {
+        return $this->reports;
+    }
+
+    public function setReports(?Reports $reports): self
+    {
+        $this->reports = $reports;
 
         return $this;
     }

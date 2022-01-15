@@ -101,6 +101,11 @@ class Comments
      */
     private $reservations;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Reports::class, inversedBy="comments")
+     */
+    private $reports;
+
   
 
     public function __construct()
@@ -239,6 +244,18 @@ class Comments
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getReports(): ?Reports
+    {
+        return $this->reports;
+    }
+
+    public function setReports(?Reports $reports): self
+    {
+        $this->reports = $reports;
 
         return $this;
     }
