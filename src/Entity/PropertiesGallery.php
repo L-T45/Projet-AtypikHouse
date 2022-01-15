@@ -67,12 +67,7 @@ class PropertiesGallery
      */
     private $updated_at;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="propertiesgallery")
-     *  @Groups({"propertiesgallery:item"})
-     */
-    private $properties;
-
+ 
 
 
     public function __construct()
@@ -135,35 +130,7 @@ class PropertiesGallery
         return $this;
     }
 
-    /**
-     * @return Collection|Properties[]
-     */
-    public function getProperties(): Collection
-    {
-        return $this->properties;
-    }
-
-    public function addProperty(Properties $property): self
-    {
-        if (!$this->properties->contains($property)) {
-            $this->properties[] = $property;
-            $property->setPropertiesgallery($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProperty(Properties $property): self
-    {
-        if ($this->properties->removeElement($property)) {
-            // set the owning side to null (unless already changed)
-            if ($property->getPropertiesgallery() === $this) {
-                $property->setPropertiesgallery(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
     public function getDescription(): ?string
     {
