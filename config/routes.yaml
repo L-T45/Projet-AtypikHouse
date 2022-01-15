@@ -1,7 +1,7 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
-api_login_check:
+api_login:
    path: /api/login
    methods: [POST]
 
@@ -15,5 +15,6 @@ api_form_contact:
 
 api_decode_JWT_Token_Auth:
     path: /api/login_check
+    methods: [POST]
     controller: App\Token\DecodeJWTAuth::decodeJwtToken
 
