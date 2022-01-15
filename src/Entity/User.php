@@ -275,10 +275,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $conversations;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="users")
-     */
-    private $reports;
+   
+
+  
 
   
 
@@ -294,7 +293,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->payments = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->conversations = new ArrayCollection();
-        $this->reports = new ArrayCollection();
+       
 
     }
 
@@ -717,35 +716,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Reports[]
-     */
-    public function getReports(): Collection
-    {
-        return $this->reports;
-    }
+   
 
-    public function addReport(Reports $report): self
-    {
-        if (!$this->reports->contains($report)) {
-            $this->reports[] = $report;
-            $report->setUsers($this);
-        }
+   
 
-        return $this;
-    }
-
-    public function removeReport(Reports $report): self
-    {
-        if ($this->reports->removeElement($report)) {
-            // set the owning side to null (unless already changed)
-            if ($report->getUsers() === $this) {
-                $report->setUsers(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
    
 

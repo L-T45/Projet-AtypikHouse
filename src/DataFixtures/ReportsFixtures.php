@@ -19,6 +19,7 @@ class ReportsFixtures extends Fixture implements DependentFixtureInterface
     {
 
         $states=['accepté', 'rejeté', 'en attente'];
+      
 
          // initialisation de l'objet Faker
          $faker = Faker\Factory::create('fr_FR');
@@ -26,13 +27,18 @@ class ReportsFixtures extends Fixture implements DependentFixtureInterface
         // create 20 Reports! Bam!
         for ($i = 1; $i < 40; $i++) {
 
+            //$RandomObject = $faker->randomElement(1,3);
+
             $reports_categories[$i] =  $this->getReference('reports_categories_'. $faker->numberBetween(1,4));
-           
+           // $user[$i] =  $this->getReference('user_'.$faker->numberBetween(1,29));
+           // $comments[$i] =  $this->getReference('comments_'.$faker->numberBetween(1,29));
+           // $properties[$i] =  $this->getReference('properties_'.$faker->numberBetween(1,29));
 
             $reports[$i] = new Reports();
             $reports[$i]->setReportState($faker->randomElement($states));
             $reports[$i]->setDescription($faker->text(500));
             $reports[$i]->setReportscategories($reports_categories[$i]);
+
             $manager->persist($reports[$i]);
 
              // On enregistre les signalements dans une référence 
@@ -45,6 +51,7 @@ class ReportsFixtures extends Fixture implements DependentFixtureInterface
         public function getDependencies(){
             return [
                 ReportsCategoriesFixtures::class,
+               
                 
             ];
         }

@@ -22,11 +22,11 @@ class CommentsFixtures extends Fixture implements DependentFixtureInterface
          $faker = Faker\Factory::create('fr_FR');
          $comments = Array();
         // create 20 Comments! Bam!
-        for ($i = 0; $i < 9; $i++) {
+        for ($i = 0; $i < 200; $i++) {
 
             $reservations[$i] =  $this->getReference('reservations_'. $faker->numberBetween(1,8));
             $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,8));
-            $reports[$i] =  $this->getReference('reports_'. $faker->numberBetween(1,8));
+            
 
             $comments[$i] = new Comments();
             $comments[$i]->setBody($faker->text);
@@ -36,8 +36,10 @@ class CommentsFixtures extends Fixture implements DependentFixtureInterface
             $comments[$i]->setPropertypicture($faker->imageUrl($width = 640, $height = 480));
             $comments[$i]->setReservations($reservations[$i]);
             $comments[$i]->setUser($user[$i]);
-            $comments[$i]->setReports($reports[$i]);
             $manager->persist($comments[$i]);
+
+            // On enregistre les commentaires dans une référence 
+            $this->addReference('comments_'. $i, $comments[$i]);
         }
 
         $manager->flush();
@@ -47,7 +49,7 @@ class CommentsFixtures extends Fixture implements DependentFixtureInterface
             return [
                 ReservationsFixtures::class,
                 UserFixtures::class,
-                ReportsFixtures::class,
+               
                 
             ];
         }

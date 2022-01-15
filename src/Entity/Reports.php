@@ -90,23 +90,6 @@ class Reports
      */
     private $reportscategories;
 
- 
-
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
-     */
-    private $users;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Comments::class, inversedBy="reports")
-     */
-    private $comments;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reports")
-     */
-    private $properties;
-
    
 
   
@@ -116,9 +99,6 @@ class Reports
     {
         
         $this->created_at = new \DateTime();
-        $this->comments = new ArrayCollection();
-        $this->properties = new ArrayCollection();
-        $this->users = new ArrayCollection();
 
     }
 
@@ -179,64 +159,7 @@ class Reports
 
     
 
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
+   
 
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setReports($this);
-        }
 
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getReports() === $this) {
-                $user->setReports(null);
-            }
-        }
-
-        return $this;
-    }
-
-    public function setUsers(?User $users): self
-    {
-        $this->users = $users;
-
-        return $this;
-    }
-
-    public function getComments(): ?Comments
-    {
-        return $this->comments;
-    }
-
-    public function setComments(?Comments $comments): self
-    {
-        $this->comments = $comments;
-
-        return $this;
-    }
-
-    public function getProperties(): ?Properties
-    {
-        return $this->properties;
-    }
-
-    public function setProperties(?Properties $properties): self
-    {
-        $this->properties = $properties;
-
-        return $this;
-    }
 }
