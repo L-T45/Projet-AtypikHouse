@@ -36,7 +36,7 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
             $properties[$i] = new Properties();
             $properties[$i]->setTitle($faker->randomElement($titles));
             $properties[$i]->setSlug($faker->text);
-            $properties[$i]->setPrice($faker->randomFloat($nbMaxDecimals = 2, $min= 20.00, $max = 200.00));
+            $properties[$i]->setPrice($faker->numberBetween($min = 20, $max = 200));
             $properties[$i]->setRooms($faker->randomDigitNotNull);
             $properties[$i]->setAddress($faker->streetAddress);
             $properties[$i]->setBooking($faker->randomDigitNotNull);

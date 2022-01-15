@@ -79,10 +79,10 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  
  *          }
  * )
- * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "partial", "capacity": "exact", "latitude": "exact", "longitude": "exact", "reservations.comments.value": "exact"})
- * @ApiFilter(RangeFilter::class, properties= {"surface", "rooms", "bedrooms", "price"})
+ * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "exact", "categories.title": "exact", "latitude": "exact", "longitude": "exact", "reservations.comments.value": "exact"})
+ * @ApiFilter(RangeFilter::class, properties= {"surface", "rooms", "bedrooms", "price", "capacity"})
  * @ApiFilter(DateFilter::class, properties= {"reservations.startdate"})
- * @ApiFilter(OrderFilter::class, properties= {"price": "ASC", "price": "DESC", "surface": "ASC", "surface" : "DESC", "rooms": "ASC", "rooms": "DESC"})
+ * @ApiFilter(OrderFilter::class, properties= {"price": "ASC", "price": "DESC", "surface": "ASC", "surface" : "DESC", "rooms": "ASC", "rooms": "DESC", "capacity": "ASC", "capacity": "DESC" })
  * 
  */
 class Properties
@@ -111,8 +111,8 @@ class Properties
     private $slug;
 
     /**
-     * @ORM\Column(type="float")
-     * @Groups({"properties:write", "admin:commentsid", "propertiesid:item", "owner:reservid", "properties:item", "owner:propertiesid", "categories:item", "reservations:user", "read:commentsid", "properties:collection", "properties:create"})
+     * @ORM\Column(type="integer")
+     * @Groups({"properties:write", "admin:commentsid", "propertiesid:item", "owner:reservid", "properties:item", "owner:propertiesid", "categories:item", "reservations:user", "read:commentsid", "properties:collection"})
      */
     private $price;
 
@@ -225,11 +225,14 @@ class Properties
      */
     private $reservations;
 
+<<<<<<< HEAD
     /**
      * @ORM\ManyToOne(targetEntity=PropertiesGallery::class, inversedBy="properties")
      * @Groups({"properties:item", "propertiesid:item", "properties:write", "owner:propertiesid", "properties:create"})
      */
     private $propertiesgallery;
+=======
+>>>>>>> Routesv2
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="properties")
@@ -237,6 +240,23 @@ class Properties
      */
     private $user;
 
+<<<<<<< HEAD
+=======
+    /**
+     * @ORM\OneToMany(targetEntity=PropertiesGallery::class, mappedBy="properties")
+     */
+    private $propertiesGalleries;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Reports::class, inversedBy="properties")
+     */
+    private $reports;
+
+   
+
+   
+
+>>>>>>> Routesv2
     public function __construct()
     {
         $this->equipements = new ArrayCollection();
@@ -244,6 +264,7 @@ class Properties
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
         $this->comments = new ArrayCollection();
+        $this->propertiesGalleries = new ArrayCollection();
 
     }
 
@@ -480,18 +501,7 @@ class Properties
         return $this;
     }
 
-    public function getPropertiesgallery(): ?Propertiesgallery
-    {
-        return $this->propertiesgallery;
-    }
-
-    public function setPropertiesgallery(?Propertiesgallery $propertiesgallery): self
-    {
-        $this->propertiesgallery = $propertiesgallery;
-
-        return $this;
-    }
-
+   
     /**
      * @return Collection|Reservations[]
      */
@@ -554,6 +564,48 @@ class Properties
     public function setLongitude(float $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PropertiesGallery[]
+     */
+    public function getPropertiesGalleries(): Collection
+    {
+        return $this->propertiesGalleries;
+    }
+
+    public function addPropertiesGallery(PropertiesGallery $propertiesGallery): self
+    {
+        if (!$this->propertiesGalleries->contains($propertiesGallery)) {
+            $this->propertiesGalleries[] = $propertiesGallery;
+            $propertiesGallery->setProperties($this);
+        }
+
+        return $this;
+    }
+
+    public function removePropertiesGallery(PropertiesGallery $propertiesGallery): self
+    {
+        if ($this->propertiesGalleries->removeElement($propertiesGallery)) {
+            // set the owning side to null (unless already changed)
+            if ($propertiesGallery->getProperties() === $this) {
+                $propertiesGallery->setProperties(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getReports(): ?Reports
+    {
+        return $this->reports;
+    }
+
+    public function setReports(?Reports $reports): self
+    {
+        $this->reports = $reports;
 
         return $this;
     }
