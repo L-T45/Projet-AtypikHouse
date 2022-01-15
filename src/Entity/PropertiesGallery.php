@@ -77,7 +77,7 @@ class PropertiesGallery
 
     public function __construct()
     {
-        $this->properties = new ArrayCollection();
+       
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
     }

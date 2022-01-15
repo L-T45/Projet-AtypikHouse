@@ -30,8 +30,8 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 1; $i < 150; $i++) {
 
             $categories[$i] =  $this->getReference('categories_'. $faker->numberBetween(1,8));
-            $properties_gallery[$i] =  $this->getReference('properties_gallery_'. $faker->numberBetween(1,499));
             $user[$i] =  $this->getReference('user_'.$faker->numberBetween(1,29));
+            $reports[$i] =  $this->getReference('reports_'. $faker->numberBetween(1,8));
 
             $properties[$i] = new Properties();
             $properties[$i]->setTitle($faker->randomElement($titles));
@@ -41,8 +41,8 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
             $properties[$i]->setAddress($faker->streetAddress);
             $properties[$i]->setBooking($faker->randomDigitNotNull);
             $properties[$i]->setCity($faker->city);
-            $properties[$i]->setLatitude($faker->randomFloat($nbMaxDecimals = 8, $min= 48.212, $max = 48.089));
-            $properties[$i]->setLongitude($faker->randomFloat($nbMaxDecimals = 8, $min = 3.91, $max = 4.158));
+            $properties[$i]->setLatitude($faker->numberBetween($min= 47.81366152658748, $max = 47.87779313046071));
+            $properties[$i]->setLongitude($faker->numberBetween($min = 3.655042557455004, $max = 4.1354427951483785));
             $properties[$i]->setBedrooms($faker->randomDigitNotNull);
             $properties[$i]->setSurface($faker->numberBetween($min = 1, $max = 853));
             $properties[$i]->setReference('Categories '.$i);
@@ -51,8 +51,8 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
             $properties[$i]->setCapacity($faker->randomDigitNotNull);
             $properties[$i]->setZipCode(intval($faker->postcode));
             $properties[$i]->setCategories($categories[$i]);
-            $properties[$i]->setPropertiesgallery($properties_gallery[$i]);
             $properties[$i]->setUser($user[$i]);
+            $properties[$i]->setReports($reports[$i]);
             $manager->persist($properties[$i]);
 
              // On enregistre les propriétés dans une référence 
@@ -65,8 +65,8 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
         public function getDependencies(){
             return [
                 CategoriesFixtures::class,
-                PropertiesGalleryFixtures::class,
                 UserFixtures::class,
+                ReportsFixtures::class,
             ];
         }
 }
