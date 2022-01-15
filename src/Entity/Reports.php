@@ -9,6 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ORM\Entity(repositoryClass=ReportsRepository::class)
@@ -26,6 +31,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "path"="dashboard/admin/reports",
  *                  "normalization_context"={"groups"={"admin:reports", "enable_max_depth"=true}},  
  *               },  
+ *                
  *               
  *          },
  *      itemOperations={
@@ -47,6 +53,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *               },  
  *          }
  * )
+ * @ApiFilter(DateFilter::class, properties= {"created_at"})
+ * @ApiFilter(OrderFilter::class, properties= {"reportscategories.title": "ASC", "reportscategories.title": "DESC", "comments.id": "ASC", "comments.id": "DESC"})
  */
 class Reports
 {
@@ -82,22 +90,24 @@ class Reports
      */
     private $reportscategories;
 
-   
+ 
 
     /**
-     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reports")
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
+     */
+    private $users;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Comments::class, inversedBy="reports")
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="reports")
+     * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reports")
      */
     private $properties;
 
-    /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="reports")
-     */
-    private $users;
+   
 
   
 
@@ -170,66 +180,6 @@ class Reports
     
 
     /**
-     * @return Collection|Comments[]
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
-
-    public function addComment(Comments $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setReports($this);
-        }
-
-        return $this;
-    }
-
-    public function removeComment(Comments $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getReports() === $this) {
-                $comment->setReports(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Properties[]
-     */
-    public function getProperties(): Collection
-    {
-        return $this->properties;
-    }
-
-    public function addProperty(Properties $property): self
-    {
-        if (!$this->properties->contains($property)) {
-            $this->properties[] = $property;
-            $property->setReports($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProperty(Properties $property): self
-    {
-        if ($this->properties->removeElement($property)) {
-            // set the owning side to null (unless already changed)
-            if ($property->getReports() === $this) {
-                $property->setReports(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|User[]
      */
     public function getUsers(): Collection
@@ -255,6 +205,37 @@ class Reports
                 $user->setReports(null);
             }
         }
+
+        return $this;
+    }
+
+    public function setUsers(?User $users): self
+    {
+        $this->users = $users;
+
+        return $this;
+    }
+
+    public function getComments(): ?Comments
+    {
+        return $this->comments;
+    }
+
+    public function setComments(?Comments $comments): self
+    {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    public function getProperties(): ?Properties
+    {
+        return $this->properties;
+    }
+
+    public function setProperties(?Properties $properties): self
+    {
+        $this->properties = $properties;
 
         return $this;
     }

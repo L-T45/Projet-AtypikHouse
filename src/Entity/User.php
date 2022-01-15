@@ -127,9 +127,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  
  *          }
  * )
- * @ApiFilter(SearchFilter::class, properties= {"properties.id": "exact", "lastname": "exact"})
- * @ApiFilter(DateFilter::class, properties= {"reservations.startdate"})
- * @ApiFilter(OrderFilter::class, properties= {"id": "DESC", "price": "ASC", "price": "DESC", "reservations.comments.value": "ASC", "reservations.comments.value": "DESC"})
+ * @ApiFilter(SearchFilter::class, properties= {"properties.id": "exact", "lastname": "exact", "firstname" : "exact", "lastname": "partial", "firstname" : "partial"})
+ * @ApiFilter(OrderFilter::class, properties= {"roles": "DESC", "roles": "ASC", "lastname": "ASC", "firstname" : "DESC", "reservations.comments.value": "ASC", "reservations.comments.value": "DESC"})
  * 
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -277,9 +276,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $conversations;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Reports::class, inversedBy="users")
+     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="users")
      */
     private $reports;
+
+  
 
  
 
@@ -716,17 +717,37 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getReports(): ?Reports
+    /**
+     * @return Collection|Reports[]
+     */
+    public function getReports(): Collection
     {
         return $this->reports;
     }
 
-    public function setReports(?Reports $reports): self
+    public function addReport(Reports $report): self
     {
-        $this->reports = $reports;
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setUsers($this);
+        }
 
         return $this;
     }
+
+    public function removeReport(Reports $report): self
+    {
+        if ($this->reports->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getUsers() === $this) {
+                $report->setUsers(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
 
    
 

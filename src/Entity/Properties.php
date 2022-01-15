@@ -239,13 +239,11 @@ class Properties
     private $propertiesGalleries;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Reports::class, inversedBy="properties")
-     * @Groups({"properties:item", "propertiesid:item", "properties:write", "owner:propertiesid"})
+     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="properties")
      */
     private $reports;
 
-   
-
+ 
    
 
     public function __construct()
@@ -256,6 +254,7 @@ class Properties
         $this->updated_at = new \DateTime();
         $this->comments = new ArrayCollection();
         $this->propertiesGalleries = new ArrayCollection();
+        $this->reports = new ArrayCollection();
 
     }
 
@@ -589,14 +588,32 @@ class Properties
         return $this;
     }
 
-    public function getReports(): ?Reports
+    /**
+     * @return Collection|Reports[]
+     */
+    public function getReports(): Collection
     {
         return $this->reports;
     }
 
-    public function setReports(?Reports $reports): self
+    public function addReport(Reports $report): self
     {
-        $this->reports = $reports;
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setProperties($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReport(Reports $report): self
+    {
+        if ($this->reports->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getProperties() === $this) {
+                $report->setProperties(null);
+            }
+        }
 
         return $this;
     }

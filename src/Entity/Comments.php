@@ -9,6 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ORM\Entity(repositoryClass=CommentsRepository::class)
@@ -54,6 +59,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                
  *          }
  * )
+ * 
+ * @ApiFilter(DateFilter::class, properties= {"created_at"})
+ * @ApiFilter(OrderFilter::class, properties= {"reservations.properties.title": "ASC",  "reservations.properties.title": "DESC", "value" : "ASC", "value" : "DESC"})
  */
 class Comments
 {
@@ -102,9 +110,11 @@ class Comments
     private $reservations;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Reports::class, inversedBy="comments")
+     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="comments")
      */
     private $reports;
+
+   
 
   
 
@@ -112,6 +122,7 @@ class Comments
     {
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+        $this->reports = new ArrayCollection();
         
     }
 
@@ -248,17 +259,37 @@ class Comments
         return $this;
     }
 
-    public function getReports(): ?Reports
+    /**
+     * @return Collection|Reports[]
+     */
+    public function getReports(): Collection
     {
         return $this->reports;
     }
 
-    public function setReports(?Reports $reports): self
+    public function addReport(Reports $report): self
     {
-        $this->reports = $reports;
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setComments($this);
+        }
 
         return $this;
     }
+
+    public function removeReport(Reports $report): self
+    {
+        if ($this->reports->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getComments() === $this) {
+                $report->setComments(null);
+            }
+        }
+
+        return $this;
+    }
+
+   
 
    
 }
