@@ -23,6 +23,7 @@ class ReportsCategoriesFixtures extends Fixture
          $reports_categories = Array();
         // create 20 Reports! Bam!
         for ($i = 0; $i < 6; $i++) {
+            
             $reports_categories[$i] = new ReportsCategories();
             $reports_categories[$i]->setTitle($reportscategories[$i]);
             $manager->persist($reports_categories[$i]);
