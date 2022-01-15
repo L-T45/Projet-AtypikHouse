@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ReportsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
@@ -80,11 +82,22 @@ class Reports
      */
     private $reportscategories;
 
+   
+
     /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
-     * @Groups({"read:reportsid", "admin:reportsid", "admin:reports"})
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reports")
      */
-    private $user;
+    private $comments;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="reports")
+     */
+    private $properties;
+
+    /**
+     * @ORM\OneToMany(targetEntity=User::class, mappedBy="reports")
+     */
+    private $users;
 
   
 
@@ -93,6 +106,9 @@ class Reports
     {
         
         $this->created_at = new \DateTime();
+        $this->comments = new ArrayCollection();
+        $this->properties = new ArrayCollection();
+        $this->users = new ArrayCollection();
 
     }
 
@@ -151,14 +167,94 @@ class Reports
         return $this;
     }
 
-    public function getUser(): ?User
+    
+
+    /**
+     * @return Collection|Comments[]
+     */
+    public function getComments(): Collection
     {
-        return $this->user;
+        return $this->comments;
     }
 
-    public function setUser(?User $user): self
+    public function addComment(Comments $comment): self
     {
-        $this->user = $user;
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setReports($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comments $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getReports() === $this) {
+                $comment->setReports(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Properties[]
+     */
+    public function getProperties(): Collection
+    {
+        return $this->properties;
+    }
+
+    public function addProperty(Properties $property): self
+    {
+        if (!$this->properties->contains($property)) {
+            $this->properties[] = $property;
+            $property->setReports($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProperty(Properties $property): self
+    {
+        if ($this->properties->removeElement($property)) {
+            // set the owning side to null (unless already changed)
+            if ($property->getReports() === $this) {
+                $property->setReports(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->setReports($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            // set the owning side to null (unless already changed)
+            if ($user->getReports() === $this) {
+                $user->setReports(null);
+            }
+        }
 
         return $this;
     }
