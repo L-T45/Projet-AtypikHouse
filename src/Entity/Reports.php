@@ -54,31 +54,31 @@ class Reports
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reports:collection", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reports:collection", "read:reports", "propertiesid:item", "read:reportsid", "admin:reports", "admin:reportsid"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"reports:collection", "reports:write", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reports:collection", "reports:write", "propertiesid:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
      */
     private $reportstate;
 
       /**
      * @ORM\Column(type="text")
-     * @Groups({"reports:collection", "reports:write", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reports:collection", "propertiesid:item", "reports:write", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reports:item", "read:reportsid", "admin:reportsid"})
+     * @Groups({"reports:item", "read:reportsid", "admin:reportsid", "propertiesid:item"})
      */
     private $created_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=ReportsCategories::class, inversedBy="reports")
-     * @Groups({"reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid", "propertiesid:item"})
      */
     private $reportscategories;
 

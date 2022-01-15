@@ -48,7 +48,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *          },
  *      itemOperations={
  * 
- *          "get"={"normalization_context"={"groups"={"propertiesid:item"}}},       
+ *          "get"={"normalization_context"={"groups"={"propertiesid:item", "properties:id"}}},       
  *          "put"={},
  *          "delete"={},
  *               "dashboard_admin_properties_id"={
@@ -234,11 +234,13 @@ class Properties
 
     /**
      * @ORM\OneToMany(targetEntity=PropertiesGallery::class, mappedBy="properties")
+     * @Groups({"properties:item", "propertiesid:item", "properties:write", "owner:propertiesid"})
      */
     private $propertiesGalleries;
 
     /**
      * @ORM\ManyToOne(targetEntity=Reports::class, inversedBy="properties")
+     * @Groups({"properties:item", "propertiesid:item", "properties:write", "owner:propertiesid"})
      */
     private $reports;
 
