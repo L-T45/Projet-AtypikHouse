@@ -229,6 +229,11 @@ class Properties
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity=PropertiesGallery::class, mappedBy="properties")
+     */
+    private $propertiesGalleries;
+
    
 
    
@@ -240,6 +245,7 @@ class Properties
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
         $this->comments = new ArrayCollection();
+        $this->propertiesGalleries = new ArrayCollection();
 
     }
 
@@ -539,6 +545,36 @@ class Properties
     public function setLongitude(float $longitude): self
     {
         $this->longitude = $longitude;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PropertiesGallery[]
+     */
+    public function getPropertiesGalleries(): Collection
+    {
+        return $this->propertiesGalleries;
+    }
+
+    public function addPropertiesGallery(PropertiesGallery $propertiesGallery): self
+    {
+        if (!$this->propertiesGalleries->contains($propertiesGallery)) {
+            $this->propertiesGalleries[] = $propertiesGallery;
+            $propertiesGallery->setProperties($this);
+        }
+
+        return $this;
+    }
+
+    public function removePropertiesGallery(PropertiesGallery $propertiesGallery): self
+    {
+        if ($this->propertiesGalleries->removeElement($propertiesGallery)) {
+            // set the owning side to null (unless already changed)
+            if ($propertiesGallery->getProperties() === $this) {
+                $propertiesGallery->setProperties(null);
+            }
+        }
 
         return $this;
     }

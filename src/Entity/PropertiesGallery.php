@@ -67,6 +67,11 @@ class PropertiesGallery
      */
     private $updated_at;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="propertiesGalleries")
+     */
+    private $properties;
+
  
 
 
@@ -140,6 +145,18 @@ class PropertiesGallery
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getProperties(): ?Properties
+    {
+        return $this->properties;
+    }
+
+    public function setProperties(?Properties $properties): self
+    {
+        $this->properties = $properties;
 
         return $this;
     }
