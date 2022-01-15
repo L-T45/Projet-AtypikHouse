@@ -27,7 +27,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         // create 20 User! Bam!
         for ($i = 1; $i < 32; $i++) {
 
-          $reports[$i] =  $this->getReference('reports_'. $faker->numberBetween(1,30));
+          
 
             $user[$i] = new User();
             $user[$i]->setEmail($faker->email);        
@@ -44,7 +44,6 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             $user[$i]->setCountry($faker->country);
             $user[$i]->setPicture($i.".webp");
             $user[$i]->setIsBlocked($faker->numberBetween($min = 0, $max = 1));
-            $user[$i]->setReports($reports[$i]);
             $manager->persist($user[$i]);
 
              // On enregistre les utilisateurs dans une référence 

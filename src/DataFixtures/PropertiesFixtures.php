@@ -31,7 +31,7 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
 
             $categories[$i] =  $this->getReference('categories_'. $faker->numberBetween(1,8));
             $user[$i] =  $this->getReference('user_'.$faker->numberBetween(1,29));
-            $reports[$i] =  $this->getReference('reports_'. $faker->numberBetween(1,8));
+            
 
             $properties[$i] = new Properties();
             $properties[$i]->setTitle($faker->randomElement($titles));
@@ -51,8 +51,6 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
             $properties[$i]->setCapacity($faker->randomDigitNotNull);
             $properties[$i]->setZipCode(intval($faker->postcode));
             $properties[$i]->setCategories($categories[$i]);
-            $properties[$i]->setUser($user[$i]);
-            $properties[$i]->setReports($reports[$i]);
             $manager->persist($properties[$i]);
 
              // On enregistre les propriétés dans une référence 
@@ -66,7 +64,7 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
             return [
                 CategoriesFixtures::class,
                 UserFixtures::class,
-                ReportsFixtures::class,
+               
             ];
         }
 }

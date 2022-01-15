@@ -9,6 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ORM\Entity(repositoryClass=ReportsRepository::class)
@@ -26,6 +31,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "path"="dashboard/admin/reports",
  *                  "normalization_context"={"groups"={"admin:reports", "enable_max_depth"=true}},  
  *               },  
+ *                
  *               
  *          },
  *      itemOperations={
@@ -47,6 +53,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *               },  
  *          }
  * )
+ * @ApiFilter(DateFilter::class, properties= {"created_at"})
+ * @ApiFilter(OrderFilter::class, properties= {"reportscategories.title": "ASC", "reportscategories.title": "DESC", "comments.id": "ASC", "comments.id": "DESC"})
  */
 class Reports
 {
@@ -54,50 +62,35 @@ class Reports
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reports:collection", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reports:collection", "read:reports", "propertiesid:item", "read:reportsid", "admin:reports", "admin:reportsid"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"reports:collection", "reports:write", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reports:collection", "reports:write", "propertiesid:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
      */
     private $reportstate;
 
       /**
      * @ORM\Column(type="text")
-     * @Groups({"reports:collection", "reports:write", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reports:collection", "propertiesid:item", "reports:write", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reports:item", "read:reportsid", "admin:reportsid"})
+     * @Groups({"reports:item", "read:reportsid", "admin:reportsid", "propertiesid:item"})
      */
     private $created_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=ReportsCategories::class, inversedBy="reports")
-     * @Groups({"reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid", "propertiesid:item"})
      */
     private $reportscategories;
 
    
-
-    /**
-     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reports")
-     */
-    private $comments;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="reports")
-     */
-    private $properties;
-
-    /**
-     * @ORM\OneToMany(targetEntity=User::class, mappedBy="reports")
-     */
-    private $users;
 
   
 
@@ -106,9 +99,6 @@ class Reports
     {
         
         $this->created_at = new \DateTime();
-        $this->comments = new ArrayCollection();
-        $this->properties = new ArrayCollection();
-        $this->users = new ArrayCollection();
 
     }
 
@@ -169,93 +159,7 @@ class Reports
 
     
 
-    /**
-     * @return Collection|Comments[]
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
+   
 
-    public function addComment(Comments $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setReports($this);
-        }
 
-        return $this;
-    }
-
-    public function removeComment(Comments $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getReports() === $this) {
-                $comment->setReports(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Properties[]
-     */
-    public function getProperties(): Collection
-    {
-        return $this->properties;
-    }
-
-    public function addProperty(Properties $property): self
-    {
-        if (!$this->properties->contains($property)) {
-            $this->properties[] = $property;
-            $property->setReports($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProperty(Properties $property): self
-    {
-        if ($this->properties->removeElement($property)) {
-            // set the owning side to null (unless already changed)
-            if ($property->getReports() === $this) {
-                $property->setReports(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|User[]
-     */
-    public function getUsers(): Collection
-    {
-        return $this->users;
-    }
-
-    public function addUser(User $user): self
-    {
-        if (!$this->users->contains($user)) {
-            $this->users[] = $user;
-            $user->setReports($this);
-        }
-
-        return $this;
-    }
-
-    public function removeUser(User $user): self
-    {
-        if ($this->users->removeElement($user)) {
-            // set the owning side to null (unless already changed)
-            if ($user->getReports() === $this) {
-                $user->setReports(null);
-            }
-        }
-
-        return $this;
-    }
 }
