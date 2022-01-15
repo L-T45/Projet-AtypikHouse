@@ -225,14 +225,6 @@ class Properties
      */
     private $reservations;
 
-<<<<<<< HEAD
-    /**
-     * @ORM\ManyToOne(targetEntity=PropertiesGallery::class, inversedBy="properties")
-     * @Groups({"properties:item", "propertiesid:item", "properties:write", "owner:propertiesid", "properties:create"})
-     */
-    private $propertiesgallery;
-=======
->>>>>>> Routesv2
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="properties")
@@ -240,8 +232,6 @@ class Properties
      */
     private $user;
 
-<<<<<<< HEAD
-=======
     /**
      * @ORM\OneToMany(targetEntity=PropertiesGallery::class, mappedBy="properties")
      */
@@ -256,7 +246,6 @@ class Properties
 
    
 
->>>>>>> Routesv2
     public function __construct()
     {
         $this->equipements = new ArrayCollection();
