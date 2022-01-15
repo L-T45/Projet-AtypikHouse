@@ -156,7 +156,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"user:item", "admin:usersid", "user:write"})
+     * @Groups({"user:item", "admin:usersid", "admin:users", "user:write"})
      */
     private $roles = [];
 
