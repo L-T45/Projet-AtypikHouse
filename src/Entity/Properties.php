@@ -222,11 +222,6 @@ class Properties
      */
     private $reservations;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=PropertiesGallery::class, inversedBy="properties")
-     * @Groups({"properties:item", "propertiesid:item", "properties:write", "owner:propertiesid"})
-     */
-    private $propertiesgallery;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="properties")
@@ -481,18 +476,7 @@ class Properties
         return $this;
     }
 
-    public function getPropertiesgallery(): ?Propertiesgallery
-    {
-        return $this->propertiesgallery;
-    }
-
-    public function setPropertiesgallery(?Propertiesgallery $propertiesgallery): self
-    {
-        $this->propertiesgallery = $propertiesgallery;
-
-        return $this;
-    }
-
+   
     /**
      * @return Collection|Reservations[]
      */
