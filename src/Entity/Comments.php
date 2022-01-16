@@ -109,6 +109,11 @@ class Comments
      */
     private $reservations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="comments")
+     */
+    private $reports;
+
  
 
    
@@ -119,6 +124,7 @@ class Comments
     {
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+        $this->reports = new ArrayCollection();
         
         
     }
@@ -252,6 +258,36 @@ class Comments
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reports[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
+    }
+
+    public function addReport(Reports $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setComments($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReport(Reports $report): self
+    {
+        if ($this->reports->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getComments() === $this) {
+                $report->setComments(null);
+            }
+        }
 
         return $this;
     }

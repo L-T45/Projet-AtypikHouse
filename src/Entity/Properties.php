@@ -238,6 +238,11 @@ class Properties
      */
     private $propertiesGalleries;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="properties")
+     */
+    private $reports;
+
  
 
  
@@ -251,6 +256,7 @@ class Properties
         $this->updated_at = new \DateTime();
         $this->comments = new ArrayCollection();
         $this->propertiesGalleries = new ArrayCollection();
+        $this->reports = new ArrayCollection();
        
 
     }
@@ -579,6 +585,36 @@ class Properties
             // set the owning side to null (unless already changed)
             if ($propertiesGallery->getProperties() === $this) {
                 $propertiesGallery->setProperties(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Reports[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
+    }
+
+    public function addReport(Reports $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setProperties($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReport(Reports $report): self
+    {
+        if ($this->reports->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getProperties() === $this) {
+                $report->setProperties(null);
             }
         }
 
