@@ -1,22 +1,23 @@
 <?php
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+namespace App\Token;
 
-use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
+
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request; 
+use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
 
 class DecodeJWTAuth extends AbstractController
 {
-    //private $token;
+    private $token;
 
-    public function __construct(TokenStorageInterface $tokenStorageInterface, JWTTokenManagerInterface $jwtManager)
-        {
-            $this->jwtManager = $jwtManager;
-            $this->tokenStorageInterface = $tokenStorageInterface;
-        }
+    public function decodeJwtToken(JWTEncoderInterface $jwtManager, Request $request)
+    {   
+        //récupère le token envoyé au front 
+        $data = json_decode( $request->getContent(), true );
+        $token = $data['token'];
+        $decodedJwtToken = $jwtManager->decode($token);
 
-    public function decodeJwtToken(TokenStorageInterface $tokenStorageInterface, JWTTokenManagerInterface $jwtManager)
-    {
-        $decodedJwtToken = $this->jwtManager->decode($this->tokenStorageInterface->getToken());
+        
     }
 }
