@@ -33,25 +33,21 @@ class DecodeJWTAuth extends AbstractController
         $data = json_decode( $request->getContent(), true );
         $token = $data['token'];
         $decodedJwtToken = $jwtManager->decode($token);
-        //dd($decodedJwtToken);
         $decodedJwtTokenCheck = $decodedJwtToken;
 
         if($decodedJwtTokenCheck =! ''){
             $username = serialize($decodedJwtToken);
-            //dd($username);
             $username = $this->cutChaine($username, '"username";s:', ';'); 
             $username = $this->cutChaine($username, ':"', '"'); 
             $usernameCheck = $username;
-            //dd($username);
 
             if($usernameCheck =! ''){
                 $this->UserRepository = $UserRepository;
                 $findUser = $this->UserRepository->findByEmail($username);
-                //dd($findUser);
                 $findUserCheck = $findUser;
 
                 if($findUserCheck =! ''){
-                    return new JsonResponse( [ 'status' => '200', 'Infos utilisateur' => $findUser ], JsonResponse::HTTP_CREATED ); 
+                    return new JsonResponse( [ 'status' => '200', 'User' => $findUser ], JsonResponse::HTTP_CREATED ); 
                 }else{
                     return new JsonResponse( [ 'status' => '500', 'title' => 'Server Error', 'message' => "Erreur de récupération des données de l'utilisateur" ], JsonResponse::HTTP_CREATED ); 
                 }
