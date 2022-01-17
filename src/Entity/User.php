@@ -61,17 +61,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"user:properties", "enable_max_depth"=true}}
  *                 },
- *                 
  *                  "delete_user"={
  *                     "method"="DELETE",
  *                     "path"="dashboard/user/{id}/personnal-infos/delete-account",
- *                 },
- *                  
+ *                 },                 
  *               "api_dashboard_user_messages"={
  *                  "method"="GET",
  *                  "path"="/dashboard/user/{id}/messages",
  *                  "normalization_context"={"groups"={"read:messages"}},
- *                 
  *               },
  *            
  *                 "dashboard/user/{id}/infos-personnelles"={
@@ -98,12 +95,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               },  
  *                  "dashboard/user/{id}/reports"={
  *                  "method"="GET",
+ *                  "force_eager"=false,
  *                  "path"="dashboard/user/{id}/reports",
  *                  "normalization_context"={"groups"={"read:reports", "enable_max_depth"=true}}, 
  *                  
  *               },  
  *                  "dashboard/owner/{id}/properties"={
  *                  "method"="GET",
+ *                  "force_eager"=false,
  *                  "path"="dashboard/owner/{id}/properties",
  *                  "normalization_context"={"groups"={"owner:properties", "enable_max_depth"=true}}, 
  *                  
@@ -112,12 +111,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                 
  *                  "dashboard/owner/{id}/reservations"={
  *                  "method"="GET",
+ *                  "force_eager"=false,
  *                  "path"="dashboard/owner/{id}/reservations",
  *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},
  *                  
  *               },  
  *                  "dashboard/admin/users/{id}"={
  *                  "method"="GET",
+ *                  "force_eager"=false,
  *                  "path"="dashboard/admin/users/{id}",
  *                  "normalization_context"={"groups"={"admin:usersid", "admin:usersconv", "enable_max_depth"=true}},
  *                  
@@ -126,9 +127,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  
  *          }
  * )
- * @ApiFilter(SearchFilter::class, properties= {"properties.id": "exact", "lastname": "exact"})
- * @ApiFilter(DateFilter::class, properties= {"reservations.startdate"})
- * @ApiFilter(OrderFilter::class, properties= {"id": "DESC", "price": "ASC", "price": "DESC", "reservations.comments.value": "ASC", "reservations.comments.value": "DESC"})
+ * @ApiFilter(SearchFilter::class, properties= {"properties.id": "exact", "lastname": "exact", "firstname" : "exact", "lastname": "partial", "firstname" : "partial"})
+ * @ApiFilter(OrderFilter::class, properties= {"roles": "DESC", "roles": "ASC", "lastname": "ASC", "firstname" : "DESC", "reservations.comments.value": "ASC", "reservations.comments.value": "DESC"})
  * 
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -137,7 +137,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user"})
+     * @Groups({"user:collection", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user"})
      */
     private $id;
 
@@ -149,7 +149,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"user:item", "admin:usersid", "user:write", "users:register"})
+     * @Groups({"user:item", "admin:usersid", "admin:users", "user:write", "users:register"})
      */
     private $roles = [];
 
@@ -162,7 +162,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
+     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
      */
     private $lastname;
 
@@ -216,7 +216,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
+     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
      */
     private $firstname;
 
@@ -228,7 +228,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection", "users:register"})
+     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection", "users:register"})
      */
     private $picture;
 
@@ -275,11 +275,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $conversations;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="user")
-     * @Groups({"read:reports", "admin:users"})
-     */
-    private $reports;
+   
+
+  
+
+  
+
+ 
 
     public function __construct()
     {
@@ -291,7 +293,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->payments = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->conversations = new ArrayCollection();
-        $this->reports = new ArrayCollection();
+       
 
     }
 
@@ -456,24 +458,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTime $created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): self
+    public function setUpdatedAt(\DateTime $updated_at): self
     {
         $this->updated_at = $updated_at;
 
@@ -714,33 +716,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Reports[]
-     */
-    public function getReports(): Collection
-    {
-        return $this->reports;
-    }
+   
 
-    public function addReport(Reports $report): self
-    {
-        if (!$this->reports->contains($report)) {
-            $this->reports[] = $report;
-            $report->setUser($this);
-        }
+   
 
-        return $this;
-    }
+   
 
-    public function removeReport(Reports $report): self
-    {
-        if ($this->reports->removeElement($report)) {
-            // set the owning side to null (unless already changed)
-            if ($report->getUser() === $this) {
-                $report->setUser(null);
-            }
-        }
+   
 
-        return $this;
-    }
+   
+
 }

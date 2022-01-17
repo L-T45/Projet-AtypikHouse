@@ -130,14 +130,14 @@ class Reservations
       
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
-     * @Groups({"reserv:user", "owner:reserv", "owner:reservid", "admin:reserv"})
+     * @Groups({"reserv:user", "owner:reserv", "owner:reservid", "admin:reserv", "propertiesid:item"})
      * 
      */
     private $user;
 
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
-     * @Groups({"reservations:item", "reservations:user", "owner:propertiesid", "properties:item", "properties:collection", "admin:usersid"})
+     * @Groups({"reservations:item", "propertiesid:item", "reservations:user", "owner:propertiesid", "properties:item", "properties:collection", "admin:usersid"})
      */
     private $comments;
 

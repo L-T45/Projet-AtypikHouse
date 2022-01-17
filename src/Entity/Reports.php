@@ -3,10 +3,17 @@
 namespace App\Entity;
 
 use App\Repository\ReportsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ORM\Entity(repositoryClass=ReportsRepository::class)
@@ -24,6 +31,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "path"="dashboard/admin/reports",
  *                  "normalization_context"={"groups"={"admin:reports", "enable_max_depth"=true}},  
  *               },  
+ *                
  *               
  *          },
  *      itemOperations={
@@ -45,6 +53,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *               },  
  *          }
  * )
+ * @ApiFilter(DateFilter::class, properties= {"created_at"})
+ * @ApiFilter(OrderFilter::class, properties= {"reportscategories.title": "ASC", "reportscategories.title": "DESC", "comments.id": "ASC", "comments.id": "DESC"})
  */
 class Reports
 {
@@ -52,39 +62,35 @@ class Reports
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reports:collection", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reports:collection", "read:reports", "propertiesid:item", "read:reportsid", "admin:reports", "admin:reportsid"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"reports:collection", "reports:write", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reports:collection", "reports:write", "propertiesid:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
      */
     private $reportstate;
 
       /**
      * @ORM\Column(type="text")
-     * @Groups({"reports:collection", "reports:write", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reports:collection", "propertiesid:item", "reports:write", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reports:item", "read:reportsid", "admin:reportsid"})
+     * @Groups({"reports:item", "read:reportsid", "admin:reportsid", "propertiesid:item"})
      */
     private $created_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=ReportsCategories::class, inversedBy="reports")
-     * @Groups({"reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid", "propertiesid:item"})
      */
     private $reportscategories;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
-     * @Groups({"read:reportsid", "admin:reportsid", "admin:reports"})
-     */
-    private $user;
+   
 
   
 
@@ -151,15 +157,9 @@ class Reports
         return $this;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
+    
 
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
+   
 
-        return $this;
-    }
+
 }

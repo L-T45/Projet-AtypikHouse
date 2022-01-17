@@ -68,7 +68,7 @@ class Categories
 
      /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "categories:item", "admin:categoriesid", "categories:write", "properties:item"})
+     * @Groups({"categories:collection", "categories:item", "admin:categories", "admin:categoriesid", "categories:write", "properties:item"})
      */
     private $slug;
 

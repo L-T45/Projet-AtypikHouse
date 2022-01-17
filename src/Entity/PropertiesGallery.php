@@ -68,16 +68,16 @@ class PropertiesGallery
     private $updated_at;
 
     /**
-     * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="propertiesgallery")
-     *  @Groups({"propertiesgallery:item"})
+     * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="propertiesGalleries")
      */
     private $properties;
 
+ 
 
 
     public function __construct()
     {
-        $this->properties = new ArrayCollection();
+       
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
     }
@@ -135,35 +135,7 @@ class PropertiesGallery
         return $this;
     }
 
-    /**
-     * @return Collection|Properties[]
-     */
-    public function getProperties(): Collection
-    {
-        return $this->properties;
-    }
-
-    public function addProperty(Properties $property): self
-    {
-        if (!$this->properties->contains($property)) {
-            $this->properties[] = $property;
-            $property->setPropertiesgallery($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProperty(Properties $property): self
-    {
-        if ($this->properties->removeElement($property)) {
-            // set the owning side to null (unless already changed)
-            if ($property->getPropertiesgallery() === $this) {
-                $property->setPropertiesgallery(null);
-            }
-        }
-
-        return $this;
-    }
+   
 
     public function getDescription(): ?string
     {
@@ -173,6 +145,18 @@ class PropertiesGallery
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getProperties(): ?Properties
+    {
+        return $this->properties;
+    }
+
+    public function setProperties(?Properties $properties): self
+    {
+        $this->properties = $properties;
 
         return $this;
     }

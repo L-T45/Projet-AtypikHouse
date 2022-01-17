@@ -9,6 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ORM\Entity(repositoryClass=CommentsRepository::class)
@@ -54,6 +59,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                
  *          }
  * )
+ * 
+ * @ApiFilter(DateFilter::class, properties= {"created_at"})
+ * @ApiFilter(OrderFilter::class, properties= {"reservations.properties.title": "ASC",  "reservations.properties.title": "DESC", "value" : "ASC", "value" : "DESC"})
  */
 class Comments
 {
@@ -61,19 +69,19 @@ class Comments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"comments:collection", "admin:usersid", "admin:commentsid", "properties:collection", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "reservations:user", "reservations:item", "properties:item", "categories:item", "properties:comments"})
+     * @Groups({"comments:collection", "propertiesid:item", "admin:usersid", "admin:commentsid", "properties:collection", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "reservations:user", "reservations:item", "properties:item", "categories:item", "properties:comments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"comments:collection", "admin:usersid", "admin:commentsid", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "read:commentsperso", "read:commentsid", "reservations:item", "reservations:user", "properties:item", "properties:comments"})
+     * @Groups({"comments:collection", "propertiesid:item", "admin:usersid", "admin:commentsid", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "read:commentsperso", "read:commentsid", "reservations:item", "reservations:user", "properties:item", "properties:comments"})
      */
     private $body;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"comments:item", "admin:usersid", "properties:collection", "admin:commentsid", "reservations:item", "admin:comments", "categories:item", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "properties:comments", "reservations:user", "lastcomments:collection"})
+     * @Groups({"comments:item", "propertiesid:item", "admin:usersid", "properties:collection", "admin:commentsid", "reservations:item", "admin:comments", "categories:item", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "properties:comments", "reservations:user", "lastcomments:collection"})
      */
     private $value;
 
@@ -91,7 +99,7 @@ class Comments
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
-     * @Groups({"comments:item", "admin:usersid", "reservations:user", "admin:commentsid","reservations:item", "lastcomments:collection", "read:commentsid", "properties:item"})
+     * @Groups({"comments:item", "admin:usersid", "propertiesid:item", "reservations:user", "admin:commentsid","reservations:item", "lastcomments:collection", "read:commentsid", "properties:item"})
      */
     private $user;
 
@@ -101,12 +109,17 @@ class Comments
      */
     private $reservations;
 
+ 
+
+   
+
   
 
     public function __construct()
     {
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+        
         
     }
 
@@ -242,6 +255,10 @@ class Comments
 
         return $this;
     }
+
+   
+
+   
 
    
 }

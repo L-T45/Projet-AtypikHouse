@@ -18,16 +18,19 @@ class AttributesFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
 
+
+        $titles = ['proche de la mer', 'convient aux enfants', 'convient aux personnes âgées', 'Escapade romantique', 'Silencieux', 'Au contact de la nature'];
+
          // initialisation de l'objet Faker
          $faker = Faker\Factory::create('fr_FR');
          $attributes = Array();
         // create 20 Categories! Bam!
-        for ($i = 0; $i < 9; $i++) {
+        for ($i = 0; $i < 6; $i++) {
             
             $categories[$i] =  $this->getReference('categories_'. $faker->numberBetween(1,8));
 
             $attributes[$i] = new Attributes();
-            $attributes[$i]->setTitle($faker->text);
+            $attributes[$i]->setTitle($titles[$i]);
             $attributes[$i]->setCategories($categories[$i]);
             $manager->persist($attributes[$i]);
         }
