@@ -19,14 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
- *            "post"={},
- *                "lastconversations"={
- *                  "method"="GET",
- *                  "path"="/home/lastconversations",
- *                  "controller"=App\Controller\LastNewConversations::class,
- *                  "normalization_context"={"groups"={"lastconversations:collection"}},
- *                 
- *               },
+ *            "post"={},             
  *                  "dashboard/admin/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/conversations",
@@ -43,6 +36,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "dashboard/user/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/conversations/{id}",
+ *                  "controller"=App\Controller\AllConversations::class,
  *                  
  *               },  
  *          }

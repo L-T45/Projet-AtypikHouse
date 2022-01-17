@@ -18,7 +18,7 @@ class AllConversations
 
     public function __invoke()
     {
-        return $this->conversationsRepository->findAll();
+        return $this->conversationsRepository->findMessagesDetails();
     }
 
 }

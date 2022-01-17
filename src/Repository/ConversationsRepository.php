@@ -43,24 +43,6 @@ class ConversationsRepository extends ServiceEntityRepository
     * @return Conversations[] Returns an array of Conversations objects
     */
 
-    /*
-        SELECT
- 
-            c,
-        
-            m.id
-        
-        FROM
-        
-        c
-        
-            LEFT JOIN m
-    
-                ON c.id = m.conversations_id
-                    
-        ORDER BY m.id DESC
-    */
-
     public function findLatest():array
     {
         $qb = $this->createQueryBuilder('c');
@@ -72,11 +54,18 @@ class ConversationsRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    public function findAll():array
+    /**
+    * @return Conversations[] Returns an array of Conversations objects
+    */
+
+    public function findMessagesDetails($id):array
     {
-        $qb = $this->createQueryBuilder('m');
-        $qb ->select('m.id, m.body, m.created_at, c.id')
-            ->leftJoin('c.messages', 'm');
+        $qb = $this->createQueryBuilder('c');
+        $qb ->select('m.id, m.body, m.created_at')
+            ->leftJoin('c.messages', 'm', 'WITH', 'c.id = m.conversations_id')
+            ->leftJoin('m.user', 'u')
+            ->orderBy('m.id', 'DESC')
+            ->setParameter('id', $id);
         $query = $qb->getQuery();
         return $query->getResult();
     }
