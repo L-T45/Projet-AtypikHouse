@@ -54,13 +54,13 @@ class Conversations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"conversations:collection", "admin:conversationsid", "users:collection", "read:messages", "admin:conversations", "lastconversations:collection", "user:messages", "user:conversations"})
+     * @Groups({"conversations:collection", "admin:conversationsid", "users:collection", "read:messages", "admin:conversations", "lastconversations:collection", "user:messages", "user:conversations", "admin:users"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"conversations:collection", "user:messages", "user:conversations"})
+     * @Groups({"conversations:collection", "user:messages", "user:conversations", "admin:users"})
      */
     private $created_at;
 
@@ -72,7 +72,7 @@ class Conversations
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="conversations")
-     * @Groups({"conversations:item", "read:conversationsid", "user:conversations", "admin:conversations", "admin:conversationsid", "lastconversations:collection"})
+     * @Groups({"conversations:item", "read:conversationsid", "user:conversations", "admin:conversations", "admin:conversationsid", "lastconversations:collection", "admin:usersconv"})
      */
     private $users;
 

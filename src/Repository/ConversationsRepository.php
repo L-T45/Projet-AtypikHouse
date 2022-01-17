@@ -68,7 +68,15 @@ class ConversationsRepository extends ServiceEntityRepository
             ->leftJoin('c.messages', 'm')
             ->leftJoin('m.user', 'u')
             ->orderBy('m.id', 'DESC');
-            // ->setMaxResults(1);
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+    public function findAll():array
+    {
+        $qb = $this->createQueryBuilder('m');
+        $qb ->select('m.id, m.body, m.created_at, c.id')
+            ->leftJoin('c.messages', 'm');
         $query = $qb->getQuery();
         return $query->getResult();
     }
