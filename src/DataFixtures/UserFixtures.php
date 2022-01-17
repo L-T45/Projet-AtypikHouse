@@ -27,8 +27,6 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         // create 20 User! Bam!
         for ($i = 1; $i < 32; $i++) {
 
-          
-
             $user[$i] = new User();
             $user[$i]->setEmail($faker->email);        
             $user[$i]->setRoles([]);     

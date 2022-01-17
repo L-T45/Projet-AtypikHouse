@@ -6,11 +6,16 @@ namespace App\Token;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request; 
 use Lexik\Bundle\JWTAuthenticationBundle\Encoder\JWTEncoderInterface;
+use App\Entity\User;
+use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class DecodeJWTAuth extends AbstractController
 {
     private $token;
     private $username;
+    private $UserRepository;
 
     // pour ne concerver que ce que l'on souhaite après avoir serialize une variable de type array 
     public function cutChaine($string, $start, $end){
@@ -22,23 +27,41 @@ class DecodeJWTAuth extends AbstractController
         return substr($string, $ini, $len);   
     }
 
-    public function decodeJwtToken(JWTEncoderInterface $jwtManager, Request $request)
+    public function decodeJwtToken(JWTEncoderInterface $jwtManager, Request $request, UserRepository $UserRepository): Response
     {   
         //récupère le token envoyé au front 
         $data = json_decode( $request->getContent(), true );
         $token = $data['token'];
         $decodedJwtToken = $jwtManager->decode($token);
         //dd($decodedJwtToken);
+        $decodedJwtTokenCheck = $decodedJwtToken;
 
-        if($decodedJwtToken =! ''){
-            $username = serialize($jwtManager->decode($token));
+        if($decodedJwtTokenCheck =! ''){
+            $username = serialize($decodedJwtToken);
             //dd($username);
             $username = $this->cutChaine($username, '"username";s:', ';'); 
             $username = $this->cutChaine($username, ':"', '"'); 
+            $usernameCheck = $username;
             //dd($username);
-            if($username =! ''){
+
+            if($usernameCheck =! ''){
+                $this->UserRepository = $UserRepository;
+                $findUser = $this->UserRepository->findByEmail($username);
+                //dd($findUser);
+                $findUserCheck = $findUser;
+
+                if($findUserCheck =! ''){
+                    return new JsonResponse( [ 'status' => '200', 'Infos utilisateur' => $findUser ], JsonResponse::HTTP_CREATED ); 
+                }else{
+                    return new JsonResponse( [ 'status' => '500', 'title' => 'Server Error', 'message' => "Erreur de récupération des données de l'utilisateur" ], JsonResponse::HTTP_CREATED ); 
+                }
                 
+            }else{
+                return new JsonResponse( [ 'status' => '500', 'title' => 'Server Error', 'message' => "Erreur de récupération des données de l'utilisateur" ], JsonResponse::HTTP_CREATED ); 
             }
+
+        }else{
+            return new JsonResponse( [ 'status' => '500', 'title' => 'Server Error', 'message' => "Erreur de récupération des données de l'utilisateur" ], JsonResponse::HTTP_CREATED ); 
         }
 
     }
