@@ -6,66 +6,68 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\HttpFoundation\RedirectResponse;
-
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\HttpFoundation\Request;    
+use Symfony\Component\HttpFoundation\JsonResponse;
+use ReCaptcha\ReCaptcha; 
 
 class SendEmail extends AbstractController {
 
     // Pour le formulaire de contact
-    public $forname;
-    public $lastname;
-    public $phone;
-    public $email;
-    public $objet;
-    public $message;
+    private $forname;
+    private $lastname;
+    private $phone;
+    private $email; 
+    private $objet;
+    private $message;
+    private $token;
 
-    // pour ne concerver que ce que l'on souhaite après avoir serialize une variable de type array 
-    public function cutChaine($string, $start, $end){
-        $string = ' ' . $string;   
-        $ini = strpos($string, $start);  
-        if ($ini == 0) return '';   
-        $ini += strlen($start);  
-        $len = strpos($string, $end, $ini) - $ini;
-        return substr($string, $ini, $len);   
-    }
+    public function sendEmailFormContact(MailerInterface $mailer, Request $request): Response{
 
-    public function sendEmailFormContact(MailerInterface $mailer): Response{
+        $data = json_decode( $request->getContent(), true );
 
         // Données du formulaire de contact
-        $forname = $_POST["forname"];   
-        $forname = serialize($forname); 
-        $forname = $this->cutChaine($forname, ':"', '";'); 
+        // On vérifie si les champs sont vides
+        if(!empty($data["forname"]) & !empty($data["lastname"]) & !empty($data["email"]) & !empty($data["message"])){
+            // On vérifie que les champs réspectent les asserts !
+            if(strlen($data["forname"])<60 & strlen($data["forname"])>2 & strlen($data["lastname"])<60 & strlen($data["lastname"])>2 & 
+            strlen($data["email"])<80 & strlen($data["email"])>6 & strlen($data["message"])<800 & strlen($data["message"])>6 &
+            strlen($data["phone"])<15 & strlen($data["objet"])<60){
 
-        $lastname = $_POST["lastname"];
-        $lastname = serialize($lastname);
-        $lastname = $this->cutChaine($lastname, ':"', '";'); 
+                $forname = htmlentities($data["forname"]);   
+                $lastname = htmlentities($data["lastname"]);
+                $phone = htmlentities($data["phone"]); 
+                $email = htmlentities($data["email"]);
+                $objet = htmlentities($data["objet"]);   
+                $message = htmlentities($data["message"]); 
+                $token = $data['token'];
+                
+                // recaptcha
+                $url = "https://www.google.com/recaptcha/api/siteverify?secret=6LdVoQwdAAAAAOJbRrSpEmpgF08KWwfa_i72cpgF&response=$token";
+                $result_json = file_get_contents($url);
+                $resulting = json_decode($result_json, true);
+                    
+                if($resulting["success"] = true ) {
+                    $email = (new Email())
+                    ->from('atypikhouse.communication@gmail.com')
+                    ->to('atypikhouse.communication@gmail.com')
+                    ->subject($objet)
+                    ->text($forname.' '.$lastname."\n"."\n".'Message: '.$message."\n"."\n".'Contact: '.$email.' '.$phone);
 
-        $phone = $_POST["phone"];
-        $phone = serialize($phone);
-        $phone = $this->cutChaine($phone, ':"', '";'); 
+                $mailer->send($email);  
+                return new JsonResponse( [ 'status' => '200', 'title' => 'Email envoyé'  ], JsonResponse::HTTP_CREATED ); 
 
-        $email = $_POST["email"];
-        $email = serialize($email);
-        $email = $this->cutChaine($email, ':"', '";'); 
+                }else{
+                    return new JsonResponse( [ 'status' => '400', 'title' => 'Bad Request', 'message' => "Erreur d'envoi" ], JsonResponse::HTTP_CREATED ); 
+                }
 
-        $objet = $_POST["objet"];
-        $objet = serialize($objet);
-        $objet = $this->cutChaine($objet, ':"', '";'); 
-
-        $message = $_POST["message"]; 
-        $message = serialize($message);
-        $message = $this->cutChaine($message, ':"', '";'); 
-
-        $email = (new Email())
-            ->from('atypikhouse.communication@gmail.com')
-            ->to('atypikhouse.communication@gmail.com')
-            ->subject($objet)
-            ->text($forname.' '.$lastname."\n"."\n".'Message: '.$message."\n"."\n".'Contact: '.$phone.' '.$email);
-
-		// Ajouter le RedirectResponse pour rediriger à une page sinon message d'erreur !
-		return $mailer->send($email)?: new RedirectResponse('/api'); 
-
+            }else{
+                return new JsonResponse( [ 'status' => '400', 'title' => 'Bad Request', 'message' => 'les informations renseignées sont trop long ou trop court' ], JsonResponse::HTTP_CREATED ); 
+            }
+        }else{
+            return new JsonResponse( [ 'status' => '400', 'title' => 'Bad Request', 'message' => 'Certaines informations ne sont pas renseignées' ], JsonResponse::HTTP_CREATED ); 
+        }    
+        
     }
 
 }

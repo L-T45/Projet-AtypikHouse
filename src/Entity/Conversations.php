@@ -27,6 +27,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get"={"normalization_context"={"groups"={"conversations:collection", "conversations:item"}}},
  *          "put"={},
  *          "delete"={},
+ *                   
+ *                  "dashboard/user/conversations/{id}"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/conversations/{id}",
+ *                  
+ *               },  
  *          }
  * )
  */
@@ -36,26 +42,33 @@ class Conversations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"conversations:collection", "read:messages", "user:messages"})
+     * @Groups({"conversations:collection", "read:messages", "user:messages", "user:conversations", "admin:users"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"conversations:collection", "user:messages"})
+     * @Groups({"conversations:collection", "user:messages", "user:conversations", "admin:users"})
      */
     private $created_at;
 
     /**
      * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="conversations")
-     * @Groups({"conversations:item"})
+     * @Groups({"conversations:item", "user:conversations"})
      */
     private $messages;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=User::class, mappedBy="conversations")
+     * @Groups({"conversations:item", "user:conversations", "admin:usersconv"})
+     */
+    private $users;
 
     public function __construct()
     {
         $this->messages = new ArrayCollection();
         $this->created_at = new \DateTime();
+        $this->users = new ArrayCollection();
         
     }
 
@@ -101,6 +114,33 @@ class Conversations
             if ($message->getConversations() === $this) {
                 $message->setConversations(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|User[]
+     */
+    public function getUsers(): Collection
+    {
+        return $this->users;
+    }
+
+    public function addUser(User $user): self
+    {
+        if (!$this->users->contains($user)) {
+            $this->users[] = $user;
+            $user->addConversation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUser(User $user): self
+    {
+        if ($this->users->removeElement($user)) {
+            $user->removeConversation($this);
         }
 
         return $this;

@@ -9,6 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 /**
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
@@ -17,7 +22,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      denormalizationContext={"groups"={"categories:write"}},
  *      collectionOperations={
  *            "get"={},
- *            "post"={},        
+ *            "post"={}, 
+ * 
+ *                   "dashboard/admin/categories"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/admin/categories",
+ *                  "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
+ *                  
+ *               },     
+ *                       
  *          },
  * 
  *      itemOperations={
@@ -25,7 +38,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *           
  *          "put"={},
  *          "delete"={},
- *          })
+ *                  
+ *                  "dashboard/admin/categories/{id}"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/admin/categories/{id}",
+ *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
+ *                  
+ *               }, 
+ *                  
+ *          }
+ * )
+ * 
  */
 class Categories
 {
@@ -33,59 +56,61 @@ class Categories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"categories:collection","attributes:item"})
+     * @Groups({"categories:collection", "propertiesid:item", "admin:commentsid", "attributes:item", "admin:categattributesid", "admin:categattributes", "admin:categoriesid", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:categories"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection","categories:write", "properties:item", "attributes:item"})
+     * @Groups({"categories:collection", "propertiesid:item", "admin:commentsid",  "categories:item", "admin:categattributesid", "admin:categattributes", "admin:categories", "admin:categoriesid", "categories:write", "owner:propertiesid", "owner:reservid", "properties:item", "attributes:item", "reservations:user"})
      */
     private $title;
 
      /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "categories:write", "properties:item"})
+     * @Groups({"categories:collection", "categories:item", "admin:categories", "admin:categoriesid", "categories:write", "properties:item"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({ "categories:write"})
+     * @Groups({"categories:item", "categories:write", "admin:categories", "admin:categoriesid"})
      * 
      */
     private $picture;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:item", "categories:write"})
+     /**
+     * @ORM\Column(type="text")
+     * @Groups({"categories:item","categories:write", "admin:categoriesid"})
      */
     private $description;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"categories:write"})
+     * @Groups({"categories:write", "admin:categoriesid"})
      * 
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"categories:write"})
+     * @Groups({"categories:write", "admin:categoriesid"})
      */
     private $updated_at;
 
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="categories")
-     * @Groups({"categories:item", "categories:write"})
+     * @Groups({"categories:item", "categories:write", "admin:categoriesid"})
      */ 
     private $properties;
 
     /**
      * @ORM\OneToMany(targetEntity=Attributes::class, mappedBy="categories")
-     * @Groups({"categories:item"})
+     * @Groups({"categories:item", "admin:categoriesid", "admin:categattributes"})
      */
     private $attributes;
+
+   
 
   
 

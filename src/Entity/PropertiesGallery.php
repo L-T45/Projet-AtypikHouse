@@ -39,44 +39,45 @@ class PropertiesGallery
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"propertiesgallery:collection"})
+     * @Groups({"propertiesgallery:collection", "owner:propertiesid", "properties:item", "propertiesid:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection"})
+     * @Groups({"propertiesgallery:collection", "owner:propertiesid", "properties:item", "propertiesid:item"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:item"})
+     * @Groups({"propertiesgallery:collection"})
      */
     private $alt;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"propertiesgallery:item"})
+     *
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"propertiesgallery:item"})
+     *
      */
     private $updated_at;
 
     /**
-     * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="propertiesgallery")
-     *  @Groups({"propertiesgallery:item"})
+     * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="propertiesGalleries")
      */
     private $properties;
+
+ 
 
 
     public function __construct()
     {
-        $this->properties = new ArrayCollection();
+       
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
     }
@@ -134,32 +135,28 @@ class PropertiesGallery
         return $this;
     }
 
-    /**
-     * @return Collection|Properties[]
-     */
-    public function getProperties(): Collection
+   
+
+    public function getDescription(): ?string
     {
-        return $this->properties;
+        return $this->description;
     }
 
-    public function addProperty(Properties $property): self
+    public function setDescription(string $description): self
     {
-        if (!$this->properties->contains($property)) {
-            $this->properties[] = $property;
-            $property->setPropertiesgallery($this);
-        }
+        $this->description = $description;
 
         return $this;
     }
 
-    public function removeProperty(Properties $property): self
+    public function getProperties(): ?Properties
     {
-        if ($this->properties->removeElement($property)) {
-            // set the owning side to null (unless already changed)
-            if ($property->getPropertiesgallery() === $this) {
-                $property->setPropertiesgallery(null);
-            }
-        }
+        return $this->properties;
+    }
+
+    public function setProperties(?Properties $properties): self
+    {
+        $this->properties = $properties;
 
         return $this;
     }

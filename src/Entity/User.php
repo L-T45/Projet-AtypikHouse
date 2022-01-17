@@ -6,11 +6,15 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-
-use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 // Ajout route personalisé ici (lastnewreservations, api_dashboard_user_payments, dashboard_user_properties, delete_user, api_sign_up) car pas possible à un autre endroit visiblement.
 
@@ -29,10 +33,16 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *                  "path"="/send_payment",
  *                  "controller"=App\Controller\SendPayment::class 
  *               }, 
- *                 "api_sign_up"={
+ *                "dashboard/admin/users"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/admin/users",
+ *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},                 
+ *               },
+ *                "api_register"={
  *                  "method"="POST",
- *                  "path"="sign_up",
- *               },      
+ *                  "path"="register",
+ *                  "denormalization_context"={"groups"={"users:register", "enable_max_depth"=true}},   
+ *                },                                 
  *          },
  *      itemOperations={
  * 
@@ -51,25 +61,71 @@ use ApiPlatform\Core\Annotation\ApiResource;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"user:properties", "enable_max_depth"=true}}
  *                 },
- *                 "lastnewreservations"={
- *                     "method"="GET",
- *                     "path"="dashboard/user/{id}/reservations",
- *                     "force_eager"=false,
- *                     "normalization_context"={"groups"={"user:reservations", "enable_max_depth"=true}}
- *                 },
  *                  "delete_user"={
  *                     "method"="DELETE",
  *                     "path"="dashboard/user/{id}/personnal-infos/delete-account",
- *                 },
- *                  
+ *                 },                 
  *               "api_dashboard_user_messages"={
  *                  "method"="GET",
  *                  "path"="/dashboard/user/{id}/messages",
  *                  "normalization_context"={"groups"={"read:messages"}},
- *                 
  *               },
+ *            
+ *                 "dashboard/user/{id}/infos-personnelles"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/{id}/infos-personnelles",
+ *                  "normalization_context"={"groups"={"read:infosperso", "enable_max_depth"=true}},  
+ *               },     
+ *                  "dashboard/user/{id}/reservations"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/{id}/reservations",
+ *                  "normalization_context"={"groups"={"read:reservperso", "enable_max_depth"=true}},
+ *               },    
+ *                  "dashboard/user/{id}/comments"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/{id}/comments",
+ *                  "normalization_context"={"groups"={"read:commentsperso", "enable_max_depth"=true}},  
+ *               },  
+ *                  "dashboard/user/{id}/conversations"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/{id}/conversations",
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"user:conversations", "enable_max_depth"=true}}, 
+ *                  
+ *               },  
+ *                  "dashboard/user/{id}/reports"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/{id}/reports",
+ *                  "normalization_context"={"groups"={"read:reports", "enable_max_depth"=true}}, 
+ *                  
+ *               },  
+ *                  "dashboard/owner/{id}/properties"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/owner/{id}/properties",
+ *                  "normalization_context"={"groups"={"owner:properties", "enable_max_depth"=true}}, 
+ *                  
+ *               },  
+ *                  
+ *                 
+ *                  "dashboard/owner/{id}/reservations"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/owner/{id}/reservations",
+ *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},
+ *                  
+ *               },  
+ *                  "dashboard/admin/users/{id}"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/admin/users/{id}",
+ *                  "normalization_context"={"groups"={"admin:usersid", "admin:usersconv", "enable_max_depth"=true}},
+ *                  
+ *               },  
+ *                 
+ *                  
  *          }
  * )
+ * @ApiFilter(SearchFilter::class, properties= {"properties.id": "exact", "lastname": "exact", "firstname" : "exact", "lastname": "partial", "firstname" : "partial"})
+ * @ApiFilter(OrderFilter::class, properties= {"roles": "DESC", "roles": "ASC", "lastname": "ASC", "firstname" : "DESC", "reservations.comments.value": "ASC", "reservations.comments.value": "DESC"})
+ * 
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -77,121 +133,123 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "properties:user", "reservations:user", "user:payments", "user:messages", "read:messages"})
+     * @Groups({"user:collection", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user:collection"})
+     * @Groups({"user:collection", "user:write", "admin:usersid", "read:infosperso", "users:register", "users:login"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "admin:usersid", "admin:users", "user:write", "users:register"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Groups({"user:write", "users:register", "users:login"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user", "reservations:user", "user:messages", "read:messages"})
+     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
      */
     private $birthdate;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
      */
     private $zipCode;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "admin:usersid"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "admin:usersid"})
      */
     private $updated_at;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "admin:usersid"})
      */
     private $emailvalidated;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user", "reservations:user", "user:messages", "read:messages"})
+     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "reservations:item", "payments:item", "user:item", "properties:user", "reservations:user"})
+     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection", "users:register"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
-     * @Groups({"user:item"})
+     * @Groups({"user:item", "admin:usersid"})
      */
     private $is_blocked;
 
 
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user")
-     * @Groups({"user:properties"})
+     * @Groups({"user:properties", "owner:properties", "admin:proequip", "admin:usersid"})
      */
     private $properties;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user")
-     * @Groups({"user:item", "user:reservations"})
+     * @Groups({"user:item", "user:reservations", "admin:usersid", "read:reservations", "read:reservperso", "admin:reservations", "owner:reservations"})
      */
     private $reservations;
 
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="user")
+     * @Groups({"read:commentsperso"})
      */
     private $comments;
 
@@ -203,9 +261,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="user")
-     * @Groups({"read:messages"})
+     * @Groups({"read:messages", "admin:usersid"})
      */
     private $messages;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Conversations::class, inversedBy="users")
+     * @Groups({"user:conversations"})
+     */
+    private $conversations;
+    
 
     public function __construct()
     {
@@ -216,6 +281,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->updated_at = new \DateTime();
         $this->payments = new ArrayCollection();
         $this->messages = new ArrayCollection();
+        $this->conversations = new ArrayCollection();
+       
 
     }
 
@@ -624,6 +691,42 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($message->getUser() === $this) {
                 $message->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Conversations[]
+     */
+    public function getConversations(): Collection
+    {
+        return $this->conversations;
+    }
+
+    public function addConversation(Conversations $conversation): self
+    {
+        if (!$this->conversations->contains($conversation)) {
+            $this->conversations[] = $conversation;
+        }
+
+        return $this;
+    }
+
+    public function removeConversation(Conversations $conversation): self
+    {
+        $this->conversations->removeElement($conversation);
+
+        return $this;
+    }
+
+    public function removeReport(Reports $report): self
+    {
+        if ($this->reports->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getUser() === $this) {
+                $report->setUser(null);
             }
         }
 

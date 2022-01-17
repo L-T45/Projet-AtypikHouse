@@ -25,18 +25,18 @@ class CategoriesFixtures extends Fixture
             'chateaux-hantees','cabanes-suspendues','container','palais','grotte','igloo','maison-de-hobbit','maisons-bulles','tipi'
         ];
 
-        $n=1;
+        //$n=1;
 
        // initialisation de l'objet Faker
        $faker = Faker\Factory::create('fr_FR');
        $categories = Array();
       // create 20 Categories! Bam!
-      for ($i = 0; $i < 9; $i++) {
+      for ($i = 1; $i < 9; $i++) {
           $categories[$i] = new Categories();
           $categories[$i]->setTitle($titles[$i]);
           $categories[$i]->setSlug($slug[$i]);
-          $categories[$i]->setPicture($i+$n.".webp");
-          $categories[$i]->setDescription($faker->text);
+          $categories[$i]->setPicture($i.".webp");
+          $categories[$i]->setDescription($faker->text(500));
           $manager->persist($categories[$i]);
 
           // On enregistre les catégories dans une référence 
