@@ -23,6 +23,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     }
 
     /**
+    * @return User[] Returns an array of User objects
+    */
+
+    /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
@@ -51,6 +55,25 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+    * @return User[] Returns an array of User objects
+    */
+
+    public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder) {
+        $old_pwd = $request->get('old_password'); 
+        $new_pwd = $request->get('new_password'); 
+        $new_pwd_confirm = $request->get('new_password_confirm');
+
+        $user = $this->getUser();
+        $checkPass = $passwordEncoder->isPasswordValid($user, $old_pwd);
+
+        if($checkPass === true) {    
+                            
+        } else {
+            return new jsonresponse(array('error' => 'The current password is incorrect.'));
+        }
     }
     
 

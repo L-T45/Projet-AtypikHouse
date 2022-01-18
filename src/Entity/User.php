@@ -119,6 +119,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "normalization_context"={"groups"={"admin:usersid", "admin:usersconv", "enable_max_depth"=true}},
  *                  
  *               },  
+ * 
+ *                  "dashboard/user/{id}/personal_informations/modifypassword"={
+ *                  "method"="Patch",
+ *                  "path"="dashboard/amdin/users",
+ *                  "normalization_context"={"groups"={"admin:usersid", "enable_max_depth"=true}},
+ *               },
  *                 
  *                  
  *          }
@@ -353,21 +359,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->password = $password;
 
         return $this;
-    }
-
-    public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder) {
-        $old_pwd = $request->get('old_password'); 
-        $new_pwd = $request->get('new_password'); 
-        $new_pwd_confirm = $request->get('new_password_confirm');
-
-        $user = $this->getUser();
-        $checkPass = $passwordEncoder->isPasswordValid($user, $old_pwd);
-
-        if($checkPass === true) {    
-                            
-        } else {
-            return new jsonresponse(array('error' => 'The current password is incorrect.'));
-        }
     }
    
 
