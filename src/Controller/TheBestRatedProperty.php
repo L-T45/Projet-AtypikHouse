@@ -2,23 +2,23 @@
 
 namespace App\Controller;
 
-use App\Entity\Properties;
-use App\Repository\PropertiesRepository;
+use App\Entity\Reservations;
+use App\Repository\ReservationsRepository;
 
 
 class TheBestRatedProperty
 {
 
-    private $propertiesRepository;
+    private $reservationsRepository;
 
-    public function __construct(PropertiesRepository $propertiesRepository)
+    public function __construct(ReservationsRepository $reservationsRepository)
     {
-        $this->propertiesRepository = $propertiesRepository;
+        $this->reservationsRepository = $reservationsRepository;
     }
 
     public function __invoke()
     {
-        return $this->propertiesRepository->theBestRatedProperty();
+        return $this->reservationsRepository->theBestRatedProperty();
     }
 
 /*

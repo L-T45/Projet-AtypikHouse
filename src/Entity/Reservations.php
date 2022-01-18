@@ -29,6 +29,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "normalization_context"={"groups"={"admin:reservations", "enable_max_depth"=true}},
  *                  
  *               },     
+ * 
+ *                  "thebestproperty"={
+ *                  "method"="GET",
+ *                  "path"="home/bestproperty",
+ *                  "controller"=App\Controller\TheBestRatedProperty::class,
+ *               },   
+ * 
  *          },
  *      itemOperations={
  * 

@@ -34,6 +34,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
  *                 }, 
+ *                   
  * 
  *                  "dashboard/admin/properties"={
  *                  "method"="GET",

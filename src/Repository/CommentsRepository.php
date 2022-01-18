@@ -19,22 +19,23 @@ class CommentsRepository extends ServiceEntityRepository
         parent::__construct($registry, Comments::class);
     }
 
-    // /**
-    //  * @return Comments[] Returns an array of Comments objects
-    //  */
-    /*
-    public function findByExampleField($value)
+     /**
+      * @return Comments[] Returns an array of Comments objects
+      */
+    
+    public function find($id, $lockMode = null, $lockVersion = null)
     {
         return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('c.id,c.body,c.value,c.created_at,c.updated_at')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $id)
+            //->orderBy('c.id', 'ASC')
+           // ->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;
     }
-    */
+    
 
        /**
       * @return Comments[] Returns an array of Comments objects
@@ -48,6 +49,7 @@ class CommentsRepository extends ServiceEntityRepository
           ->getQuery()
           ->getResult();
       }
+    
 
     /*
     public function findOneBySomeField($value): ?Comments

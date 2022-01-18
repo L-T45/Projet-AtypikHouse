@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Properties;
+use App\Entity\Reservations;
+use App\Entity\Comments;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
@@ -57,15 +59,29 @@ class PropertiesRepository extends ServiceEntityRepository
       * @return Properties[] Returns an array of Properties objects
       */
 
-    public function findCategorybyProperties():array
+    public function theBestRatedProperty():array
     {
-        $qb = $this->createQueryBuilder('p');
-        $qb->select('p,c.title')
-      ->innerJoin('p.categories', 'c');
-      $query = $qb->getQuery();
-      return $query->getResult();
+        return $this->createQueryBuilder('p')
+            ->select('p.id,p.title,r.id,c.value')
+            ->innerJoin('p.reservations', 'r')
+            ->innerJoin('r.comments', 'c')
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
+    public function findAllWithoutOldComite()
+    {
+        return $this->createQueryBuilder('fc')
+            ->addSelect('f')
+            ->leftJoin('fc.famille', 'f')
+            ->andWhere('fc.actif = 1')
+            ->leftJoin('fc.comite', 'c')
+            ->orderBy('f.nomChefFoyer', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     
 
     

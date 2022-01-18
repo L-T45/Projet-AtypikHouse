@@ -89,8 +89,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "dashboard/user/{id}/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
- *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"user:conversations", "enable_max_depth"=true}}, 
+ *                  "controller"="App\Controller\"
+ *                 
  *                  
  *               },  
  *                  "dashboard/user/{id}/reports"={
