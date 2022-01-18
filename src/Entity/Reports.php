@@ -90,6 +90,21 @@ class Reports
      */
     private $reportscategories;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reports")
+     */
+    private $properties;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Comments::class, inversedBy="reports")
+     */
+    private $comments;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
+     */
+    private $user;
+
    
 
   
@@ -153,6 +168,42 @@ class Reports
     public function setDescription(string $description): self
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getProperties(): ?Properties
+    {
+        return $this->properties;
+    }
+
+    public function setProperties(?Properties $properties): self
+    {
+        $this->properties = $properties;
+
+        return $this;
+    }
+
+    public function getComments(): ?Comments
+    {
+        return $this->comments;
+    }
+
+    public function setComments(?Comments $comments): self
+    {
+        $this->comments = $comments;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

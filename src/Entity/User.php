@@ -89,8 +89,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "dashboard/user/{id}/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
- *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"user:conversations", "enable_max_depth"=true}}, 
+ *                  "controller"="App\Controller\FindConversationsByUser::class",
+ *                 
  *                  
  *               },  
  *                  "dashboard/user/{id}/reports"={
@@ -276,7 +276,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"user:conversations"})
      */
     private $conversations;
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="user")
+     */
+    private $reports;
+
+   
+
+  
+
+  
+
+ 
 
     public function __construct()
     {
@@ -288,6 +300,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->payments = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->conversations = new ArrayCollection();
+        $this->reports = new ArrayCollection();
        
 
     }
@@ -712,6 +725,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * @return Collection|Reports[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
+    }
+
+    public function addReport(Reports $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setUser($this);
+        }
+
+        return $this;
+    }
+
     public function removeReport(Reports $report): self
     {
         if ($this->reports->removeElement($report)) {
@@ -723,4 +754,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+   
+
+   
+
+   
+
+   
+
+   
+
+        
 }
+

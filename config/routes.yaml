@@ -5,6 +5,11 @@ api_login:
    path: /api/login
    methods: [POST]
 
+gesdinet_jwt_refresh_token:
+  path:       /token/refresh
+  controller: gesdinet.jwtrefreshtoken::refresh
+  methods: [POST]
+
 api_send_payment:
     path: /api/send_payment
     controller: App\Controller\SendPayment::PayoutAction
