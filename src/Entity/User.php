@@ -89,7 +89,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "dashboard/user/{id}/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
- *                  "controller"="App\Controller\"
+ *                  "controller"="App\Controller\FindConversationsByUser::class",
  *                 
  *                  
  *               },  
