@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Reservations;
+use App\Entity\Properties;
+use App\Entity\Comments;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @method Reservations|null find($id, $lockMode = null, $lockVersion = null)
@@ -37,7 +40,7 @@ class ReservationsRepository extends ServiceEntityRepository
     */
 
     /**
-      * @return Reservations[] Returns an array of Comments objects
+      * @return Reservations[] Returns an array of Reservations objects
       */
 
       public function findLatest():array
@@ -47,6 +50,24 @@ class ReservationsRepository extends ServiceEntityRepository
           ->setMaxResults(10)
           ->getQuery()
           ->getResult();
+      }
+
+      /**
+      * @return Reservations[] Returns an array of Reservations objects
+      */
+
+      public function theBestRatedProperty():array
+      {
+          return $this->createQueryBuilder('SELECT r,p.title FROM r JOIN r.properties p JOIN r.comments c WHERE avg(c.value) < ?3')
+              //->select('p.title,avg(c.value) as value_avg')
+              //->innerJoin('r.properties', 'p')
+             // ->innerJoin('r.comments', 'c')
+             // ->groupBy('p.title')
+             ->getQuery()
+             ->getResult();
+    
+            
+          
       }
 
 

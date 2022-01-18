@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\Messages;
+use App\Entity\Conversations;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -51,6 +53,24 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
     
+    /** 
+    * @return User[] Returns an array of User objects
+    */
+    
+    public function findConversationsByIdUser($id)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.id,u.picture,u.lastname,u.firstname,m.id,m.body,m.created_at')
+            ->leftJoin('u.messages','m')
+            ->leftJoin('m.conversations','c')
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('m.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?User
