@@ -15,7 +15,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
-// Ajout route personalisé ici (lastnewproperties, dashboard_admin_properties, dashboard_admin_properties_id, dashboard_user_properties_id, dashboard_owner_properties_create, dashboard_owner_properties_{id}, properties_{id}_signalement) car pas possible à un autre endroit visiblement.
+// Ajout route personalisé ici (lastnewproperties, dashboard_admin_properties, dashboard_admin_properties_id, dashboard_user_properties_id, dashboard_owner_properties_create, dashboard_owner_properties_{id}) car pas possible à un autre endroit visiblement.
 /**
  * @ORM\Entity(repositoryClass=PropertiesRepository::class)
  * @ApiResource(
@@ -34,8 +34,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
  *                 }, 
- *                   
- * 
  *                  "dashboard/admin/properties"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/properties",
@@ -45,10 +43,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "method"="POST",
  *                  "path"="dashboard/owner/properties/create",
  *                  "denormalization_context"={"groups"={"properties:create", "enable_max_depth"=true}}, 
- *                },              
+ *                },                            
  *          },
  *      itemOperations={
- * 
  *          "get"={"normalization_context"={"groups"={"propertiesid:item", "properties:id"}}},       
  *          "put"={},
  *          "delete"={},
@@ -75,15 +72,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "path"= "dashboard/owner/properties/{id}",
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
- *                 },
- *                  "properties_{id}_signalement"={
- *                      "method"= "POST",
- *                      "path"= "properties/{id}/signalement",
- *                      "force_eager"=false,
- *                      "denormalization_context"={"groups"={"properties:signalement", "enable_max_depth"=true}}, 
- *                  },
- *                 
- *                  
+ *                 },                
  *          }
  * )
  * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "exact", "categories.title": "exact", "latitude": "exact", "longitude": "exact", "reservations.comments.value": "exact"})
@@ -98,7 +87,7 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"properties:collection", "admin:users", "propertiesid:item", "admin:commentsid", "admin:comments", "lastcomments:collection", "admin:proequip", "admin:categoriesid", "equipements:item", "admin:properties", "owner:propertiesid", "owner:reservid", "owner:properties", "read:commentsid", "propertiesid:item", "read:commentsperso", "read:commentsid", "reservations:user", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user"})
+     * @Groups({"properties:collection", "admin:users", "propertiesid:item", "admin:commentsid", "admin:comments", "lastcomments:collection", "admin:proequip", "admin:categoriesid", "equipements:item", "admin:properties", "owner:propertiesid", "owner:reservid", "owner:properties", "read:commentsid", "propertiesid:item", "read:commentsperso", "read:commentsid", "reservations:user", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user", "properties:reports"})
      * 
      * 
      */
@@ -106,7 +95,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "admin:users", "admin:commentsid", "propertiesid:item", "admin:comments", "admin:proequip", "admin:categoriesid", "equipements:item", "admin:properties", "owner:properties", "owner:propertiesid", "owner:reservid", "properties:write", "read:commentsperso", "read:commentsid", "categories:item", "reservations:user", "user:properties", "propertiesgallery:item", "properties:user", "properties:create" })
+     * @Groups({"properties:collection", "admin:users", "admin:commentsid", "propertiesid:item", "admin:comments", "admin:proequip", "admin:categoriesid", "equipements:item", "admin:properties", "owner:properties", "owner:propertiesid", "owner:reservid", "properties:write", "read:commentsperso", "read:commentsid", "categories:item", "reservations:user", "user:properties", "propertiesgallery:item", "properties:user", "properties:create"})
      *
      */
     private $title;
