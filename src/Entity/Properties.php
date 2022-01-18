@@ -15,7 +15,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
-// Ajout route personalisé ici (lastnewproperties, dashboard_admin_properties, dashboard_admin_properties_id, dashboard_user_properties_id, dashboard_owner_properties_create") car pas possible à un autre endroit visiblement.
+// Ajout route personalisé ici (lastnewproperties, dashboard_admin_properties, dashboard_admin_properties_id, dashboard_user_properties_id, dashboard_owner_properties_create, dashboard_owner_properties_{id}, properties_{id}_signalement) car pas possible à un autre endroit visiblement.
 /**
  * @ORM\Entity(repositoryClass=PropertiesRepository::class)
  * @ApiResource(
@@ -69,12 +69,18 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"properties:comments", "enable_max_depth"=true}}
  *                 },
- *                   "dashboard/owner/properties/{id}"={
+ *                   "dashboard_owner_properties_{id}"={
  *                      "method"="GET",
  *                      "path"= "dashboard/owner/properties/{id}",
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
  *                 },
+ *                  "properties_{id}_signalement"={
+ *                      "method"= "POST",
+ *                      "path"= "properties/{id}/signalement",
+ *                      "force_eager"=false,
+ *                      "denormalization_context"={"groups"={"properties:signalement", "enable_max_depth"=true}}, 
+ *                  },
  *                 
  *                  
  *          }
