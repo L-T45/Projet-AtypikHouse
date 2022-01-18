@@ -36,6 +36,9 @@ class ConversationsRepository extends ServiceEntityRepository
     }
     */
 
+
+    
+
     /*
     public function findOneBySomeField($value): ?Conversations
     {

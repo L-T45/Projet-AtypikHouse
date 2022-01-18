@@ -51,6 +51,7 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
             $properties[$i]->setCapacity($faker->randomDigitNotNull);
             $properties[$i]->setZipCode(intval($faker->postcode));
             $properties[$i]->setCategories($categories[$i]);
+            $properties[$i]->setUser($user[$i]);
             $manager->persist($properties[$i]);
 
              // On enregistre les propriétés dans une référence 
