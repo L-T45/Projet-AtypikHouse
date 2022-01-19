@@ -20,6 +20,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
+ * 
+ *                  "dashboard/admin/conversations"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/admin/conversations",
+ *                  "controller"=App\Controller\FindAllConversations::class,
+ *                  
+ *               }, 
  *             
  *          },
  *      itemOperations={
@@ -32,6 +39,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "method"="GET",
  *                  "path"="dashboard/user/conversations/{id}",
  *                  "controller"=App\Controller\FindConversationsidByUser::class,
+ *                  
+ *               }, 
+ *                  "dashboard/admin/conversations/{id}"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/admin/conversations/{id}",
+ *                  
  *                  
  *               }, 
  *          }
