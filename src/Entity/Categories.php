@@ -15,6 +15,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
+// Ajout de la route dashboard/admin/categories/create
 /**
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
  * @ApiResource(
@@ -24,12 +25,16 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *            "get"={},
  *            "post"={}, 
  * 
- *                   "dashboard/admin/categories"={
+ *             "dashboard/admin/categories"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories",
  *                  "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
- *                  
- *               },     
+ *               },
+ *              "dashboard/admin/categories/create"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/admin/categories/create",
+ *                  "normalization_context"={"groups"={"admin:createcategories", "enable_max_depth"=true}},
+ *               },       
  *                       
  *          },
  * 
@@ -62,26 +67,26 @@ class Categories
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "propertiesid:item", "admin:commentsid",  "categories:item", "admin:categattributesid", "admin:categattributes", "admin:categories", "admin:categoriesid", "categories:write", "owner:propertiesid", "owner:reservid", "properties:item", "attributes:item", "reservations:user"})
+     * @Groups({"categories:collection", "propertiesid:item", "admin:commentsid",  "categories:item", "admin:categattributesid", "admin:categattributes", "admin:categories", "admin:categoriesid", "categories:write", "owner:propertiesid", "owner:reservid", "properties:item", "attributes:item", "reservations:user", "admin:createcategories"})
      */
     private $title;
 
      /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "categories:item", "admin:categories", "admin:categoriesid", "categories:write", "properties:item"})
+     * @Groups({"categories:collection", "categories:item", "admin:categories", "admin:categoriesid", "categories:write", "properties:item", "admin:createcategories"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:item", "categories:write", "admin:categories", "admin:categoriesid"})
+     * @Groups({"categories:item", "categories:write", "admin:categories", "admin:categoriesid", "admin:createcategories"})
      * 
      */
     private $picture;
 
      /**
      * @ORM\Column(type="text")
-     * @Groups({"categories:item","categories:write", "admin:categoriesid"})
+     * @Groups({"categories:item","categories:write", "admin:categoriesid", "admin:createcategories"})
      */
     private $description;
 
