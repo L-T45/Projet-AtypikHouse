@@ -3,6 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\Conversations;
+use App\Entity\Messages;
+use App\Entity\User;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -36,6 +39,25 @@ class ConversationsRepository extends ServiceEntityRepository
     }
     */
 
+     /**
+      * @return Conversations[] Returns an array of Conversations objects
+      */
+
+
+    public function find($id, $lockMode = null, $lockVersion = null)
+    {
+        return $this->createQueryBuilder('c')
+            ->select('m.id,m.body,m.created_at,u.firstname,u.lastname,u.picture,c.created_at')
+            ->innerJoin('c.messages','m')
+            ->innerJoin('m.user','u')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('m.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     
 

@@ -31,8 +31,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "dashboard/user/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/conversations/{id}",
+ *                  "controller"=App\Controller\FindConversationsidByUser::class,
  *                  
- *               },  
+ *               }, 
  *          }
  * )
  */
@@ -42,25 +43,25 @@ class Conversations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"conversations:collection", "read:messages", "user:messages", "user:conversations", "admin:users"})
+     * @Groups({"conversations:collection", "user:conversid", "read:messages", "user:messages", "user:conversations", "admin:users"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"conversations:collection", "user:messages", "user:conversations", "admin:users"})
+     * @Groups({"conversations:collection", "user:conversid", "user:messages", "user:conversations", "admin:users"})
      */
     private $created_at;
 
     /**
      * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="conversations")
-     * @Groups({"conversations:item", "user:conversations"})
+     * @Groups({"conversations:item", "user:conversid", "user:conversations"})
      */
     private $messages;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="conversations")
-     * @Groups({"conversations:item", "user:conversations", "admin:usersconv"})
+     * @Groups({"conversations:item", "user:conversations", "admin:usersconv", "user:conversid"})
      */
     private $users;
 

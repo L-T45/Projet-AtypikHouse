@@ -57,6 +57,25 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult()
         ;
     }
+
+     /**
+      * @return User[] Returns an array of User objects
+    */
+   
+    public function findConversationsidByUser($id, $lockMode = null, $lockVersion = null)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('m.id,m.body,m.created_at,u.firstname,u.lastname,u.picture,c.id,c.created_at')
+            ->innerJoin('u.messages','m')
+            ->innerJoin('m.conversations','c')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+          //  ->orderBy('m.id', 'DESC')
+           // ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     
 
     /*
