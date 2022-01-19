@@ -10,6 +10,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+//Ajout route dashboard/user/conversations/details/{id}/create
 /**
  * @ORM\Entity(repositoryClass=ConversationsRepository::class)
  * @ApiResource( normalizationContext={"groups"={"conversations:collection"}},
@@ -20,18 +21,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
- *             
+ *               "dashboard/user/conversations/details/{id}/create"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/user/conversations/details/{id}/create",
+ *               },              
  *          },
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"conversations:collection", "conversations:item"}}},
  *          "put"={},
- *          "delete"={},
- *                   
- *                  "dashboard/user/conversations/{id}"={
+ *          "delete"={},            
+ *               "dashboard/user/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/conversations/{id}",
- *                  
  *               },  
  *          }
  * )
