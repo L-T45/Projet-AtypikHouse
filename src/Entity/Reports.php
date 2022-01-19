@@ -35,13 +35,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                     "method"="POST",
  *                     "path"= "properties/{id}/reports",
  *                     "force_eager"=false,
- *                     "denormalization_context"={"groups"={"reports:properties", "properties:reports", "reportscategories:reports", "enable_max_depth"=true}}, 
+ *                     "denormalization_context"={"groups"={"reports:properties", "properties:reports", "reportscategories:reports", "user:reports", "enable_max_depth"=true}}, 
  *                },
  *              "properties_comments_{id}_reports"={
  *                     "method"="POST",
  *                     "path"= "properties/comments/{id}/reports",
  *                     "force_eager"=false,
- *                     "denormalization_context"={"groups"={"reports:comments", "comments:reports", "reportscategories:reports", "enable_max_depth"=true}}, 
+ *                     "denormalization_context"={"groups"={"reports:comments", "comments:reports", "reportscategories:reports", "user:reports", "enable_max_depth"=true}}, 
  *                },   
  *          },
  *      itemOperations={
@@ -114,7 +114,7 @@ class Reports
     
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
-     * @Groups({"reports:user"})
+     * @Groups({"reports:properties", "reports:comments"})
      */
     private $user;
 
