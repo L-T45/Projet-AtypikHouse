@@ -76,37 +76,37 @@ class Comments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"comments:collection", "propertiesid:item", "admin:usersid", "admin:commentsid", "properties:collection", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "reservations:user", "reservations:item", "properties:item", "categories:item", "properties:comments"})
+     * @Groups({"comments:collection", "admin:usertest", "propertiesid:item", "admin:commentsid", "properties:collection", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "reservations:user", "reservations:item", "properties:item", "categories:item", "properties:comments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"comments:collection", "propertiesid:item", "admin:usersid", "admin:commentsid", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "read:commentsperso", "read:commentsid", "reservations:item", "reservations:user", "properties:item", "properties:comments"})
+     * @Groups({"comments:collection", "admin:usertest", "propertiesid:item", "admin:commentsid", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "read:commentsperso", "read:commentsid", "reservations:item", "reservations:user", "properties:item", "properties:comments"})
      */
     private $body;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"comments:item", "propertiesid:item", "admin:usersid", "properties:collection", "admin:commentsid", "reservations:item", "admin:comments", "categories:item", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "properties:comments", "reservations:user", "lastcomments:collection"})
+     * @Groups({"comments:item", "admin:usertest", "propertiesid:item", "properties:collection", "admin:commentsid", "reservations:item", "admin:comments", "categories:item", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "properties:comments", "reservations:user", "lastcomments:collection"})
      */
     private $value;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"comments:item", "admin:usersid", "admin:commentsid", "reservations:item", "admin:comments", "properties:comments", "read:commentsperso", "owner:propertiesid", "read:commentsid"})
+     * @Groups({"comments:item", "admin:usertest", "admin:commentsid", "reservations:item", "admin:comments", "properties:comments", "read:commentsperso", "owner:propertiesid", "read:commentsid"})
      */
     private $created_at;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"comments:item", "admin:usersid", "admin:commentsid", "reservations:item"})
+     * @Groups({"comments:item","admin:commentsid", "admin:usertest", "reservations:item"})
      */
     private $updated_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
-     * @Groups({"comments:item", "admin:usersid", "propertiesid:item", "reservations:user", "admin:commentsid","reservations:item", "lastcomments:collection", "read:commentsid", "properties:item"})
+     * @Groups({"comments:item","propertiesid:item", "reservations:user", "admin:commentsid","reservations:item", "lastcomments:collection", "read:commentsid", "properties:item"})
      */
     private $user;
 
