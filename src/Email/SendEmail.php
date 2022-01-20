@@ -6,13 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Doctrine\Common\Collections\ArrayCollection;
-use ApiPlatform\Core\Annotation\ApiResource;
-use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;    
 use Symfony\Component\HttpFoundation\JsonResponse;
-
 use ReCaptcha\ReCaptcha; 
 
 class SendEmail extends AbstractController {
@@ -38,12 +34,12 @@ class SendEmail extends AbstractController {
             strlen($data["email"])<80 & strlen($data["email"])>6 & strlen($data["message"])<800 & strlen($data["message"])>6 &
             strlen($data["phone"])<15 & strlen($data["objet"])<60){
 
-                $forname = htmlentities($data["forname"]);   
-                $lastname = htmlentities($data["lastname"]);
-                $phone = htmlentities($data["phone"]); 
-                $email = htmlentities($data["email"]);
-                $objet = htmlentities($data["objet"]);   
-                $message = htmlentities($data["message"]); 
+                $forname = htmlspecialchars($data["forname"], ENT_NOQUOTES, "UTF-8");   
+                $lastname = htmlspecialchars($data["lastname"], ENT_NOQUOTES, "UTF-8");
+                $phone = htmlspecialchars($data["phone"], ENT_NOQUOTES, "UTF-8"); 
+                $email = htmlspecialchars($data["email"], ENT_NOQUOTES, "UTF-8");
+                $objet = htmlspecialchars($data["objet"], ENT_NOQUOTES, "UTF-8");   
+                $message = htmlspecialchars($data["message"], ENT_NOQUOTES, "UTF-8"); 
                 $token = $data['token'];
                 
                 // recaptcha

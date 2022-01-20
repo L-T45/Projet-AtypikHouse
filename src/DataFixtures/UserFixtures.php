@@ -12,9 +12,9 @@ use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Faker;
 
-use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class UserFixtures extends Fixture implements DependentFixtureInterface
+
+class UserFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
@@ -26,8 +26,6 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
          $user = Array();
         // create 20 User! Bam!
         for ($i = 1; $i < 32; $i++) {
-
-          
 
             $user[$i] = new User();
             $user[$i]->setEmail($faker->email);        
@@ -53,10 +51,5 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $manager->flush();
         }
 
-        public function getDependencies(){
-          return [
-              ReportsFixtures::class,
-
-          ];
-      }
+        
 }

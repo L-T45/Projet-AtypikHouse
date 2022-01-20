@@ -39,6 +39,7 @@ class ConversationsRepository extends ServiceEntityRepository
     }
     */
 
+<<<<<<< HEAD
     /**
     * @return Conversations[] Returns an array of Conversations objects
     */
@@ -69,6 +70,10 @@ class ConversationsRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
         return $query->getResult();
     }
+=======
+
+    
+>>>>>>> master
 
     /*
     public function findOneBySomeField($value): ?Conversations

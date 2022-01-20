@@ -89,20 +89,18 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "dashboard/user/{id}/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
- *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"user:conversations", "enable_max_depth"=true}}, 
+ *                  "controller"="App\Controller\FindConversationsByUser::class",
+ *                 
  *                  
  *               },  
  *                  "dashboard/user/{id}/reports"={
  *                  "method"="GET",
- *                  "force_eager"=false,
  *                  "path"="dashboard/user/{id}/reports",
  *                  "normalization_context"={"groups"={"read:reports", "enable_max_depth"=true}}, 
  *                  
  *               },  
  *                  "dashboard/owner/{id}/properties"={
  *                  "method"="GET",
- *                  "force_eager"=false,
  *                  "path"="dashboard/owner/{id}/properties",
  *                  "normalization_context"={"groups"={"owner:properties", "enable_max_depth"=true}}, 
  *                  
@@ -111,14 +109,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                 
  *                  "dashboard/owner/{id}/reservations"={
  *                  "method"="GET",
- *                  "force_eager"=false,
  *                  "path"="dashboard/owner/{id}/reservations",
  *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},
  *                  
  *               },  
  *                  "dashboard/admin/users/{id}"={
  *                  "method"="GET",
- *                  "force_eager"=false,
  *                  "path"="dashboard/admin/users/{id}",
  *                  "normalization_context"={"groups"={"admin:usersid", "admin:usersconv", "enable_max_depth"=true}},
  *                  
@@ -281,6 +277,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $conversations;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="user")
+     */
+    private $reports;
+
    
 
   
@@ -299,6 +300,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->payments = new ArrayCollection();
         $this->messages = new ArrayCollection();
         $this->conversations = new ArrayCollection();
+        $this->reports = new ArrayCollection();
        
 
     }
@@ -464,24 +466,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTime $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTime $updated_at): self
+    public function setUpdatedAt(\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
 
@@ -722,7 +724,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-   
+    /**
+     * @return Collection|Reports[]
+     */
+    public function getReports(): Collection
+    {
+        return $this->reports;
+    }
+
+    public function addReport(Reports $report): self
+    {
+        if (!$this->reports->contains($report)) {
+            $this->reports[] = $report;
+            $report->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReport(Reports $report): self
+    {
+        if ($this->reports->removeElement($report)) {
+            // set the owning side to null (unless already changed)
+            if ($report->getUser() === $this) {
+                $report->setUser(null);
+            }
+        }
+
+        return $this;
+    }
 
    
 
@@ -732,4 +762,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
    
 
+   
+
+        
 }
+

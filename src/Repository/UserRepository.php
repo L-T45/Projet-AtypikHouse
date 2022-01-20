@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\User;
+use App\Entity\Messages;
+use App\Entity\Conversations;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -36,22 +38,39 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->flush();
     }
 
-    // /**
-    //  * @return User[] Returns an array of User objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+    * @return User[] Returns an array of User objects
+    */
+    
+    public function findByEmail(string $username): array
     {
         return $this->createQueryBuilder('u')
-            ->andWhere('u.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('u.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('u.id, u.email, u.roles, u.lastname, u.phone, u.address, u.city, u.birthdate, u.zipCode, u.created_at, u.updated_at, u.emailvalidated, u.firstname, u.country ,u.picture, u.is_blocked')
+            ->andWhere('u.email = :email')
+            ->setParameter('email', $username)
             ->getQuery()
             ->getResult()
         ;
     }
+    
+    /** 
+    * @return User[] Returns an array of User objects
     */
+    
+    public function findConversationsByIdUser($id)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.id,u.picture,u.lastname,u.firstname,m.id,m.body,m.created_at')
+            ->leftJoin('u.messages','m')
+            ->leftJoin('m.conversations','c')
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('m.id', 'DESC')
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?User
