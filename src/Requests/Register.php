@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
-class Register  {
+class Register extends AbstractController{
     // Pour le formulaire de register
     private $firstname;
     private $lastname;
@@ -64,7 +64,7 @@ class Register  {
         $password = $this->cutChaine($password, ':"', '";'); 
 
         //encodage password
-        $password = $encoder->encodePassword($password);
+        $password = $encoder->encodePassword($user, $password);
 
         $address = $_POST["address"]; 
         $address = serialize($address);
@@ -108,7 +108,7 @@ class Register  {
 
         $manager->persist($user);
         $manager->flush();
-        return new JsonResponse(['status' => '200', 'title' => 'Votre compte a bien été créé'], JsonResponse::HTTP_CREATED ); 
+        return new JsonResponse( ['status' => '200', 'title' => 'Votre compte a bien été créé'], JsonResponse::HTTP_CREATED ); 
     }
 
 }
