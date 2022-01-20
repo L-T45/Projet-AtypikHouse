@@ -24,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *               "dashboard/user/conversations/details/{id}/create"={
  *                  "method"="POST",
  *                  "path"="dashboard/user/conversations/details/{id}/create",
+ *                  "denormalization_context"={"groups"={"conversations:messages", "messages:conversations"}}
  *               },              
  *          },
  *      itemOperations={
