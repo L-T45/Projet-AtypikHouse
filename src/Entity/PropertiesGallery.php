@@ -21,7 +21,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
- *              
+ *             "dashboard/owner/properties/details/galleryphoto/{id}/addpictures"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/owner/properties/details/galleryphoto/{id}/addpictures",
+ *                  "denormalization_context"={"groups"={"galleryphoto:create", "propertiesgalleryphoto:create", "enable_max_depth"=true}}, 
+ *                }, 
  *              
  *          },
  *      itemOperations={
@@ -45,13 +49,13 @@ class PropertiesGallery
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection", "owner:propertiesid", "properties:item", "propertiesid:item"})
+     * @Groups({"propertiesgallery:collection", "owner:propertiesid", "properties:item", "propertiesid:item", "galleryphoto:create"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection"})
+     * @Groups({"propertiesgallery:collection", "galleryphoto:create"})
      */
     private $alt;
 
@@ -69,6 +73,7 @@ class PropertiesGallery
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="propertiesGalleries")
+     * @Groups({"galleryphoto:create"})
      */
     private $properties;
 

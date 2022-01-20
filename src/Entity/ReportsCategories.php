@@ -19,8 +19,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
- *            "post"={},
- *               
+ *            "post"={},  
  *          },
  *      itemOperations={
  * 
@@ -36,7 +35,7 @@ class ReportsCategories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reportscategories:collection", "user:reports", "reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reportscategories:collection", "user:reports", "reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid", "reportscategories:reports"})
      */
     private $id;
 

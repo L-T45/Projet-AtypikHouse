@@ -10,6 +10,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+//Ajout route dashboard/user/conversations/details/{id}/create
 /**
  * @ORM\Entity(repositoryClass=ConversationsRepository::class)
  * @ApiResource( normalizationContext={"groups"={"conversations:collection"}},
@@ -19,18 +20,26 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
- *            "post"={},
+ *            "post"={},             
+ *            
+ * 
+ *                  "dashboard/admin/conversations"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/admin/conversations",
+ *                  "controller"=App\Controller\LastNewConversations::class,
+ *                  
+ *               },  
  *             
  *          },
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"conversations:collection", "conversations:item"}}},
  *          "put"={},
- *          "delete"={},
- *                   
- *                  "dashboard/user/conversations/{id}"={
+ *          "delete"={},            
+ *               "dashboard/user/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/conversations/{id}",
+ *                  "controller"=App\Controller\AllConversations::class,
  *                  
  *               },  
  *          }
@@ -42,7 +51,7 @@ class Conversations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"conversations:collection", "read:messages", "user:messages", "user:conversations", "admin:users"})
+     * @Groups({"conversations:collection", "admin:conversationsid", "users:collection", "read:messages", "admin:conversations", "lastconversations:collection", "user:messages", "user:conversations", "admin:users"})
      */
     private $id;
 
@@ -54,13 +63,13 @@ class Conversations
 
     /**
      * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="conversations")
-     * @Groups({"conversations:item", "user:conversations"})
+     * @Groups({"conversations:item", "admin:conversationsid", "user:conversations"})
      */
     private $messages;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="conversations")
-     * @Groups({"conversations:item", "user:conversations", "admin:usersconv"})
+     * @Groups({"conversations:item", "read:conversationsid", "user:conversations", "admin:conversations", "admin:conversationsid", "lastconversations:collection", "admin:usersconv"})
      */
     private $users;
 
