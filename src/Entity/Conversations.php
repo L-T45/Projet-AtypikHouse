@@ -20,10 +20,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},             
+ *            
+ * 
  *                  "dashboard/admin/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/conversations",
- *                  "normalization_context"={"groups"={"admin:conversations", "enable_max_depth"=true}},  
+ *                  "controller"=App\Controller\LastNewConversations::class,
+ *                  
  *               },  
  *             
  *          },

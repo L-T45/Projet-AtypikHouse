@@ -39,7 +39,6 @@ class ConversationsRepository extends ServiceEntityRepository
     }
     */
 
-<<<<<<< HEAD
     /**
     * @return Conversations[] Returns an array of Conversations objects
     */
@@ -47,10 +46,11 @@ class ConversationsRepository extends ServiceEntityRepository
     public function findLatest():array
     {
         $qb = $this->createQueryBuilder('c');
-        $qb ->select('m.id, m.body, m.created_at, u.id, u.lastname, u.firstname, u.picture, c.id')
+        $qb ->select('MAX(m.created_at) AS max_messages, m.id, m.body, m.created_at, u.id, u.lastname, u.firstname, u.picture, c.id')
             ->leftJoin('c.messages', 'm')
             ->leftJoin('m.user', 'u')
-            ->orderBy('m.id', 'DESC');
+            ->orderBy('m.id', 'DESC')
+            ->groupBy('c.id');
         $query = $qb->getQuery();
         return $query->getResult();
     }
@@ -70,10 +70,6 @@ class ConversationsRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
         return $query->getResult();
     }
-=======
-
-    
->>>>>>> master
 
     /*
     public function findOneBySomeField($value): ?Conversations
