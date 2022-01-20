@@ -37,12 +37,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users",
  *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},                 
- *               },
- *                "api_register"={
- *                  "method"="POST",
- *                  "path"="register",
- *                  "denormalization_context"={"groups"={"users:register", "enable_max_depth"=true}},   
- *                },                                 
+ *               },                                 
  *          },
  *      itemOperations={
  * 
@@ -139,56 +134,56 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user:collection", "user:write", "admin:usersid", "read:infosperso", "users:register", "users:login"})
+     * @Groups({"user:collection", "user:write", "admin:usersid", "read:infosperso", "users:login"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"user:item", "admin:usersid", "admin:users", "user:write", "users:register"})
+     * @Groups({"user:item", "admin:usersid", "admin:users", "user:write"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"user:write", "users:register", "users:login"})
+     * @Groups({"user:write", "users:login"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
+     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
      */
     private $lastname;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $birthdate;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $zipCode;
 
@@ -212,19 +207,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
+     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection", "users:register"})
+     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection"})
      */
     private $picture;
 
