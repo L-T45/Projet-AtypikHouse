@@ -47,7 +47,7 @@ class Payments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"payments:collection", "read:payments", "user:payments", "reservations:user", "owner:propertiesid", "owner:reservid"})
+     * @Groups({"payments:collection", "read:payments", "user:payments", "reservations:user", "owner:propertiesid", "owner:reservid", "payments:reservations"})
      */
     private $id;
 

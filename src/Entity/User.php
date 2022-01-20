@@ -37,7 +37,16 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users",
  *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},                 
+<<<<<<< HEAD
  *               },                                 
+=======
+ *               },
+ *                "api_register"={
+ *                  "method"="POST",
+ *                  "path"="register",
+ *                  "denormalization_context"={"groups"={"users:register", "enable_max_depth"=true}},   
+ *                },                           
+>>>>>>> master
  *          },
  *      itemOperations={
  * 
@@ -113,7 +122,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "path"="dashboard/admin/users/{id}",
  *                  "normalization_context"={"groups"={"admin:usersid", "admin:usersconv", "enable_max_depth"=true}},
  *                  
- *               },  
+ *               },
+ *                 "lastconversations"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/{id}/conversations",
+ *                  "controller"=App\Controller\LastNewConversations::class,
+ *                 
+ *               },      
  *                 
  *                  
  *          }
@@ -128,7 +143,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user"})
+     * @Groups({"user:collection", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations"})
      */
     private $id;
 

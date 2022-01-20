@@ -8,6 +8,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
+// Ajout de la route dashboard/admin/categories/attributes/create
 /**
  * @ORM\Entity(repositoryClass=AttributesRepository::class)
  * @ApiResource(
@@ -20,11 +21,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *            "get"={},
  *            "post"={},
  *                
- *                  "dashboard/admin/categories/attributes"={
+ *            "dashboard/admin/categories/attributes"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories/attributes",
  *                  "normalization_context"={"groups"={"admin:categattributes", "enable_max_depth"=true}},
- *                  
+ *               },
+ * 
+ *             "dashboard/admin/categories/attributes/create"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/admin/categories/attributes/create",
+ *                  "denormalization_context"={"groups"={"admin:attributescreate", "attributes:categories", "enable_max_depth"=true}},
  *               },    
  *              
  *          },
@@ -56,7 +62,7 @@ class Attributes
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"attributes:collection", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid"})
+     * @Groups({"attributes:collection", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate"})
      */
     private $title;
 
@@ -74,7 +80,7 @@ class Attributes
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="attributes")
-     * @Groups({"attributes:item", "admin:categattributes", "admin:categattributesid"})
+     * @Groups({"attributes:item", "admin:categattributes", "admin:categattributesid", "admin:attributescreate"})
      */
     private $categories;
 
