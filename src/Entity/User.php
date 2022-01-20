@@ -48,6 +48,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  * 
  *          "get"={"normalization_context"={"groups"={"user:collection", "user:item"}}},
  *          "put"={},
+ *          "patch"={},
  *          "delete"={},
  *               "api_dashboard_user_payments"={
  *                  "method"="GET",
@@ -121,9 +122,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               },  
  * 
  *                  "dashboard/user/{id}/personal_informations/modifypassword"={
- *                  "method"="Patch",
- *                  "path"="dashboard/amdin/users",
- *                  "normalization_context"={"groups"={"admin:usersid", "enable_max_depth"=true}},
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/user/{id}/personal_informations/modifypassword",
+ *                  "denormalization_context"={"groups"={"admin:usersid", "enable_max_depth"=true}},
  *               },
  *                 
  *                  
