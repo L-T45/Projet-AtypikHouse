@@ -42,7 +42,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "method"="POST",
  *                  "path"="register",
  *                  "denormalization_context"={"groups"={"users:register", "enable_max_depth"=true}},   
- *                },                                 
+ *                },                           
  *          },
  *      itemOperations={
  * 
@@ -118,7 +118,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "path"="dashboard/admin/users/{id}",
  *                  "normalization_context"={"groups"={"admin:usersid", "admin:usersconv", "enable_max_depth"=true}},
  *                  
- *               },  
+ *               },
+ *                 "lastconversations"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/{id}/conversations",
+ *                  "controller"=App\Controller\LastNewConversations::class,
+ *                 
+ *               },      
  *                 
  *                  
  *          }
