@@ -9,6 +9,7 @@ use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+
 /**
  * @method Conversations|null find($id, $lockMode = null, $lockVersion = null)
  * @method Conversations|null findOneBy(array $criteria, array $orderBy = null)
@@ -39,6 +40,7 @@ class ConversationsRepository extends ServiceEntityRepository
     }
     */
 
+
      /**
       * @return Conversations[] Returns an array of Conversations objects
       */
@@ -56,7 +58,38 @@ class ConversationsRepository extends ServiceEntityRepository
           ;
       }
 
-    
+    /**
+    * @return Conversations[] Returns an array of Conversations objects
+    */
+
+    public function findLatest():array
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb ->select('MAX(m.created_at) AS max_messages, m.id, m.body, m.created_at, u.id, u.lastname, u.firstname, u.picture, c.id')
+            ->leftJoin('c.messages', 'm')
+            ->leftJoin('m.user', 'u')
+            ->orderBy('m.id', 'DESC')
+            ->groupBy('c.id');
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+
+    /**
+    * @return Conversations[] Returns an array of Conversations objects
+    */
+
+    public function findMessagesDetails($id):array
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb ->select('m.id, m.body, m.created_at')
+            ->leftJoin('c.messages', 'm', 'WITH', 'c.id = m.conversations_id')
+            ->leftJoin('m.user', 'u')
+            ->orderBy('m.id', 'DESC')
+            ->setParameter('id', $id);
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
 
     /*
     public function findOneBySomeField($value): ?Conversations
