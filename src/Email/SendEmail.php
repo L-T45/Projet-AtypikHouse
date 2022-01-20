@@ -24,7 +24,7 @@ class SendEmail extends AbstractController {
 
     public function sendEmailFormContact(MailerInterface $mailer, Request $request): Response{
 
-        $data = json_decode($request->getContent(), true );
+        $data = json_decode($request->getContent(), true);
 
         // Données du formulaire de contact
         // On vérifie si les champs sont vides

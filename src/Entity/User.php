@@ -37,16 +37,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users",
  *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},                 
-<<<<<<< HEAD
  *               },                                 
-=======
- *               },
- *                "api_register"={
- *                  "method"="POST",
- *                  "path"="register",
- *                  "denormalization_context"={"groups"={"users:register", "enable_max_depth"=true}},   
- *                },                           
->>>>>>> master
  *          },
  *      itemOperations={
  * 
@@ -286,14 +277,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $reports;
 
-   
 
-  
-
-  
-
- 
-
+    
     public function __construct()
     {
         $this->properties = new ArrayCollection();
@@ -757,17 +742,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-   
-
-   
-
-   
-
-   
-
-   
-
-        
+     
 }
 

@@ -4,8 +4,16 @@ namespace App\Requests;
 
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\User;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;  
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 
-class Register extends AbstractController {
+class Register  {
     // Pour le formulaire de register
     private $firstname;
     private $lastname;
@@ -18,6 +26,7 @@ class Register extends AbstractController {
     private $zipCode;
     private $country;
     private $picture;
+    private $encoder;
 
     public function cutChaine($string, $start, $end){
         $string = ' ' . $string;   
@@ -28,13 +37,13 @@ class Register extends AbstractController {
         return substr($string, $ini, $len);
 
     }
-
-    public function newUser(ObjectManager $manager): void
+    public function newUser(EntityManagerInterface $manager, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
+        $user = Array();
+        $user = new User();
 
         // Données du formulaire de register  
         $firstname = $_POST["firstname"];
-        dump($firstname);
         $firstname = serialize($firstname); 
         $firstname = $this->cutChaine($firstname, ':"', '";'); 
         
@@ -53,7 +62,10 @@ class Register extends AbstractController {
         $password = $_POST["password"];
         $password = serialize($password);
         $password = $this->cutChaine($password, ':"', '";'); 
-        
+
+        //encodage password
+        $password = $encoder->encodePassword($password);
+
         $address = $_POST["address"]; 
         $address = serialize($address);
         $address = $this->cutChaine($address, ':"', '";');
@@ -65,6 +77,7 @@ class Register extends AbstractController {
         $birthdate = $_POST["birthdate"]; 
         $birthdate = serialize($birthdate);
         $birthdate = $this->cutChaine($birthdate, ':"', '";');
+        $birthdate = new \DateTime($birthdate);
 
         $zipCode = $_POST["zipCode"]; 
         $zipCode = serialize($zipCode);
@@ -78,9 +91,6 @@ class Register extends AbstractController {
         $picture = serialize($picture);
         $picture = $this->cutChaine($picture, ':"', '";');
 
-        $user = Array();
-
-        $user = new User();
         $user->setEmail($email);        
         $user->setRoles(["ROLE_USER"]);
         $user->setPassword($password);
@@ -98,6 +108,7 @@ class Register extends AbstractController {
 
         $manager->persist($user);
         $manager->flush();
-        }
+        return new JsonResponse(['status' => '200', 'title' => 'Votre compte a bien été créé'], JsonResponse::HTTP_CREATED ); 
+    }
 
 }
