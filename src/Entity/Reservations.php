@@ -10,7 +10,7 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-// Ajout route personalisé ici (reservationid) car pas possible à un autre endroit visiblement.
+// Ajout route personalisé ici (reservationid, properties/{id}/reservation) car pas possible à un autre endroit visiblement.
 /**
  * @ORM\Entity(repositoryClass=ReservationsRepository::class)
  * @ApiResource(
@@ -21,19 +21,23 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
- *            "post"={},   
- *                   
- *                  "dashboard/admin/reservations"={
+ *            "post"={},    
+ *               "dashboard/admin/reservations"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/reservations",
- *                  "normalization_context"={"groups"={"admin:reservations", "enable_max_depth"=true}},
- *                  
+ *                  "normalization_context"={"groups"={"admin:reservations", "enable_max_depth"=true}}, 
  *               },     
- * 
- *                  "thebestproperty"={
+ *               "thebestproperty"={
  *                  "method"="GET",
  *                  "path"="home/bestproperty",
  *                  "controller"=App\Controller\TheBestRatedProperty::class,
+ *               },
+ * 
+ *              "properties/{id}/reservations"={
+ *                  "method"="POST",
+ *                  "path"="properties/{id}/reservations",
+ *                  "force_eager"=false,
+ *                  "denormalization_context"={"groups"={"reservations:create", "payments:reservations", "properties:reservations",  "user:createreservations", "enable_max_depth"=true}},
  *               },   
  * 
  *          },
@@ -70,43 +74,43 @@ class Reservations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:collection", "admin:usertest", "propertiesid:item", "comments:item", "read:reservperso", "owner:reservations", "admin:reservations", "owner:reservid", "owner:reserv", "owner:propertiesid", "properties:item", "payments:item", "user:item", "user:reservations", "reservations:user", "properties:comments"})
+     * @Groups({"reservations:collection", "admin:usertest", "admin:usersid", "propertiesid:item", "comments:item", "read:reservperso", "owner:reservations", "admin:reservations", "owner:reservid", "owner:reserv", "owner:propertiesid", "properties:item", "payments:item", "user:item", "user:reservations", "reservations:user", "properties:comments", "reservations:comments"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "propertiesid:item", "reservations:user", "comments:item", "owner:reservations", "admin:reservations", "owner:reservid","owner:reserv", "owner:propertiesid", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations", "properties:comments"})
+     * @Groups({"reservations:collection", "admin:usersid", "propertiesid:item", "reservations:user", "comments:item", "owner:reservations", "admin:reservations", "owner:reservid","owner:reserv", "owner:propertiesid", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations", "properties:comments", "reservations:create"})
      */
     private $start_date;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"reservations:collection", "propertiesid:item", "reservations:user", "comments:item", "owner:reservations", "admin:reservations", "owner:reservid", "owner:reserv", "owner:propertiesid", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations"})
+     * @Groups({"reservations:collection", "admin:usersid", "propertiesid:item", "reservations:user", "comments:item", "owner:reservations", "admin:reservations", "owner:reservid", "owner:reserv", "owner:propertiesid", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations", "reservations:create"})
      */
     private $end_date;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "properties:item", "reservations:user", "user:item", "owner:reservid", "owner:propertiesid"})
+     * @Groups({"reservations:item", "properties:item", "reservations:user", "user:item", "owner:reservid", "owner:propertiesid", "reservations:create"})
      */
     private $is_approuved;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item","propertiesid:item", "properties:item", "user:item", "owner:reservations", "admin:reservations", "reservations:user", "owner:reservid", "read:reservperso", "owner:propertiesid", "owner:reserv"})
+     * @Groups({"reservations:item", "admin:usersid", "propertiesid:item", "properties:item", "user:item", "owner:reservations", "admin:reservations", "reservations:user", "owner:reservid", "read:reservperso", "owner:propertiesid", "owner:reserv", "reservations:create"})
      */
     private $is_cancelled;
 
     /**
      * @ORM\Column(type="boolean")
-     * @Groups({"reservations:item", "properties:item", "user:item", "reservations:user", "owner:reservid", "owner:propertiesid"})
+     * @Groups({"reservations:item", "admin:usersid", "properties:item", "user:item", "reservations:user", "owner:reservid", "owner:propertiesid", "reservations:create"})
      */
     private $is_paid;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:item", "properties:item", "user:item", "reservations:user", "owner:reservid", "owner:propertiesid"})
+     * @Groups({"reservations:item", "admin:usersid", "properties:item", "user:item", "reservations:user", "owner:reservid", "owner:propertiesid", "reservations:create"})
      */
     private $participants_nbr;
 
@@ -124,20 +128,20 @@ class Reservations
 
     /**
      * @ORM\OneToOne(targetEntity=Payments::class, inversedBy="reservations", cascade={"persist", "remove"})
-     * @Groups({"reservations:user", "owner:propertiesid", "owner:reservid"})
+     * @Groups({"reservations:user", "owner:propertiesid", "owner:reservid", "reservations:create"})
      */
     private $payments;
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reservations")
-     * @Groups({"reservations:item", "admin:commentsid", "lastcomments:collection", "comments:item", "admin:comments", "read:reservations", "reservations:user", "read:commentsid", "read:commentsperso", "owner:reservid"})
+     * @Groups({"reservations:item", "admin:commentsid", "lastcomments:collection", "comments:item", "admin:comments", "read:reservations", "reservations:user", "read:commentsid", "read:commentsperso", "owner:reservid", "reservations:create"})
      */
     private $properties;
 
       
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
-     * @Groups({"reserv:user", "owner:reserv", "owner:reservid", "admin:reserv", "propertiesid:item"})
+     * @Groups({"reserv:user", "owner:reserv", "owner:reservid", "admin:reserv", "propertiesid:item", "reservations:create"})
      * 
      */
     private $user;

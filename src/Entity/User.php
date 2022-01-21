@@ -42,7 +42,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "method"="POST",
  *                  "path"="register",
  *                  "denormalization_context"={"groups"={"users:register", "enable_max_depth"=true}},   
- *                },                                 
+ *                },                           
  *          },
  *      itemOperations={
  * 
@@ -123,7 +123,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:usersid", "admin:usertest", "enable_max_depth"=true}},
  *                  
- *               },  
+ *               },
+ *                 "lastconversations"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/{id}/conversations",
+ *                  "controller"=App\Controller\LastNewConversations::class,
+ *                 
+ *               },      
  *                 
  *                  
  *          }
@@ -138,7 +144,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "user:conversid", "admin:useru", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user"})
+     * @Groups({"user:collection", "user:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations"})
      */
     private $id;
 
@@ -465,24 +471,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTime
+    public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTime $created_at): self
+    public function setCreatedAt(\DateTimeImmutable $created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTime
+    public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTime $updated_at): self
+    public function setUpdatedAt(\DateTimeImmutable $updated_at): self
     {
         $this->updated_at = $updated_at;
 
@@ -763,4 +769,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
    
 
+        
 }
+

@@ -15,6 +15,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
+// Ajout route personalisé ici (dashboard/admin/reports, properties_{id}_signalement, properties_comments_{id}_reports, dashboard/admin/reports/{id}, dashboard/user/reports/{id}) car pas possible à un autre endroit visiblement.
 /**
  * @ORM\Entity(repositoryClass=ReportsRepository::class)
  * @ApiResource( normalizationContext={"groups"={"reports:collection"}},
@@ -25,14 +26,23 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
- * 
- *                  "dashboard/admin/reports"={
+ *               "dashboard/admin/reports"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/reports",
  *                  "normalization_context"={"groups"={"admin:reports", "enable_max_depth"=true}},  
- *               },  
- *                
- *               
+ *               }, 
+ *              "properties_{id}_reports"={
+ *                     "method"="POST",
+ *                     "path"= "properties/{id}/reports",
+ *                     "force_eager"=false,
+ *                     "denormalization_context"={"groups"={"reports:properties", "properties:reports", "reportscategories:reports", "user:reports", "enable_max_depth"=true}}, 
+ *                },
+ *              "properties_comments_{id}_reports"={
+ *                     "method"="POST",
+ *                     "path"= "properties/comments/{id}/reports",
+ *                     "force_eager"=false,
+ *                     "denormalization_context"={"groups"={"reports:comments", "comments:reports", "reportscategories:reports", "user:reports", "enable_max_depth"=true}}, 
+ *                },   
  *          },
  *      itemOperations={
  * 
@@ -68,13 +78,13 @@ class Reports
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"reports:collection", "reports:write", "propertiesid:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reports:collection", "reports:write", "propertiesid:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid", "reports:properties", "reports:comments"})
      */
     private $reportstate;
 
       /**
      * @ORM\Column(type="text")
-     * @Groups({"reports:collection", "propertiesid:item", "reports:write", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
+     * @Groups({"reports:collection", "propertiesid:item", "reports:write", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid", "reports:properties", "reports:comments"})
      */
     private $description;
 
@@ -86,22 +96,25 @@ class Reports
 
     /**
      * @ORM\ManyToOne(targetEntity=ReportsCategories::class, inversedBy="reports")
-     * @Groups({"reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid", "propertiesid:item"})
+     * @Groups({"reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid", "propertiesid:item", "reports:properties", "reports:comments"})
      */
     private $reportscategories;
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reports")
+     * @Groups({"reports:properties"})
      */
     private $properties;
 
     /**
      * @ORM\ManyToOne(targetEntity=Comments::class, inversedBy="reports")
+     * @Groups({"reports:comments"})
      */
     private $comments;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
+     * @Groups({"reports:properties", "reports:comments"})
      */
     private $user;
 

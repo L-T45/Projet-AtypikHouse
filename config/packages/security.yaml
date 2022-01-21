@@ -14,7 +14,7 @@ security:
                 class: App\Entity\User
                 property: email
                 
-    firewalls:       
+    firewalls:     
         login:
             pattern: ^/api/login$
             stateless: true
@@ -22,6 +22,10 @@ security:
                 check_path: /api/login
                 success_handler: lexik_jwt_authentication.handler.authentication_success
                 failure_handler: lexik_jwt_authentication.handler.authentication_failure
+        
+        token_refresh:
+            pattern: ^/api/token/refresh
+            stateless: true
 
         api:
             pattern:   ^/api
@@ -48,6 +52,7 @@ security:
     access_control:
         # Paramétrage des droits d'accès au login 
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # Paramétrage des droits d'accès à l'api 
         #- { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
