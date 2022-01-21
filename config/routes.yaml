@@ -27,3 +27,9 @@ api_register:
     path: /api/register
     methods: [POST]
     controller: App\Requests\Register::newUser
+
+dashboard_owner_properties_create:
+    path: /api/dashboard/owner/properties/create
+    methods: [POST]
+    controller: App\Requests\CreateProperties::newProperties
+
