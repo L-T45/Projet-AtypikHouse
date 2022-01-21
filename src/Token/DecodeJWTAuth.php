@@ -46,7 +46,7 @@ class DecodeJWTAuth extends AbstractController
                 $findUser = $this->UserRepository->findByEmail($username);
                 $findUserCheck = $findUser;
 
-                if($findUserCheck =! ''){
+                if($findUserCheck =! []){
                     return new JsonResponse( [ 'status' => '200', 'User' => $findUser ], JsonResponse::HTTP_CREATED ); 
                 }else{
                     return new JsonResponse( [ 'status' => '500', 'title' => 'Server Error', 'message' => "Erreur de récupération des données de l'utilisateur" ], JsonResponse::HTTP_CREATED ); 
