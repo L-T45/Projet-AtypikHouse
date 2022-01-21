@@ -50,7 +50,7 @@ class CreateProperties extends AbstractController{
         $properties = Array();
         $properties = new Properties();
 
-        // Données du formulaire de register  
+        // Données du formulaire de properties  
         $title = $_POST["title"];
         $title = serialize($title); 
         $title = $this->cutChaine($title, ':"', '";'); 

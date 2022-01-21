@@ -14,7 +14,7 @@ use App\Repository\CategoriesRepository;
 
 class CreateCategories extends AbstractController{
     
-    // Pour le formulaire de création de propriété
+    // Pour le formulaire de création de catégories
     private $title;
     private $slug;
     private $picture;
@@ -34,7 +34,7 @@ class CreateCategories extends AbstractController{
         $categories = Array();
         $categories = new Categories();
 
-        // Données du formulaire de register  
+        // Données du formulaire de catégories  
         $title = $_POST["title"];
         $title = serialize($title); 
         $title = $this->cutChaine($title, ':"', '";'); 

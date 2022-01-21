@@ -37,3 +37,8 @@ dashboard/admin/categories/create:
     methods: [POST]
     path: /api/dashboard/admin/categories/create
     controller: App\Requests\CreateCategories::newCategories
+
+dashboard/owner/properties/details/galleryphoto/{id}/addpictures:
+    methods: [POST]
+    path: /api/dashboard/owner/properties/details/galleryphoto/{id}/addpictures
+    controller: App\Requests\CreatePropertiesGallery::newPropertiesGallery
