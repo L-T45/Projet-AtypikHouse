@@ -39,6 +39,22 @@ class ConversationsRepository extends ServiceEntityRepository
     }
     */
 
+     /**
+      * @return Conversations[] Returns an array of Conversations objects
+      */
+
+
+      public function findAll()
+      {
+          return $this->createQueryBuilder('c')
+              ->select('m.id,m.body,m.created_at,u.firstname,u.lastname,u.picture,c.id')
+              ->leftJoin('c.messages','m')
+              ->leftJoin('m.user','u')
+              ->orderBy('m.id', 'DESC')
+              ->getQuery()
+              ->getResult()
+          ;
+      }
     /**
     * @return Conversations[] Returns an array of Conversations objects
     */

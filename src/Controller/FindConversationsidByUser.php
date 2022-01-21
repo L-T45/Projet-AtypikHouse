@@ -6,7 +6,7 @@ use App\Entity\User;
 use App\Repository\UserRepository;
 
 
-class FindConversationsByUser
+class FindConversationsidByUser
 {
 
     private $userRepository;
@@ -20,7 +20,7 @@ class FindConversationsByUser
 
     public function __invoke(int $id)
     {
-        return $this->userRepository->find($id);
+        return $this->userRepository->findConversationsidByUser($id);
     }
 
 }

@@ -37,12 +37,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users",
  *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},                 
- *               },
- *                "api_register"={
- *                  "method"="POST",
- *                  "path"="register",
- *                  "denormalization_context"={"groups"={"users:register", "enable_max_depth"=true}},   
- *                },                           
+ *               },                                 
  *          },
  *      itemOperations={
  * 
@@ -90,19 +85,22 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "dashboard/user/{id}/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
- *                  "controller"="App\Controller\FindConversationsByUser::class",
+ *                  "controller"=App\Controller\FindConversationsByUser::class,
  *                 
  *                  
  *               },  
+ *  
  *                  "dashboard/user/{id}/reports"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/reports",
+ *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"read:reports", "enable_max_depth"=true}}, 
  *                  
  *               },  
  *                  "dashboard/owner/{id}/properties"={
  *                  "method"="GET",
  *                  "path"="dashboard/owner/{id}/properties",
+ *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"owner:properties", "enable_max_depth"=true}}, 
  *                  
  *               },  
@@ -111,13 +109,15 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "dashboard/owner/{id}/reservations"={
  *                  "method"="GET",
  *                  "path"="dashboard/owner/{id}/reservations",
+ *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},
  *                  
  *               },  
  *                  "dashboard/admin/users/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users/{id}",
- *                  "normalization_context"={"groups"={"admin:usersid", "admin:usersconv", "enable_max_depth"=true}},
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"admin:usersid", "admin:usertest", "enable_max_depth"=true}},
  *                  
 <<<<<<< HEAD
  *               },  
@@ -150,62 +150,62 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations"})
+     * @Groups({"user:collection", "user:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user:collection", "user:write", "admin:usersid", "read:infosperso", "users:register", "users:login"})
+     * @Groups({"user:collection", "user:write", "admin:usersid", "read:infosperso", "users:login"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"user:item", "admin:usersid", "admin:users", "user:write", "users:register"})
+     * @Groups({"user:item", "admin:usersid", "admin:users", "user:write"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"user:write", "users:register", "users:login"})
+     * @Groups({"user:write", "users:login"})
      */
     private $password;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
+     * @Groups({"comments:item", "user:write", "user:conversid", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
      */
     private $lastname;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @ORM\Column(type="string", length=15)
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $birthdate;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $zipCode;
 
@@ -229,19 +229,19 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
+     * @Groups({"comments:item", "user:write", "user:conversid", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
      */
     private $firstname;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection", "users:register"})
+     * @Groups({"comments:item", "user:write", "user:conversid", "admin:usertest", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection", "users:register"})
      */
     private $picture;
 
@@ -260,7 +260,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user")
-     * @Groups({"user:item", "user:reservations", "admin:usersid", "read:reservations", "read:reservperso", "admin:reservations", "owner:reservations"})
+     * @Groups({"user:item", "user:reservations", "read:reservations", "read:reservperso", "admin:reservations", "owner:reservations"})
      */
     private $reservations;
 
@@ -278,7 +278,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="user")
-     * @Groups({"read:messages", "admin:usersid"})
+     * @Groups({"read:messages"})
      */
     private $messages;
 
@@ -293,13 +293,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $reports;
 
-   
 
-  
-
-  
-
- 
 
     public function __construct()
     {
@@ -765,17 +759,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-   
-
-   
-
-   
-
-   
-
-   
-
-        
+     
 }
 

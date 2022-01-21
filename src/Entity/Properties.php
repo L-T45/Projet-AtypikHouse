@@ -21,9 +21,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  * @ApiResource(
  *      normalizationContext={"groups"={"properties:collection"}},
  *      denormalizationContext={"groups"={"properties:write"}},
- *      paginationItemsPerPage= 20,
- *      paginationMaximumItemsPerPage= 20,
- *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
@@ -108,7 +105,7 @@ class Properties
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"properties:write", "admin:commentsid", "propertiesid:item", "owner:reservid", "properties:item", "owner:propertiesid", "categories:item", "reservations:user", "read:commentsid", "properties:collection"})
+     * @Groups({"properties:write", "admin:commentsid", "admin:usersid", "propertiesid:item", "owner:reservid", "properties:item", "owner:propertiesid", "categories:item", "reservations:user", "read:commentsid", "properties:collection", "properties:create"})
      */
     private $price;
 
@@ -169,7 +166,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "owner:reservid", "propertiesid:item", "admin:comments", "lastcomments:collection", "admin:commentsid", "read:commentsperso", "admin:properties", "owner:propertiesid", "owner:properties", "properties:write", "reservations:user", "read:commentsid", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "lastcomments:collection", "read:reservations", "properties:create"})
+     * @Groups({"properties:collection", "owner:reservid", "admin:usersid", "propertiesid:item", "admin:comments", "lastcomments:collection", "admin:commentsid", "read:commentsperso", "admin:properties", "owner:propertiesid", "owner:properties", "properties:write", "reservations:user", "read:commentsid", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "lastcomments:collection", "read:reservations", "properties:create"})
      */
     private $picture;
 
@@ -211,13 +208,13 @@ class Properties
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="properties")
-     * @Groups({"properties:item", "propertiesid:item", "admin:commentsid", "properties:write", "reservations:user", "owner:propertiesid", "owner:reservid", "properties:create"})
+     * @Groups({"properties:item", "propertiesid:item", "admin:usersid", "admin:commentsid", "properties:write", "reservations:user", "owner:propertiesid", "owner:reservid", "properties:create"})
      */
     private $categories;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="properties")
-     * @Groups({"properties:item", "propertiesid:item", "properties:write", "owner:propertiesid", "properties:collection"})
+     * @Groups({"properties:item", "admin:usertest", "propertiesid:item", "properties:write", "owner:propertiesid", "properties:collection"})
      */
     private $reservations;
 

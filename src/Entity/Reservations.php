@@ -74,7 +74,7 @@ class Reservations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:collection", "admin:usersid", "propertiesid:item", "comments:item", "read:reservperso", "owner:reservations", "admin:reservations", "owner:reservid", "owner:reserv", "owner:propertiesid", "properties:item", "payments:item", "user:item", "user:reservations", "reservations:user", "properties:comments", "reservations:comments"})
+     * @Groups({"reservations:collection", "admin:usertest", "admin:usersid", "propertiesid:item", "comments:item", "read:reservperso", "owner:reservations", "admin:reservations", "owner:reservid", "owner:reserv", "owner:propertiesid", "properties:item", "payments:item", "user:item", "user:reservations", "reservations:user", "properties:comments", "reservations:comments"})
      */
     private $id;
 
@@ -148,7 +148,7 @@ class Reservations
 
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
-     * @Groups({"reservations:item", "propertiesid:item", "reservations:user", "owner:propertiesid", "properties:item", "properties:collection", "admin:usersid"})
+     * @Groups({"reservations:item", "admin:usertest", "propertiesid:item", "reservations:user", "owner:propertiesid", "properties:item", "properties:collection"})
      */
     private $comments;
 

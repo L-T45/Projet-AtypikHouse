@@ -26,7 +26,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "dashboard/admin/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/conversations",
- *                  "controller"=App\Controller\LastNewConversations::class,
+ *                   "controller"=App\Controller\LastNewConversations::class,
+ *                  
+ *               }, 
+ *                 
  *                  
  *               },  
  *             
@@ -39,9 +42,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *               "dashboard/user/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/conversations/{id}",
+ *                  "controller"=App\Controller\FindConversationsidByUser::class,
+ *                  
+ *               }, 
+ *                  "dashboard/admin/conversations/{id}"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/admin/conversations/{id}",  
  *                  "controller"=App\Controller\AllConversations::class,
  *                  
- *               },  
+ *               }, 
  *          }
  * )
  */
@@ -51,25 +60,37 @@ class Conversations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+<<<<<<< HEAD
+     * @Groups({"conversations:collection", "user:conversid", "read:messages", "user:messages", "user:conversations", "admin:users"})
+=======
      * @Groups({"conversations:collection", "admin:conversationsid", "users:collection", "read:messages", "admin:conversations", "lastconversations:collection", "user:messages", "user:conversations", "admin:users"})
+>>>>>>> master
      */
     private $id;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"conversations:collection", "user:messages", "user:conversations", "admin:users"})
+     * @Groups({"conversations:collection", "user:conversid", "user:messages", "user:conversations", "admin:users"})
      */
     private $created_at;
 
     /**
      * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="conversations")
+<<<<<<< HEAD
+     * @Groups({"conversations:item", "user:conversid", "user:conversations"})
+=======
      * @Groups({"conversations:item", "admin:conversationsid", "user:conversations"})
+>>>>>>> master
      */
     private $messages;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="conversations")
+<<<<<<< HEAD
+     * @Groups({"conversations:item", "user:conversations", "admin:usersconv", "user:conversid"})
+=======
      * @Groups({"conversations:item", "read:conversationsid", "user:conversations", "admin:conversations", "admin:conversationsid", "lastconversations:collection", "admin:usersconv"})
+>>>>>>> master
      */
     private $users;
 
