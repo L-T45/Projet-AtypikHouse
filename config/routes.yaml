@@ -33,3 +33,7 @@ dashboard_owner_properties_create:
     methods: [POST]
     controller: App\Requests\CreateProperties::newProperties
 
+dashboard/admin/categories/create:
+    methods: [POST]
+    path: /api/dashboard/admin/categories/create
+    controller: App\Requests\CreateCategories::newCategories

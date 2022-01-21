@@ -64,5 +64,19 @@ class CategoriesRepository extends ServiceEntityRepository
             ->getOneOrNullResult()
         ;
     }
+
+    /**
+      * @return Properties[] Returns an array of Properties objects
+      */
+
+      public function findByCategories(string $title):array
+      {
+          return $this->createQueryBuilder('c')
+          ->select('c.id')
+          ->andWhere('c.title = :title')
+          ->setParameter('title', $title)
+          ->getQuery()
+          ->getResult();
+      }
     
 }

@@ -29,12 +29,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories",
  *                  "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
- *               },
- *              "dashboard/admin/categories/create"={
- *                  "method"="POST",
- *                  "path"="dashboard/admin/categories/create",
- *                  "normalization_context"={"groups"={"admin:createcategories", "enable_max_depth"=true}},
- *               },       
+ *               },      
  *                       
  *          },
  * 
