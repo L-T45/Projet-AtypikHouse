@@ -164,7 +164,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $lastname;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="string", length=15)
      * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $phone;
@@ -278,7 +278,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $reports;
 
 
-    
+
     public function __construct()
     {
         $this->properties = new ArrayCollection();

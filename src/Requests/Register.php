@@ -12,8 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;  
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\UserRepository;
 
 class Register extends AbstractController{
+    
     // Pour le formulaire de register
     private $firstname;
     private $lastname;
@@ -27,6 +29,7 @@ class Register extends AbstractController{
     private $country;
     private $picture;
     private $encoder;
+    private $UserRepository;
 
     public function cutChaine($string, $start, $end){
         $string = ' ' . $string;   
@@ -35,9 +38,9 @@ class Register extends AbstractController{
         $ini += strlen($start);  
         $len = strpos($string, $end, $ini) - $ini;
         return substr($string, $ini, $len);
-
     }
-    public function newUser(EntityManagerInterface $manager, Request $request, UserPasswordEncoderInterface $encoder): Response
+
+    public function newUser(EntityManagerInterface $manager, Request $request, UserPasswordEncoderInterface $encoder, UserRepository $UserRepository): Response
     {
         $user = Array();
         $user = new User();
@@ -91,24 +94,32 @@ class Register extends AbstractController{
         $picture = serialize($picture);
         $picture = $this->cutChaine($picture, ':"', '";');
 
-        $user->setEmail($email);        
-        $user->setRoles(["ROLE_USER"]);
-        $user->setPassword($password);
-        $user->setLastname($lastname);
-        $user->setPhone($phone);
-        $user->setAddress($address);
-        $user->setCity($city);
-        $user->setBirthdate($birthdate);
-        $user->setZipCode($zipCode);
-        $user->setEmailvalidated(0);
-        $user->setFirstname($firstname);
-        $user->setCountry($country);
-        $user->setPicture($picture);
-        $user->setIsBlocked(0);
-
-        $manager->persist($user);
-        $manager->flush();
-        return new JsonResponse( ['status' => '200', 'title' => 'Votre compte a bien été créé'], JsonResponse::HTTP_CREATED ); 
+        $this->UserRepository = $UserRepository;
+        $findUser = $this->UserRepository->findByEmailCheckIfExist($email);
+        $findUserCheck = $findUser;
+        
+        if($findUserCheck === [])
+        { 
+            $user->setEmail($email);        
+            $user->setRoles(["ROLE_USER"]);
+            $user->setPassword($password);
+            $user->setLastname($lastname);
+            $user->setPhone($phone);
+            $user->setAddress($address);
+            $user->setCity($city);
+            $user->setBirthdate($birthdate);
+            $user->setZipCode($zipCode);
+            $user->setEmailvalidated(0);
+            $user->setFirstname($firstname);
+            $user->setCountry($country);
+            $user->setPicture($picture);
+            $user->setIsBlocked(0);
+        
+            $manager->persist($user);
+            $manager->flush();
+            return new JsonResponse( ['status' => '200', 'title' => 'Votre compte a bien été créé'], JsonResponse::HTTP_CREATED ); 
+        }else{
+            return new JsonResponse( ['status' => '400', 'title' => 'Bad Request', 'message' => 'Un utilisateur est déjà créé avec cette adresse mail !'], JsonResponse::HTTP_CREATED );
+        }
     }
-
 }
