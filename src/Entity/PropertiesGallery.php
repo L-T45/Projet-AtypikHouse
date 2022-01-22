@@ -28,8 +28,7 @@ use Symfony\Component\Validator\Constraints\Uuid;
  *                  "method"="POST",
  *                  "path"="dashboard/owner/properties/details/galleryphoto/{id}/addpictures",
  *                  "deserialize"=false,
- *                  "controller"="App\Requests\CreatePropertiesGallery::newPropertiesGallery" , 
- *                  "denormalization_context"={"groups"={"galleryphoto:create", "propertiesgalleryphoto:create", "enable_max_depth"=true}},    
+ *                  "controller"="App\Requests\CreatePropertiesGallery::newPropertiesGallery" ,   
  *                }, 
  *              
  *          },
@@ -54,13 +53,13 @@ class PropertiesGallery
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection", "owner:propertiesid", "properties:item", "propertiesid:item", "galleryphoto:create"})
+     * @Groups({"propertiesgallery:collection", "owner:propertiesid", "properties:item", "propertiesid:item"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection", "galleryphoto:create"})
+     * @Groups({"propertiesgallery:collection"})
      */
     private $alt;
 
@@ -78,7 +77,6 @@ class PropertiesGallery
 
     /**
     * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="propertiesGalleries")
-    * @Groups({"galleryphoto:create"})
     * @ApiProperty(readableLink=true)
     */
     private $properties;

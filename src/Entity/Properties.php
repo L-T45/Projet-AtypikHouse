@@ -36,6 +36,11 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "path"="dashboard/admin/properties",
  *                  "normalization_context"={"groups"={"admin:properties", "enable_max_depth"=true}}, 
  *               }, 
+ *               "dashboard_owner_properties_create"={
+ *                  "method"="POST", 
+ *                  "path"="dashboard/owner/properties/create",
+ *                  "controller"="App\Requests\CreateProperties::newProperties",
+ *                  },
  *          },
  *      itemOperations={
  *          "get"={"normalization_context"={"groups"={"propertiesid:item", "properties:id"}}},       
