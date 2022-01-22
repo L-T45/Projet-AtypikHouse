@@ -53,13 +53,13 @@ class PropertiesGallery
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection", "owner:propertiesid", "properties:item", "propertiesid:item"})
+     * @Groups({"propertiesgallery:collection", "propertiesgallery:write", "owner:propertiesid", "properties:item", "propertiesid:item", "galleryphoto:create"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection"})
+     * @Groups({"propertiesgallery:collection", "propertiesgallery:write", "galleryphoto:create"})
      */
     private $alt;
 
@@ -76,9 +76,9 @@ class PropertiesGallery
     private $updated_at;
 
     /**
-    * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="propertiesGalleries")
-    * @ApiProperty(readableLink=true)
-    */
+     * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="propertiesGalleries")
+     * @Groups({"galleryphoto:create", "propertiesgallery:write"})
+     */
     private $properties;
 
     public function __construct()
