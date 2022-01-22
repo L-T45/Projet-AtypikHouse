@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Conversations;
 use App\Entity\Messages;
 use App\Entity\User;
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -40,7 +39,6 @@ class ConversationsRepository extends ServiceEntityRepository
     }
     */
 
-
      /**
       * @return Conversations[] Returns an array of Conversations objects
       */
@@ -57,7 +55,6 @@ class ConversationsRepository extends ServiceEntityRepository
               ->getResult()
           ;
       }
-
     /**
     * @return Conversations[] Returns an array of Conversations objects
     */

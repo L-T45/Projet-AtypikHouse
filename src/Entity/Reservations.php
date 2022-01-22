@@ -21,7 +21,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
- *            "post"={},    
+ *            "post"={},
+ *                
  *               "dashboard/admin/reservations"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/reservations",
@@ -74,7 +75,7 @@ class Reservations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reservations:collection", "user:item", "admin:usersid", "propertiesid:item", "comments:item", "read:reservperso", "owner:reservations", "admin:reservations", "owner:reservid", "owner:reserv", "owner:propertiesid", "properties:item", "payments:item", "user:item", "user:reservations", "reservations:user", "properties:comments", "reservations:comments"})
+     * @Groups({"reservations:collection","admin:usertest", "admin:usersid", "propertiesid:item", "comments:item", "read:reservperso", "owner:reservations", "admin:reservations", "owner:reservid", "owner:reserv", "owner:propertiesid", "properties:item", "payments:item", "user:item", "user:reservations", "reservations:user", "properties:comments", "reservations:comments"})
      */
     private $id;
 
@@ -86,11 +87,7 @@ class Reservations
 
     /**
      * @ORM\Column(type="date")
-<<<<<<< HEAD
-     * @Groups({"reservations:collection", "propertiesid:item", "reservations:user", "comments:item", "owner:reservations", "admin:reservations", "owner:reservid", "owner:reserv", "owner:propertiesid", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations"})
-=======
      * @Groups({"reservations:collection", "admin:usersid", "propertiesid:item", "reservations:user", "comments:item", "owner:reservations", "admin:reservations", "owner:reservid", "owner:reserv", "owner:propertiesid", "read:reservperso", "properties:item", "payments:item", "user:item", "user:reservations", "read:reservations", "reservations:create"})
->>>>>>> master
      */
     private $end_date;
 

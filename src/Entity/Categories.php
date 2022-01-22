@@ -29,12 +29,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories",
  *                  "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
- *               },
- *              "dashboard/admin/categories/create"={
- *                  "method"="POST",
- *                  "path"="dashboard/admin/categories/create",
- *                  "normalization_context"={"groups"={"admin:createcategories", "enable_max_depth"=true}},
- *               },       
+ *               },      
  *                       
  *          },
  * 
@@ -47,6 +42,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "dashboard/admin/categories/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories/{id}",
+ *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
  *                  
  *               }, 
@@ -61,13 +57,13 @@ class Categories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"categories:collection", "admin:usersid", "propertiesid:item", "admin:commentsid", "attributes:item", "admin:categattributesid", "admin:categattributes", "admin:categoriesid", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:categories", "attributes:categories"})
+     * @Groups({"categories:collection", "propertiesid:item", "admin:usersid", "propertiesid:item", "admin:commentsid", "attributes:item", "admin:categattributesid", "admin:categattributes", "admin:categoriesid", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:categories", "attributes:categories"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "admin:usersid", "propertiesid:item", "admin:commentsid",  "categories:item", "admin:categattributesid", "admin:categattributes", "admin:categories", "admin:categoriesid", "categories:write", "owner:propertiesid", "owner:reservid", "properties:item", "attributes:item", "reservations:user", "admin:createcategories"})
+     * @Groups({"categories:collection", "admin:usersid", "propertiesid:item", "propertiesid:item", "admin:commentsid",  "categories:item", "admin:categattributesid", "admin:categattributes", "admin:categories", "admin:categoriesid", "categories:write", "owner:propertiesid", "owner:reservid", "properties:item", "attributes:item", "reservations:user", "admin:createcategories"})
      */
     private $title;
 
@@ -111,7 +107,7 @@ class Categories
 
     /**
      * @ORM\OneToMany(targetEntity=Attributes::class, mappedBy="categories")
-     * @Groups({"categories:item", "admin:categoriesid", "admin:categattributes"})
+     * @Groups({"categories:item", "admin:categoriesid", "propertiesid:item"})
      */
     private $attributes;
 

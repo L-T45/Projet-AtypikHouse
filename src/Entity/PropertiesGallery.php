@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiProperty;
+
+use Symfony\Component\Validator\Constraints\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass=PropertiesGalleryRepository::class)
@@ -24,7 +27,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *             "dashboard/owner/properties/details/galleryphoto/{id}/addpictures"={
  *                  "method"="POST",
  *                  "path"="dashboard/owner/properties/details/galleryphoto/{id}/addpictures",
- *                  "denormalization_context"={"groups"={"galleryphoto:create", "propertiesgalleryphoto:create", "enable_max_depth"=true}}, 
+ *                  "deserialize"=false,
+ *                  "controller"="App\Requests\CreatePropertiesGallery::newPropertiesGallery" ,   
  *                }, 
  *              
  *          },
@@ -49,13 +53,13 @@ class PropertiesGallery
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection", "owner:propertiesid", "properties:item", "propertiesid:item", "galleryphoto:create"})
+     * @Groups({"propertiesgallery:collection", "propertiesgallery:write", "owner:propertiesid", "properties:item", "propertiesid:item", "galleryphoto:create"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection", "galleryphoto:create"})
+     * @Groups({"propertiesgallery:collection", "propertiesgallery:write", "galleryphoto:create"})
      */
     private $alt;
 
@@ -73,12 +77,9 @@ class PropertiesGallery
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="propertiesGalleries")
-     * @Groups({"galleryphoto:create"})
+     * @Groups({"galleryphoto:create", "propertiesgallery:write"})
      */
     private $properties;
-
- 
-
 
     public function __construct()
     {

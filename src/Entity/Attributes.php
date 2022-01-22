@@ -14,9 +14,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ApiResource(
  *      normalizationContext={"groups"={"attributes:collection"}},
  *      denormalizationContext={"groups"={"attributes:write"}},
- *      paginationItemsPerPage= 2,
- *      paginationMaximumItemsPerPage= 2,
- *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
@@ -24,6 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *            "dashboard/admin/categories/attributes"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories/attributes",
+ *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:categattributes", "enable_max_depth"=true}},
  *               },
  * 
@@ -44,7 +42,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "dashboard/admin/categories/attributes/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories/attributes/{id}",
- *                  "normalization_context"={"groups"={"admin:categattributesid", "attributes:item"}},
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"admin:categattributesid", "attributes:item", "enable_max_depth"=true}},
  *               },
  *               
  *          }
@@ -56,13 +55,13 @@ class Attributes
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"attributes:collection", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid"})
+     * @Groups({"attributes:collection", "propertiesid:item", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"attributes:collection", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate"})
+     * @Groups({"attributes:collection", "propertiesid:item", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate"})
      */
     private $title;
 

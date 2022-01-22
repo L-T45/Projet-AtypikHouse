@@ -54,6 +54,21 @@ class PropertiesRepository extends ServiceEntityRepository
         ->getQuery()
         ->getResult();
     }
+    
+     /**
+      * @return Properties[] Returns an array of Properties objects
+      */
+
+      public function findAddress(string $address):array
+      {
+          return $this->createQueryBuilder('p')
+          ->select('p.id')
+          ->andWhere('p.address = :address')
+          ->setParameter('address', $address)
+          ->getQuery()
+          ->getResult();
+      }
+
 
      /**
       * @return Properties[] Returns an array of Properties objects
