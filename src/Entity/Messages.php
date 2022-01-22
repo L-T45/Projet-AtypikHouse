@@ -18,18 +18,23 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
- *             
- *          },
+ *            "api_dashboard/user/conversations/details/{id}/create"={
+ *                  "method"="POST",
+ *                  "path"="/dashboard/user/conversations/details/{id}/create",
+ *                  "force_eager"=false,
+ *                  "denormalization_context"={"groups"={"messages:create", "usermessage:create", "convmessage:create", "enable_max_depth"=true}}, 
+ *              },
+ *      },
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"messages:collection", "messages:item"}}},
  *          "put"={},
  *          "delete"={},
- *                  "api_dashboard_user_messages"={
+ *           "api_dashboard_user_messages"={
  *                  "method"="GET",
  *                  "path"="/dashboard/user/messages/{id}",
  *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"user:messages"},"enable_max_depth"=true},
+ *                  "normalization_context"={"groups"={"user:messages", "enable_max_depth"=true}},
  *                 
  *               },
  *          }
@@ -47,7 +52,7 @@ class Messages
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"messages:collection", "user:conversid", "admin:usersid", "read:messages", "user:messages", "conversations:item", "user:conversations"})
+     * @Groups({"messages:collection", "user:conversid", "admin:usersid", "read:messages", "user:messages", "conversations:item", "user:conversations", "messages:create"})
      */
     private $body;
 
@@ -59,13 +64,13 @@ class Messages
 
     /**
      * @ORM\ManyToOne(targetEntity=Conversations::class, inversedBy="messages")
-     * @Groups({"messages:item", "read:messages", "user:messages", "admin:usersid"})
+     * @Groups({"messages:item", "read:messages", "user:messages", "admin:usersid", "messages:create"})
      */
     private $conversations;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
-     * @Groups({"user:messages", "user:conversid"})
+     * @Groups({"user:messages", "user:conversid", "messages:create"})
      */
     private $user;
 

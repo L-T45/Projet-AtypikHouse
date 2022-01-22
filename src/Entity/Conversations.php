@@ -57,7 +57,7 @@ class Conversations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"conversations:collection", "admin:conversationsid", "users:collection", "read:messages", "admin:conversations", "lastconversations:collection", "user:messages", "user:conversations", "admin:users", "user:conversid"})
+     * @Groups({"conversations:collection", "admin:conversationsid", "users:collection", "read:messages", "admin:conversations", "lastconversations:collection", "user:messages", "user:conversations", "admin:users", "user:conversid", "convmessage:create"})
      */
     private $id;
 
