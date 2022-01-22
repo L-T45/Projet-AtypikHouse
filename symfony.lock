@@ -713,6 +713,7 @@
     },
     "willdurand/negotiation": {
         "version": "3.0.0"
+    },
     "gesdinet/jwt-refresh-token-bundle": {
         "version": "v0.12.0"
     }
