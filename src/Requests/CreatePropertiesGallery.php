@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse; 
 use App\Repository\PropertiesGalleryRepository; 
+use App\Entity\Properties;
 
 class CreatePropertiesGallery extends AbstractController{
     
@@ -31,11 +32,15 @@ class CreatePropertiesGallery extends AbstractController{
     {
         $propertiesGallery = Array();
         $propertiesGallery = new PropertiesGallery();
+        $em = $this->getDoctrine()->getManager();
 
         // Données du formulaire de Gallerie photo  
-        $properties = $_POST["properties"];
-        $properties = serialize($properties); 
-        $properties = $this->cutChaine($properties, ':"', '";');
+        
+        $postProperties = $_POST["properties"];
+        $postProperties = serialize($postProperties); 
+        $postProperties = $this->cutChaine($postProperties, ':"', '";'); 
+        $properties = new Properties();
+        $properties = $em->getReference("App\Entity\Properties", $postProperties);
 
         $picture = $_POST["picture"]; 
         $picture = serialize($picture);
@@ -51,7 +56,7 @@ class CreatePropertiesGallery extends AbstractController{
         
         if($findPropertiesGalleryCheck === [])
         { 
-            dd($propertiesGallery->setProperties($properties));
+            $propertiesGallery->setProperties($properties);
             $propertiesGallery->setPicture($picture);
             $propertiesGallery->setAlt($alt);
             $manager->persist($propertiesGallery);

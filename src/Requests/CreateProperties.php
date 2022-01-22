@@ -12,6 +12,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse; 
 use App\Repository\PropertiesRepository; 
 
+use App\Entity\User;
+use App\Entity\PropertiesGallery;
+use App\Entity\Categories;
+use App\Entity\Equipements;
+
 class CreateProperties extends AbstractController{
     
     // Pour le formulaire de création de propriété
@@ -49,6 +54,8 @@ class CreateProperties extends AbstractController{
     {
         $properties = Array();
         $properties = new Properties();
+        $em = $this->getDoctrine()->getManager();
+
 
         // Données du formulaire de properties  
         $title = $_POST["title"];
@@ -115,19 +122,30 @@ class CreateProperties extends AbstractController{
         $capacity = serialize($capacity);
         $capacity = $this->cutChaine($capacity, ':"', '";');
 
-        $equipements = $_POST["equipements"]; 
+        $postEquipements = $_POST["equipements"]; 
+        $postEquipements = serialize($postEquipements);
+        $postEquipements = $this->cutChaine($postEquipements, ':"', '";'); 
+        $equipements = new Equipements();
+        $equipements = $em->getReference("App\Entity\Equipements", $postEquipements);
+        //dd($equipements);
 
-        $categories = $_POST["categories"]; 
-        $categories = serialize($categories);
-        $categories = $this->cutChaine($categories, ':"', '";');
+        $postCategories = $_POST["categories"];
+        $postCategories = serialize($postCategories);
+        $postCategories = $this->cutChaine($postCategories, ':"', '";');  
+        $categories = new Categories();
+        $categories = $em->getReference("App\Entity\Categories", $postCategories);
 
-        $propertiesgallery = $_POST["propertiesgallery"]; 
-        $propertiesgallery = serialize($propertiesgallery);
-        $propertiesgallery = $this->cutChaine($propertiesgallery, ':"', '";');
+        $postPropertiesgallery = $_POST["propertiesgallery"]; 
+        $postPropertiesgallery = serialize($postPropertiesgallery);
+        $postPropertiesgallery = $this->cutChaine($postPropertiesgallery, ':"', '";');
+        $propertiesgallery = new Propertiesgallery();
+        $propertiesgallery = $em->getReference("App\Entity\Propertiesgallery", $postPropertiesgallery);
 
-        $user = $_POST["user"]; 
-        $user = serialize($user);
-        $user = $this->cutChaine($user, ':"', '";');
+        $postUser = $_POST["user"]; 
+        $postUser = serialize($postUser);
+        $postUser = $this->cutChaine($postUser, ':"', '";');
+        $user = new User();
+        $user = $em->getReference("App\Entity\User", $postUser);
 
         $this->PropertiesRepository = $PropertiesRepository;
         $findProperties = $this->PropertiesRepository->findAddress($address);
@@ -151,10 +169,9 @@ class CreateProperties extends AbstractController{
             $properties->setCountry($country);
             $properties->setCapacity($capacity);
             $properties->setZipCode($zipCode);
-            $properties->getEquipements($equipements);
-            $properties->getCategories($categories);
-            $properties->getPropertiesGalleries($propertiesgallery);
-            $properties->getUser($user);  
+            $properties->addEquipement($equipements);     
+            $properties->setCategories($categories);
+            $properties->setUser($user);  
 
             $manager->persist($properties);
             $manager->flush();

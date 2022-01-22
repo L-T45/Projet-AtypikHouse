@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiProperty;
+
+use Symfony\Component\Validator\Constraints\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass=PropertiesGalleryRepository::class)
@@ -21,6 +24,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
+ *             "dashboard/owner/properties/details/galleryphoto/{id}/addpictures"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/owner/properties/details/galleryphoto/{id}/addpictures",
+ *                  "deserialize"=false,
+ *                  "controller"="App\Requests\CreatePropertiesGallery::newPropertiesGallery" , 
+ *                  "denormalization_context"={"groups"={"galleryphoto:create", "propertiesgalleryphoto:create", "enable_max_depth"=true}},    
+ *                }, 
  *              
  *          },
  *      itemOperations={
@@ -44,13 +54,13 @@ class PropertiesGallery
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection", "owner:propertiesid", "properties:item", "propertiesid:item"})
+     * @Groups({"propertiesgallery:collection", "owner:propertiesid", "properties:item", "propertiesid:item", "galleryphoto:create"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection"})
+     * @Groups({"propertiesgallery:collection", "galleryphoto:create"})
      */
     private $alt;
 
@@ -67,13 +77,11 @@ class PropertiesGallery
     private $updated_at;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="propertiesGalleries")
-     * @Groups({"galleryphoto:create"})
-     */
+    * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="propertiesGalleries")
+    * @Groups({"galleryphoto:create"})
+    * @ApiProperty(readableLink=true)
+    */
     private $properties;
-
- 
-
 
     public function __construct()
     {
