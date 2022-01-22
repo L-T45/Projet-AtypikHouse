@@ -11,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -61,11 +62,10 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
     * @return User[] Returns an array of User objects
     */
-<<<<<<< HEAD
 
     public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder) {
         $old_pwd = $request->get('old_password'); 
-        $new_pwd = $request->get('new_password'); 
+        $new_pwd = $request->get('new_password');
         $new_pwd_confirm = $request->get('new_password_confirm');
 
         $user = $this->getUser();
@@ -76,7 +76,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         } else {
             return new jsonresponse(array('error' => 'The current password is incorrect.'));
         }
-=======
+    }
     
     public function findByEmailCheckIfExist(string $email): array
     {
@@ -87,7 +87,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getResult()
         ;
->>>>>>> master
     }
     
     /** 

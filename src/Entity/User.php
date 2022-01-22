@@ -119,23 +119,21 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:usersid", "admin:usertest", "enable_max_depth"=true}},
  *                  
-<<<<<<< HEAD
  *               },  
  * 
  *                  "dashboard/user/{id}/personal_informations/modifypassword"={
  *                  "method"="PATCH",
  *                  "path"="dashboard/user/{id}/personal_informations/modifypassword",
- *                  "denormalization_context"={"groups"={"admin:usersid", "enable_max_depth"=true}},
+ *                  "controller"=App\Controller\ResetPassword::class,
+ *                  "denormalization_context"={"groups"={"admin:useridentifiants", "enable_max_depth"=true}},
  *               },
-=======
- *               },
+ * 
  *                 "lastconversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
  *                  "controller"=App\Controller\LastNewConversations::class,
  *                 
  *               },      
->>>>>>> master
  *                 
  *                  
  *          }
@@ -150,7 +148,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "user:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations"})
+     * @Groups({"user:collection", "user:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations", "admin:useridentifiants"})
      */
     private $id;
 
@@ -169,7 +167,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"user:write", "users:login"})
+     * @Groups({"user:write", "users:login", "admin:useridentifiants"})
      */
     private $password;
 
