@@ -49,13 +49,13 @@ class PropertiesGallery
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection", "owner:propertiesid", "properties:item", "propertiesid:item", "galleryphoto:create"})
+     * @Groups({"propertiesgallery:collection", "propertiesgallery:write", "owner:propertiesid", "properties:item", "propertiesid:item", "galleryphoto:create"})
      */
     private $picture;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection", "galleryphoto:create"})
+     * @Groups({"propertiesgallery:collection", "propertiesgallery:write", "galleryphoto:create"})
      */
     private $alt;
 
@@ -73,7 +73,7 @@ class PropertiesGallery
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="propertiesGalleries")
-     * @Groups({"galleryphoto:create"})
+     * @Groups({"galleryphoto:create", "propertiesgallery:write"})
      */
     private $properties;
 

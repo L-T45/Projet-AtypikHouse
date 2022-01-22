@@ -24,6 +24,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *            "dashboard/admin/categories/attributes"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories/attributes",
+ *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:categattributes", "enable_max_depth"=true}},
  *               },
  * 
@@ -44,7 +45,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "dashboard/admin/categories/attributes/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories/attributes/{id}",
- *                  "normalization_context"={"groups"={"admin:categattributesid", "attributes:item"}},
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"admin:categattributesid", "attributes:item", "enable_max_depth"=true}},
  *               },
  *               
  *          }

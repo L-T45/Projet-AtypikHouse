@@ -47,6 +47,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "dashboard/admin/categories/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories/{id}",
+ *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
  *                  
  *               }, 
@@ -111,7 +112,7 @@ class Categories
 
     /**
      * @ORM\OneToMany(targetEntity=Attributes::class, mappedBy="categories")
-     * @Groups({"categories:item", "admin:categoriesid", "admin:categattributes"})
+     * @Groups({"categories:item", "admin:categoriesid"})
      */
     private $attributes;
 
