@@ -261,12 +261,13 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"properties:collection"})
+     * 
      */
     private $filePath;
 
     /**
      * @var string|null
+     * @Groups({"properties:collection", "properties:write"})
      */
     private $fileUrl;
 
@@ -685,7 +686,17 @@ class Properties
         return $this->fileUrl;
     }
 
-    
+    /**
+     * @return string|null $fileUrl
+     * @return Properties
+     */
+    public function setFileUrl(?string $fileUrl): Properties
+    {
+        $this->fileUrl = $fileUrl;
+        return $this; 
+    }
+
+
 
 
 }
