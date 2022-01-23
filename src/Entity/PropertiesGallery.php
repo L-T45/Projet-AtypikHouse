@@ -9,6 +9,9 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiProperty;
+
+use Symfony\Component\Validator\Constraints\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass=PropertiesGalleryRepository::class)
@@ -24,7 +27,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *             "dashboard/owner/properties/details/galleryphoto/{id}/addpictures"={
  *                  "method"="POST",
  *                  "path"="dashboard/owner/properties/details/galleryphoto/{id}/addpictures",
- *                  "denormalization_context"={"groups"={"galleryphoto:create", "propertiesgalleryphoto:create", "enable_max_depth"=true}}, 
+ *                  "deserialize"=false,
+ *                  "controller"="App\Requests\CreatePropertiesGallery::newPropertiesGallery" ,   
  *                }, 
  *              
  *          },
@@ -76,9 +80,6 @@ class PropertiesGallery
      * @Groups({"galleryphoto:create", "propertiesgallery:write"})
      */
     private $properties;
-
- 
-
 
     public function __construct()
     {

@@ -37,12 +37,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users",
  *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},                 
- *               },
- *                "api_register"={
- *                  "method"="POST",
- *                  "path"="register",
- *                  "denormalization_context"={"groups"={"users:register", "enable_max_depth"=true}},   
- *                },                           
+ *               },                                 
  *          },
  *      itemOperations={
  * 
@@ -144,26 +139,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "user:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations"})
+     * @Groups({"user:collection", "user:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations", "usermessage:create"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups({"user:collection", "user:write", "admin:usersid", "read:infosperso", "users:register", "users:login"})
+     * @Groups({"user:collection", "user:write", "admin:usersid", "read:infosperso", "users:login"})
      */
     private $email;
 
     /**
      * @ORM\Column(type="json")
-     * @Groups({"user:item", "admin:usersid", "admin:users", "user:write", "users:register"})
+     * @Groups({"user:item", "admin:usersid", "admin:users", "user:write"})
      */
     private $roles = [];
 
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"user:write", "users:register", "users:login"})
+     * @Groups({"user:write", "users:login"})
      */
     private $password;
 
@@ -174,32 +169,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $lastname;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @ORM\Column(type="string", length=15)
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $city;
 
     /**
      * @ORM\Column(type="date")
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $birthdate;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $zipCode;
 
@@ -229,7 +224,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid", "users:register"})
+     * @Groups({"user:item", "user:write", "read:infosperso", "admin:usersid"})
      */
     private $country;
 
@@ -287,13 +282,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $reports;
 
-   
 
-  
-
-  
-
- 
 
     public function __construct()
     {
@@ -758,17 +747,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-
-   
-
-   
-
-   
-
-   
-
-   
-
-        
+     
 }
 

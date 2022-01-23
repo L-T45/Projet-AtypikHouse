@@ -53,6 +53,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult()
         ;
     }
+
+    /**
+    * @return User[] Returns an array of User objects
+    */
+    
+    public function findByEmailCheckIfExist(string $email): array
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.email')
+            ->andWhere('u.email = :email')
+            ->setParameter('email', $email)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
     
     /** 
     * @return User[] Returns an array of User objects

@@ -26,11 +26,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "dashboard/admin/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/conversations",
+<<<<<<< HEAD
+ *                  "controller"=App\Controller\LastNewConversations::class,
+ *                  
+ *               },  
+=======
  *                   "controller"=App\Controller\LastNewConversations::class,
  *                  
- *               }, 
- *                 
- *              
+ *               },   
+>>>>>>> master
  *             
  *          },
  *      itemOperations={
@@ -46,7 +50,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *               }, 
  *                  "dashboard/admin/conversations/{id}"={
  *                  "method"="GET",
+<<<<<<< HEAD
+ *                  "path"="dashboard/admin/conversations/{id}", 
+=======
  *                  "path"="dashboard/admin/conversations/{id}",  
+>>>>>>> master
  *                  "controller"=App\Controller\AllConversations::class,
  *                  
  *               }, 
@@ -59,7 +67,15 @@ class Conversations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"conversations:collection", "user:conversid", "admin:conversationsid", "users:collection", "read:messages", "admin:conversations", "lastconversations:collection", "user:messages", "user:conversations", "admin:users"})
+<<<<<<< HEAD
+<<<<<<< HEAD
+     * @Groups({"conversations:collection", "user:conversid", "read:messages", "user:messages", "user:conversations", "admin:users"})
+=======
+     * @Groups({"conversations:collection", "admin:conversationsid", "users:collection", "read:messages", "admin:conversations", "lastconversations:collection", "user:messages", "user:conversations", "admin:users"})
+>>>>>>> master
+=======
+     * @Groups({"conversations:collection", "admin:conversationsid", "users:collection", "read:messages", "admin:conversations", "lastconversations:collection", "user:messages", "user:conversations", "admin:users", "user:conversid", "convmessage:create"})
+>>>>>>> master
      */
     private $id;
 
@@ -71,13 +87,29 @@ class Conversations
 
     /**
      * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="conversations")
-     * @Groups({"conversations:item", "admin:conversationsid", "user:conversid", "user:conversations"})
+<<<<<<< HEAD
+<<<<<<< HEAD
+     * @Groups({"conversations:item", "user:conversid", "user:conversations"})
+=======
+     * @Groups({"conversations:item", "admin:conversationsid", "user:conversations"})
+>>>>>>> master
+=======
+     * @Groups({"conversations:item", "user:conversid", "user:conversations", "admin:conversationsid"})
+>>>>>>> master
      */
     private $messages;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="conversations")
-     * @Groups({"conversations:item", "user:conversid", "read:conversationsid", "user:conversations", "admin:conversations", "admin:conversationsid", "lastconversations:collection", "admin:usersconv"})
+<<<<<<< HEAD
+<<<<<<< HEAD
+     * @Groups({"conversations:item", "user:conversations", "admin:usersconv", "user:conversid"})
+=======
+     * @Groups({"conversations:item", "read:conversationsid", "user:conversations", "admin:conversations", "admin:conversationsid", "lastconversations:collection", "admin:usersconv"})
+>>>>>>> master
+=======
+     * @Groups({"conversations:item", "read:conversationsid", "user:conversations", "admin:conversations", "admin:conversationsid", "lastconversations:collection", "admin:usersconv", "user:conversid"})
+>>>>>>> master
      */
     private $users;
 

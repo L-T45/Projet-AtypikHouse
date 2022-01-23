@@ -7,7 +7,7 @@ use App\Entity\Messages;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use Doctrine\ORM\Query\Expr\Join;
+
 
 /**
  * @method Conversations|null find($id, $lockMode = null, $lockVersion = null)
@@ -70,6 +70,7 @@ class ConversationsRepository extends ServiceEntityRepository
         $query = $qb->getQuery();
         return $query->getResult();
     }
+
 
     /**
     * @return Conversations[] Returns an array of Conversations objects
