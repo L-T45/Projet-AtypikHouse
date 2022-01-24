@@ -148,7 +148,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+<<<<<<< HEAD
      * @Groups({"user:collection", "user:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations", "admin:useridentifiants"})
+=======
+     * @Groups({"user:collection", "user:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations", "usermessage:create"})
+>>>>>>> master
      */
     private $id;
 
@@ -470,24 +474,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeImmutable
+    public function getCreatedAt(): ?\DateTime
     {
         return $this->created_at;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $created_at): self
+    public function setCreatedAt(\DateTime $created_at): self
     {
         $this->created_at = $created_at;
 
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeImmutable
+    public function getUpdatedAt(): ?\DateTime
     {
         return $this->updated_at;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updated_at): self
+    public function setUpdatedAt(\DateTime $updated_at): self
     {
         $this->updated_at = $updated_at;
 

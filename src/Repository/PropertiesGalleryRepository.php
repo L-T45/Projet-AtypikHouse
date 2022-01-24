@@ -47,4 +47,18 @@ class PropertiesGalleryRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+      * @return Properties[] Returns an array of Properties objects
+      */
+
+      public function findByPropertiesGallery(string $alt):array
+      {
+          return $this->createQueryBuilder('pg')
+          ->select('pg.id')
+          ->andWhere('pg.alt = :alt')
+          ->setParameter('alt', $alt)
+          ->getQuery()
+          ->getResult();
+      }
 }

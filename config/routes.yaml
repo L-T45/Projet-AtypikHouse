@@ -27,3 +27,9 @@ api_register:
     path: /api/register
     methods: [POST]
     controller: App\Requests\Register::newUser
+
+dashboard/admin/categories/create:
+    methods: [POST]
+    path: /api/dashboard/admin/categories/create
+    controller: App\Requests\CreateCategories::newCategories
+
