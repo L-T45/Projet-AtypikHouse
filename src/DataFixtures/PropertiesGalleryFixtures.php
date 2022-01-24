@@ -24,7 +24,7 @@ class PropertiesGalleryFixtures extends Fixture implements DependentFixtureInter
          $faker = Faker\Factory::create('fr_FR');
          $properties_gallery = Array();
         // create 20 PropertiesGallery! Bam!
-        for ($i = 1; $i < 30; $i++) {
+        for ($i = 1; $i < 150; $i++) {
 
             $properties[$i] =  $this->getReference('properties_'. $faker->numberBetween(1,149));
 

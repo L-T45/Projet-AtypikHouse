@@ -25,11 +25,13 @@ class UserFixtures extends Fixture
          $faker = Faker\Factory::create('fr_FR');
          $user = Array();
         // create 20 User! Bam!
-        for ($i = 1; $i < 32; $i++) {
+        for ($i = 0; $i < 25; $i++) {
+
+            $roles = ['[ROLE_USER]','[ROLE_USER]', '[ROLE_USER]', '[ROLE_USER]', '[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_USER]','[ROLE_USER]','[ROLE_USER]','[ROLE_USER]','[ROLE_USER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_USER]','[ROLE_USER]','[ROLE_USER]','[ROLE_USER]','[ROLE_USER]',];
 
             $user[$i] = new User();
             $user[$i]->setEmail($faker->email);        
-            $user[$i]->setRoles([]);     
+            $user[$i]->setRoles([$roles[$i]]);     
             $user[$i]->setPassword($faker->password);
             $user[$i]->setLastname($faker->lastname);
             $user[$i]->setPhone($faker->numberBetween($min = 100000000, $max = 999999999));
