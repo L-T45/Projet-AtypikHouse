@@ -14,15 +14,18 @@ class PostPictureController
      {
 
         $properties = $request->attributes->get('data');
+        //dd($properties);
         if(!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
         }   
         
         
+        //dd($_FILES);
         $properties->setFile($request->files->get('file'));
+        dd($request->files);
         $properties->setUpdatedAt(new \DateTime());
-       //dd($file, $properties);
         return $properties;
+        //dd($properties);
 
      }
 

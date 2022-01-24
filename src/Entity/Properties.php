@@ -16,6 +16,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use App\Resolver\PostPictureResolver;
 
 // Ajout route personalisé ici (lastnewproperties, dashboard_admin_properties, dashboard_admin_properties_id, dashboard_user_properties_id, dashboard_owner_properties_create, dashboard_owner_properties_{id}, properties_{id}_comments) car pas possible à un autre endroit visiblement.
 /**
@@ -80,10 +81,26 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "deserialize" = false,
  *                  "controller"=App\Controller\PostPictureController::class,
  *                  "denormalization_context"={"groups"={"properties:write"}},
- *                  "input_formats" = {
- *                          "multipart" = {"multipart/form-data"},
- * 
- *                              },
+ *                  "openapi_context" = {
+ *                  "requestBody" = {
+ *                     "content" = {
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                     "file" = {
+ *                                         "type" = "array",
+ *                                         "items" = {
+ *                                             "type" = "string",
+ *                                             "format" = "binary"
+ *                                         },
+ *                                     },
+ *                                 },
+ *                             },
+ *                         },
+ *                     },
+ *                 },
+ *             },
                 
            
  *                 },             
@@ -266,7 +283,7 @@ class Properties
     private $filePath;
 
     /**
-     * @var string|null
+     * @var array|null
      * @Groups({"properties:collection", "properties:write"})
      */
     private $fileUrl;
