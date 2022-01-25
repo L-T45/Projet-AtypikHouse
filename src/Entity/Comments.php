@@ -71,9 +71,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               },           
  *          }
  * )
- * 
+ * @ApiFilter(SearchFilter::class, properties= {"user.id": "exact"})
  * @ApiFilter(DateFilter::class, properties= {"created_at"})
- * @ApiFilter(OrderFilter::class, properties= {"reservations.properties.title": "ASC",  "reservations.properties.title": "DESC", "value" : "ASC", "value" : "DESC"})
+ * @ApiFilter(OrderFilter::class, properties= {"created_at": "ASC", "created_at": "DESC", "reservations.properties.title": "ASC",  "reservations.properties.title": "DESC", "value" : "ASC", "value" : "DESC"})
  */
 class Comments
 {

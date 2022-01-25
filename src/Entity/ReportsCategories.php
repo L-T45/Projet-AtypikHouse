@@ -64,6 +64,7 @@ class ReportsCategories
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"admin:reportsid"})
      */
     private $reportsobject;
 

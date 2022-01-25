@@ -64,7 +64,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *          }
  * )
  * @ApiFilter(DateFilter::class, properties= {"created_at"})
- * @ApiFilter(OrderFilter::class, properties= {"reportscategories.title": "ASC", "reportscategories.title": "DESC", "comments.id": "ASC", "comments.id": "DESC"})
+ * @ApiFilter(OrderFilter::class, properties= {"reportscategories.title": "ASC", "reportscategories.title": "DESC", "comments.id": "ASC", "comments.id": "DESC", "user.lastname": "ASC", "user.lastname": "DESC"})
  */
 class Reports
 {
@@ -114,7 +114,7 @@ class Reports
     
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
-     * @Groups({"reports:properties", "reports:comments"})
+     * @Groups({"reports:properties", "reports:comments", "admin:reportsid"})
      */
     private $user;
 

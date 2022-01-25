@@ -9,6 +9,11 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 //Ajout route dashboard/user/conversations/details/{id}/create
 /**
@@ -45,11 +50,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "dashboard/admin/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/conversations/{id}",  
- *                  "controller"=App\Controller\AllConversations::class,
+ *                  "normalization_context"={"groups"={"admin:conversid"}}, 
  *                  
  *               }, 
  *          }
  * )
+ * @ApiFilter(OrderFilter::class, properties= {"created_at": "ASC"})
  */
 class Conversations
 {
@@ -57,19 +63,19 @@ class Conversations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"conversations:collection", "admin:conversationsid", "users:collection", "read:messages", "admin:conversations", "lastconversations:collection", "user:messages", "user:conversations", "admin:users", "user:conversid", "convmessage:create"})
+     * @Groups({"conversations:collection", "admin:conversid", "admin:conversationsid", "users:collection", "read:messages", "admin:conversations", "lastconversations:collection", "user:messages", "user:conversations", "admin:users", "user:conversid", "convmessage:create"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"conversations:collection", "user:conversid", "user:messages", "user:conversations", "admin:users"})
+     * @Groups({"conversations:collection", "admin:conversid", "user:conversid", "user:messages", "user:conversations", "admin:users"})
      */
     private $created_at;
 
     /**
      * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="conversations")
-     * @Groups({"conversations:item", "user:conversid", "user:conversations", "admin:conversationsid"})
+     * @Groups({"conversations:item", "admin:conversid","user:conversid", "user:conversations", "admin:conversationsid"})
      */
     private $messages;
 
