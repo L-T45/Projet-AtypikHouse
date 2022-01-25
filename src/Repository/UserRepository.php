@@ -38,7 +38,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->persist($user);
         $this->_em->flush();
     }
-
+    
     /**
     * @return User[] Returns an array of User objects
     */
@@ -88,8 +88,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
 
-     /**
-      * @return User[] Returns an array of User objects
+    /**
+    * @return User[] Returns an array of User objects
     */
    
     public function findConversationsidByUser($id, $lockMode = null, $lockVersion = null)
@@ -107,7 +107,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult()
         ;
     }
-    
+
+
+    /**
+    * @return User[] Returns an array of User objects
+    */
+    public function findByIdToDelete($id, $lockMode = null, $lockVersion = null)
+    {
+        return $this->createQueryBuilder('u')
+            ->delete()
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?User

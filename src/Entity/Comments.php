@@ -112,6 +112,7 @@ class Comments
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
      * @Groups({"comments:item", "admin:usersid", "propertiesid:item", "reservations:user", "admin:commentsid","reservations:item", "lastcomments:collection", "read:commentsid", "properties:item", "comments:reservations"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $user;
 

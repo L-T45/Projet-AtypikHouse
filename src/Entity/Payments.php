@@ -84,6 +84,7 @@ class Payments
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="payments")
      * @Groups({"payments:item", "user:payments"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $user;
 

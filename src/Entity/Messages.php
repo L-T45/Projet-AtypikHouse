@@ -71,6 +71,7 @@ class Messages
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
      * @Groups({"user:messages", "user:conversid", "messages:create"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $user;
 

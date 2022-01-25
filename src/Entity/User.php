@@ -55,11 +55,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "path"= "dashboard/user/{id}/properties",
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"user:properties", "enable_max_depth"=true}}
- *                 },
- *                  "delete_user"={
- *                     "method"="DELETE",
- *                     "path"="dashboard/user/{id}/personnal-infos/delete-account",
- *                 },                 
+ *                 },               
  *               "api_dashboard_user_messages"={
  *                  "method"="GET",
  *                  "path"="/dashboard/user/{id}/messages",
@@ -125,7 +121,11 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "controller"=App\Controller\LastNewConversations::class,
  *                 
  *               },      
- *                 
+ *                  "delete_user"={
+ *                     "method"="DELETE",
+ *                     "path"="dashboard/user/{id}/personnal-infos/delete-account",
+ *                     "controller"= App\Controller\FindUserByIdToDelete::class,
+ *                 },  
  *                  
  *          }
  * )
@@ -242,43 +242,50 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     /**
-     * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true)
      * @Groups({"user:properties", "owner:properties", "admin:proequip", "admin:usersid"})
      */
     private $properties;
 
     /**
-     * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true)
      * @Groups({"user:item", "user:reservations", "read:reservations", "read:reservperso", "admin:reservations", "owner:reservations"})
      */
     private $reservations;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true)
      * @Groups({"read:commentsperso"})
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Payments::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Payments::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true)
      * @Groups({"read:payments"})
      */
     private $payments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true) 
      * @Groups({"read:messages"})
      */
     private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Conversations::class, inversedBy="users")
+     * @ORM\ManyToMany(targetEntity=Conversations::class, inversedBy="users"))
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL") 
      * @Groups({"user:conversations"})
      */
     private $conversations;
 
     /**
-     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL") 
      */
     private $reports;
 

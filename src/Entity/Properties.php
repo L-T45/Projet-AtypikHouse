@@ -84,11 +84,7 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-<<<<<<< HEAD
      * @Groups({"properties:collection", "admin:users", "admin:usersid", "propertiesid:item", "admin:commentsid", "admin:comments", "lastcomments:collection", "admin:proequip", "admin:categoriesid", "equipements:item", "admin:properties", "owner:propertiesid", "owner:reservid", "owner:properties", "read:commentsid", "propertiesid:item", "read:commentsperso", "read:commentsid", "reservations:user", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user", "properties:reports", "propertiesgalleryphoto:create", "properties:reservations"})
-=======
-     * @Groups({"properties:collection", "admin:users", "propertiesid:item", "admin:commentsid", "admin:comments", "lastcomments:collection", "admin:proequip", "admin:categoriesid", "equipements:item", "admin:properties", "owner:propertiesid", "owner:reservid", "owner:properties", "read:commentsid", "propertiesid:item", "read:commentsperso", "read:commentsid", "reservations:user", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user", "properties:reports", "properties:reservations", "propertiesgalleryphoto:create"})
->>>>>>> master
      * 
      * 
      */
@@ -96,11 +92,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-<<<<<<< HEAD
      * @Groups({"properties:collection", "admin:users", "admin:usersid", "admin:commentsid", "propertiesid:item", "admin:comments", "admin:proequip", "admin:categoriesid", "equipements:item", "admin:properties", "owner:properties", "owner:propertiesid", "owner:reservid", "properties:write", "read:commentsperso", "read:commentsid", "categories:item", "reservations:user", "user:properties", "propertiesgallery:item", "properties:user", "properties:create"})
-=======
-     * @Groups({"properties:collection", "admin:users", "admin:commentsid", "propertiesid:item", "admin:comments", "admin:proequip", "admin:categoriesid", "equipements:item", "admin:properties", "owner:properties", "owner:propertiesid", "owner:reservid", "properties:write", "read:commentsperso", "read:commentsid", "categories:item", "reservations:user", "user:properties", "propertiesgallery:item", "properties:user"})
->>>>>>> master
      *
      */
     private $title;
@@ -230,6 +222,7 @@ class Properties
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="properties")
      * @Groups({"properties:user", "propertiesid:item", "reservations:user", "owner:propertiesid", "owner:reservid"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $user;
 

@@ -115,6 +115,7 @@ class Reports
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
      * @Groups({"reports:properties", "reports:comments"})
+     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL")
      */
     private $user;
 
