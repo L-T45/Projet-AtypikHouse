@@ -79,6 +79,7 @@ class Equipements
     /**
      * @ORM\ManyToMany(targetEntity=Properties::class, mappedBy="equipements")
      * @Groups({"equipements:item", "equipements:write", "admin:proequip"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $properties;
 

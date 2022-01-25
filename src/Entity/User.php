@@ -243,49 +243,49 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user"))
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      * @Groups({"user:properties", "owner:properties", "admin:proequip", "admin:usersid"})
      */
     private $properties;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user"))
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      * @Groups({"user:item", "user:reservations", "read:reservations", "read:reservperso", "admin:reservations", "owner:reservations"})
      */
     private $reservations;
 
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="user"))
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      * @Groups({"read:commentsperso"})
      */
     private $comments;
 
     /**
      * @ORM\OneToMany(targetEntity=Payments::class, mappedBy="user"))
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      * @Groups({"read:payments"})
      */
     private $payments;
 
     /**
      * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="user"))
-     * @ORM\JoinColumn(nullable=true) 
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE") 
      * @Groups({"read:messages"})
      */
     private $messages;
 
     /**
      * @ORM\ManyToMany(targetEntity=Conversations::class, inversedBy="users"))
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL") 
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE") 
      * @Groups({"user:conversations"})
      */
     private $conversations;
 
     /**
      * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="user"))
-     * @ORM\JoinColumn(nullable=true, onDelete="SET NULL") 
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE") 
      */
     private $reports;
 

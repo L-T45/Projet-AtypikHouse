@@ -80,6 +80,7 @@ class Attributes
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="attributes")
      * @Groups({"attributes:item", "admin:categattributes", "admin:categattributesid", "admin:attributescreate"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $categories;
 
