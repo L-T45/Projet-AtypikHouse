@@ -33,3 +33,7 @@ dashboard/admin/categories/create:
     path: /api/dashboard/admin/categories/create
     controller: App\Requests\CreateCategories::newCategories
 
+delete_user:
+    path: /api/dashboard/user/personnal-infos/delete-account
+    methods: [DELETE]
+    controller: App\Delete\DeleteUser::DeleteAccount

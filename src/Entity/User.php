@@ -120,12 +120,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "path"="dashboard/user/{id}/conversations",
  *                  "controller"=App\Controller\LastNewConversations::class,
  *                 
- *               },      
- *                  "delete_user"={
- *                     "method"="DELETE",
- *                     "path"="dashboard/user/{id}/personnal-infos/delete-account",
- *                     "controller"= "App\Delete\DeleteUser::DeleteAccount",
- *                 },  
+ *               },       
  *                  
  *          }
  * )
