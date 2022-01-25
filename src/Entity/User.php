@@ -124,7 +124,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "delete_user"={
  *                     "method"="DELETE",
  *                     "path"="dashboard/user/{id}/personnal-infos/delete-account",
- *                     "controller"= App\Controller\FindUserByIdToDelete::class,
+ *                     "controller"= "App\Delete\DeleteUser::DeleteAccount",
  *                 },  
  *                  
  *          }
