@@ -79,7 +79,7 @@ delete_reports_user:
     controller: App\Delete\DeleteReports::DeleteReports
 
 delete_reports_admin:
-    path: /api/dashboard/admin/reports/details/deletereport
+    path: /api/dashboard/admin/reports/details/delete
     methods: [DELETE]
     controller: App\Delete\DeleteReports::DeleteReports
     
