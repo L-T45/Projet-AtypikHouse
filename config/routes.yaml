@@ -47,3 +47,8 @@ delete_comments:
     path: /api/dashboard/user/comments/details/delete
     methods: [DELETE]
     controller: App\Delete\DeleteComments::DeleteComments
+
+delete_reservations:
+    path: /api/dashboard/user/reservations/delete
+    methods: [DELETE]
+    controller: App\Delete\DeleteReservations::DeleteReservations
