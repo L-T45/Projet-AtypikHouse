@@ -48,6 +48,11 @@ delete_properties_owner:
     methods: [DELETE]
     controller: App\Delete\DeleteProperties::DeleteProperties
 
+delete_properties_galleryphoto_owner:
+    path: /api/dashboard/owner/properties/details/galleryphoto/deletepictures
+    methods: [DELETE]
+    controller: App\Delete\DeletePropertiesGallery::DeletePropertiesGallery
+
 delete_properties_admin:
     path: /api/dashboard/admin/properties/delete
     methods: [DELETE]
