@@ -92,4 +92,9 @@ delete_attribute:
     path: /api/dashboard/admin/categories/attributes/delete 
     methods: [DELETE]
     controller: App\Delete\DeleteAttribute::DeleteAttribute
+
+delete_conversations:
+    path: /api/dashboard/admin/conversations/details/delete 
+    methods: [DELETE]
+    controller: App\Delete\DeleteConversations::DeleteConversations
     
