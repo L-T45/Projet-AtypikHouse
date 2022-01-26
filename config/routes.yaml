@@ -37,3 +37,8 @@ delete_user:
     path: /api/dashboard/user/personnal-infos/delete-account
     methods: [DELETE]
     controller: App\Delete\DeleteUser::DeleteAccount
+
+delete_properties:
+    path: /api/dashboard/owner/properties/delete
+    methods: [DELETE]
+    controller: App\Delete\DeleteProperties::DeleteProperties

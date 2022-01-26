@@ -3,9 +3,8 @@
 namespace App\Delete;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use App\Controller\FindUserByIdToDelete;
-use App\Entity\User;
-use App\Repository\UserRepository;
+use App\Entity\Properties;
+use App\Repository\PropertiesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;  
 
@@ -17,14 +16,13 @@ class DeleteProperties extends AbstractController {
 
     public function DeleteProperties(Request $request, PropertiesRepository $PropertiesRepository): Response{
 
-        $data = json_decode($request->getContent(), true);
-        $idProperties = $data["id"];
-
+        $data = $request->query->get('id');
+        $idProperties = $data;
+ 
         $this->PropertiesRepository = $PropertiesRepository;
         $findPropertiesToDelete = $this->PropertiesRepository->findByIdToDelete($idProperties);
-        $findPropertiesToDeleteCheck = $findPropertiesToDelete;
 
-            if($findUserToDeleteCheck =! []){
+            if($findPropertiesToDelete =! []){
                 $response = new Response('Propriété supprimé',Response::HTTP_OK,['content-type' => 'application/json']);
             }
             else{  
