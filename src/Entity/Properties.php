@@ -87,7 +87,7 @@ use App\Resolver\PostPictureResolver;
  *                  "method"="POST",
  *                  "path"="postpicture/properties/{id}",
  *                  "deserialize" = false,
- *                  "controller"=App\Controller\PostPictureController::class,
+ *                  "controller"=App\Requests\CreateProperties::class,
  *                  "denormalization_context"={"groups"={"properties:write"}},
  *                  "openapi_context" = {
  *                  "requestBody" = {
