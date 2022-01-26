@@ -82,4 +82,9 @@ delete_reports_admin:
     path: /api/dashboard/admin/reports/details/delete
     methods: [DELETE]
     controller: App\Delete\DeleteReports::DeleteReports
+
+delete_categories:
+    path: /api/dashboard/admin/categories/delete 
+    methods: [DELETE]
+    controller: App\Delete\DeleteCategories::DeleteCategories
     
