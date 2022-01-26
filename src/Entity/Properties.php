@@ -40,6 +40,7 @@ use App\Resolver\PostPictureResolver;
  *                      "method"="GET",
  *                      "path"="properties/map",
  *                      "force_eager"=false,
+ *                      "pagination_enabled"= false,
  *                      "normalization_context"={"groups"={"properties:collection", "properties:map", "enable_max_depth"=true}}
  *                 }, 
  * 
@@ -114,7 +115,7 @@ use App\Resolver\PostPictureResolver;
  *                 },             
  *          }
  * )
- * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "exact", "categories.title": "exact", "latitude": "exact", "longitude": "exact", "reservations.comments.value": "exact", "address": "exact", "city": "exact" })
+ * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "exact", "categories.title": "exact", "latitude": "exact", "longitude": "exact", "reservations.comments.value": "exact", "address": "partial", "city": "partial"})
  * @ApiFilter(RangeFilter::class, properties= {"surface", "rooms", "bedrooms", "price", "capacity"})
  * @ApiFilter(DateFilter::class, properties= {"reservations.startdate"})
  * @ApiFilter(OrderFilter::class, properties= {"price": "ASC", "price": "DESC", "surface": "ASC", "surface" : "DESC", "rooms": "ASC", "rooms": "DESC", "capacity": "ASC", "capacity": "DESC"})
