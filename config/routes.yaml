@@ -97,4 +97,9 @@ delete_conversations:
     path: /api/dashboard/admin/conversations/details/delete 
     methods: [DELETE]
     controller: App\Delete\DeleteConversations::DeleteConversations
+
+delete_messages:
+    path: /api/dashboard/admin/messages/details/delete 
+    methods: [DELETE]
+    controller: App\Delete\DeleteMessages::DeleteMessages
     
