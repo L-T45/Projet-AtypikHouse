@@ -42,7 +42,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               "dashboard/user/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/conversations/{id}",
- *                  "controller"=App\Controller\FindConversationsidByUser::class,
+ *                  "normalization_context"={"groups"={"user:conversid"}}, 
+ *                  
  *                  
  *               }, 
  *                  "dashboard/admin/conversations/{id}"={
@@ -79,7 +80,7 @@ class Conversations
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="conversations")
-     * @Groups({"conversations:item", "read:conversationsid", "user:conversations", "admin:conversations", "admin:conversationsid", "lastconversations:collection", "admin:usersconv", "user:conversid"})
+     * @Groups({"conversations:item", "read:conversationsid", "user:conversations", "admin:conversations", "admin:conversationsid", "lastconversations:collection", "admin:usersconv"})
      */
     private $users;
 

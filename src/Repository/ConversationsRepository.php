@@ -88,6 +88,24 @@ class ConversationsRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    
+    /**
+    * @return Conversations[] Returns an array of Conversations objects
+    */
+
+    public function findConversations($id):array
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb ->select('c.id as conversations_id,c.created_at,u.id as user_id,u.firstname,u.lastname,u.picture,m.id as messages_id,m.body,m.created_at')
+            ->leftJoin('c.messages', 'm', 'WITH', 'c.id = m.conversations_id')
+            ->leftJoin('m.user', 'u')
+            ->orderBy('m.created_at', 'DESC')
+            ->setParameter('id', $id);
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+
     /*
     public function findOneBySomeField($value): ?Conversations
     {

@@ -90,7 +90,7 @@ class Reports
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reports:item", "read:reportsid", "admin:reportsid", "propertiesid:item"})
+     * @Groups({"reports:item", "read:reportsid", "admin:reportsid", "propertiesid:item", "admin:reports"})
      */
     private $created_at;
 
@@ -102,19 +102,19 @@ class Reports
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reports")
-     * @Groups({"reports:properties", "admin:reportsid"})
+     * @Groups({"reports:properties", "admin:reportsid", "admin:reports"})
      */
     private $properties;
 
     /**
      * @ORM\ManyToOne(targetEntity=Comments::class, inversedBy="reports")
-     * @Groups({"reports:comments", "admin:reportsid"})
+     * @Groups({"reports:comments", "admin:reportsid", "admin:reports"})
      */
     private $comments;
     
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
-     * @Groups({"reports:properties", "reports:comments", "admin:reportsid", "read:reportsid"})
+     * @Groups({"reports:properties", "reports:comments", "admin:reportsid", "read:reportsid", "admin:reports"})
      */
     private $user;
 

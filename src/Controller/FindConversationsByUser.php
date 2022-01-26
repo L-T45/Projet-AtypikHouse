@@ -20,7 +20,7 @@ class FindConversationsByUser
 
     public function __invoke(int $id)
     {
-        return $this->userRepository->find($id);
+        return $this->userRepository->findConversations($id);
     }
 
 }
