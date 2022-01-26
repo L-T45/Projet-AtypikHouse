@@ -102,13 +102,13 @@ class Reports
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reports")
-     * @Groups({"reports:properties", "admin:reportsid", "admin:reports"})
+     * @Groups({"reports:properties", "admin:reportsid", "admin:reports", "read:reports", "read:reportsid"})
      */
     private $properties;
 
     /**
      * @ORM\ManyToOne(targetEntity=Comments::class, inversedBy="reports")
-     * @Groups({"reports:comments", "admin:reportsid", "admin:reports"})
+     * @Groups({"reports:comments", "admin:reportsid", "admin:reports", "read:reports", "read:reportsid"})
      */
     private $comments;
     

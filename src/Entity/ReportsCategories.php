@@ -32,7 +32,7 @@ class ReportsCategories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"reportscategories:collection", "admin:reports", "user:reports", "reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid", "reportscategories:reports"})
+     * @Groups({"reportscategories:collection", "read:reports", "admin:reports", "user:reports", "reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid", "reportscategories:reports"})
      */
     private $id;
 
@@ -61,7 +61,7 @@ class ReportsCategories
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"admin:reportsid", "read:reportsid", "admin:reports"})
+     * @Groups({"admin:reportsid", "read:reportsid", "admin:reports", "read:reports"})
      */
     private $reportsobject;
 
