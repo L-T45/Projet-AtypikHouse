@@ -11,7 +11,6 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 /**
  * @method User|null find($id, $lockMode = null, $lockVersion = null)
@@ -21,6 +20,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    private $encoder;
+  
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
@@ -51,7 +52,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findByEmail(string $username): array
     {
         return $this->createQueryBuilder('u')
-            ->select('u.id, u.email, u.roles, u.lastname, u.phone, u.address, u.city, u.birthdate, u.zipCode, u.created_at, u.updated_at, u.emailvalidated, u.firstname, u.country ,u.picture, u.is_blocked')
+            ->select('u.id, u.email, u.roles, u.lastname, u.phone, u.address, u.city, u.birthdate, u.zipCode, u.created_at, u.updated_at, u.emailvalidated, u.firstname, u.country, u.picture, u.is_blocked')
             ->andWhere('u.email = :email')
             ->setParameter('email', $username)
             ->getQuery()
@@ -63,20 +64,25 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     * @return User[] Returns an array of User objects
     */
 
-    public function resetPassword(Request $request, UserPasswordEncoderInterface $passwordEncoder) {
-        $old_pwd = $request->get('old_password'); 
-        $new_pwd = $request->get('new_password');
-        $new_pwd_confirm = $request->get('new_password_confirm');
+    public function resetPassword($id, $old_pwd, $new_pwd, $lockMode = null, $lockVersion = null) {
 
-        $user = $this->getUser();
-        $checkPass = $passwordEncoder->isPasswordValid($user, $old_pwd);
+        return $this->createQueryBuilder('u')
+            ->update('App\Entity\User', 'u')
+            ->set('u.password', ':new_pwd')
+            ->Where('u.id = :id')
+            ->andWhere('u.password = :old_pwd')
+            ->setParameter('id', $id)
+            ->setParameter('old_pwd', $old_pwd)
+            ->setParameter('new_pwd', $new_pwd)
+            ->getQuery()
+            ->getResult();
 
-        if($checkPass === true) {    
-                            
-        } else {
-            return new jsonresponse(array('error' => 'The current password is incorrect.'));
-        }
+                
     }
+
+    /**
+    * @return User[] Returns an array of User objects
+    */
     
     public function findByEmailCheckIfExist(string $email): array
     {

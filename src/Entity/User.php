@@ -124,7 +124,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "dashboard/user/{id}/personal_informations/modifypassword"={
  *                  "method"="PATCH",
  *                  "path"="dashboard/user/{id}/personal_informations/modifypassword",
- *                  "controller"=App\Controller\ResetPassword::class,
+ *                  "controller"="App\Controller\ResetPassword::UpdatePwd",
  *                  "denormalization_context"={"groups"={"admin:useridentifiants", "enable_max_depth"=true}},
  *               },
  * 
@@ -148,11 +148,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-<<<<<<< HEAD
-     * @Groups({"user:collection", "user:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations", "admin:useridentifiants"})
-=======
-     * @Groups({"user:collection", "user:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations", "usermessage:create"})
->>>>>>> master
+     * @Groups({"user:collection", "user:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations", "admin:useridentifiants", "usermessage:create"})
      */
     private $id;
 
@@ -308,8 +304,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->messages = new ArrayCollection();
         $this->conversations = new ArrayCollection();
         $this->reports = new ArrayCollection();
-       
-
     }
 
     public function getId(): ?int
