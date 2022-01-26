@@ -48,7 +48,7 @@ delete_properties_owner:
     methods: [DELETE]
     controller: App\Delete\DeleteProperties::DeleteProperties
 
-delete_properties:
+delete_properties_admin:
     path: /api/dashboard/admin/properties/delete
     methods: [DELETE]
     controller: App\Delete\DeleteProperties::DeleteProperties
@@ -72,3 +72,8 @@ delete_reservations_admin:
     path: /api/dashboard/admin/reservations/delete
     methods: [DELETE]
     controller: App\Delete\DeleteReservations::DeleteReservations
+
+delete_reports_user:
+    path: /api/dashboard/user/reports/details/delete
+    methods: [DELETE]
+    controller: App\Delete\DeleteReports::DeleteReports
