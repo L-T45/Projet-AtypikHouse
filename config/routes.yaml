@@ -43,8 +43,13 @@ delete_properties:
     methods: [DELETE]
     controller: App\Delete\DeleteProperties::DeleteProperties
 
-delete_comments:
+delete_comments_user:
     path: /api/dashboard/user/comments/details/delete
+    methods: [DELETE]
+    controller: App\Delete\DeleteComments::DeleteComments
+
+delete_comments_admin:
+    path: /api/dashboard/admin/comments/details/delete
     methods: [DELETE]
     controller: App\Delete\DeleteComments::DeleteComments
 
