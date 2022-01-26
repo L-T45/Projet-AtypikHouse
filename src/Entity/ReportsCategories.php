@@ -14,9 +14,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @ORM\Entity(repositoryClass=ReportsCategoriesRepository::class)
  * @ApiResource( normalizationContext={"groups"={"reportscategories:collection"}},
  *      denormalizationContext={"groups"={"reportscategories:write"}},
- *      paginationItemsPerPage= 2,
- *      paginationMaximumItemsPerPage= 2,
- *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},  
