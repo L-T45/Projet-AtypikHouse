@@ -26,7 +26,7 @@ class ReservationsFixtures extends Fixture implements DependentFixtureInterface
 
             $payments[$i] =  $this->getReference('payments_'. $i);
             $properties[$i] =  $this->getReference('properties_'. $faker->numberBetween(1,145));
-            $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,25));
+            $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,23));
             $startDate = $faker->dateTime($max = 'now'); 
 
             $reservations[$i] = new Reservations();

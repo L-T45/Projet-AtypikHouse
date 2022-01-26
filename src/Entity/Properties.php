@@ -35,6 +35,14 @@ use App\Resolver\PostPictureResolver;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
  *                 }, 
+ *                  
+ *                   "properties_map"={
+ *                      "method"="GET",
+ *                      "path"="properties/map",
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"properties:collection", "properties:map", "enable_max_depth"=true}}
+ *                 }, 
+ * 
  *                  "dashboard/admin/properties"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/properties",
@@ -242,13 +250,13 @@ class Properties
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="properties")
-     * @Groups({"properties:item", "admin:properties", "propertiesid:item", "admin:usersid", "admin:commentsid",  "reservations:user", "owner:propertiesid", "owner:reservid"})
+     * @Groups({"properties:item", "admin:properties", "propertiesid:item", "admin:usersid", "admin:commentsid",  "reservations:user", "owner:propertiesid", "owner:reservid", "properties:map"})
      */
     private $categories;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="properties")
-     * @Groups({"properties:item", "admin:usertest", "propertiesid:item",  "owner:propertiesid", "properties:collection"})
+     * @Groups({"properties:item", "admin:usertest", "propertiesid:item",  "owner:propertiesid", "properties:collection", "properties:map"})
      */
     private $reservations;
 
@@ -272,7 +280,7 @@ class Properties
 
     /**
      * @var File|null
-     * @Vich\UploadableField(mapping="media_object", fileNameProperty="filePath")
+     * @Vich\UploadableField(mapping="properties_images", fileNameProperty="filePath")
      */
     private $file;
 
@@ -283,7 +291,7 @@ class Properties
     private $filePath;
 
     /**
-     * @var array|null
+     * @var string|null
      * @Groups({"properties:collection", "properties:write"})
      */
     private $fileUrl;

@@ -55,7 +55,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               }, 
  *          }
  * )
- * @ApiFilter(OrderFilter::class, properties= {"created_at": "ASC"})
+ * @ApiFilter(OrderFilter::class, properties= {"created_at": "ASC", "created_at": "DESC", "messages.created_at": "DESC", "messages.created_at": "ASC" })
  */
 class Conversations
 {

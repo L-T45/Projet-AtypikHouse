@@ -14,10 +14,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 // Ajout de la route dashboard/admin/categories/create
 /**
  * @ORM\Entity(repositoryClass=CategoriesRepository::class)
+ * @Vich\Uploadable()
  * @ApiResource(
  *      normalizationContext={"groups"={"categories:collection"}},
  *      denormalizationContext={"groups"={"categories:write"}},
@@ -46,7 +49,35 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
  *                  
  *               }, 
+ *                  "dashboard/admin/test/categories/{id}"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/admin/categories/{id}",
+ *                  "deserialize" = false,
+ *                  "controller"=App\Controller\PostCategoriesController::class,
+ *                  "openapi_context" = {
+ *                  "requestBody" = {
+ *                     "content" = {
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                     "file" = {
+ *                                         "type" = "array",
+ *                                         "items" = {
+ *                                             "type" = "string",
+ *                                             "format" = "binary"
+ *                                         },
+ *                                     },
+ *                                 },
+ *                             },
+ *                         },
+ *                     },
+ *                 },
+ *             },
+                
+ *         
  *                  
+ *               }, 
  *          }
  * )
  * 
@@ -57,13 +88,13 @@ class Categories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"categories:collection", "admin:properties", "propertiesid:item", "admin:usersid", "propertiesid:item", "admin:commentsid", "attributes:item", "admin:categattributesid", "admin:categattributes", "admin:categoriesid", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:categories", "attributes:categories"})
+     * @Groups({"categories:collection", "properties:map", "admin:properties", "propertiesid:item", "admin:usersid", "propertiesid:item", "admin:commentsid", "attributes:item", "admin:categattributesid", "admin:categattributes", "admin:categoriesid", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:categories", "attributes:categories"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "admin:properties", "admin:usersid", "propertiesid:item", "propertiesid:item", "admin:commentsid",  "categories:item", "admin:categattributesid", "admin:categattributes", "admin:categories", "admin:categoriesid", "categories:write", "owner:propertiesid", "owner:reservid", "properties:item", "attributes:item", "reservations:user", "admin:createcategories"})
+     * @Groups({"categories:collection", "properties:map", "admin:properties", "admin:usersid", "propertiesid:item", "propertiesid:item", "admin:commentsid",  "categories:item", "admin:categattributesid", "admin:categattributes", "admin:categories", "admin:categoriesid", "categories:write", "owner:propertiesid", "owner:reservid", "properties:item", "attributes:item", "reservations:user", "admin:createcategories"})
      */
     private $title;
 
@@ -79,6 +110,26 @@ class Categories
      * 
      */
     private $picture;
+
+     /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="properties_images", fileNameProperty="filePath")
+     */
+    private $file;
+
+     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * 
+     */
+    private $filePath;
+
+    
+    /**
+     * @var string|null
+     * @Groups({"categories:collection", "properties:write"})
+     */
+    private $fileUrl;
+
 
      /**
      * @ORM\Column(type="text")
@@ -259,6 +310,56 @@ class Categories
         }
 
         return $this;
+    }
+
+    
+    public function getFilePath(): ?string
+    {
+        return $this->filePath;
+    }
+
+    public function setFilePath(?string $filePath): self
+    {
+        $this->filePath = $filePath;
+
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+
+    /**
+     * @return File|null $file
+     * @return Categories
+     */
+    public function setFile(?File $file): Categories
+    {
+        $this->file = $file;
+        return $this;
+    }
+  
+    /**
+     * @return string|null
+     */
+    public function getFileUrl(): ?string
+    {
+        return $this->fileUrl;
+    }
+
+    /**
+     * @return string|null $fileUrl
+     * @return Categories
+     */
+    public function setFileUrl(?string $fileUrl): Categories
+    {
+        $this->fileUrl = $fileUrl;
+        return $this; 
     }
 
 

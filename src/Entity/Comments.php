@@ -81,7 +81,7 @@ class Comments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"comments:collection", "admin:usertest", "propertiesid:item", "admin:usersid", "admin:commentsid", "properties:collection", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "reservations:user", "reservations:item", "properties:item", "categories:item", "properties:comments", "comments:reports"})
+     * @Groups({"comments:collection", "properties:map", "admin:usertest", "propertiesid:item", "admin:usersid", "admin:commentsid", "properties:collection", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "reservations:user", "reservations:item", "properties:item", "categories:item", "properties:comments", "comments:reports"})
      */
     private $id;
 
@@ -93,7 +93,7 @@ class Comments
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"comments:item", "admin:usertest", "propertiesid:item", "admin:usersid", "properties:collection", "admin:commentsid", "reservations:item", "admin:comments", "categories:item", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "properties:comments", "reservations:user", "lastcomments:collection", "comments:reservations"})
+     * @Groups({"comments:item", "properties:map", "admin:usertest", "propertiesid:item", "admin:usersid", "properties:collection", "admin:commentsid", "reservations:item", "admin:comments", "categories:item", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "properties:comments", "reservations:user", "lastcomments:collection", "comments:reservations"})
      */
     private $value;
 
