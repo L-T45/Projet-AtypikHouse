@@ -23,7 +23,7 @@ class DeleteCategories extends AbstractController {
         $findCategoriesToDelete = $this->CategoriesRepository->findByIdToDelete($idCategories);
 
             if($findCategoriesToDelete =! []){
-                $response = new Response('Catégorie supprimé',Response::HTTP_OK,['content-type' => 'application/json']);
+                $response = new Response('Catégorie supprimée',Response::HTTP_OK,['content-type' => 'application/json']);
             }
             else{  
                 $response = new Response("Une erreur est survenu lors de la suppression de la catégorie...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     

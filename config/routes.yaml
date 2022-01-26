@@ -87,4 +87,9 @@ delete_categories:
     path: /api/dashboard/admin/categories/delete 
     methods: [DELETE]
     controller: App\Delete\DeleteCategories::DeleteCategories
+
+delete_attribute:
+    path: /api/dashboard/admin/categories/attributes/delete 
+    methods: [DELETE]
+    controller: App\Delete\DeleteAttribute::DeleteAttribute
     

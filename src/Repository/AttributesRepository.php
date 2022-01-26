@@ -47,4 +47,18 @@ class AttributesRepository extends ServiceEntityRepository
         ;
     }
     */
+
+      /**
+    * @return Attributes[] Returns an array of Attributes objects
+    */
+    public function findByIdToDelete($id, $lockMode = null, $lockVersion = null)
+    {
+        return $this->createQueryBuilder('u')
+            ->delete()
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

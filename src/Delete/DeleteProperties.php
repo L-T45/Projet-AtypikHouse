@@ -23,7 +23,7 @@ class DeleteProperties extends AbstractController {
         $findPropertiesToDelete = $this->PropertiesRepository->findByIdToDelete($idProperties);
 
             if($findPropertiesToDelete =! []){
-                $response = new Response('Propriété supprimé',Response::HTTP_OK,['content-type' => 'application/json']);
+                $response = new Response('Propriété supprimée',Response::HTTP_OK,['content-type' => 'application/json']);
             }
             else{  
                 $response = new Response("Une erreur est survenu lors de la suppression de la propriété...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
