@@ -63,6 +63,12 @@ class ReportsCategories
      */
     private $reports;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     * @Groups({"admin:reportsid", "read:reportsid"})
+     */
+    private $reportsobject;
+
    
 
     public function __construct()
@@ -139,6 +145,18 @@ class ReportsCategories
                 $report->setReportscategories(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReportsobject(): ?string
+    {
+        return $this->reportsobject;
+    }
+
+    public function setReportsobject(string $reportsobject): self
+    {
+        $this->reportsobject = $reportsobject;
 
         return $this;
     }
