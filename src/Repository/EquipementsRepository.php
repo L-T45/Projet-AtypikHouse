@@ -60,4 +60,18 @@ class EquipementsRepository extends ServiceEntityRepository
           ->getQuery()
           ->getResult();
       }
+
+        /**
+    * @return Equipements[] Returns an array of Equipements objects
+    */
+    public function findByIdToDelete($id, $lockMode = null, $lockVersion = null)
+    {
+        return $this->createQueryBuilder('u')
+            ->delete()
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

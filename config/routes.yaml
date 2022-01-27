@@ -112,4 +112,9 @@ delete_messages:
     path: /api/dashboard/admin/conversations/details/message/delete 
     methods: [DELETE]
     controller: App\Delete\DeleteMessages::DeleteMessages
+
+delete_equipements:
+    path: /api/dashboard/admin/equipements 
+    methods: [DELETE]
+    controller: App\Delete\DeleteEquipements::DeleteEquipements
     
