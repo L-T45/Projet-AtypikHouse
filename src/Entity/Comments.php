@@ -63,12 +63,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "normalization_context"={"groups"={"admin:commentsid", "enable_max_depth"=true}},  
  *               },  
  *                 
- *               "dashboard/admin/comments/{id}"={
- *                  "method"="GET",
- *                  "path"="test/comments/{id}",
- *                  "controller"=App\Controller\CommentsById::class,
- *                  
- *               },           
+ *                      
  *          }
  * )
  * @ApiFilter(SearchFilter::class, properties= {"user.id": "exact"})

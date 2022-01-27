@@ -63,8 +63,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               },  
  *          }
  * )
- * @ApiFilter(SearchFilter::class, properties= {"created_at"})
- * @ApiFilter(OrderFilter::class, properties= {"reportscategories.title": "ASC", "reportscategories.title": "DESC", "comments.id": "ASC", "comments.id": "DESC", "user.lastname": "ASC", "user.lastname": "DESC"})
+ * @ApiFilter(SearchFilter::class, properties= {""})
+ * @ApiFilter(OrderFilter::class, properties= {"reportscategories.title": "ASC", "reportscategories.title": "DESC", "reportscategories.reportsobject": "ASC", "reportscategories.reportsobject": "DESC" , "user.lastname": "ASC", "user.lastname": "DESC", "created_at": "ASC", "created_at": "DESC" })
  */
 class Reports
 {
