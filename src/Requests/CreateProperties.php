@@ -50,6 +50,26 @@ class CreateProperties extends AbstractController{
         return substr($string, $ini, $len);
     }
 
+    public function __invoke(Request $request)
+    {
+
+       $properties = $request->attributes->get('data');
+       //dd($properties);
+       if(!($properties instanceof Properties)) {
+           throw new \RuntimeException('Propriété attendue');
+       }   
+       
+       
+       //dd($_FILES);
+       //$properties = $request->files->get('file');
+       $properties->setFile($request->files->get('file'));
+       dd($properties);
+       $properties->setUpdatedAt(new \DateTime());
+       return $properties;
+       //dd($properties);
+
+    }
+
     public function newProperties(EntityManagerInterface $manager, Request $request, PropertiesRepository $PropertiesRepository): Response
     {
         $properties = Array();

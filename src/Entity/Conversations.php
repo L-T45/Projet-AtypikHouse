@@ -20,13 +20,11 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  * @ORM\Entity(repositoryClass=ConversationsRepository::class)
  * @ApiResource( normalizationContext={"groups"={"conversations:collection"}},
  *      denormalizationContext={"groups"={"conversations:write"}},
- *      paginationItemsPerPage= 20,
  *      paginationMaximumItemsPerPage= 20,
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
  *            "post"={},             
- *            
  * 
  *                  "dashboard/admin/conversations"={
  *                  "method"="GET",
@@ -44,7 +42,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               "dashboard/user/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/conversations/{id}",
- *                  "controller"=App\Controller\FindConversationsidByUser::class,
+ *                  "normalization_context"={"groups"={"user:conversid"}}, 
+ *                  
  *                  
  *               }, 
  *                  "dashboard/admin/conversations/{id}"={

@@ -40,6 +40,7 @@ use App\Resolver\PostPictureResolver;
  *                      "method"="GET",
  *                      "path"="properties/map",
  *                      "force_eager"=false,
+ *                      "pagination_enabled"= false,
  *                      "normalization_context"={"groups"={"properties:collection", "properties:map", "enable_max_depth"=true}}
  *                 }, 
  * 
@@ -87,7 +88,7 @@ use App\Resolver\PostPictureResolver;
  *                  "method"="POST",
  *                  "path"="postpicture/properties/{id}",
  *                  "deserialize" = false,
- *                  "controller"=App\Controller\PostPictureController::class,
+ *                  "controller"=App\Requests\CreateProperties::class,
  *                  "denormalization_context"={"groups"={"properties:write"}},
  *                  "openapi_context" = {
  *                  "requestBody" = {
@@ -114,7 +115,7 @@ use App\Resolver\PostPictureResolver;
  *                 },             
  *          }
  * )
- * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "exact", "categories.title": "exact", "latitude": "exact", "longitude": "exact", "reservations.comments.value": "exact", "address": "exact", "city": "exact" })
+ * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "exact", "categories.title": "exact", "latitude": "exact", "longitude": "exact", "reservations.comments.value": "exact", "address": "partial", "city": "partial"})
  * @ApiFilter(RangeFilter::class, properties= {"surface", "rooms", "bedrooms", "price", "capacity"})
  * @ApiFilter(DateFilter::class, properties= {"reservations.startdate"})
  * @ApiFilter(OrderFilter::class, properties= {"price": "ASC", "price": "DESC", "surface": "ASC", "surface" : "DESC", "rooms": "ASC", "rooms": "DESC", "capacity": "ASC", "capacity": "DESC"})
@@ -126,13 +127,13 @@ class Properties
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"properties:collection", "admin:users", "admin:usersid", "propertiesid:item", "admin:commentsid", "admin:comments", "lastcomments:collection", "admin:proequip", "admin:categoriesid", "equipements:item", "admin:properties", "owner:propertiesid", "owner:reservid", "owner:properties", "read:commentsid", "propertiesid:item", "read:commentsperso", "read:commentsid", "reservations:user", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user", "properties:reports", "propertiesgalleryphoto:create", "properties:reservations"})
+     * @Groups({"properties:collection", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "admin:users", "admin:usersid", "propertiesid:item", "admin:commentsid", "admin:comments", "lastcomments:collection", "admin:proequip", "admin:categoriesid", "equipements:item", "admin:properties", "owner:propertiesid", "owner:reservid", "owner:properties", "read:commentsid", "propertiesid:item", "read:commentsperso", "read:commentsid", "reservations:user", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "properties:user", "properties:reports", "propertiesgalleryphoto:create", "properties:reservations"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "properties:write", "admin:users", "admin:usersid", "admin:commentsid", "propertiesid:item", "admin:comments", "admin:proequip", "admin:categoriesid", "equipements:item", "admin:properties", "owner:properties", "owner:propertiesid", "owner:reservid",  "read:commentsperso", "read:commentsid", "categories:item", "reservations:user", "user:properties", "propertiesgallery:item", "properties:user", "properties:create"})
+     * @Groups({"properties:collection", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "properties:write", "admin:users", "admin:usersid", "admin:commentsid", "propertiesid:item", "admin:comments", "admin:proequip", "admin:categoriesid", "equipements:item", "admin:properties", "owner:properties", "owner:propertiesid", "owner:reservid",  "read:commentsperso", "read:commentsid", "categories:item", "reservations:user", "user:properties", "propertiesgallery:item", "properties:user", "properties:create"})
      *
      */
     private $title;
@@ -145,7 +146,7 @@ class Properties
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"admin:commentsid", "admin:properties", "admin:usersid", "propertiesid:item", "owner:reservid", "properties:item", "owner:propertiesid", "categories:item", "reservations:user", "read:commentsid", "properties:collection", "properties:create"})
+     * @Groups({"admin:commentsid", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "admin:properties", "admin:usersid", "propertiesid:item", "owner:reservid", "properties:item", "owner:propertiesid", "categories:item", "reservations:user", "read:commentsid", "properties:collection", "properties:create"})
      */
     private $price;
 
@@ -206,7 +207,7 @@ class Properties
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"properties:collection", "owner:reservid", "admin:usersid", "propertiesid:item", "admin:comments", "lastcomments:collection", "admin:commentsid", "read:commentsperso", "admin:properties", "owner:propertiesid", "owner:properties", "reservations:user", "read:commentsid", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "lastcomments:collection", "read:reservations"})
+     * @Groups({"properties:collection", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "owner:reservid", "admin:usersid", "propertiesid:item", "admin:comments", "lastcomments:collection", "admin:commentsid", "read:commentsperso", "admin:properties", "owner:propertiesid", "owner:properties", "reservations:user", "read:commentsid", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "lastcomments:collection", "read:reservations"})
      */
     private $picture;
 
@@ -230,7 +231,7 @@ class Properties
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({ "properties:item", "owner:propertiesid", "propertiesid:item"})
+     * @Groups({ "properties:item", "owner:propertiesid", "propertiesid:item", "admin:reportsid", "admin:reports", "read:reports", "read:reportsid"})
      */
     private $created_at;
 
@@ -249,7 +250,7 @@ class Properties
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="properties")
-     * @Groups({"properties:item", "propertiesid:item", "admin:usersid", "admin:commentsid", "properties:write", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:properties", "properties:map"})
+     * @Groups({"properties:item", "propertiesid:item", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "admin:usersid", "admin:commentsid", "properties:write", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:properties", "properties:map"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $categories;
@@ -264,7 +265,7 @@ class Properties
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="properties")
-     * @Groups({"properties:user", "propertiesid:item", "reservations:user", "owner:propertiesid", "owner:reservid"})
+     * @Groups({"properties:user", "read:reportsid", "admin:reports", "read:reports", "admin:reportsid", "propertiesid:item", "reservations:user", "owner:propertiesid", "owner:reservid"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $user;

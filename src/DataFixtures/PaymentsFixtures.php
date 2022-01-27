@@ -22,9 +22,9 @@ class PaymentsFixtures extends Fixture implements DependentFixtureInterface
          $faker = Faker\Factory::create('fr_FR');
          $payments = Array();
         // create 20 Payments! Bam!
-        for ($i = 0; $i < 9; $i++) {
+        for ($i = 0; $i < 101; $i++) {
 
-            $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,8));
+            $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,23));
 
             $payments[$i] = new Payments();
             $payments[$i]->setAmount($faker->numberBetween($min = 1, $max = 9999));

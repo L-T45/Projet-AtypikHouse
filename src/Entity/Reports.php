@@ -90,7 +90,7 @@ class Reports
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reports:item", "read:reportsid", "admin:reportsid", "propertiesid:item"})
+     * @Groups({"reports:item", "read:reportsid", "admin:reportsid", "propertiesid:item", "admin:reports"})
      */
     private $created_at;
 
@@ -103,21 +103,21 @@ class Reports
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reports")
-     * @Groups({"reports:properties"})
+     * @Groups({"reports:properties","admin:reportsid", "admin:reports", "read:reports", "read:reportsid"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $properties;
 
     /**
      * @ORM\ManyToOne(targetEntity=Comments::class, inversedBy="reports")
-     * @Groups({"reports:comments"})
+     * @Groups({"reports:comments", "admin:reportsid", "admin:reports", "read:reports", "read:reportsid"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $comments;
     
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
-     * @Groups({"reports:properties", "reports:comments", "admin:reportsid", "read:reportsid"})
+     * @Groups({"reports:properties", "reports:comments", "admin:reportsid", "read:reportsid", "admin:reports"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $user;
