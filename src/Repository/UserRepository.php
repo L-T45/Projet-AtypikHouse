@@ -95,7 +95,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findConversationsByUser($id, $lockMode = null, $lockVersion = null)
     {
         $qb= $this->createQueryBuilder('u');
-        $qb ->select('c.id as conversations_id,c.created_at,MAX(m.created_at) AS max_messages,m.id as messages_id,m.body,u.firstname,u.lastname,u.picture')
+        $qb ->select('c.id as conversations_id,c.created_at as conversations_created_at,MAX(m.created_at) AS max_messages,m.id as messages_id,m.body,u.firstname,u.lastname,u.picture')
             ->innerJoin('u.messages','m')
             ->innerJoin('m.conversations','c')
            // ->innerJoin('c.users','u')

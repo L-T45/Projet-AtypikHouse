@@ -42,14 +42,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               "dashboard/user/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/conversations/{id}",
- *                  "normalization_context"={"groups"={"user:conversid"}}, 
+ *                  "controller"=App\Controller\FindConversationsByid::class 
  *                  
  *                  
  *               }, 
  *                  "dashboard/admin/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/conversations/{id}",  
- *                  "normalization_context"={"groups"={"admin:conversid"}}, 
+ *                  "controller"=App\Controller\FindConversationsByid::class
  *                  
  *               }, 
  *          }
