@@ -30,7 +30,7 @@ class CommentsRepository extends ServiceEntityRepository
             ->andWhere('c.id = :id')
             ->setParameter('id', $id)
             //->orderBy('c.id', 'ASC')
-           // ->setMaxResults(10)
+            //->setMaxResults(10)
             ->getQuery()
             ->getResult()
         ;

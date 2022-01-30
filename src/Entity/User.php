@@ -43,6 +43,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  * 
  *          "get"={"normalization_context"={"groups"={"user:collection", "user:item"}}},
  *          "put"={},
+ *          "patch"={},
  *          "delete"={},
  *               "api_dashboard_user_payments"={
  *                  "method"="GET",
@@ -114,7 +115,15 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:usersid", "admin:usertest", "enable_max_depth"=true}},
  *                  
+ *               },  
+ * 
+ *                  "dashboard/user/{id}/personal_informations/modifypassword"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/user/{id}/personal_informations/modifypassword",
+ *                  "controller"="App\Controller\ResetPassword::UpdatePwd",
+ *                  "denormalization_context"={"groups"={"admin:useridentifiants", "enable_max_depth"=true}},
  *               },
+ * 
  *                 "lastconversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
@@ -153,7 +162,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"user:write", "users:login"})
+     * @Groups({"user:write", "users:login", "admin:useridentifiants"})
      */
     private $password;
 
@@ -298,8 +307,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->messages = new ArrayCollection();
         $this->conversations = new ArrayCollection();
         $this->reports = new ArrayCollection();
-       
-
     }
 
     public function getId(): ?int
@@ -370,6 +377,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+   
 
     /**
      * Returning a salt is only needed, if you are not using a modern
