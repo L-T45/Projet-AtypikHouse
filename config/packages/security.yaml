@@ -54,8 +54,7 @@ security:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # Paramétrage des droits d'accès à l'api 
-        # Création de catégories
-        - { path: ^/api/dashboard/admin/categories/create, roles: ROLE_ADMIN}
+        # ROUTES DELETES :
         # Delete User
         - { path: ^/api/dashboard/user/personnal-infos/delete-account, roles: ROLE_USER}
         - { path: ^/api/dashboard/admin/users/details/delete, roles: ROLE_ADMIN}
@@ -82,5 +81,8 @@ security:
         - { path: ^/api/dashboard/admin/conversations/details/delete, roles: ROLE_ADMIN}
         # Delete Messages
         - { path: ^/api/dashboard/admin/conversations/details/message/delete, roles: ROLE_ADMIN}
-        #- { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        # ROUTES POSTS :
+        # ADD de catégories
+        - { path: ^/api/dashboard/admin/categories/create, roles: ROLE_ADMIN}
+
 
