@@ -21,8 +21,12 @@ class ConversationsFixtures extends Fixture
          $faker = Faker\Factory::create('fr_FR');
          $conversations = Array();
         // create 20 Equipements! Bam!
-        for ($i = 0; $i < 9; $i++) {
+        for ($i = 0; $i < 50; $i++) {
+
+            $startDate = $faker->dateTime($max = 'now'); 
+
             $conversations[$i] = new Conversations();
+            $conversations[$i]->setCreatedAt($faker->dateTimeBetween($startDate = '-20 days', $endDate = '-4 days')); 
             $manager->persist($conversations[$i]);
 
               // On enregistre les conversations dans une référence 

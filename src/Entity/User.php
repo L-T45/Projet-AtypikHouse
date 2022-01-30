@@ -56,11 +56,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                      "path"= "dashboard/user/{id}/properties",
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"user:properties", "enable_max_depth"=true}}
- *                 },
- *                  "delete_user"={
- *                     "method"="DELETE",
- *                     "path"="dashboard/user/{id}/personnal-infos/delete-account",
- *                 },                 
+ *                 },               
  *               "api_dashboard_user_messages"={
  *                  "method"="GET",
  *                  "path"="/dashboard/user/{id}/messages",
@@ -133,13 +129,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "path"="dashboard/user/{id}/conversations",
  *                  "controller"=App\Controller\LastNewConversations::class,
  *                 
- *               },      
- *                 
+ *               },       
  *                  
  *          }
  * )
- * @ApiFilter(SearchFilter::class, properties= {"properties.id": "exact", "lastname": "exact", "firstname" : "exact", "lastname": "partial", "firstname" : "partial"})
- * @ApiFilter(OrderFilter::class, properties= {"roles": "DESC", "roles": "ASC", "lastname": "ASC", "firstname" : "DESC", "reservations.comments.value": "ASC", "reservations.comments.value": "DESC"})
+ * @ApiFilter(SearchFilter::class, properties= {"properties.id": "exact", "properties.title": "exact", "lastname": "exact", "firstname" : "exact", "lastname": "partial", "firstname" : "partial"})
+ * @ApiFilter(OrderFilter::class, properties= {"roles": "DESC", "roles": "ASC", "lastname": "ASC", "firstname" : "DESC", "reservations.comments.value": "ASC", "reservations.comments.value": "DESC", "created_at": "ASC", "created_at": "DESC"})
  * 
  */
 class User implements UserInterface, PasswordAuthenticatedUserInterface
@@ -148,7 +143,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "user:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations", "admin:useridentifiants", "usermessage:create"})
+     * @Groups({"user:collection", "read:commentsid", "read:reportsid", "read:reports", "user:conversid", "admin:reports", "admin:reportsid", "read:reportsid", "admin:reportsid", "admin:conversid", "user:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations", "usermessage:create"})
      */
     private $id;
 
@@ -173,7 +168,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "user:write", "user:conversid", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
+     * @Groups({"comments:item", "read:commentsid", "read:reportsid", "read:reports", "user:conversid", "admin:reports", "admin:reportsid", "read:reportsid", "admin:conversid", "admin:reportsid", "user:write", "user:conversid", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
      */
     private $lastname;
 
@@ -227,7 +222,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "user:write", "user:conversid", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
+     * @Groups({"comments:item", "read:commentsid", "read:reportsid", "read:reports", "user:conversid", "admin:reports", "admin:reportsid", "read:reportsid", "admin:conversid", "admin:reportsid", "user:write", "user:conversid", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
      */
     private $firstname;
 
@@ -239,7 +234,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "user:write", "user:conversid", "admin:usertest", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection", "users:register"})
+     * @Groups({"comments:item", "read:commentsid", "read:reportsid", "read:reports", "user:conversid", "admin:reports", "admin:reportsid", "read:reportsid", "admin:conversid", "admin:reportsid", "user:write", "user:conversid", "admin:usertest", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection", "users:register"})
      */
     private $picture;
 
@@ -251,43 +246,51 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     /**
-     * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      * @Groups({"user:properties", "owner:properties", "admin:proequip", "admin:usersid"})
      */
     private $properties;
 
     /**
-     * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      * @Groups({"user:item", "user:reservations", "read:reservations", "read:reservperso", "admin:reservations", "owner:reservations"})
      */
     private $reservations;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      * @Groups({"read:commentsperso"})
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Payments::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Payments::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      * @Groups({"read:payments"})
      */
     private $payments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE") 
      * @Groups({"read:messages"})
      */
     private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Conversations::class, inversedBy="users")
+     * @ORM\ManyToMany(targetEntity=Conversations::class, inversedBy="users"))
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE") 
      * @Groups({"user:conversations"})
      */
     private $conversations;
 
     /**
-     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE") 
+     * @Groups({"read:reports"})
      */
     private $reports;
 

@@ -63,8 +63,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               },  
  *          }
  * )
- * @ApiFilter(DateFilter::class, properties= {"created_at"})
- * @ApiFilter(OrderFilter::class, properties= {"reportscategories.title": "ASC", "reportscategories.title": "DESC", "comments.id": "ASC", "comments.id": "DESC"})
+ * @ApiFilter(SearchFilter::class, properties= {""})
+ * @ApiFilter(OrderFilter::class, properties= {"reportscategories.title": "ASC", "reportscategories.title": "DESC", "reportscategories.reportsobject": "ASC", "reportscategories.reportsobject": "DESC" , "user.lastname": "ASC", "user.lastname": "DESC", "created_at": "ASC", "created_at": "DESC" })
  */
 class Reports
 {
@@ -90,31 +90,35 @@ class Reports
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"reports:item", "read:reportsid", "admin:reportsid", "propertiesid:item"})
+     * @Groups({"reports:item", "read:reportsid", "admin:reportsid", "propertiesid:item", "admin:reports"})
      */
     private $created_at;
 
     /**
      * @ORM\ManyToOne(targetEntity=ReportsCategories::class, inversedBy="reports")
      * @Groups({"reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid", "propertiesid:item", "reports:properties", "reports:comments"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $reportscategories;
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reports")
-     * @Groups({"reports:properties"})
+     * @Groups({"reports:properties","admin:reportsid", "admin:reports", "read:reports", "read:reportsid"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $properties;
 
     /**
      * @ORM\ManyToOne(targetEntity=Comments::class, inversedBy="reports")
-     * @Groups({"reports:comments"})
+     * @Groups({"reports:comments", "admin:reportsid", "admin:reports", "read:reports", "read:reportsid"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $comments;
     
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
-     * @Groups({"reports:properties", "reports:comments"})
+     * @Groups({"reports:properties", "reports:comments", "admin:reportsid", "read:reportsid", "admin:reports"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $user;
 

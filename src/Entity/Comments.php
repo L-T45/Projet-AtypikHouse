@@ -63,17 +63,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "normalization_context"={"groups"={"admin:commentsid", "enable_max_depth"=true}},  
  *               },  
  *                 
- *               "dashboard/admin/comments/{id}"={
- *                  "method"="GET",
- *                  "path"="test/comments/{id}",
- *                  "controller"=App\Controller\CommentsById::class,
- *                  
- *               },           
+ *                      
  *          }
  * )
- * 
+ * @ApiFilter(SearchFilter::class, properties= {"user.id": "exact"})
  * @ApiFilter(DateFilter::class, properties= {"created_at"})
- * @ApiFilter(OrderFilter::class, properties= {"reservations.properties.title": "ASC",  "reservations.properties.title": "DESC", "value" : "ASC", "value" : "DESC"})
+ * @ApiFilter(OrderFilter::class, properties= {"created_at": "ASC", "created_at": "DESC", "reservations.properties.title": "ASC",  "reservations.properties.title": "DESC", "value" : "ASC", "value" : "DESC"})
  */
 class Comments
 {
@@ -81,25 +76,25 @@ class Comments
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"comments:collection", "admin:usertest", "propertiesid:item", "admin:usersid", "admin:commentsid", "properties:collection", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "reservations:user", "reservations:item", "properties:item", "categories:item", "properties:comments", "comments:reports"})
+     * @Groups({"comments:collection", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "properties:map", "admin:usertest", "propertiesid:item", "admin:usersid", "admin:commentsid", "properties:collection", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "reservations:user", "reservations:item", "properties:item", "categories:item", "properties:comments", "comments:reports"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="text")
-     * @Groups({"comments:collection", "admin:usertest", "propertiesid:item", "admin:usersid", "admin:commentsid", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "read:commentsperso", "read:commentsid", "reservations:item", "reservations:user", "properties:item", "properties:comments", "comments:reservations"})
+     * @Groups({"comments:collection", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "admin:usertest", "propertiesid:item", "admin:usersid", "admin:commentsid", "admin:comments", "lastcomments:collection", "reservations:user", "owner:propertiesid", "read:commentsperso", "read:commentsid", "reservations:item", "reservations:user", "properties:item", "properties:comments", "comments:reservations"})
      */
     private $body;
 
     /**
      * @ORM\Column(type="integer")
-     * @Groups({"comments:item", "admin:usertest", "propertiesid:item", "admin:usersid", "properties:collection", "admin:commentsid", "reservations:item", "admin:comments", "categories:item", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "properties:comments", "reservations:user", "lastcomments:collection", "comments:reservations"})
+     * @Groups({"comments:item", "properties:map", "admin:usertest", "propertiesid:item", "admin:usersid", "properties:collection", "admin:commentsid", "reservations:item", "admin:comments", "categories:item", "reservations:user", "owner:propertiesid", "properties:collection", "read:commentsperso", "read:commentsid", "properties:comments", "reservations:user", "lastcomments:collection", "comments:reservations"})
      */
     private $value;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"comments:item", "admin:usertest", "admin:commentsid", "reservations:item", "admin:comments", "properties:comments", "read:commentsperso", "owner:propertiesid", "read:commentsid"})
+     * @Groups({"comments:item", "read:reportsid", "read:reports", "admin:reportsid", "admin:usertest", "admin:commentsid", "reservations:item", "admin:comments", "properties:comments", "read:commentsperso", "owner:propertiesid", "read:commentsid"})
      */
     private $created_at;
 
@@ -111,18 +106,21 @@ class Comments
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
-     * @Groups({"comments:item", "admin:usersid", "propertiesid:item", "reservations:user", "admin:commentsid","reservations:item", "lastcomments:collection", "read:commentsid", "properties:item", "comments:reservations"})
+     * @Groups({"comments:item", "read:reports", "read:reportsid", "admin:reportsid", "admin:reports", "admin:usersid", "propertiesid:item", "reservations:user", "admin:commentsid","reservations:item", "lastcomments:collection", "read:commentsid", "properties:item", "comments:reservations"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Reservations::class, inversedBy="comments")
      * @Groups({"comments:item", "read:commentsid", "read:commentsperso", "admin:comments", "admin:commentsid", "lastcomments:collection", "comments:reservations"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $reservations;
 
     /**
      * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="comments")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $reports;
 

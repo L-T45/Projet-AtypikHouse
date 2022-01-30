@@ -22,11 +22,11 @@ class ReservationsFixtures extends Fixture implements DependentFixtureInterface
          $faker = Faker\Factory::create('fr_FR');
          $reservations = Array();
         // create 20 Reservations! Bam!
-        for ($i = 0; $i < 9; $i++) {
+        for ($i = 0; $i < 101; $i++) {
 
             $payments[$i] =  $this->getReference('payments_'. $i);
-            $properties[$i] =  $this->getReference('properties_'. $faker->numberBetween(1,8));
-            $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,8));
+            $properties[$i] =  $this->getReference('properties_'. $faker->numberBetween(1,145));
+            $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,23));
             $startDate = $faker->dateTime($max = 'now'); 
 
             $reservations[$i] = new Reservations();
@@ -60,7 +60,7 @@ class ReservationsFixtures extends Fixture implements DependentFixtureInterface
       
 
 
-
 }
+
 
 

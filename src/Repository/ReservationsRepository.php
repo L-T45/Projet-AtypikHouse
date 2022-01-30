@@ -70,7 +70,6 @@ class ReservationsRepository extends ServiceEntityRepository
           
       }
 
-
     /*
     public function findOneBySomeField($value): ?Reservations
     {
@@ -82,4 +81,18 @@ class ReservationsRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    /**
+      * @return Reservations[] Returns an array of Reservations objects
+      */
+    public function findByIdToDelete($id, $lockMode = null, $lockVersion = null)
+    {
+        return $this->createQueryBuilder('u')
+            ->delete()
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

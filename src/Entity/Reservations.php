@@ -130,12 +130,14 @@ class Reservations
     /**
      * @ORM\OneToOne(targetEntity=Payments::class, inversedBy="reservations", cascade={"persist", "remove"})
      * @Groups({"reservations:user", "owner:propertiesid", "owner:reservid", "reservations:create"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $payments;
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reservations")
      * @Groups({"reservations:item", "admin:commentsid", "lastcomments:collection", "comments:item", "admin:comments", "read:reservations", "reservations:user", "read:commentsid", "read:commentsperso", "owner:reservid", "reservations:create"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $properties;
 
@@ -143,13 +145,15 @@ class Reservations
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reservations")
      * @Groups({"reserv:user", "owner:reserv", "owner:reservid", "admin:reserv", "propertiesid:item", "reservations:create"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      * 
      */
     private $user;
 
     /**
      * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="reservations")
-     * @Groups({"reservations:item", "admin:usertest", "propertiesid:item", "reservations:user", "owner:propertiesid", "properties:item", "properties:collection"})
+     * @Groups({"reservations:item", "admin:usertest", "propertiesid:item", "reservations:user", "owner:propertiesid", "properties:item", "properties:collection", "properties:map"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $comments;
 

@@ -25,7 +25,8 @@ class CommentsFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 200; $i++) {
 
             $reservations[$i] =  $this->getReference('reservations_'. $faker->numberBetween(1,8));
-            $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,8));
+            $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,23));
+            $startDate = $faker->dateTime($max = 'now'); 
             
 
             $comments[$i] = new Comments();
@@ -34,6 +35,7 @@ class CommentsFixtures extends Fixture implements DependentFixtureInterface
             $comments[$i]->setUsername($faker->firstName($gender = 'male'|'female'));
             $comments[$i]->setUserpicture($faker->imageUrl($width = 640, $height = 480));        
             $comments[$i]->setPropertypicture($faker->imageUrl($width = 640, $height = 480));
+            $comments[$i]->setCreatedAt($faker->dateTimeBetween($startDate = '-20 days', $endDate = '-4 days')); 
             $comments[$i]->setReservations($reservations[$i]);
             $comments[$i]->setUser($user[$i]);
             $manager->persist($comments[$i]);

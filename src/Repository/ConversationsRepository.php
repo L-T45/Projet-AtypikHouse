@@ -62,10 +62,10 @@ class ConversationsRepository extends ServiceEntityRepository
     public function findLatest():array
     {
         $qb = $this->createQueryBuilder('c');
-        $qb ->select('MAX(m.created_at) AS max_messages, m.id, m.body, m.created_at, u.id, u.lastname, u.firstname, u.picture, c.id')
+        $qb ->select('c.id as conversations_id,MAX(m.created_at) AS max_messages, m.id as messages_id, m.body, m.created_at, u.id as user_id, u.lastname, u.firstname, u.picture')
             ->leftJoin('c.messages', 'm')
             ->leftJoin('m.user', 'u')
-            ->orderBy('m.id', 'DESC')
+            ->orderBy('m.created_at', 'DESC')
             ->groupBy('c.id');
         $query = $qb->getQuery();
         return $query->getResult();
@@ -88,6 +88,24 @@ class ConversationsRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
+    
+    /**
+    * @return Conversations[] Returns an array of Conversations objects
+    */
+
+    public function findConversations($id):array
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb ->select('c.id as conversations_id,c.created_at,u.id as user_id,u.firstname,u.lastname,u.picture,m.id as messages_id,m.body,m.created_at')
+            ->leftJoin('c.messages', 'm', 'WITH', 'c.id = m.conversations_id')
+            ->leftJoin('m.user', 'u')
+            ->orderBy('m.created_at', 'DESC')
+            ->setParameter('id', $id);
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
+
     /*
     public function findOneBySomeField($value): ?Conversations
     {
@@ -99,4 +117,18 @@ class ConversationsRepository extends ServiceEntityRepository
         ;
     }
     */
+
+      /**
+    * @return Conversations[] Returns an array of Conversations objects
+    */
+    public function findByIdToDelete($id, $lockMode = null, $lockVersion = null)
+    {
+        return $this->createQueryBuilder('u')
+            ->delete()
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }

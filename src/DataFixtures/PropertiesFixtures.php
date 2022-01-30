@@ -30,7 +30,7 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 1; $i < 150; $i++) {
 
             $categories[$i] =  $this->getReference('categories_'. $faker->numberBetween(1,8));
-            $user[$i] =  $this->getReference('user_'.$faker->numberBetween(1,29));
+            $user[$i] =  $this->getReference('user_'.$faker->numberBetween(1,23));
             
 
             $properties[$i] = new Properties();

@@ -47,4 +47,19 @@ class ReportsRepository extends ServiceEntityRepository
         ;
     }
     */
+
+
+    /**
+    * @return Reports[] Returns an array of Reports objects
+    */
+    public function findByIdToDelete($id, $lockMode = null, $lockVersion = null)
+    {
+        return $this->createQueryBuilder('u')
+            ->delete()
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
