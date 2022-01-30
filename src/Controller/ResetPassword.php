@@ -23,6 +23,7 @@ class ResetPassword extends AbstractController {
 
         $user = Array();
         $user = new User();
+        $user = $this->getUser();
 
         $data = json_decode($request->getContent(), true);
 
@@ -31,19 +32,16 @@ class ResetPassword extends AbstractController {
         $idUser = $data["id"];
     
         //encodage password
-        $old_pwd = $encoder->encodePassword($user, $old_pwd);
+        // $old_pwd = $encoder->encodePassword($user, $old_pwd);
         $new_pwd = $encoder->encodePassword($user, $new_pwd);
+        $checkPass = $encoder->isPasswordValid($user, $old_pwd);
 
-        $this->UserRepository = $UserRepository;
+        //dd($encoder->isPasswordValid($user, $old_pwd));
 
-        $password = $this->UserRepository->checkPassword($idUser);
+        if ($checkPass === true) {
 
-        dd($password[0]["password"], $old_pwd);
-
-        if ($password[0]["password"] == $old_pwd) {
-
-            // execute the queries on the database
-            $this->getEntityManager()->flush();
+            $this->UserRepository = $UserRepository;
+            $password = $this->UserRepository->resetPassword($idUser, $new_pwd);
 
             $response = new Response('Mot de passe modifié avec succès', Response::HTTP_OK,['content-type' => 'application/json']);
 

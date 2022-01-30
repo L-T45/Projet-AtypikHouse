@@ -1,10 +1,4 @@
 api_platform:
     resource: .
     type: api_platform
-<<<<<<< HEAD
     prefix: /api
-=======
-    prefix: /api
-    
-    
->>>>>>> master
