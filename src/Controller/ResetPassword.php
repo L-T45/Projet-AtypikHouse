@@ -32,11 +32,10 @@ class ResetPassword extends AbstractController {
         $idUser = $data["id"];
     
         //encodage password
-        // $old_pwd = $encoder->encodePassword($user, $old_pwd);
         $new_pwd = $encoder->encodePassword($user, $new_pwd);
-        $checkPass = $encoder->isPasswordValid($user, $old_pwd);
 
-        //dd($encoder->isPasswordValid($user, $old_pwd));
+        // est-ce que le mot de passe est conforme
+        $checkPass = $encoder->isPasswordValid($user, $old_pwd);
 
         if ($checkPass === true) {
 
@@ -44,22 +43,6 @@ class ResetPassword extends AbstractController {
             $password = $this->UserRepository->resetPassword($idUser, $new_pwd);
 
             $response = new Response('Mot de passe modifié avec succès', Response::HTTP_OK,['content-type' => 'application/json']);
-
-            // $findUserToUpdatePwd = $this->UserRepository->resetPassword($idUser, $new_pwd);
-
-            //     if($findUserToUpdatePwd =! 0){
-
-            //         $response = new Response('Mot de passe modifié avec succès', Response::HTTP_OK,['content-type' => 'application/json']);
-
-            //     }
-
-            //     else{  
-
-            //         $response = new Response("Une erreur est survenu lors du changement de mot de passe...", Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);    
-
-            //     }
-
-            //     return $response;
 
         }
         else{  
