@@ -81,8 +81,34 @@ security:
         - { path: ^/api/dashboard/admin/conversations/details/delete, roles: ROLE_ADMIN}
         # Delete Messages
         - { path: ^/api/dashboard/admin/conversations/details/message/delete, roles: ROLE_ADMIN}
-        # ROUTES POSTS :
-        # ADD de catégories
-        - { path: ^/api/dashboard/admin/categories/create, roles: ROLE_ADMIN}
+        # ROUTES PUT :
+        # MAJ de attributes
+        - { path: ^/api/attribute/{id}, roles: ROLE_ADMIN}
+        # MAJ de categories
+        - { path: ^/api/categories/{id}, roles: ROLE_ADMIN}
+        # MAJ de comments
+        - { path: ^/api/comments/{id}, roles: ROLE_USER}
+        # MAJ de properties
+        - { path: ^/api/properties/{id}, roles: ROLE_OWNER, ROLE_ADMIN}
+        # MAJ de conversations
+        - { path: ^/api/conversations/{id}, roles: ROLE_USER}
+        # MAJ de equipements
+        - { path: ^/api/equipements/{id}, roles: ROLE_ADMIN}
+        # MAJ de reports
+        - { path: ^/api/reports/{id}, roles: ROLE_USER}
+        # MAJ de reservations
+        - { path: ^/api/reservations/{id}, roles: ROLE_USER}
+        # MAJ de users
+        - { path: ^/api/users/{id}, roles: ROLE_USER}
+        # MAJ de properties_galleries
+        - { path: ^/api/properties_galleries/{id}, roles: ROLE_OWNER, ROLE_ADMIN}
+        # MAJ de messages
+        - { path: ^/api/messages/{id}, roles: ROLE_USER}
+        # MAJ de payments
+        - { path: ^/api/payments/{id}, roles: ROLE_USER}
+        # MAJ de reports_categories
+        - { path: ^/api/reports_categories/{id}, roles: ROLE_USER}
+        
+        
 
 
