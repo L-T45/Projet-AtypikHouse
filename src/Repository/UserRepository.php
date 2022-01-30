@@ -64,20 +64,31 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     * @return User[] Returns an array of User objects
     */
 
-    public function resetPassword($id, $old_pwd, $new_pwd, $lockMode = null, $lockVersion = null) {
+    public function checkPassword($id, $lockMode = null, $lockVersion = null) {
+        return $this->createQueryBuilder('u')
+            ->select('u.password')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+    * @return User[] Returns an array of User objects
+    */
+
+    public function resetPassword($id, $new_pwd, $lockMode = null, $lockVersion = null) {
 
         return $this->createQueryBuilder('u')
             ->update('App\Entity\User', 'u')
             ->set('u.password', ':new_pwd')
-            ->Where('u.id = :id')
-            ->andWhere('u.password = :old_pwd')
+            ->where('u.id = :id')
             ->setParameter('id', $id)
-            ->setParameter('old_pwd', $old_pwd)
             ->setParameter('new_pwd', $new_pwd)
             ->getQuery()
-            ->getResult();
-
-                
+            ->execute()
+            ;                
     }
 
     /**

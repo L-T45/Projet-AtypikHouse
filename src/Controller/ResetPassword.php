@@ -36,23 +36,42 @@ class ResetPassword extends AbstractController {
 
         $this->UserRepository = $UserRepository;
 
-        $findUserToUpdatePwd = $this->UserRepository->resetPassword($idUser, $old_pwd, $new_pwd);
+        $password = $this->UserRepository->checkPassword($idUser);
 
-            //dd($findUserToUpdatePwd);
+        dd($password[0]["password"], $old_pwd);
 
-            if($findUserToUpdatePwd =! []){
+        if ($password[0]["password"] == $old_pwd) {
 
-                $response = new Response('Mot de passe modifié avec succès',Response::HTTP_OK,['content-type' => 'application/json']);
+            // execute the queries on the database
+            $this->getEntityManager()->flush();
 
-            }
+            $response = new Response('Mot de passe modifié avec succès', Response::HTTP_OK,['content-type' => 'application/json']);
 
-            else{  
+            // $findUserToUpdatePwd = $this->UserRepository->resetPassword($idUser, $new_pwd);
 
-                $response = new Response("Une erreur est survenu lors du changement de mot de passe...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);    
+            //     if($findUserToUpdatePwd =! 0){
 
-            }
+            //         $response = new Response('Mot de passe modifié avec succès', Response::HTTP_OK,['content-type' => 'application/json']);
 
+            //     }
+
+            //     else{  
+
+            //         $response = new Response("Une erreur est survenu lors du changement de mot de passe...", Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);    
+
+            //     }
+
+            //     return $response;
+
+        }
+        else{  
+
+            $response = new Response("Une erreur est survenu lors du changement de mot de passe...", Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);    
+
+        }
+        
         return $response;
 
     }
+
 }
