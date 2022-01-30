@@ -84,3 +84,5 @@ security:
         - { path: ^/api/dashboard/admin/conversations/details/message/delete, roles: ROLE_ADMIN}
         #- { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
 
+        # Post envoyer les paiements
+        - { path: ^/api/send_payment, roles: ROLE_USER }
