@@ -29,9 +29,9 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "dashboard/admin/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/conversations",
- *                  "controller"=App\Controller\LastNewConversations::class,
+ *                   "controller"=App\Controller\LastNewConversations::class,
  *                  
- *               },  
+ *               },
  *             
  *          },
  *      itemOperations={
