@@ -131,7 +131,9 @@ class Register extends AbstractController{
         //$picture = serialize($picture);
         //$picture = $this->cutChaine($picture, ':"', '";');
    
-       $picture = $_FILES['file']['name'][0];
+       $picture = uniqid().'_'.$_FILES['file']['name'][0];
+       //dd($picture);
+    
        //dd($picture);
 
        
