@@ -105,7 +105,7 @@ security:
         - { path: ^/api/properties_galleries/id, roles: ROLE_OWNER}
         - { path: ^/api/properties_galleries/id, roles: ROLE_ADMIN}
         # MAJ de messages
-        - { path: ^/api/messages/id, roles: ROLE_USER}
+        - { path: ^/api/messages/id, roles: [IS_AUTHENTICATED_FULLY, ROLE_USER]}
         # MAJ de payments
         - { path: ^/api/payments/id, roles: ROLE_USER}
         # MAJ de reports_categories
