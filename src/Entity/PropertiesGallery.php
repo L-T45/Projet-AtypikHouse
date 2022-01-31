@@ -78,6 +78,7 @@ class PropertiesGallery
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="propertiesGalleries")
      * @Groups({"galleryphoto:create", "propertiesgallery:write"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $properties;
 

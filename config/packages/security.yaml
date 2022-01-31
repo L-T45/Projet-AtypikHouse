@@ -54,5 +54,35 @@ security:
         - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # Paramétrage des droits d'accès à l'api 
-        #- { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }
+        # ROUTES DELETES :
+        # Delete User
+        - { path: ^/api/dashboard/user/personnal-infos/delete-account, roles: ROLE_USER}
+        - { path: ^/api/dashboard/admin/users/details/delete, roles: ROLE_ADMIN}
+        # Delete Properties
+        - { path: ^/api/dashboard/owner/properties/delete, roles: ROLE_OWNER}
+        - { path: ^/api/dashboard/admin/properties/delete, roles: ROLE_ADMIN}
+        # Delete PropertiesGallery
+        - { path: ^/api/dashboard/owner/properties/details/galleryphoto/deletepictures, roles: ROLE_OWNER}
+        - { path: ^/api/dashboard/admin/properties/details/galleryphoto/deletepictures, roles: ROLE_ADMIN}
+        # Delete Comments
+        - { path: ^/api/dashboard/user/comments/details/delete, roles: ROLE_USER}
+        - { path: ^/api/dashboard/admin/comments/details/delete, roles: ROLE_ADMIN}
+        # Delete Reservations
+        - { path: ^/api/dashboard/user/reservations/delete, roles: ROLE_USER}
+        - { path: ^/api/dashboard/admin/reservations/delete, roles: ROLE_ADMIN}
+        # Delete Reports
+        - { path: ^/api/dashboard/user/reports/details/delete, roles: ROLE_USER}
+        - { path: ^/api/dashboard/admin/reports/details/delete, roles: ROLE_ADMIN}
+        # Delete Categories
+        - { path: ^/api/dashboard/admin/categories/delete, roles: ROLE_ADMIN}
+        # Delete Attributes
+        - { path: ^/api/dashboard/admin/categories/attributes/delete, roles: ROLE_ADMIN}
+        # Delete Conversations
+        - { path: ^/api/dashboard/admin/conversations/details/delete, roles: ROLE_ADMIN}
+        # Delete Messages
+        - { path: ^/api/dashboard/admin/conversations/details/message/delete, roles: ROLE_ADMIN}
+        # ROUTES POSTS :
+        # ADD de catégories
+        - { path: ^/api/dashboard/admin/categories/create, roles: ROLE_ADMIN}
+
 

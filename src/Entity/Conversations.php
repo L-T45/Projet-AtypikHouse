@@ -31,7 +31,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "path"="dashboard/admin/conversations",
  *                   "controller"=App\Controller\LastNewConversations::class,
  *                  
- *               },   
+ *               },
  *             
  *          },
  *      itemOperations={
@@ -74,13 +74,15 @@ class Conversations
 
     /**
      * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="conversations")
-     * @Groups({"conversations:item", "admin:conversid","user:conversid", "user:conversations", "admin:conversationsid"})
+     * @Groups({"conversations:item", "user:conversid", "user:conversations", "admin:conversationsid", "admin:conversid"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $messages;
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="conversations")
-     * @Groups({"conversations:item", "read:conversationsid", "user:conversations", "admin:conversations", "admin:conversationsid", "lastconversations:collection", "admin:usersconv"})
+     * @Groups({"conversations:item", "read:conversationsid", "user:conversations", "admin:conversations", "admin:conversationsid", "lastconversations:collection", "admin:usersconv", "user:conversid"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $users;
 

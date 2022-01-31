@@ -253,37 +253,43 @@ class Properties
 
     /**
      * @ORM\ManyToMany(targetEntity=Equipements::class, inversedBy="properties")
-     * @Groups({ "properties:item", "owner:propertiesid", "propertiesid:item"})
+     * @Groups({"properties:write", "properties:item", "owner:propertiesid", "propertiesid:item"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $equipements;
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="properties")
-     * @Groups({"properties:item", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "admin:properties", "propertiesid:item", "admin:usersid", "admin:commentsid",  "reservations:user", "owner:propertiesid", "owner:reservid", "properties:map"})
+     * @Groups({"properties:item", "propertiesid:item", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "admin:usersid", "admin:commentsid", "properties:write", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:properties", "properties:map"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $categories;
 
     /**
      * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="properties")
-     * @Groups({"properties:item", "admin:usertest", "propertiesid:item",  "owner:propertiesid", "properties:collection", "properties:map"})
+     * @Groups({"properties:item", "admin:usertest", "propertiesid:item", "properties:write", "owner:propertiesid", "properties:collection", "properties:map"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $reservations;
 
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="properties")
-     * @Groups({"properties:user", "read:reportsid", "admin:reports", "read:reports", "propertiesid:item", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:reportsid"})
+     * @Groups({"properties:user", "read:reportsid", "admin:reports", "read:reports", "admin:reportsid", "propertiesid:item", "reservations:user", "owner:propertiesid", "owner:reservid"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $user;
 
     /**
      * @ORM\OneToMany(targetEntity=PropertiesGallery::class, mappedBy="properties")
-     * @Groups({"properties:item", "propertiesid:item",  "owner:propertiesid"})
+     * @Groups({"properties:item", "propertiesid:item", "properties:write", "owner:propertiesid"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $propertiesGalleries;
 
     /**
      * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="properties")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $reports;
 

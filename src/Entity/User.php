@@ -107,6 +107,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * 
  *          "get"={"normalization_context"={"groups"={"user:collection", "user:item"}}},
  *          "put"={},
+ *          "patch"={},
  *          "delete"={},
  *               "api_dashboard_user_payments"={
  *                  "method"="GET",
@@ -119,11 +120,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                      "path"= "dashboard/user/{id}/properties",
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"user:properties", "enable_max_depth"=true}}
- *                 },
- *                  "delete_user"={
- *                     "method"="DELETE",
- *                     "path"="dashboard/user/{id}/personnal-infos/delete-account",
- *                 },                 
+ *                 },               
  *               "api_dashboard_user_messages"={
  *                  "method"="GET",
  *                  "path"="/dashboard/user/{id}/messages",
@@ -182,41 +179,21 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:usersid", "admin:usertest", "enable_max_depth"=true}},
  *                  
+ *               },  
+ * 
+ *                  "dashboard/user/{id}/personal_informations/modifypassword"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/user/{id}/personal_informations/modifypassword",
+ *                  "controller"="App\Controller\ResetPassword::UpdatePwd",
+ *                  "denormalization_context"={"groups"={"admin:useridentifiants", "enable_max_depth"=true}},
  *               },
+ * 
  *                 "lastconversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
  *                  "controller"=App\Controller\LastNewConversations::class,
  *                 
- *               },      
- *                  "testuser"={
- *                  "method"="POST",
- *                  "path"="test/user/{id}",
- *                  "deserialize" = false,
- *                  "controller"=App\Requests\Register::class,
- *                  "denormalization_context"={"groups"={"user:write"}},
- *                   "openapi_context" = {
- *                   "requestBody" = {
- *                     "content" = {
- *                         "multipart/form-data" = {
- *                             "schema" = {
- *                                 "type" = "object",
- *                                 "properties" = {
- *                                     "file" = {
- *                                         "type" = "array",
- *                                         "items" = {
- *                                             "type" = "string",
- *                                             "format" = "binary"
- *                                         },
- *                                     },
- *                                 },
- *                             },
- *                         },
- *                     },
- *                 },
- *                 
- *               },
- *           },  
+ *               },       
  *                  
  *          }
  * )
@@ -249,7 +226,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
-     * @Groups({"user:write", "users:login"})
+     * @Groups({"user:write", "users:login", "admin:useridentifiants"})
      */
     private $password;
 
@@ -350,43 +327,50 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     /**
-     * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      * @Groups({"user:properties", "owner:properties", "admin:proequip", "admin:usersid"})
      */
     private $properties;
 
     /**
-     * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Reservations::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      * @Groups({"user:item", "user:reservations", "read:reservations", "read:reservperso", "admin:reservations", "owner:reservations"})
      */
     private $reservations;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Comments::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      * @Groups({"read:commentsperso"})
      */
     private $comments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Payments::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Payments::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      * @Groups({"read:payments"})
      */
     private $payments;
 
     /**
-     * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Messages::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE") 
      * @Groups({"read:messages"})
      */
     private $messages;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Conversations::class, inversedBy="users")
+     * @ORM\ManyToMany(targetEntity=Conversations::class, inversedBy="users"))
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE") 
      * @Groups({"user:conversations"})
      */
     private $conversations;
 
     /**
-     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="user"))
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE") 
      * @Groups({"read:reports"})
      */
     private $reports;
@@ -405,8 +389,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->messages = new ArrayCollection();
         $this->conversations = new ArrayCollection();
         $this->reports = new ArrayCollection();
-       
-
     }
 
     public function getId(): ?int
@@ -477,6 +459,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+   
 
     /**
      * Returning a salt is only needed, if you are not using a modern

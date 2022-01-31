@@ -97,24 +97,28 @@ class Reports
     /**
      * @ORM\ManyToOne(targetEntity=ReportsCategories::class, inversedBy="reports")
      * @Groups({"reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid", "propertiesid:item", "reports:properties", "reports:comments"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $reportscategories;
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="reports")
-     * @Groups({"reports:properties", "admin:reportsid", "admin:reports", "read:reports", "read:reportsid"})
+     * @Groups({"reports:properties","admin:reportsid", "admin:reports", "read:reports", "read:reportsid"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $properties;
 
     /**
      * @ORM\ManyToOne(targetEntity=Comments::class, inversedBy="reports")
      * @Groups({"reports:comments", "admin:reportsid", "admin:reports", "read:reports", "read:reportsid"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $comments;
     
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
      * @Groups({"reports:properties", "reports:comments", "admin:reportsid", "read:reportsid", "admin:reports"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $user;
 

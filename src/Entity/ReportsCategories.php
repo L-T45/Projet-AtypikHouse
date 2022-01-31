@@ -56,6 +56,7 @@ class ReportsCategories
 
     /**
      * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="reportscategories")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $reports;
 

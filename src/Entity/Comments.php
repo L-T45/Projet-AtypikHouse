@@ -107,17 +107,20 @@ class Comments
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
      * @Groups({"comments:item", "read:reports", "read:reportsid", "admin:reportsid", "admin:reports", "admin:usersid", "propertiesid:item", "reservations:user", "admin:commentsid","reservations:item", "lastcomments:collection", "read:commentsid", "properties:item", "comments:reservations"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Reservations::class, inversedBy="comments")
      * @Groups({"comments:item", "read:commentsid", "read:commentsperso", "admin:comments", "admin:commentsid", "lastcomments:collection", "comments:reservations"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $reservations;
 
     /**
      * @ORM\OneToMany(targetEntity=Reports::class, mappedBy="comments")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $reports;
 

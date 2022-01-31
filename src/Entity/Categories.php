@@ -153,18 +153,16 @@ class Categories
     /**
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="categories")
      * @Groups({"categories:item", "categories:write", "admin:categoriesid"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */ 
     private $properties;
 
     /**
      * @ORM\OneToMany(targetEntity=Attributes::class, mappedBy="categories")
      * @Groups({"categories:item", "admin:categoriesid", "propertiesid:item"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $attributes;
-
-   
-
-  
 
     public function __construct()
     {

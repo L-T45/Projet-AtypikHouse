@@ -20,10 +20,16 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    private $encoder;
+  
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
     }
+
+    /**
+    * @return User[] Returns an array of User objects
+    */
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
@@ -38,7 +44,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->_em->persist($user);
         $this->_em->flush();
     }
-
+    
     /**
     * @return User[] Returns an array of User objects
     */
@@ -46,12 +52,43 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function findByEmail(string $username): array
     {
         return $this->createQueryBuilder('u')
-            ->select('u.id, u.email, u.roles, u.lastname, u.phone, u.address, u.city, u.birthdate, u.zipCode, u.created_at, u.updated_at, u.emailvalidated, u.firstname, u.country ,u.picture, u.is_blocked')
+            ->select('u.id, u.email, u.roles, u.lastname, u.phone, u.address, u.city, u.birthdate, u.zipCode, u.created_at, u.updated_at, u.emailvalidated, u.firstname, u.country, u.picture, u.is_blocked')
             ->andWhere('u.email = :email')
             ->setParameter('email', $username)
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+    * @return User[] Returns an array of User objects
+    */
+
+    public function checkPassword($id, $lockMode = null, $lockVersion = null) {
+        return $this->createQueryBuilder('u')
+            ->select('u.password')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    /**
+    * @return User[] Returns an array of User objects
+    */
+
+    public function resetPassword($id, $new_pwd, $lockMode = null, $lockVersion = null) {
+
+        return $this->createQueryBuilder('u')
+            ->update('App\Entity\User', 'u')
+            ->set('u.password', ':new_pwd')
+            ->where('u.id = :id')
+            ->setParameter('id', $id)
+            ->setParameter('new_pwd', $new_pwd)
+            ->getQuery()
+            ->execute()
+            ;                
     }
 
     /**
@@ -88,8 +125,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ;
     }
 
-     /**
-      * @return User[] Returns an array of User objects
+    /**
+    * @return User[] Returns an array of User objects
     */
    
     public function findConversationsByUser($id, $lockMode = null, $lockVersion = null)
@@ -109,7 +146,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
            return $query->getResult();
         
     }
-    
+
+
+    /**
+    * @return User[] Returns an array of User objects
+    */
+    public function findByIdToDelete($id, $lockMode = null, $lockVersion = null)
+    {
+        return $this->createQueryBuilder('u')
+            ->delete()
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 
     /*
     public function findOneBySomeField($value): ?User

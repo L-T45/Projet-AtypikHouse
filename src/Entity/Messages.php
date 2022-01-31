@@ -65,12 +65,14 @@ class Messages
     /**
      * @ORM\ManyToOne(targetEntity=Conversations::class, inversedBy="messages")
      * @Groups({"messages:item", "read:messages", "user:messages", "admin:usersid", "messages:create"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $conversations;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="messages")
      * @Groups({"user:messages", "user:conversid", "messages:create", "admin:conversid"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $user;
 

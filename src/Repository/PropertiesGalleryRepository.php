@@ -61,4 +61,18 @@ class PropertiesGalleryRepository extends ServiceEntityRepository
           ->getQuery()
           ->getResult();
       }
+
+       /**
+    * @return PropertiesGallery[] Returns an array of PropertiesGallery objects
+    */
+    public function findByIdToDelete($id, $lockMode = null, $lockVersion = null)
+    {
+        return $this->createQueryBuilder('u')
+            ->delete()
+            ->andWhere('u.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
 }
