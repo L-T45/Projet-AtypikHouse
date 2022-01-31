@@ -110,7 +110,7 @@ security:
         - { path: ^/api/payments/id, roles: ROLE_USER}
         # MAJ de reports_categories
         - { path: ^/api/reports_categories/id, roles: ROLE_USER}
-        # ROUTES PATCH
+        # ROUTES PATCH :
         # MAJ MDP USER
         - { path: ^/api/dashboard/user/id/personal_informations/modifypassword, roles: ROLE_USER}
 
