@@ -28,6 +28,11 @@ class EquipementsFixtures extends Fixture
             $equipements[$i] = new Equipements();
             $equipements[$i]->setTitle($attributes[$i]);
             $manager->persist($equipements[$i]);
+
+
+            
+          // On enregistre les équipements dans une référence 
+            $this->addReference('equipements_'. $i, $equipements[$i]);
         }
 
         $manager->flush();
