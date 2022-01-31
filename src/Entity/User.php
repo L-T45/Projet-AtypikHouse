@@ -15,12 +15,15 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\DateFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 // Ajout route personalisé ici (lastnewreservations, api_dashboard_user_payments, dashboard_user_properties, delete_user, api_sign_up) car pas possible à un autre endroit visiblement.
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- *  @ApiResource( normalizationContext={"groups"={"user:collection"}},
+ * @Vich\Uploadable()
+ * @ApiResource( normalizationContext={"groups"={"user:collection"}},
  *      denormalizationContext={"groups"={"user:write"}},
  *      paginationItemsPerPage= 20,
  *      paginationMaximumItemsPerPage= 20,
@@ -32,6 +35,67 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "method"="POST",
  *                  "path"="/send_payment",
  *                  "controller"=App\Controller\SendPayment::class 
+ *               }, 
+ *              "api_register"={
+ *                  "method"="POST",
+ *                  "path"="register",
+ *                  "deserialize" = false,
+ *                  "controller"=App\Requests\Register::class,
+ *                  "denormalization_context"={"groups"={"user:write"}},
+ *                  "openapi_context" = {
+ *                  "requestBody" = {
+ *                     "content" = {
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                     "firstname" ={
+ *                                        "type" = "string"
+ *                                      },
+ *                                     "lastname" ={
+ *                                        "type" = "string"
+ *                                      },
+ *                                      "phone" ={
+ *                                        "type" = "string"
+ *                                      },
+ *                                       "email" ={
+ *                                        "type" = "string"
+ *                                      },
+ *                                       "password" ={
+ *                                        "type" = "string"
+ *                                      },
+ *                                       "address" ={
+ *                                        "type" = "string"
+ *                                      },
+ *                                       "city" ={
+ *                                        "type" = "string"
+ *                                      }, 
+ *                                       "birthdate" ={
+ *                                        "type" = "date"
+ *                                      },
+ *                                       "zipCode" ={
+ *                                        "type" = "string"
+ *                                      }, 
+ *                                       "country" ={
+ *                                        "type" = "string"
+ *                                      },
+ *                                      "picture" ={
+ *                                        "type" = "string"
+ *                                      },
+ *                                     "file" = {
+ *                                         "type" = "array",
+ *                                         "items" = {
+ *                                             "type" = "string",
+ *                                             "format" = "binary"
+ *                                         },
+ *                                     },
+ *                                 },
+ *                             },
+ *                         },
+ *                     },
+ *                 },
+ *             },
+ *                  
  *               }, 
  *                "dashboard/admin/users"={
  *                  "method"="GET",
@@ -125,7 +189,34 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "controller"=App\Controller\LastNewConversations::class,
  *                 
  *               },      
+ *                  "testuser"={
+ *                  "method"="POST",
+ *                  "path"="test/user/{id}",
+ *                  "deserialize" = false,
+ *                  "controller"=App\Requests\Register::class,
+ *                  "denormalization_context"={"groups"={"user:write"}},
+ *                   "openapi_context" = {
+ *                   "requestBody" = {
+ *                     "content" = {
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                     "file" = {
+ *                                         "type" = "array",
+ *                                         "items" = {
+ *                                             "type" = "string",
+ *                                             "format" = "binary"
+ *                                         },
+ *                                     },
+ *                                 },
+ *                             },
+ *                         },
+ *                     },
+ *                 },
  *                 
+ *               },
+ *           },  
  *                  
  *          }
  * )
@@ -228,9 +319,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $country;
 
+     /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="user_images", fileNameProperty="filePath")
+     */
+    private $file;
+
+     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $filePath;
+
+    /**
+     * @var array|null
+     * @Groups({"user:item", "properties:write"})
+     */
+    private $fileUrl;
+
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"comments:item", "read:commentsid", "read:reportsid", "read:reports", "user:conversid", "admin:reports", "admin:reportsid", "read:reportsid", "admin:conversid", "admin:reportsid", "user:write", "user:conversid", "admin:usertest", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection", "users:register"})
+     * @Groups({"user:collection","comments:item", "read:commentsid", "read:reportsid", "read:reports", "user:conversid", "admin:reports", "admin:reportsid", "read:reportsid", "admin:conversid", "admin:reportsid", "user:write", "user:conversid", "admin:usertest", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection", "users:register"})
      */
     private $picture;
 
@@ -282,6 +390,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Groups({"read:reports"})
      */
     private $reports;
+
 
 
 
@@ -533,6 +642,47 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    
+
+
+      /**
+     * @return File|null
+     */
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+
+    /**
+     * @return File|null $file
+     * @return User
+     */
+    public function setFile(?File $file): User
+    {
+        $this->file = $file;
+        return $this;
+    }
+  
+    /**
+     * @return array|null
+     */
+    public function getFileUrl(): ?array
+    {
+        return $this->fileUrl;
+    }
+
+    /**
+     * @return array|null $fileUrl
+     * @return User
+     */
+    public function setFileUrl(?array $fileUrl): User
+    {
+        $this->fileUrl = $fileUrl;
+        return $this; 
+    }
+
+
     public function getIsBlocked(): ?bool
     {
         return $this->is_blocked;
@@ -745,6 +895,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $report->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getFilePath(): ?string
+    {
+        return $this->filePath;
+    }
+
+    public function setFilePath(?string $filePath): self
+    {
+        $this->filePath = $filePath;
 
         return $this;
     }

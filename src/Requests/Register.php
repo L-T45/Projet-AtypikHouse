@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Repository\UserRepository;
+use Symfony\Component\HttpFoundation\File\File;
 
 class Register extends AbstractController{
     
@@ -27,7 +28,6 @@ class Register extends AbstractController{
     private $birthdate;
     private $zipCode;
     private $country;
-    private $picture;
     private $encoder;
     private $UserRepository;
 
@@ -39,11 +39,38 @@ class Register extends AbstractController{
         $len = strpos($string, $end, $ini) - $ini;
         return substr($string, $ini, $len);
     }
+    //    
+    // public function __invoke(Request $request)
+    // {
+    //   
+    //    $user = $request->attributes->get('data');
+    //    //dd($user);
+    //    if(!($user instanceof User)) {
+    //        throw new \RuntimeException('User attendu');
+    //    }   
+    //    
+       
+    //   // $_FILES;
+    //    //dd($_FILES);
+    //   // $user = $request->files->get('files');
+    //   // dd($_FILES);
+    //     //$user->setFile($request->files->get('file'));
+    //     //dd($user);
+    //   // $user->setUpdatedAt(new \DateTime());
+    //    return $user;
+    //    //dd($user);
 
-    public function newUser(EntityManagerInterface $manager, Request $request, UserPasswordEncoderInterface $encoder, UserRepository $UserRepository): Response
+    // }
+    
+    
+
+    public function __invoke(EntityManagerInterface $manager, Request $request, UserPasswordEncoderInterface $encoder, UserRepository $UserRepository): Response
     {
         $user = Array();
         $user = new User();
+        
+
+        $_FILES;
 
         // Données du formulaire de register  
         $firstname = $_POST["firstname"];
@@ -90,9 +117,25 @@ class Register extends AbstractController{
         $country = serialize($country);
         $country = $this->cutChaine($country, ':"', '";');
 
-        $picture = $_POST["picture"]; 
-        $picture = serialize($picture);
-        $picture = $this->cutChaine($picture, ':"', '";');
+        //$pictures = $_POST["pictures"]; 
+        $file = $request->files->get('file');
+        //dd($file);
+      //dd($request->files->get('file'));
+        //dd($_FILES);
+    //    $picture = serialize($picture);
+    //     $picture = $this->cutChaine($picture, ':"', '";');
+
+    //     $file = $_POST["file"]; 
+    //     $file = $request->files->get('file');
+    //     dd($file);
+        //$picture = serialize($picture);
+        //$picture = $this->cutChaine($picture, ':"', '";');
+   
+       $picture = $_FILES['file']['name'][0];
+       //dd($picture);
+
+       
+        
 
         $this->UserRepository = $UserRepository;
         $findUser = $this->UserRepository->findByEmailCheckIfExist($email);
@@ -113,6 +156,7 @@ class Register extends AbstractController{
             $user->setFirstname($firstname);
             $user->setCountry($country);
             $user->setPicture($picture);
+            $user->setFile($file[0]);
             $user->setIsBlocked(0);
         
             $manager->persist($user);
