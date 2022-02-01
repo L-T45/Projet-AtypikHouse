@@ -36,7 +36,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * 
  *          "get"={"normalization_context"={"groups"={"attributes:collection", "attributes:item"}}},
  *        
- *          "put"={"security"= "is_granted('ROLE_ADMIN')"},
+ *          "put"={
+ *              "security"= "is_granted('ROLE_ADMIN')",
+ *              "deserialize" = false,
+ *              "denormalization_context"={"groups"={"update:attribute", "categorie:updateattibute", "enable_max_depth"=true}}  
+ *          },
  *          "delete"={},
  * 
  *              "dashboard/admin/categories/attributes/{id}"={
@@ -61,7 +65,7 @@ class Attributes
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"attributes:collection", "propertiesid:item", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate"})
+     * @Groups({"attributes:collection", "propertiesid:item", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate", "update:attribute"})
      */
     private $title;
 
@@ -79,11 +83,10 @@ class Attributes
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="attributes")
-     * @Groups({"attributes:item", "admin:categattributes", "admin:categattributesid", "admin:attributescreate"})
+     * @Groups({"attributes:item", "admin:categattributes", "admin:categattributesid", "admin:attributescreate", "update:attribute"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $categories;
-
 
     public function __construct()
     {
