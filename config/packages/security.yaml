@@ -85,13 +85,13 @@ security:
 
         # ROUTES POSTS :
         # Post envoyer les paiements
-        - { path: ^/api/send_payment, roles: ROLE_USER }
+        - { path: ^/api/send_payment, roles: ROLE_USER } #voir avec Séraph
         # Post ajouter des attributs
-        - { path: ^/api/dashboard/admin/categories/attributes/create, roles: ROLE_ADMIN }
+        - { path: ^/api/dashboard/admin/categories/attributes/create, roles: ROLE_ADMIN } #check
         # Post ajouter des catégories
-        - { path: ^/api/dashboard/admin/categories/create, roles: ROLE_ADMIN }
+        - { path: ^/api/dashboard/admin/categories/create, roles: ROLE_ADMIN } #attendre modifications liées au chargement d'images dans la base de donné
         # Post ajouter un commentaire
-        - { path: ^/api/properties/id/comments, roles: ROLE_USER }
+        - { path: ^/api/properties/id/comments, roles: ROLE_USER } #check
         # Post ajouter une propriété
         - { path: ^/api/dashboard/owner/properties/create, roles: ROLE_OWNER }
         # Post ajouter une image
@@ -102,67 +102,3 @@ security:
         - { path: ^/api/properties/comments/id/reports, roles: ROLE_USER }
         # Post envoyé une réservation
         - { path: ^/api/properties/id/reservations, roles: ROLE_USER }
-
-        #ROUTES GET :
-        # Get info perso
-        - { path: ^/api/dashboard/user/id/infos-personnelles, roles: ROLE_USER }
-        # Get réservations
-        - { path: ^/api/dashboard/user/id/reservations, roles: ROLE_USER }
-        # Get reservation
-        - { path: ^/api/dashboard/user/reservations/id, roles: ROLE_USER }
-        # Get comments
-        - { path: ^/api/dashboard/user/id/comments, roles: ROLE_USER }
-        # Get comment
-        - { path: ^/api/dashboard/user/comment/id, roles: ROLE_USER }
-        # Get conversations
-        - { path: ^/api/dashboard/user/id/conversations, roles: ROLE_USER }
-        # Get conversation
-        - { path: ^/api/dashboard/user/conversations/id, roles: ROLE_USER }
-        # Get reports
-        - { path: ^/api/dashboard/user/id/reports, roles: ROLE_USER }
-        # Get report
-        - { path: ^/api/dashboard/user/report/id, roles: ROLE_USER }
-        # Get properties
-        - { path: ^/api/dashboard/owner/id/properties, roles: ROLE_OWNER }
-        # Get propertie
-        - { path: ^/api/dashboard/owner/properties/id, roles: ROLE_OWNER }
-        # Get reservations
-        - { path: ^/api/dashboard/owner/reservations, roles: ROLE_OWNER }
-        # Get reservation
-        - { path: ^/api/dashboard/owner/reservations/id, roles: ROLE_OWNER }
-        # Get users
-        - { path: ^/api/dashboard/admin/users, roles: ROLE_ADMIN }
-        # Get user
-        - { path: ^/api/dashboard/admin/users/id, roles: ROLE_ADMIN }
-        # Get reservations
-        - { path: ^/api/dashboard/admin/reservations, roles: ROLE_ADMIN }
-        # Get reservations
-        - { path: ^/api/dashboard/admin/reservations/id, roles: ROLE_ADMIN }
-        # Get properties
-        - { path: ^/api/dashboard/admin/properties, roles: ROLE_ADMIN }
-        #Get propertie
-        - { path: ^/api/dashboard/admin/properties/id, roles: ROLE_ADMIN }
-        # Get equipements
-        - { path: ^/api/dashboard/admin/id/properties/equipments, roles: ROLE_ADMIN }
-        # Get equipement
-        - { path: ^/api/dashboard/admin/properties/equipments/id, roles: ROLE_ADMIN }
-        # Get categories
-        - { path: ^/api/dashboard/admin/categories, roles: ROLE_ADMIN }
-        # Get categorie
-        - { path: ^/api/dashboard/admin/categories/id, roles: ROLE_ADMIN }
-        # Get attributes
-        - { path: ^/api/dashboard/admin/categories/attributes, roles: ROLE_ADMIN }
-        # Get attribute
-        - { path: ^/api/dashboard/admin/categories/attributes/id, roles: ROLE_ADMIN }
-        # Get comments
-        - { path: ^/api/dashboard/admin/comments, roles: ROLE_ADMIN }
-        # Get comment
-        - { path: ^/api/dashboard/admin/comments/id, roles: ROLE_ADMIN }
-        # Get conversations
-        - { path: ^/api/dashboard/admin/conversations, roles: ROLE_ADMIN }
-        # Get conversation
-        - { path: ^/api/dashboard/admin/conversationsid, roles: ROLE_ADMIN }
-        # Get reports
-        - { path: ^/api/dashboard/admin/reports, roles: ROLE_ADMIN }
-        # Get report
-        - { path: ^/api/dashboard/admin/reports/id, roles: ROLE_ADMIN }

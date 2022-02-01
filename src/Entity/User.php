@@ -36,6 +36,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                "dashboard/admin/users"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users",
+ *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},                 
  *               },                                 
  *          },
@@ -66,30 +67,33 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                 "dashboard/user/{id}/infos-personnelles"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/infos-personnelles",
+ *                  "security"= "is_granted('ROLE_USER')"
  *                  "normalization_context"={"groups"={"read:infosperso", "enable_max_depth"=true}},  
  *               },     
  *                  "dashboard/user/{id}/reservations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/reservations",
+ *                  "security"= "is_granted('ROLE_USER')"
  *                  "normalization_context"={"groups"={"read:reservperso", "enable_max_depth"=true}},
  *               },    
  *                  "dashboard/user/{id}/comments"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/comments",
+ *                  "security"= "is_granted('ROLE_USER')",
  *                  "normalization_context"={"groups"={"read:commentsperso", "enable_max_depth"=true}},  
  *               },  
  *                  "dashboard/user/{id}/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
+ *                  "security"= "is_granted('ROLE_USER')",
  *                  "controller"=App\Controller\FindConversationsByUser::class,
- *                 
- *                  
  *               },  
  *  
  *                  "dashboard/user/{id}/reports"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/reports",
  *                  "force_eager"=false,
+ *                  "security"= "is_granted('ROLE_USER')",
  *                  "normalization_context"={"groups"={"read:reports", "enable_max_depth"=true}}, 
  *                  
  *               },  
@@ -97,38 +101,33 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "method"="GET",
  *                  "path"="dashboard/owner/{id}/properties",
  *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"owner:properties", "enable_max_depth"=true}}, 
- *                  
- *               },  
- *                  
- *                 
+ *                  "security"= "is_granted('ROLE_OWNER')",
+ *                  "normalization_context"={"groups"={"owner:properties", "enable_max_depth"=true}}, *                  
+ *               },                 
  *                  "dashboard/owner/{id}/reservations"={
  *                  "method"="GET",
  *                  "path"="dashboard/owner/{id}/reservations",
  *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},
- *                  
+ *                  "security"= "is_granted('ROLE_OWNER')"
+ *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},                  
  *               },  
  *                  "dashboard/admin/users/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users/{id}",
  *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"admin:usersid", "admin:usertest", "enable_max_depth"=true}},
- *                  
- *               },  
- * 
+ *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                  "normalization_context"={"groups"={"admin:usersid", "admin:usertest", "enable_max_depth"=true}},                  
+ *               }, 
  *                  "dashboard/user/{id}/personal_informations/modifypassword"={
  *                  "method"="PATCH",
  *                  "path"="dashboard/user/{id}/personal_informations/modifypassword",
  *                  "controller"="App\Controller\ResetPassword::UpdatePwd",
  *                  "denormalization_context"={"groups"={"admin:useridentifiants", "enable_max_depth"=true}},
- *               },
- * 
+ *               }, 
  *                 "lastconversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
- *                  "controller"=App\Controller\LastNewConversations::class,
- *                 
+ *                  "controller"=App\Controller\LastNewConversations::class,                 
  *               },       
  *                  
  *          }

@@ -24,18 +24,17 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                   "method"="GET",
  *                   "path"="dashboard/admin/equipements",
  *                   "force_eager"=false,
+ *                   "security"= "is_granted('ROLE_ADMIN')",
  *                   "normalization_context"={"groups"={"equipements:collection", "enable_max_depth"=true}}
- *                 },    
- *               
+ *                 },               
  *                  "dashboard/admin/properties/equipements"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/properties/equipements",
- *                  "normalization_context"={"groups"={"admin:proequip", "enable_max_depth"=true}},
- *                  
+ *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                  "normalization_context"={"groups"={"admin:proequip", "enable_max_depth"=true}},                  
  *               },   
  *          },
- *      itemOperations={
- *          
+ *      itemOperations={          
  *          "get"={"normalization_context"={"groups"={"equipements:collection", "equipements:item","read:equipements"}}},
  *          "put"={},
  *          "delete"={},
@@ -43,6 +42,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                   "method"="GET",
  *                   "path"="dashboard/admin/properties/equipments/{id}",
  *                   "force_eager"=false,
+ *                   "security"= "is_granted('ROLE_ADMIN')",
  *                   "normalization_context"={"groups"={"equipements:collection", "equipements:item", "enable_max_depth"=true}}
  *                 }, 
  *          }

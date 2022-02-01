@@ -29,6 +29,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               "dashboard/admin/reports"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/reports",
+ *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:reports", "enable_max_depth"=true}},  
  *               }, 
  *              "properties_{id}_reports"={
@@ -53,12 +54,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "dashboard/user/reports/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/reports/{id}",
+ *                  "security"= "is_granted('ROLE_USER')",
  *                  "normalization_context"={"groups"={"read:reportsid", "enable_max_depth"=true}}, 
  *                  
  *               },  
  *                  "dashboard/admin/reports/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/reports/{id}",
+ *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:reportsid", "enable_max_depth"=true}},  
  *               },  
  *          }

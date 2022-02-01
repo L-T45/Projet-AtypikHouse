@@ -36,6 +36,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               "dashboard/admin/comments"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/comments",
+ *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:comments", "enable_max_depth"=true}},  
  *               },
  * 
@@ -55,11 +56,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               "dashboard/user/comments/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/comments/{id}",
+ *                  "security"= "is_granted('ROLE_USER')",
  *                  "normalization_context"={"groups"={"read:commentsid", "enable_max_depth"=true}},  
  *               },  
  *               "dashboard/admin/comments/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/comments/{id}",
+ *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:commentsid", "enable_max_depth"=true}},  
  *               },  
  *                 

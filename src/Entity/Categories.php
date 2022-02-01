@@ -27,27 +27,23 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *      collectionOperations={
  *            "get"={},
  *            "post"={}, 
- * 
- *             "dashboard/admin/categories"={
- *                  "method"="GET",
- *                  "path"="dashboard/admin/categories",
- *                  "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
- *               },      
- *                       
- *          },
- * 
+ *            "dashboard/admin/categories"={
+ *                 "method"="GET",
+ *                 "path"="dashboard/admin/categories",
+ *                 "security"= "is_granted('ROLE_ADMIN')",
+ *                 "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
+ *              },                       
+ *          }, 
  *      itemOperations={
- *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},
- *           
- *          "put"={},
- *          "delete"={},
- *                  
+ *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},           
+    *         "put"={},
+    *         "delete"={},                  
  *                  "dashboard/admin/categories/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories/{id}",
  *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
- *                  
+ *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},                  
  *               }, 
  *                  "dashboard/admin/test/categories/{id}"={
  *                  "method"="POST",

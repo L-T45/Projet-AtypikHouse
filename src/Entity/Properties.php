@@ -55,6 +55,7 @@ use App\Resolver\PostPictureResolver;
  *                  "dashboard/admin/properties"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/properties",
+ *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:properties", "enable_max_depth"=true}}, 
  *               }, 
  *               "dashboard_owner_properties_create"={
@@ -71,6 +72,7 @@ use App\Resolver\PostPictureResolver;
  *                      "method"="GET",
  *                      "path"= "dashboard/admin/properties/{id}",
  *                      "force_eager"=false,
+ *                      "security"= "is_granted('ROLE_ADMIN')",
  *                      "normalization_context"={"groups"={"properties:collection", "properties:item", "admin:propertiesid", "enable_max_depth"=true}}
  *                 },
  *                "dashboard_user_properties_id"={
@@ -89,6 +91,7 @@ use App\Resolver\PostPictureResolver;
  *                      "method"="GET",
  *                      "path"= "dashboard/owner/properties/{id}",
  *                      "force_eager"=false,
+ *                      "security"= "is_granted('ROLE_OWNER')",
  *                      "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
  *                 },   
  * 
