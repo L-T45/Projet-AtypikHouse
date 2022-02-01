@@ -70,7 +70,6 @@ class Register extends AbstractController{
         $user = new User();
         
 
-        $_FILES;
 
         // Données du formulaire de register  
         $firstname = $_POST["firstname"];
@@ -118,7 +117,7 @@ class Register extends AbstractController{
         $country = $this->cutChaine($country, ':"', '";');
 
         //$pictures = $_POST["pictures"]; 
-        $file = $request->files->get('file');
+        //$file = $request->files->get('file');
         //dd($file);
       //dd($request->files->get('file'));
         //dd($_FILES);
@@ -132,8 +131,9 @@ class Register extends AbstractController{
         //$picture = $this->cutChaine($picture, ':"', '";');
 
 
-        $picture = $_FILES['file']['name'][0];
-      // $picture = uniqid().'_'.$_FILES['file']['name'][0];
+        //$picture = $_FILES['file']['name'][0];
+        $file = uniqid().'_'.$_FILES['file']['name'][0];
+        $picture = $file;
        //dd($picture);
     
        //dd($picture);
@@ -161,6 +161,7 @@ class Register extends AbstractController{
             $user->setCountry($country);
             $user->setPicture($picture);
             $user->setFile($file[0]);
+            $user->addComment([]);
             $user->setIsBlocked(0);
         
             $manager->persist($user);

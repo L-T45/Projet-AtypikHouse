@@ -70,6 +70,7 @@ class PropertiesRepository extends ServiceEntityRepository
       }
 
 
+
      /**
       * @return Properties[] Returns an array of Properties objects
       */
