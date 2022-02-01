@@ -26,11 +26,11 @@ class EquipementsFixtures extends Fixture
         // create 20 Equipements! Bam!
         for ($i = 0; $i < 7; $i++) {
 
-            $properties[$i] =  $this->getReference('properties_'.$faker->numberBetween(1,149));
+          //  $properties[$i] =  $this->getReference('properties_'.$faker->numberBetween(1,149));
 
             $equipements[$i] = new Equipements();
             $equipements[$i]->setTitle($attributes[$i]);
-            $equipements[$i]->addProperty($properties[$i]);
+           // $equipements[$i]->addProperty($properties[$i]);
             $manager->persist($equipements[$i]);
 
 
@@ -41,7 +41,7 @@ class EquipementsFixtures extends Fixture
 
         $manager->flush();
         }
-
+        /*
         public function getDependencies(){
           return [
 
@@ -49,4 +49,5 @@ class EquipementsFixtures extends Fixture
              
           ];
       }
+      */
 }
