@@ -36,7 +36,7 @@ use Symfony\Component\Validator\Constraints\Uuid;
  * 
  *          "get"={"normalization_context"={"groups"={"propertiesgallery:collection", "propertiesgallery:item"}}},
  *        
- *          "put"={},
+ *          "put"={"security"= "is_granted('ROLE_OWNER', 'ROLE_ADMIN')"},
  *          "delete"={},
  *          }
  * )

@@ -36,7 +36,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * 
  *          "get"={"normalization_context"={"groups"={"attributes:collection", "attributes:item"}}},
  *        
- *          "put"={},
+ *          "put"={"security"= "is_granted('ROLE_ADMIN')"},
  *          "delete"={},
  * 
  *              "dashboard/admin/categories/attributes/{id}"={

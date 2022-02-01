@@ -39,7 +39,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *      itemOperations={
  *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},
  *           
- *          "put"={},
+ *          "put"={"security"= "is_granted('ROLE_ADMIN')"},
  *          "delete"={},
  *                  
  *                  "dashboard/admin/categories/{id}"={

@@ -45,7 +45,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"reservations:collection", "reservations:item"}}},
- *          "put"={},
+ *          "put"={"security"= "is_granted('ROLE_USER')"},
  *          "delete"={},
  * 
  *                  "dashboard/user/reservations/{id}"={
