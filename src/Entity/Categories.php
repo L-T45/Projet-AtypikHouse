@@ -39,7 +39,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *      itemOperations={
  *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},
  *           
- *          "put"={"security"= "is_granted('ROLE_ADMIN')"},
+ *          "put"={
+ *              "security"= "is_granted('ROLE_ADMIN')",
+ *              "deserialize" = false,
+ *              "denormalization_context"={"groups"={"update:categorie", "categorie:updateattibute", "enable_max_depth"=true}},
+ *          },
  *          "delete"={},
  *                  
  *                  "dashboard/admin/categories/{id}"={
@@ -94,19 +98,19 @@ class Categories
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "properties:map", "admin:properties", "admin:usersid", "propertiesid:item", "propertiesid:item", "admin:commentsid",  "categories:item", "admin:categattributesid", "admin:categattributes", "admin:categories", "admin:categoriesid", "categories:write", "owner:propertiesid", "owner:reservid", "properties:item", "attributes:item", "reservations:user", "admin:createcategories"})
+     * @Groups({"categories:collection", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "properties:map", "admin:properties", "admin:usersid", "propertiesid:item", "propertiesid:item", "admin:commentsid",  "categories:item", "admin:categattributesid", "admin:categattributes", "admin:categories", "admin:categoriesid", "categories:write", "owner:propertiesid", "owner:reservid", "properties:item", "attributes:item", "reservations:user", "admin:createcategories", "update:categorie"})
      */
     private $title;
 
      /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:collection", "categories:item", "admin:categories", "admin:categoriesid", "categories:write", "properties:item", "admin:createcategories"})
+     * @Groups({"categories:collection", "categories:item", "admin:categories", "admin:categoriesid", "categories:write", "properties:item", "admin:createcategories", "update:categorie"})
      */
     private $slug;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:item", "categories:write", "admin:categories", "admin:categoriesid", "admin:createcategories"})
+     * @Groups({"categories:item", "categories:write", "admin:categories", "admin:categoriesid", "admin:createcategories", "update:categorie"})
      * 
      */
     private $picture;
@@ -119,21 +123,21 @@ class Categories
 
      /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * 
+     * @Groups({"categories:collection", "properties:write"}) 
      */
     private $filePath;
 
     
     /**
      * @var string|null
-     * @Groups({"categories:collection", "properties:write"})
+     * @Groups({"update:categorie"})
      */
     private $fileUrl;
 
 
      /**
      * @ORM\Column(type="text")
-     * @Groups({"categories:item","categories:write", "admin:categoriesid", "admin:createcategories"})
+     * @Groups({"categories:item","categories:write", "admin:categoriesid", "admin:createcategories", "update:categorie"})
      */
     private $description;
 
