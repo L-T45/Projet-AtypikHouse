@@ -21,14 +21,14 @@ class ConversationsFixtures extends Fixture
          $faker = Faker\Factory::create('fr_FR');
          $conversations = Array();
         // create 20 Equipements! Bam!
-        for ($i = 0; $i < 50; $i++) {
+        for ($i = 1; $i < 50; $i++) {
 
             $startDate = $faker->dateTime($max = 'now'); 
-            $user[$i] =  $this->getReference('user_'.$faker->numberBetween(1,23));
+           // $user[$i] =  $this->getReference('user_'.$faker->numberBetween(1,23));
 
             $conversations[$i] = new Conversations();
             $conversations[$i]->setCreatedAt($faker->dateTimeBetween($startDate = '-20 days', $endDate = '-4 days')); 
-            $conversations[$i]->addUser($user[$i]);
+           // $conversations[$i]->addUser($user[$i]);
             $manager->persist($conversations[$i]);
 
               // On enregistre les conversations dans une référence 
@@ -37,7 +37,7 @@ class ConversationsFixtures extends Fixture
 
         $manager->flush();
         }
-        
+        /*
         public function getDependencies(){
           return [
 
@@ -45,5 +45,6 @@ class ConversationsFixtures extends Fixture
              
           ];
       }
+      */
 
 }
