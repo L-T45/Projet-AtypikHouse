@@ -31,7 +31,7 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
 
             $categories[$i] =  $this->getReference('categories_'. $faker->numberBetween(1,8));
             $user[$i] =  $this->getReference('user_'.$faker->numberBetween(1,23));
-            
+            $equipements[$i] =  $this->getReference('equipements_'.$faker->numberBetween(1,6));
 
             $properties[$i] = new Properties();
             $properties[$i]->setTitle($faker->randomElement($titles));
@@ -41,8 +41,8 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
             $properties[$i]->setAddress($faker->streetAddress);
             $properties[$i]->setBooking($faker->randomDigitNotNull);
             $properties[$i]->setCity($faker->city);
-            $properties[$i]->setLatitude($faker->randomFloat(10, 47.81366152658748, 47.87779313046071));
-            $properties[$i]->setLongitude($faker->randomFloat(10, 3.655042557455004, 4.1354427951483785));
+            $properties[$i]->setLatitude($faker->randomFloat(10, 47.12078777981049, 48.469607001575156));
+            $properties[$i]->setLongitude($faker->randomFloat(10, 2.465935156428336, 2.663689062678336));
             $properties[$i]->setBedrooms($faker->randomDigitNotNull);
             $properties[$i]->setSurface($faker->numberBetween($min = 1, $max = 853));
             $properties[$i]->setReference('Categories '.$i);
@@ -52,6 +52,7 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
             $properties[$i]->setZipCode(intval($faker->postcode));
             $properties[$i]->setCategories($categories[$i]);
             $properties[$i]->setUser($user[$i]);
+            $properties[$i]->addEquipement($equipements[$i]);
             $manager->persist($properties[$i]);
 
              // On enregistre les propriétés dans une référence 
@@ -65,6 +66,7 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
             return [
                 CategoriesFixtures::class,
                 UserFixtures::class,
+                EquipementsFixtures::class
                
             ];
         }

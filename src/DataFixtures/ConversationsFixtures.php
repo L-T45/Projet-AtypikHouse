@@ -24,9 +24,11 @@ class ConversationsFixtures extends Fixture
         for ($i = 0; $i < 50; $i++) {
 
             $startDate = $faker->dateTime($max = 'now'); 
+            $user[$i] =  $this->getReference('user_'.$faker->numberBetween(1,23));
 
             $conversations[$i] = new Conversations();
             $conversations[$i]->setCreatedAt($faker->dateTimeBetween($startDate = '-20 days', $endDate = '-4 days')); 
+            $conversations[$i]->addUser($user[$i]);
             $manager->persist($conversations[$i]);
 
               // On enregistre les conversations dans une référence 
@@ -35,4 +37,13 @@ class ConversationsFixtures extends Fixture
 
         $manager->flush();
         }
+        
+        public function getDependencies(){
+          return [
+
+              UserFixtures::class
+             
+          ];
+      }
+
 }

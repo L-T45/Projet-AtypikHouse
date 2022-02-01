@@ -86,6 +86,7 @@ security:
         - { path: ^/api/dashboard/admin/conversations/details/delete, roles: ROLE_ADMIN}
         # Delete Messages
         - { path: ^/api/dashboard/admin/conversations/details/message/delete, roles: ROLE_ADMIN}
+<<<<<<< HEAD
         # ROUTES PUT :
         # MAJ de properties
         - { path: ^/api/properties/id, roles: ROLE_OWNER}
@@ -94,5 +95,10 @@ security:
         - { path: ^/api/properties_galleries/id, roles: ROLE_OWNER}
         - { path: ^/api/properties_galleries/id, roles: ROLE_ADMIN}
 
+=======
+        
+        
+        
+>>>>>>> master
 
 
