@@ -308,7 +308,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private $filePath;
 
     /**
-     * @var array|null
+     * @var string|null
      * @Groups({"user:item", "properties:write"})
      */
     private $fileUrl;
@@ -648,18 +648,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
   
     /**
-     * @return array|null
+     * @return string|null
      */
-    public function getFileUrl(): ?array
+    public function getFileUrl(): ?string
     {
         return $this->fileUrl;
     }
 
     /**
-     * @return array|null $fileUrl
+     * @return string|null $fileUrl
      * @return User
      */
-    public function setFileUrl(?array $fileUrl): User
+    public function setFileUrl(?string $fileUrl): User
     {
         $this->fileUrl = $fileUrl;
         return $this; 
