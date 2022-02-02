@@ -11,7 +11,8 @@ vich_uploader:
                 uri_prefix: /media/users
                 upload_destination: '%kernel.project_dir%/public/media/users'
                 # Will rename uploaded files using a uniqueid as a prefix.
-                namer: Vich\UploaderBundle\Naming\OrignameNamer
+                namer: 
+                    service: Vich\UploaderBundle\Naming\UniqidNamer
 
             gallery_images:
                 uri_prefix: /media/interior

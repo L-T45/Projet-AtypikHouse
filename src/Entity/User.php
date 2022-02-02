@@ -298,7 +298,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
      /**
      * @var File|null
-     * @Vich\UploadableField(mapping="user_images", fileNameProperty="filePath")
+     * @Vich\UploadableField(mapping="user_images", fileNameProperty="picture")
      */
     private $file;
 

@@ -125,15 +125,16 @@ class Register extends AbstractController{
     //     $picture = $this->cutChaine($picture, ':"', '";');
 
     //     $file = $_POST["file"]; 
-    //     $file = $request->files->get('file');
+           $file = $request->files->get('file');
+          //dd($file);
     //     dd($file);
         //$picture = serialize($picture);
         //$picture = $this->cutChaine($picture, ':"', '";');
 
 
         //$picture = $_FILES['file']['name'][0];
-        $file = uniqid().'_'.$_FILES['file']['name'][0];
-        $picture = $file;
+       // $picture = $_FILES['file']['name'][0];
+       //$picture = uniqid().'_'.$_FILES['file']['name'][0];
        //dd($picture);
     
        //dd($picture);
@@ -159,9 +160,9 @@ class Register extends AbstractController{
             $user->setEmailvalidated(0);
             $user->setFirstname($firstname);
             $user->setCountry($country);
-            $user->setPicture($picture);
+            $user->setPicture($file[0]);
             $user->setFile($file[0]);
-            $user->addComment([]);
+            //$user->addComment([]);
             $user->setIsBlocked(0);
         
             $manager->persist($user);
