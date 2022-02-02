@@ -5,8 +5,9 @@ vich_uploader:
                 uri_prefix: /media/properties
                 upload_destination: '%kernel.project_dir%/public/media/properties'
                 # Will rename uploaded files using a uniqueid as a prefix.
-                namer: Vich\UploaderBundle\Naming\OrignameNamer
-    
+                namer: 
+                    service: Vich\UploaderBundle\Naming\UniqidNamer
+
             user_images:
                 uri_prefix: /media/users
                 upload_destination: '%kernel.project_dir%/public/media/users'
@@ -18,13 +19,15 @@ vich_uploader:
                 uri_prefix: /media/interior
                 upload_destination: '%kernel.project_dir%/public/media/interior'
                 # Will rename uploaded files using a uniqueid as a prefix.
-                namer: Vich\UploaderBundle\Naming\OrignameNamer
+                namer: 
+                    service: Vich\UploaderBundle\Naming\UniqidNamer
+
 
             categories_images:
                 uri_prefix: /media/categories
                 upload_destination: '%kernel.project_dir%/public/media/categories'
                 # Will rename uploaded files using a uniqueid as a prefix.
-                namer: Vich\UploaderBundle\Naming\OrignameNamer
-                
+                namer: 
+                    service: Vich\UploaderBundle\Naming\UniqidNamer
 
                 
