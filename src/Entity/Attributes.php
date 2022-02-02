@@ -34,13 +34,19 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get"={"normalization_context"={"groups"={"attributes:collection", "attributes:item"}}},        
  *          "put"={},
  *          "delete"={}, 
- *              "dashboard/admin/categories/attributes/{id}"={
+ *                  "dashboard/admin/categories/attributes/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories/attributes/{id}",
  *                  "force_eager"=false,
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:categattributesid", "attributes:item", "enable_max_depth"=true}},
- *               },               
+ *               },  
+ *                  "dashboard/admin/attibute/{id}"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/admin/attibute/{id}",
+ *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                  "deserialize" = false, 
+ *              },        
  *          }
  * )
  */

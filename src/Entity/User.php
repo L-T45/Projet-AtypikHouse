@@ -130,13 +130,13 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "dashboard/user/{id}/infos-personnelles"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/infos-personnelles",
- *                  "security"="is_granted('ROLE_USER')"
+ *                  "security"="is_granted('ROLE_USER')",
  *                  "normalization_context"={"groups"={"read:infosperso", "enable_max_depth"=true}},  
  *               },
  *                  "dashboard/user/{id}/reservations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/reservations",
- *                  "security"= "is_granted('ROLE_USER')"
+ *                  "security"= "is_granted('ROLE_USER')",
  *                  "normalization_context"={"groups"={"read:reservperso", "enable_max_depth"=true}},
  *               },    
  *                  "dashboard/user/{id}/comments"={
@@ -171,7 +171,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "method"="GET",
  *                  "path"="dashboard/owner/{id}/reservations",
  *                  "force_eager"=false,
- *                  "security"= "is_granted('ROLE_OWNER')"
+ *                  "security"= "is_granted('ROLE_OWNER')",
  *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},                  
  *               },
  *                  "lastconversations"={
@@ -195,32 +195,32 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "dashboard/user/{id}/personal_informations/modifyinformations"={
  *                  "method"="PATCH",
  *                  "path"="dashboard/user/{id}/personal_informations/modifyinformations",
- *                  "security"="is_granted('ROLE_USER'),
- *                  "deserialize"="false",
+ *                  "security"="is_granted('ROLE_USER')",
+ *                  "deserialize"=false,
  *               },
  *                  "dashboard/user/{id}/personal_informations/modifypicture"={
  *                  "method"="PATCH",
  *                  "path"="dashboard/user/{id}/personal_informations/modifypicture",
- *                  "security"="is_granted('ROLE_USER'),
- *                  "deserialize"="false",
+ *                  "security"="is_granted('ROLE_USER')",
+ *                  "deserialize"=false,
  *               },  
  *                  "dashboard/admin/users/details/{id}/modifyblock"={
  *                  "method"="PATCH",
  *                  "path"="dashboard/admin/users/details/{id}/modifyblock",
- *                  "security"="is_granted('ROLE_ADMIN'),
- *                  "deserialize"="false",
+ *                  "security"="is_granted('ROLE_ADMIN')",
+ *                  "deserialize"=false,
  *               },  
- *                  "dashboard/admin/user/id/block"={
+ *                  "dashboard/admin/user/{id}/block"={
  *                  "method"="PATCH",
- *                  "path"="dashboard/admin/user/id/block",
- *                  "security"="is_granted('ROLE_ADMIN'),
- *                  "deserialize"="false",
+ *                  "path"="dashboard/admin/user/{id}/block",
+ *                  "security"="is_granted('ROLE_ADMIN')",
+ *                  "deserialize"=false,
  *               },       
- *                  "dashboard/admin/user/id/deblock"={
+ *                  "dashboard/admin/user/{id}/deblock"={
  *                  "method"="PATCH",
- *                  "path"="dashboard/admin/user/id/deblock",
- *                  "security"="is_granted('ROLE_ADMIN'),
- *                  "deserialize"="false",
+ *                  "path"="dashboard/admin/user/{id}/deblock",
+ *                  "security"="is_granted('ROLE_ADMIN')",
+ *                  "deserialize"=false,
  *               },                
  *          }
  * )

@@ -55,8 +55,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "method"="GET",
  *                  "path"="dashboard/user/reports/{id}",
  *                  "security"= "is_granted('ROLE_USER')",
- *                  "normalization_context"={"groups"={"read:reportsid", "enable_max_depth"=true}}, 
- *                  
+ *                  "normalization_context"={"groups"={"read:reportsid", "enable_max_depth"=true}},
  *               },  
  *                  "dashboard/admin/reports/{id}"={
  *                  "method"="GET",
@@ -67,14 +66,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "dashboard/user/reports/details/{id}/modify"={
  *                  "method"="PATCH",
  *                  "path"="dashboard/user/reports/details/{id}/modify",
- *                  "security"="is_granted('ROLE_USER'),
- *                  "deserialize"="false",
+ *                  "security"="is_granted('ROLE_USER')",
+ *                  "deserialize"=false,
  *               },
  *                  "dashboard/admin/reports/details/{id}/approve"={
  *                  "method"="PATCH",
  *                  "path"="dashboard/admin/reports/details/{id}/approve",
- *                  "security"="is_granted('ROLE_ADMIN'),
- *                  "deserialize"="false",
+ *                  "security"="is_granted('ROLE_ADMIN')",
+ *                  "deserialize"=false,
  *               },
  *          }
  * )

@@ -47,33 +47,32 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get"={"normalization_context"={"groups"={"reservations:collection", "reservations:item"}}},
  *          "put"={},
  *          "delete"={},
- * 
  *                  "dashboard/user/reservations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/reservations/{id}",
  *                  "force_eager"=false,
- *                  "security"= "is_granted('ROLE_USER')"
+ *                  "security"= "is_granted('ROLE_USER')",
  *                  "normalization_context"={"groups"={"reservations:user", "reserv:user"}}
  *                 },
  *                 "dashboard/owner/reservations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/owner/reservations/{id}",
  *                  "force_eager"=false,
- *                  "security"= "is_granted('ROLE_OWNER')"
- *                  "normalization_context"={"groups"={"owner:reservid", "owner:read"}}
+ *                  "security"= "is_granted('ROLE_OWNER')",
+ *                  "normalization_context"={"groups"={"owner:reservid", "owner:read"}},
  *                 },
  *                  "dashboard/admin/reservations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/reservations/{id}",
  *                  "force_eager"=false,
- *                  "security"= "is_granted('ROLE_ADMIN')"
+ *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"owner:reservid", "owner:read"}}
  *                 },
  *                  "dashboard/user/reservations/{id}/modify"={
     *                  "method"="PATCH",
     *                  "path"="dashboard/user/reservations/{id}/modify",
-    *                  "security"="is_granted('ROLE_USER'),
-    *                  "deserialize"="false",
+    *                  "security"="is_granted('ROLE_USER')",
+    *                  "deserialize"=false,
     *              },
  *          }
  * )

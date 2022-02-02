@@ -68,8 +68,8 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *              "dashboard/user/comments/details/{id}/modify"={
  *                  "method"="PATCH",
  *                  "path"="dashboard/user/comments/details/{id}/modify",
- *                  "security"="is_granted('ROLE_USER'),
- *                  "deserialize"="false",
+ *                  "security"="is_granted('ROLE_USER')",
+ *                  "deserialize"=false,
  *              },              
  *          }
  * )

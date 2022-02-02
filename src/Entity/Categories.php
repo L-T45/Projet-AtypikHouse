@@ -35,9 +35,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *              },                       
  *          }, 
  *      itemOperations={
- *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},           
-    *         "put"={},
-    *         "delete"={},                  
+ *              "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},           
+ *              "put"={},
+ *              "patch"={},
+ *              "delete"={},                  
  *                  "dashboard/admin/categories/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories/{id}",
@@ -45,6 +46,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},                  
  *               }, 
+ *                  "dashboard/admin/categories/{id}"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/admin/categories/{id}",
+ *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                  "deserialize" = false, 
+ *              },
  *                  "dashboard/admin/test/categories/{id}"={
  *                  "method"="POST",
  *                  "path"="dashboard/admin/categories/{id}",
