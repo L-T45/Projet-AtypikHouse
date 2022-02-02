@@ -92,11 +92,34 @@ class Register extends AbstractController{
         $country = serialize($country);
         $country = $this->cutChaine($country, ':"', '";');
 
+<<<<<<< HEAD
 
 
         //$picture = $_FILES['file']['name'][0];
         $file = uniqid().'_'.$_FILES['file']['name'][0];
         //$picture = $file;
+=======
+        //$pictures = $_POST["pictures"]; 
+        //$file = $request->files->get('file');
+        //dd($file);
+      //dd($request->files->get('file'));
+        //dd($_FILES);
+    //    $picture = serialize($picture);
+    //     $picture = $this->cutChaine($picture, ':"', '";');
+
+    //     $file = $_POST["file"]; 
+           $file = $request->files->get('file');
+          //dd($file);
+    //     dd($file);
+        //$picture = serialize($picture);
+        //$picture = $this->cutChaine($picture, ':"', '";');
+
+
+        //$picture = $_FILES['file']['name'][0];
+       // $picture = $_FILES['file']['name'][0];
+       //$picture = uniqid().'_'.$_FILES['file']['name'][0];
+       //dd($picture);
+>>>>>>> master
     
        //dd($picture);
 
@@ -121,9 +144,15 @@ class Register extends AbstractController{
             $user->setEmailvalidated(0);
             $user->setFirstname($firstname);
             $user->setCountry($country);
+<<<<<<< HEAD
             $user->setPicture($file);
             //$user->setFile("");
             $user->addComment([]);
+=======
+            $user->setPicture($file[0]);
+            $user->setFile($file[0]);
+            //$user->addComment([]);
+>>>>>>> master
             $user->setIsBlocked(0);
         
             $manager->persist($user);
