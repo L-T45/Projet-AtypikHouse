@@ -63,7 +63,19 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "path"="dashboard/admin/reports/{id}",
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:reportsid", "enable_max_depth"=true}},  
- *               },  
+ *               },
+ *                  "dashboard/user/reports/details/{id}/modify"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/user/reports/details/{id}/modify",
+ *                  "security"="is_granted('ROLE_USER'),
+ *                  "deserialize"="false",
+ *               },
+ *                  "dashboard/admin/reports/details/{id}/approve"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/admin/reports/details/{id}/approve",
+ *                  "security"="is_granted('ROLE_ADMIN'),
+ *                  "deserialize"="false",
+ *               },
  *          }
  * )
  * @ApiFilter(SearchFilter::class, properties= {""})

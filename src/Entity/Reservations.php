@@ -69,6 +69,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "security"= "is_granted('ROLE_ADMIN')"
  *                  "normalization_context"={"groups"={"owner:reservid", "owner:read"}}
  *                 },
+ *                  "dashboard/user/reservations/{id}/modify"={
+    *                  "method"="PATCH",
+    *                  "path"="dashboard/user/reservations/{id}/modify",
+    *                  "security"="is_granted('ROLE_USER'),
+    *                  "deserialize"="false",
+    *              },
  *          }
  * )
  */

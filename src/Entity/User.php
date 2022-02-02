@@ -110,30 +110,29 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *          "put"={},
  *          "patch"={},
  *          "delete"={},
- *               "api_dashboard_user_payments"={
- *                  "method"="GET",
- *                  "path"="/dashboard/user/{id}/payments",
- *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"read:payments", "enable_max_depth"=true}},    
+ *                 "api_dashboard_user_payments"={
+ *                 "method"="GET",
+ *                 "path"="/dashboard/user/{id}/payments",
+ *                 "force_eager"=false,
+ *                 "normalization_context"={"groups"={"read:payments", "enable_max_depth"=true}},    
  *               },
  *                 "dashboard_user_properties"={
- *                      "method"="GET",
- *                      "path"= "dashboard/user/{id}/properties",
- *                      "force_eager"=false,
- *                      "normalization_context"={"groups"={"user:properties", "enable_max_depth"=true}}
+ *                 "method"="GET",
+ *                 "path"= "dashboard/user/{id}/properties",
+ *                 "force_eager"=false,
+ *                 "normalization_context"={"groups"={"user:properties", "enable_max_depth"=true}}
  *                 },               
- *               "api_dashboard_user_messages"={
+ *                  "api_dashboard_user_messages"={
  *                  "method"="GET",
  *                  "path"="/dashboard/user/{id}/messages",
  *                  "normalization_context"={"groups"={"read:messages"}},
  *               },
- *            
- *                 "dashboard/user/{id}/infos-personnelles"={
+ *                  "dashboard/user/{id}/infos-personnelles"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/infos-personnelles",
- *                  "security"= "is_granted('ROLE_USER')"
+ *                  "security"="is_granted('ROLE_USER')"
  *                  "normalization_context"={"groups"={"read:infosperso", "enable_max_depth"=true}},  
- *               },     
+ *               },
  *                  "dashboard/user/{id}/reservations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/reservations",
@@ -174,26 +173,55 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "force_eager"=false,
  *                  "security"= "is_granted('ROLE_OWNER')"
  *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},                  
- *               },  
+ *               },
+ *                  "lastconversations"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/{id}/conversations",
+ *                  "controller"=App\Controller\LastNewConversations::class,                 
+ *               },      
  *                  "dashboard/admin/users/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users/{id}",
  *                  "force_eager"=false,
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:usersid", "admin:usertest", "enable_max_depth"=true}},                  
- *               }, 
+ *               },   
  *                  "dashboard/user/{id}/personal_informations/modifypassword"={
  *                  "method"="PATCH",
  *                  "path"="dashboard/user/{id}/personal_informations/modifypassword",
  *                  "controller"="App\Controller\ResetPassword::UpdatePwd",
  *                  "denormalization_context"={"groups"={"admin:useridentifiants", "enable_max_depth"=true}},
- *               }, 
- *                 "lastconversations"={
- *                  "method"="GET",
- *                  "path"="dashboard/user/{id}/conversations",
- *                  "controller"=App\Controller\LastNewConversations::class,                 
+ *               },                
+ *                  "dashboard/user/{id}/personal_informations/modifyinformations"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/user/{id}/personal_informations/modifyinformations",
+ *                  "security"="is_granted('ROLE_USER'),
+ *                  "deserialize"="false",
+ *               },
+ *                  "dashboard/user/{id}/personal_informations/modifypicture"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/user/{id}/personal_informations/modifypicture",
+ *                  "security"="is_granted('ROLE_USER'),
+ *                  "deserialize"="false",
+ *               },  
+ *                  "dashboard/admin/users/details/{id}/modifyblock"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/admin/users/details/{id}/modifyblock",
+ *                  "security"="is_granted('ROLE_ADMIN'),
+ *                  "deserialize"="false",
+ *               },  
+ *                  "dashboard/admin/user/id/block"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/admin/user/id/block",
+ *                  "security"="is_granted('ROLE_ADMIN'),
+ *                  "deserialize"="false",
  *               },       
- *                  
+ *                  "dashboard/admin/user/id/deblock"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/admin/user/id/deblock",
+ *                  "security"="is_granted('ROLE_ADMIN'),
+ *                  "deserialize"="false",
+ *               },                
  *          }
  * )
  * @ApiFilter(SearchFilter::class, properties= {"properties.id": "exact", "properties.title": "exact", "lastname": "exact", "firstname" : "exact", "lastname": "partial", "firstname" : "partial"})

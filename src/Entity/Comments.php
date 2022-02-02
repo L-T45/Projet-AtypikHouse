@@ -64,9 +64,13 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "path"="dashboard/admin/comments/{id}",
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:commentsid", "enable_max_depth"=true}},  
- *               },  
- *                 
- *                      
+ *               },
+ *              "dashboard/user/comments/details/{id}/modify"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/user/comments/details/{id}/modify",
+ *                  "security"="is_granted('ROLE_USER'),
+ *                  "deserialize"="false",
+ *              },              
  *          }
  * )
  * @ApiFilter(SearchFilter::class, properties= {"user.id": "exact"})
