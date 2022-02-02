@@ -35,12 +35,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"attributes:collection", "attributes:item"}}},
- *        
- *          "put"={
- *              "security"= "is_granted('ROLE_ADMIN')",
- *              "deserialize" = false,
- *              "denormalization_context"={"groups"={"update:attribute", "categorie:updateattibute", "enable_max_depth"=true}}  
- *          },
+ *          "put"={},
  *          "delete"={},
  * 
  *              "dashboard/admin/categories/attributes/{id}"={
@@ -49,6 +44,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:categattributesid", "attributes:item", "enable_max_depth"=true}},
  *               },
+ *              "dashboard/admin/attibute/{id}"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/admin/attibute/{id}",
+ *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                  "deserialize" = false, 
+ *              },
  *               
  *          }
  * )

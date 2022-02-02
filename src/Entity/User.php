@@ -181,8 +181,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  
  *               },  
  * 
- *                  "dashboard/user/{id}/personal_informations/modifypassword"={
+ *                "dashboard/user/{id}/personal_informations/modifypassword"={
  *                  "method"="PATCH",
+ *                  "deserialize" = false,
  *                  "security"= "is_granted('ROLE_USER')",
  *                  "path"="dashboard/user/{id}/personal_informations/modifypassword",
  *                  "controller"="App\Controller\ResetPassword::UpdatePwd",
