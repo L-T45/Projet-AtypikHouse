@@ -39,6 +39,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *               "dashboard/user/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/conversations/{id}",
+<<<<<<< HEAD
  *                  "security"= "is_granted('ROLE_USER')",
  *                  "normalization_context"={"groups"={"user:conversid"}}, *                  
  *               }, 
@@ -47,6 +48,17 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "path"="dashboard/admin/conversations/{id}",
  *                  "security"= "is_granted('ROLE_ADMIN')", 
  *                  "normalization_context"={"groups"={"admin:conversid"}},                  
+=======
+ *                  "controller"=App\Controller\FindConversationsByid::class 
+ *                  
+ *                  
+ *               }, 
+ *                  "dashboard/admin/conversations/{id}"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/admin/conversations/{id}",  
+ *                  "controller"=App\Controller\FindConversationsByid::class
+ *                  
+>>>>>>> master
  *               }, 
  *          }
  * )

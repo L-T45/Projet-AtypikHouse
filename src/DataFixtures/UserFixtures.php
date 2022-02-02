@@ -27,6 +27,8 @@ class UserFixtures extends Fixture
         // create 20 User! Bam!
         for ($i = 0; $i < 25; $i++) {
 
+
+           // $conversations[$i] =  $this->getReference('conversations_'.$faker->numberBetween(1,50));         
             $roles = ['[ROLE_USER]','[ROLE_USER]', '[ROLE_USER]', '[ROLE_USER]', '[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_USER]','[ROLE_USER]','[ROLE_USER]','[ROLE_USER]','[ROLE_USER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_OWNER]','[ROLE_USER]','[ROLE_USER]','[ROLE_USER]','[ROLE_USER]','[ROLE_USER]',];
 
             $user[$i] = new User();
@@ -44,6 +46,7 @@ class UserFixtures extends Fixture
             $user[$i]->setCountry($faker->country);
             $user[$i]->setPicture($i.".webp");
             $user[$i]->setIsBlocked($faker->numberBetween($min = 0, $max = 1));
+            //$user[$i]->addConversation($conversations[$i]);
             $manager->persist($user[$i]);
 
              // On enregistre les utilisateurs dans une référence 
@@ -52,6 +55,13 @@ class UserFixtures extends Fixture
 
         $manager->flush();
         }
+        /*
+        public function getDependencies(){
+          return [
 
-        
+              ConversationsFixtures::class
+             
+          ];
+      }
+        */
 }

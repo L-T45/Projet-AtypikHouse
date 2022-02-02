@@ -23,10 +23,10 @@ api_decode_JWT_Token_Auth:
     methods: [POST]
     controller: App\Token\DecodeJWTAuth::decodeJwtToken
 
-api_register:
-    path: /api/register
-    methods: [POST]
-    controller: App\Requests\Register::newUser
+#api_register:
+    #path: /api/register
+    #methods: [POST]
+    #controller: App\Requests\Register::newUser
 
 dashboard/admin/categories/create:
     methods: [POST]

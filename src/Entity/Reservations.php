@@ -38,11 +38,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *              "properties/{id}/reservations"={
  *                  "method"="POST",
  *                  "path"="properties/{id}/reservations",
- *                  "force_eager"=false,
- *                  "denormalization_context"={"groups"={"reservations:create", "payments:reservations", "properties:reservations",  "user:createreservations", "enable_max_depth"=true}},
- *               },   
- * 
- *          },
+ *                  "controller"=App\Requests\CreateReservations::class,
+ *                  "deserialize"=false,
+ *                   },
+ *       },
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"reservations:collection", "reservations:item"}}},
@@ -99,19 +98,19 @@ class Reservations
      * @ORM\Column(type="boolean")
      * @Groups({"reservations:item", "properties:item", "reservations:user", "user:item", "owner:reservid", "owner:propertiesid", "reservations:create"})
      */
-    private $is_approuved;
+    private $is_approuved = false;
 
     /**
      * @ORM\Column(type="boolean")
      * @Groups({"reservations:item", "admin:usersid", "propertiesid:item", "properties:item", "user:item", "owner:reservations", "admin:reservations", "reservations:user", "owner:reservid", "read:reservperso", "owner:propertiesid", "owner:reserv", "reservations:create"})
      */
-    private $is_cancelled;
+    private $is_cancelled = false;
 
     /**
      * @ORM\Column(type="boolean")
      * @Groups({"reservations:item", "admin:usersid", "properties:item", "user:item", "reservations:user", "owner:reservid", "owner:propertiesid", "reservations:create"})
      */
-    private $is_paid;
+    private $is_paid = false;
 
     /**
      * @ORM\Column(type="integer")

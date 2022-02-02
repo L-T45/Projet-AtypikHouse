@@ -52,6 +52,24 @@ class ReservationsRepository extends ServiceEntityRepository
           ->getResult();
       }
 
+
+      
+      /**
+      * @return Reservations[] Returns an array of Properties objects
+      */
+
+      public function findReservation(int $id):array
+      {
+          return $this->createQueryBuilder('r')
+          ->select('r.start_date, r.end_date')
+          ->leftJoin('r.properties','p')
+          ->andWhere('p.id = :id')
+          ->setParameter('id', $id)
+          ->getQuery()
+          ->getResult();
+      }
+
+
       /**
       * @return Reservations[] Returns an array of Reservations objects
       */

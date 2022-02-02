@@ -25,11 +25,29 @@ class EquipementsFixtures extends Fixture
          $equipements = Array();
         // create 20 Equipements! Bam!
         for ($i = 0; $i < 7; $i++) {
+
+          //  $properties[$i] =  $this->getReference('properties_'.$faker->numberBetween(1,149));
+
             $equipements[$i] = new Equipements();
             $equipements[$i]->setTitle($attributes[$i]);
+           // $equipements[$i]->addProperty($properties[$i]);
             $manager->persist($equipements[$i]);
+
+
+            
+          // On enregistre les équipements dans une référence 
+            $this->addReference('equipements_'. $i, $equipements[$i]);
         }
 
         $manager->flush();
         }
+        /*
+        public function getDependencies(){
+          return [
+
+              PropertiesFixtures::class
+             
+          ];
+      }
+      */
 }
