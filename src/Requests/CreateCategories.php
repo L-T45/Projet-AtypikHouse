@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse; 
 use App\Repository\CategoriesRepository; 
+use App\Email\SendEmailModifyListCategories;
+use App\Repository\UserRepository;
+use Symfony\Component\Mailer\MailerInterface;
 
 class CreateCategories extends AbstractController{
     
@@ -29,7 +32,7 @@ class CreateCategories extends AbstractController{
         return substr($string, $ini, $len);
     }
 
-    public function newCategories(EntityManagerInterface $manager, Request $request, CategoriesRepository $CategoriesRepository): Response
+    public function newCategories(EntityManagerInterface $manager, Request $request, CategoriesRepository $CategoriesRepository, SendEmailModifyListCategories $SendEmail, MailerInterface $mailer, UserRepository $UserRepository): Response
     {
         $categories = Array();
         $categories = new Categories();
@@ -61,8 +64,12 @@ class CreateCategories extends AbstractController{
             $categories->setTitle($title);
             $categories->setSlug($slug);
             $categories->setDescription($description);
+
+            $SendEmail->PostNewCategories($mailer, $request);
+            
             $manager->persist($categories);
             $manager->flush();
+            
             return new JsonResponse( ['status' => '200', 'title' => 'Votre categorie a bien été créé'], JsonResponse::HTTP_CREATED ); 
         }
         else{

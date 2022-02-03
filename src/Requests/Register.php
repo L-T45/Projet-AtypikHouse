@@ -39,37 +39,11 @@ class Register extends AbstractController{
         $len = strpos($string, $end, $ini) - $ini;
         return substr($string, $ini, $len);
     }
-    //    
-    // public function __invoke(Request $request)
-    // {
-    //   
-    //    $user = $request->attributes->get('data');
-    //    //dd($user);
-    //    if(!($user instanceof User)) {
-    //        throw new \RuntimeException('User attendu');
-    //    }   
-    //    
-       
-    //   // $_FILES;
-    //    //dd($_FILES);
-    //   // $user = $request->files->get('files');
-    //   // dd($_FILES);
-    //     //$user->setFile($request->files->get('file'));
-    //     //dd($user);
-    //   // $user->setUpdatedAt(new \DateTime());
-    //    return $user;
-    //    //dd($user);
-
-    // }
-    
-    
 
     public function __invoke(EntityManagerInterface $manager, Request $request, UserPasswordEncoderInterface $encoder, UserRepository $UserRepository): Response
     {
         $user = Array();
         $user = new User();
-        
-
 
         // Données du formulaire de register  
         $firstname = $_POST["firstname"];
@@ -116,32 +90,8 @@ class Register extends AbstractController{
         $country = serialize($country);
         $country = $this->cutChaine($country, ':"', '";');
 
-        //$pictures = $_POST["pictures"]; 
-        //$file = $request->files->get('file');
-        //dd($file);
-      //dd($request->files->get('file'));
-        //dd($_FILES);
-    //    $picture = serialize($picture);
-    //     $picture = $this->cutChaine($picture, ':"', '";');
-
-    //     $file = $_POST["file"]; 
-           $file = $request->files->get('file');
-          //dd($file);
-    //     dd($file);
-        //$picture = serialize($picture);
-        //$picture = $this->cutChaine($picture, ':"', '";');
-
-
-        //$picture = $_FILES['file']['name'][0];
-       // $picture = $_FILES['file']['name'][0];
-       //$picture = uniqid().'_'.$_FILES['file']['name'][0];
-       //dd($picture);
-    
-       //dd($picture);
-
-       
-        
-
+        $file = $request->files->get('file');
+ 
         $this->UserRepository = $UserRepository;
         $findUser = $this->UserRepository->findByEmailCheckIfExist($email);
         $findUserCheck = $findUser;

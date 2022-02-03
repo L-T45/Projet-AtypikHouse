@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Properties;
 use App\Entity\Reservations;
+use App\Entity\Categories;
 use App\Entity\Comments;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -124,5 +125,54 @@ class PropertiesRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+      * @return Properties[] Returns an array of Properties objects
+      */
+
+      public function FindByPropertiesUpdate($id):array
+      {
+          return $this->createQueryBuilder('p')
+              ->select('u.email')
+              ->innerJoin('p.user', 'u')
+              ->innerJoin('p.categories', 'c')
+              ->where('c.id = :id')
+              ->setParameter('id', $id)
+              ->groupBy('u.email')
+              ->getQuery()
+              ->getResult()
+          ;
+      }
+    
+      
+    /**
+      * @return Properties[] Returns an array of Properties objects
+      */
+
+      public function FindByPropertiesPost():array
+      {
+          return $this->createQueryBuilder('p')
+              ->select('u.email')
+              ->innerJoin('p.user', 'u')
+              ->groupBy('u.email')
+              ->getQuery()
+              ->getResult()
+          ;
+      }
+
+      /**
+      * @return Properties[] Returns an array of Properties objects
+      */
+
+      public function FindByPropertiesDelete():array
+      {
+          return $this->createQueryBuilder('p')
+              ->select('u.email')
+              ->innerJoin('p.user', 'u')
+              ->groupBy('u.email')
+              ->getQuery()
+              ->getResult()
+          ;
+      }
     
 }

@@ -32,8 +32,33 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories",
  *                  "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
- *               },      
- *                       
+ *               },
+ *                "dashboard/admin/categories/create"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/admin/categories/create",
+ *                  "deserialize" = false,
+ *                  "controller"="App\Requests\CreateCategories::newCategories",
+ *                  "openapi_context" = {
+ *                      "requestBody" = {
+ *                              "content" = {
+ *                                  "multipart/form-data" = {
+ *                                      "schema" = {
+ *                                          "type" = "object",
+ *                                              "properties" = {
+ *                                                  "file" = {
+ *                                                      "type" = "array",
+ *                                                          "items" = {
+ *                                                              "type" = "string",
+ *                                                              "format" = "binary"
+ *                                                            },
+ *                                                      },
+ *                                                  },
+ *                                              },
+ *                                          },
+ *                                      },
+ *                                  },
+ *                              },                  
+ *                          },                     
  *          },
  * 
  *      itemOperations={
@@ -47,35 +72,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "path"="dashboard/admin/categories/{id}",
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
- *                  
- *               }, 
- *                  "dashboard/admin/test/categories/{id}"={
- *                  "method"="POST",
- *                  "path"="dashboard/admin/categories/{id}",
- *                  "deserialize" = false,
- *                  "controller"=App\Controller\PostCategoriesController::class,
- *                  "openapi_context" = {
- *                  "requestBody" = {
- *                     "content" = {
- *                         "multipart/form-data" = {
- *                             "schema" = {
- *                                 "type" = "object",
- *                                 "properties" = {
- *                                     "file" = {
- *                                         "type" = "array",
- *                                         "items" = {
- *                                             "type" = "string",
- *                                             "format" = "binary"
- *                                         },
- *                                     },
- *                                 },
- *                             },
- *                         },
- *                     },
- *                 },
- *             },
-                
- *         
  *                  
  *               }, 
  *          }
