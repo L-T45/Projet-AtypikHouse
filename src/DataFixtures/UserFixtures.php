@@ -29,11 +29,11 @@ class UserFixtures extends Fixture
 
 
       // $conversations[$i] =  $this->getReference('conversations_'.$faker->numberBetween(1,50));         
-      $roles = ['[ROLE_USER]', '[ROLE_OWNER, ROLE_USER]', '[ROLE_OWNER, ROLE_USER]', '[ROLE_OWNER, ROLE_USER]', '[ROLE_USER]', '[ROLE_USER]'];
+      $roles = ['ROLE_USER', 'ROLE_OWNER, ROLE_USER', 'ROLE_OWNER, ROLE_USER]', '[ROLE_OWNER, ROLE_USER]', '[ROLE_USER]', '[ROLE_USER]', '[ROLE_USER]'];
 
       $user[$i] = new User();
       $user[$i]->setEmail($faker->email);
-      $user[$i]->setRoles([$roles[$i]]);
+      $user[$i]->setRoles([array_rand($roles)]);
       $user[$i]->setPassword("azeaze");
       $user[$i]->setLastname($faker->lastname);
       $user[$i]->setPhone($faker->numberBetween($min = 100000000, $max = 999999999));
