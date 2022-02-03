@@ -50,27 +50,9 @@ class CreateProperties extends AbstractController{
         return substr($string, $ini, $len);
     }
 
-    public function __invoke(Request $request)
-    {
+   
 
-       $properties = $request->attributes->get('data');
-       //dd($properties);
-       if(!($properties instanceof Properties)) {
-           throw new \RuntimeException('Propriété attendue');
-       }   
-       
-       
-       //dd($_FILES);
-       //$properties = $request->files->get('file');
-       $properties->setFile($request->files->get('file'));
-       dd($properties);
-       $properties->setUpdatedAt(new \DateTime());
-       return $properties;
-       //dd($properties);
-
-    }
-
-    public function newProperties(EntityManagerInterface $manager, Request $request, PropertiesRepository $PropertiesRepository): Response
+    public function __invoke(EntityManagerInterface $manager, Request $request, PropertiesRepository $PropertiesRepository): Response
     {
         $properties = Array();
         $properties = new Properties();
@@ -134,9 +116,12 @@ class CreateProperties extends AbstractController{
         $country = serialize($country);
         $country = $this->cutChaine($country, ':"', '";');
 
-        $picture = $_POST["picture"]; 
-        $picture = serialize($picture);
-        $picture = $this->cutChaine($picture, ':"', '";');
+        // $picture = $_POST["picture"]; 
+        // $picture = serialize($picture);
+        // $picture = $this->cutChaine($picture, ':"', '";');
+
+        $file = $request->files->get('file');
+        //dd($file);
 
         $capacity = $_POST["capacity"]; 
         $capacity = serialize($capacity);
@@ -185,7 +170,8 @@ class CreateProperties extends AbstractController{
             $properties->setBedrooms($bedrooms);
             $properties->setSurface($surface);
             $properties->setReference($reference);
-            $properties->setPicture($picture);
+            $properties->setPicture($file);
+            $properties->setFile($file);
             $properties->setCountry($country);
             $properties->setCapacity($capacity);
             $properties->setZipCode($zipCode);
