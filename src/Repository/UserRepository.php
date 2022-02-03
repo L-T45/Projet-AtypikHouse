@@ -79,7 +79,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     */
 
     public function resetPassword($id, $new_pwd, $lockMode = null, $lockVersion = null) {
-
         return $this->createQueryBuilder('u')
             ->update('App\Entity\User', 'u')
             ->set('u.password', ':new_pwd')

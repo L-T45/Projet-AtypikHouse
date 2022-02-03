@@ -49,8 +49,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "dashboard/admin/categories/{id}"={
  *                  "method"="PATCH",
  *                  "path"="dashboard/admin/categories/{id}",
- *                  "security"= "is_granted('ROLE_ADMIN')",
- *                  "deserialize" = false, 
+ *                  "security"="is_granted('ROLE_ADMIN')",
+ *                  "deserialize"=false, 
  *              },
  *                  "dashboard/admin/test/categories/{id}"={
  *                  "method"="POST",

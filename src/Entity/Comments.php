@@ -31,7 +31,6 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "path"="/home/lastcomments",
  *                  "controller"=App\Controller\LastNewComments::class,
  *                  "normalization_context"={"groups"={"lastcomments:collection"}},
- *                 
  *               },
  *               "dashboard/admin/comments"={
  *                  "method"="GET",
@@ -39,38 +38,37 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:comments", "enable_max_depth"=true}},  
  *               },
- * 
  *               "properties_{id}_comments"={
  *                  "method"="POST",
  *                  "path"="properties/{id}/comments",
  *                  "denormalization_context"={"groups"={"comments:reservations", "reservations:comments", "user:comments", "enable_max_depth"=true}}, 
- *                },   
+ *                },
  *             
  *          },
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"comments:collection", "comments:item"}}},
  *          "put"={},
+ *          "patch"={},
  *          "delete"={},
- * 
  *               "dashboard/user/comments/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/comments/{id}",
- *                  "security"= "is_granted('ROLE_USER')",
+ *                  "security"="is_granted('ROLE_USER')",
  *                  "normalization_context"={"groups"={"read:commentsid", "enable_max_depth"=true}},  
  *               },  
  *               "dashboard/admin/comments/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/comments/{id}",
- *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                  "security"="is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:commentsid", "enable_max_depth"=true}},  
- *               },
+ *               }, 
  *              "dashboard/user/comments/details/{id}/modify"={
  *                  "method"="PATCH",
  *                  "path"="dashboard/user/comments/details/{id}/modify",
  *                  "security"="is_granted('ROLE_USER')",
  *                  "deserialize"=false,
- *              },              
+ *              },             
  *          }
  * )
  * @ApiFilter(SearchFilter::class, properties= {"user.id": "exact"})
