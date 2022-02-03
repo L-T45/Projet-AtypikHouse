@@ -42,9 +42,12 @@ class CreatePropertiesGallery extends AbstractController{
         $properties = new Properties();
         $properties = $em->getReference("App\Entity\Properties", $postProperties);
 
-        $picture = $_POST["picture"]; 
-        $picture = serialize($picture);
-        $picture = $this->cutChaine($picture, ':"', '";');
+        // $picture = $_POST["picture"]; 
+        // $picture = serialize($picture);
+        // $picture = $this->cutChaine($picture, ':"', '";');
+
+        $file = $request->files->get('file');
+        //dd($file);
 
         $alt = $_POST["alt"]; 
         $alt = serialize($alt);
@@ -57,7 +60,8 @@ class CreatePropertiesGallery extends AbstractController{
         if($findPropertiesGalleryCheck === [])
         { 
             $propertiesGallery->setProperties($properties);
-            $propertiesGallery->setPicture($picture);
+            $propertiesGallery->setPicture($file);
+            $propertiesGallery->setFile($file);
             $propertiesGallery->setAlt($alt);
             $manager->persist($propertiesGallery);
             $manager->flush();
