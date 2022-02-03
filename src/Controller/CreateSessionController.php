@@ -128,7 +128,6 @@ class CreateSessionController extends AbstractController
     ]);
 
     header("HTTP/1.1 303 See Other");
-    header("Location: " . $checkout_session->url);
     return new JsonResponse($checkout_session);
   }
 }

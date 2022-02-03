@@ -38,7 +38,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * 
  *      itemOperations={
  *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},
- *           
+ *           "patch"={},
  *          "put"={},
  *          "delete"={},
  *                  
@@ -98,7 +98,7 @@ class Categories
      */
     private $title;
 
-     /**
+    /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"categories:collection", "categories:item", "admin:categories", "admin:categoriesid", "categories:write", "properties:item", "admin:createcategories"})
      */
@@ -111,19 +111,19 @@ class Categories
      */
     private $picture;
 
-     /**
+    /**
      * @var File|null
      * @Vich\UploadableField(mapping="properties_images", fileNameProperty="filePath")
      */
     private $file;
 
-     /**
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * 
      */
     private $filePath;
 
-    
+
     /**
      * @var string|null
      * @Groups({"categories:collection", "properties:write"})
@@ -131,7 +131,7 @@ class Categories
     private $fileUrl;
 
 
-     /**
+    /**
      * @ORM\Column(type="text")
      * @Groups({"categories:item","categories:write", "admin:categoriesid", "admin:createcategories"})
      */
@@ -154,7 +154,7 @@ class Categories
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="categories")
      * @Groups({"categories:item", "categories:write", "admin:categoriesid"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
-     */ 
+     */
     private $properties;
 
     /**
@@ -169,7 +169,6 @@ class Categories
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
         $this->attributes = new ArrayCollection();
-       
     }
 
     public function getId(): ?int
@@ -310,7 +309,7 @@ class Categories
         return $this;
     }
 
-    
+
     public function getFilePath(): ?string
     {
         return $this->filePath;
@@ -341,7 +340,7 @@ class Categories
         $this->file = $file;
         return $this;
     }
-  
+
     /**
      * @return string|null
      */
@@ -357,8 +356,6 @@ class Categories
     public function setFileUrl(?string $fileUrl): Categories
     {
         $this->fileUrl = $fileUrl;
-        return $this; 
+        return $this;
     }
-
-
 }
