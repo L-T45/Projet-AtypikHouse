@@ -83,6 +83,36 @@ class Equipements
      */
     private $properties;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $value;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $required;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $responseString;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $responseBool;
+
+    /**
+     * @ORM\Column(type="integer", nullable=true)
+     */
+    private $responseNbr;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $responseType;
+
     public function __construct()
     {
         $this->properties = new ArrayCollection();
@@ -154,6 +184,78 @@ class Equipements
         if ($this->properties->removeElement($property)) {
             $property->removeEquipement($this);
         }
+
+        return $this;
+    }
+
+    public function getValue(): ?string
+    {
+        return $this->value;
+    }
+
+    public function setValue(?string $value): self
+    {
+        $this->value = $value;
+
+        return $this;
+    }
+
+    public function getRequired(): ?bool
+    {
+        return $this->required;
+    }
+
+    public function setRequired(bool $required): self
+    {
+        $this->required = $required;
+
+        return $this;
+    }
+
+    public function getResponseString(): ?string
+    {
+        return $this->responseString;
+    }
+
+    public function setResponseString(?string $responseString): self
+    {
+        $this->responseString = $responseString;
+
+        return $this;
+    }
+
+    public function getResponseBool(): ?bool
+    {
+        return $this->responseBool;
+    }
+
+    public function setResponseBool(bool $responseBool): self
+    {
+        $this->responseBool = $responseBool;
+
+        return $this;
+    }
+
+    public function getResponseNbr(): ?int
+    {
+        return $this->responseNbr;
+    }
+
+    public function setResponseNbr(?int $responseNbr): self
+    {
+        $this->responseNbr = $responseNbr;
+
+        return $this;
+    }
+
+    public function getResponseType(): ?string
+    {
+        return $this->responseType;
+    }
+
+    public function setResponseType(?string $responseType): self
+    {
+        $this->responseType = $responseType;
 
         return $this;
     }
