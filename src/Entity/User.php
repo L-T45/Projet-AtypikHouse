@@ -31,11 +31,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
- *                "api_send_payment"={
- *                  "method"="POST",
- *                  "path"="/send_payment",
- *                  "controller"=App\Controller\SendPayment::class 
- *               }, 
  *              "api_register"={
  *                  "method"="POST",
  *                  "path"="register",
@@ -296,13 +291,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $country;
 
-     /**
+    /**
      * @var File|null
      * @Vich\UploadableField(mapping="user_images", fileNameProperty="picture")
      */
     private $file;
 
-     /**
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $filePath;
@@ -459,7 +454,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-   
+
 
     /**
      * Returning a salt is only needed, if you are not using a modern
@@ -625,10 +620,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    
 
 
-      /**
+
+    /**
      * @return File|null
      */
     public function getFile(): ?File
@@ -646,7 +641,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->file = $file;
         return $this;
     }
-  
+
     /**
      * @return string|null
      */
@@ -662,7 +657,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setFileUrl(?string $fileUrl): User
     {
         $this->fileUrl = $fileUrl;
-        return $this; 
+        return $this;
     }
 
 
@@ -893,6 +888,4 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
-     
 }
-
