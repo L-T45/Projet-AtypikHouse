@@ -10,11 +10,13 @@ use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\Core\Annotation\ApiProperty;
-
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints\Uuid;
 
 /**
  * @ORM\Entity(repositoryClass=PropertiesGalleryRepository::class)
+ * @Vich\Uploadable()
  *  @ApiResource(
  *      normalizationContext={"groups"={"propertiesgallery:collection"}},
  *      denormalizationContext={"groups"={"propertiesgallery:write"}},
@@ -30,6 +32,43 @@ use Symfony\Component\Validator\Constraints\Uuid;
  *                  "deserialize"=false,
  *                  "controller"="App\Requests\CreatePropertiesGallery::newPropertiesGallery" ,   
  *                }, 
+ * 
+ *                "dashboard/owner/propertiesgallery/create"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/owner/propertiesgallery/create",
+ *                  "deserialize" = false,
+ *                  "controller"="App\Requests\CreatePropertiesGallery::newPropertiesGallery",
+ *                  "openapi_context" = {
+ *                  "requestBody" = {
+ *                     "content" = {
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                      "alt"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                     "file" = {
+ *                                         "type" = "array",
+ *                                         "items" = {
+ *                                             "type" = "string",
+ *                                             "format" = "binary"
+ *                                         },
+ *                                     },
+ *                                 },
+ *                             },
+ *                         },
+ *                     },
+ *                 },
+ *             },
+                
+ *         
+ *                  
+ *               }, 
+ * 
+ * 
+ * 
+ * 
  *              
  *          },
  *      itemOperations={
@@ -62,6 +101,26 @@ class PropertiesGallery
      * @Groups({"propertiesgallery:collection", "propertiesgallery:write", "galleryphoto:create"})
      */
     private $alt;
+
+
+     /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="gallery_images", fileNameProperty="picture")
+     */
+    private $file;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * 
+     */
+    private $filePath;
+
+    /**
+     * @var string|null
+     * @Groups({"properties:collection", "properties:write"})
+     */
+    private $fileUrl;
+
 
     /**
      * @ORM\Column(type="datetime")
@@ -166,5 +225,56 @@ class PropertiesGallery
         $this->properties = $properties;
 
         return $this;
+    }
+
+
+      
+    public function getFilePath(): ?string
+    {
+        return $this->filePath;
+    }
+
+    public function setFilePath(?string $filePath): self
+    {
+        $this->filePath = $filePath;
+
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getFile(): ?File
+    {
+        return $this->file;
+    }
+
+
+    /**
+     * @return File|null $file
+     * @return PropertiesGallery
+     */
+    public function setFile(?File $file): PropertiesGallery
+    {
+        $this->file = $file;
+        return $this;
+    }
+  
+    /**
+     * @return string|null
+     */
+    public function getFileUrl(): ?string
+    {
+        return $this->fileUrl;
+    }
+
+    /**
+     * @return string|null $fileUrl
+     * @return PropertiesGallery
+     */
+    public function setFileUrl(?string $fileUrl): PropertiesGallery
+    {
+        $this->fileUrl = $fileUrl;
+        return $this; 
     }
 }

@@ -138,14 +138,6 @@ use App\Resolver\PostPictureResolver;
  * 
  * 
  * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
- * 
  *          },
  *      itemOperations={
  *          "get"={"normalization_context"={"groups"={"propertiesid:item", "properties:id"}}},       

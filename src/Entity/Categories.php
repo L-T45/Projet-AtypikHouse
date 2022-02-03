@@ -32,28 +32,13 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories",
  *                  "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
- *               },      
- *                       
- *          },
- * 
- *      itemOperations={
- *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},
- *           
- *          "put"={},
- *          "delete"={},
- *                  
- *                  "dashboard/admin/categories/{id}"={
- *                  "method"="GET",
- *                  "path"="dashboard/admin/categories/{id}",
- *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
- *                  
  *               }, 
- *                  "dashboard/admin/test/categories/{id}"={
+ * 
+ *               "dashboard/admin/categories/create"={
  *                  "method"="POST",
- *                  "path"="dashboard/admin/categories/{id}",
+ *                  "path"="dashboard/admin/categories/create",
  *                  "deserialize" = false,
- *                  "controller"=App\Controller\PostCategoriesController::class,
+ *                  "controller"="App\Requests\CreateCategories::newCategories",
  *                  "openapi_context" = {
  *                  "requestBody" = {
  *                     "content" = {
@@ -61,6 +46,15 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                             "schema" = {
  *                                 "type" = "object",
  *                                 "properties" = {
+ *                                      "title"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                      "slug"={
+ *                                          "type" = "string"
+ *                                          },                            
+ *                                      "description"={
+ *                                          "type" = "string"
+ *                                          },
  *                                     "file" = {
  *                                         "type" = "array",
  *                                         "items" = {
@@ -78,6 +72,24 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *         
  *                  
  *               }, 
+ *      
+ *                       
+ *          },
+ * 
+ *      itemOperations={
+ *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},
+ *           
+ *          "put"={},
+ *          "delete"={},
+ *                  
+ *                  "dashboard/admin/categories/{id}"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/admin/categories/{id}",
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
+ *                  
+ *               }, 
+ *                 
  *          }
  * )
  * 
@@ -111,22 +123,21 @@ class Categories
      */
     private $picture;
 
-     /**
+    /**
      * @var File|null
-     * @Vich\UploadableField(mapping="properties_images", fileNameProperty="filePath")
+     * @Vich\UploadableField(mapping="categories_images", fileNameProperty="picture")
      */
     private $file;
 
-     /**
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * 
      */
     private $filePath;
 
-    
     /**
      * @var string|null
-     * @Groups({"categories:collection", "properties:write"})
+     * @Groups({"properties:collection", "properties:write"})
      */
     private $fileUrl;
 
