@@ -19,22 +19,19 @@ class PaymentsRepository extends ServiceEntityRepository
         parent::__construct($registry, Payments::class);
     }
 
-    // /**
-    //  * @return Payments[] Returns an array of Payments objects
-    //  */
-    /*
-    public function findByExampleField($value)
+
+
+    //  @return Payments[] Returns an array of Payments objects
+    //  
+    public function findByStripeSession($session_id)
     {
         return $this->createQueryBuilder('p')
-            ->andWhere('p.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('p.id', 'ASC')
-            ->setMaxResults(10)
+            ->andWhere('p.stripe_session = :id')
+            ->setParameter('id', $session_id)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Payments

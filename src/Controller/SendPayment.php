@@ -17,6 +17,7 @@ class SendPayment extends AbstractController
         $post= json_decode($request->getContent());
     
         $property= $post->property;
+        dd($property);
         $reservation= $post->reservation;
         $user= $post->customer_email;
       
