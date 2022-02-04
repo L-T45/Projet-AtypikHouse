@@ -17,20 +17,20 @@ class ReservationsFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-     
-         // initialisation de l'objet Faker
-         $faker = Faker\Factory::create('fr_FR');
-         $reservations = Array();
+
+        // initialisation de l'objet Faker
+        $faker = Faker\Factory::create('fr_FR');
+        $reservations = array();
         // create 20 Reservations! Bam!
         for ($i = 0; $i < 101; $i++) {
 
-            $payments[$i] =  $this->getReference('payments_'. $i);
-            $properties[$i] =  $this->getReference('properties_'. $faker->numberBetween(1,145));
-            $user[$i] =  $this->getReference('user_'. $faker->numberBetween(1,23));
-            $startDate = $faker->dateTime($max = 'now'); 
+            $payments[$i] =  $this->getReference('payments_' . $i);
+            $properties[$i] =  $this->getReference('properties_' . $faker->numberBetween(1, 145));
+            $user[$i] =  $this->getReference('user_' . $faker->numberBetween(1, 23));
+            $startDate = $faker->dateTime($min = 'now');
 
             $reservations[$i] = new Reservations();
-            $reservations[$i]->setStartdate($faker->dateTimeBetween($startDate = '-20 days', $endDate = '-4 days'));   
+            $reservations[$i]->setStartdate($faker->dateTimeBetween($startDate = '-20 days', $endDate = '-4 days'));
             $reservations[$i]->setEndDate($faker->dateTimeBetween($startDate = '-3 days', $endDate = 'now'));
             $reservations[$i]->setIsApprouved($faker->boolean());
             $reservations[$i]->setIsCancelled($faker->boolean());
@@ -41,26 +41,20 @@ class ReservationsFixtures extends Fixture implements DependentFixtureInterface
             $reservations[$i]->setUser($user[$i]);
             $manager->persist($reservations[$i]);
 
-              // On enregistre les réservations dans une référence 
-              $this->addReference('reservations_'. $i, $reservations[$i]);
+            // On enregistre les réservations dans une référence 
+            $this->addReference('reservations_' . $i, $reservations[$i]);
         }
 
         $manager->flush();
-        }
+    }
 
-        public function getDependencies(){
-            return [
-               
-                PropertiesFixtures::class,
-                UserFixtures::class,
-                PaymentsFixtures::class,
-            ];
-        }
+    public function getDependencies()
+    {
+        return [
 
-      
-
-
+            PropertiesFixtures::class,
+            UserFixtures::class,
+            PaymentsFixtures::class,
+        ];
+    }
 }
-
-
-
