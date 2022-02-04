@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AttributesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
@@ -89,41 +91,17 @@ class Attributes
      */
     private $categories;
 
-        /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $value;
-
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\OneToMany(targetEntity=AttributesAnswers::class, mappedBy="attributes")
      */
-    private $required;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $responseString;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $responseBool;
-
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $responseNbr;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $responseType;
+    private $attributesAnswers;
 
     public function __construct()
     {
        
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+        $this->attributesAnswers = new ArrayCollection();
 
     }
 
@@ -180,74 +158,32 @@ class Attributes
         return $this;
     }
 
-    public function getValue(): ?string
+    /**
+     * @return Collection|AttributesAnswers[]
+     */
+    public function getAttributesAnswers(): Collection
     {
-        return $this->value;
+        return $this->attributesAnswers;
     }
 
-    public function setValue(?string $value): self
+    public function addAttributesAnswer(AttributesAnswers $attributesAnswer): self
     {
-        $this->value = $value;
+        if (!$this->attributesAnswers->contains($attributesAnswer)) {
+            $this->attributesAnswers[] = $attributesAnswer;
+            $attributesAnswer->setAttributes($this);
+        }
 
         return $this;
     }
 
-    public function getRequired(): ?bool
+    public function removeAttributesAnswer(AttributesAnswers $attributesAnswer): self
     {
-        return $this->required;
-    }
-
-    public function setRequired(bool $required): self
-    {
-        $this->required = $required;
-
-        return $this;
-    }
-
-    public function getResponseString(): ?string
-    {
-        return $this->responseString;
-    }
-
-    public function setResponseString(?string $responseString): self
-    {
-        $this->responseString = $responseString;
-
-        return $this;
-    }
-
-    public function getResponseBool(): ?bool
-    {
-        return $this->responseBool;
-    }
-
-    public function setResponseBool(bool $responseBool): self
-    {
-        $this->responseBool = $responseBool;
-
-        return $this;
-    }
-
-    public function getResponseNbr(): ?int
-    {
-        return $this->responseNbr;
-    }
-
-    public function setResponseNbr(?int $responseNbr): self
-    {
-        $this->responseNbr = $responseNbr;
-
-        return $this;
-    }
-
-    public function getResponseType(): ?string
-    {
-        return $this->responseType;
-    }
-
-    public function setResponseType(?string $responseType): self
-    {
-        $this->responseType = $responseType;
+        if ($this->attributesAnswers->removeElement($attributesAnswer)) {
+            // set the owning side to null (unless already changed)
+            if ($attributesAnswer->getAttributes() === $this) {
+                $attributesAnswer->setAttributes(null);
+            }
+        }
 
         return $this;
     }
