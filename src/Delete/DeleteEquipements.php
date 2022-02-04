@@ -7,6 +7,8 @@ use App\Entity\Equipements;
 use App\Repository\EquipementsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;  
+use Symfony\Component\Mailer\MailerInterface; 
+use App\Email\SendEmailModifyListEquipements;
 
 class DeleteEquipements extends AbstractController {
 
@@ -14,7 +16,7 @@ class DeleteEquipements extends AbstractController {
     private $idEquipements;
     private $AttributeRepository;
 
-    public function DeleteEquipements(Request $request, EquipementsRepository $EquipementsRepository): Response{
+    public function DeleteEquipements(Request $request, EquipementsRepository $EquipementsRepository, SendEmailModifyListEquipements $SendEmail, MailerInterface $mailer): Response{
 
         $data = $request->query->get('id');
         $idEquipements = $data;
@@ -23,6 +25,7 @@ class DeleteEquipements extends AbstractController {
         $findEquipementsToDelete = $this->EquipementsRepository->findByIdToDelete($idEquipements);
 
             if($findEquipementsToDelete =! []){
+                $SendEmail->DeleteEquipements($mailer, $request);
                 $response = new Response('Equipement supprimée',Response::HTTP_OK,['content-type' => 'application/json']);
             }
             else{  

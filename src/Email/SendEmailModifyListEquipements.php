@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\PropertiesRepository;
 
-class SendEmailModifyListCategories extends AbstractController {
+class SendEmailModifyListEquipements extends AbstractController {
 
     private $email; 
 
@@ -19,52 +19,52 @@ class SendEmailModifyListCategories extends AbstractController {
         $this->PropertiesRepository = $PropertiesRepository;
     }
 
-    public function UpdateCategorie(MailerInterface $mailer, Request $request){
+    public function UpdateEquipements(MailerInterface $mailer, Request $request){
         $id = $_POST['id'];
         // Récupéré tous les OWNER  
-        $findOwners = $this->PropertiesRepository->FindByPropertiesUpdate($id);
+        $findOwners = $this->PropertiesRepository->FindByPropertiesUpdateEquipements($id);
         $findOwnersCheck = $findOwners;   
         $nbLines = count($findOwners);
 
         // Envoi de mail aux propriétaires !            
         if($findOwnersCheck = true) {
-            $this->sendEmailChangeCategorieList($mailer, $request, $nbLines, $findOwners);
+            $this->sendEmailChangeEquipementsList($mailer, $request, $nbLines, $findOwners);
         }
     }
 
-    public function PostNewCategories(MailerInterface $mailer, Request $request){
+    public function PostNewEquipements(MailerInterface $mailer, Request $request){
         // Récupéré tous les OWNER 
-        $findOwners = $this->PropertiesRepository->FindByPropertiesPost();
+        $findOwners = $this->PropertiesRepository->FindByPropertiesPostEquipements();
         $findOwnersCheck = $findOwners;   
         $nbLines = count($findOwners);
 
         // Envoi de mail aux propriétaires !            
         if($findOwnersCheck = true) {
-            $this->sendEmailChangeCategorieList($mailer, $request, $nbLines, $findOwners);
+            $this->sendEmailChangeEquipementsList($mailer, $request, $nbLines, $findOwners);
         }
     }
 
-    public function DeleteCategories(MailerInterface $mailer, Request $request){
+    public function DeleteEquipements(MailerInterface $mailer, Request $request){
         // Récupéré tous les OWNER 
-        $findOwners = $this->PropertiesRepository->FindByPropertiesDelete();
+        $findOwners = $this->PropertiesRepository->FindByPropertiesDeleteEquipements();
         $findOwnersCheck = $findOwners;   
         $nbLines = count($findOwners);
 
         // Envoi de mail aux propriétaires !            
         if($findOwnersCheck = true) {
-            $this->sendEmailChangeCategorieList($mailer, $request, $nbLines, $findOwners);
+            $this->sendEmailChangeEquipementsList($mailer, $request, $nbLines, $findOwners);
         }
     }
 
-    public function sendEmailChangeCategorieList(MailerInterface $mailer, Request $request, $nbLines, $findOwners): Response{
-        //dd($nbLines, $findOwners);
+    public function sendEmailChangeEquipementsList(MailerInterface $mailer, Request $request, $nbLines, $findOwners): Response{
+        dd($nbLines, $findOwners);
         for($i = 0; $i < $nbLines; $i++){
             $ownersEmail = $findOwners[$i]['email'];
             $email = (new Email())
             ->from('atypikhouse.communication@gmail.com')
             ->to($ownersEmail) 
-            ->subject("Ça bouge du côté de la liste des Catégories !")
-            ->text("Bonjour à vous propriétaire de bien !"."\n"."\n"."Nous vous informons que la liste des Catégories de bien à été mis à jour."."\n"."\n"."Venez vite découvrir notre nouvelle liste!");
+            ->subject("Ça bouge du côté de la liste des Equipements !")
+            ->text("Bonjour à vous propriétaire de bien !"."\n"."\n"."Nous vous informons que la liste des Equipements de bien à été mis à jour."."\n"."\n"."Venez vite découvrir notre nouvelle liste!");
 
             $mailer->send($email);  
         }

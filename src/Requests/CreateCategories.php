@@ -67,12 +67,11 @@ class CreateCategories extends AbstractController{
             $categories->setFile($file);
             $categories->setTitle($title);
             $categories->setSlug($slug);
-            $categories->setDescription($description);
-
-            $SendEmail->PostNewCategories($mailer, $request);
-            
+            $categories->setDescription($description);      
             $manager->persist($categories);
             $manager->flush();
+
+            $SendEmail->PostNewCategories($mailer, $request);
             
             return new JsonResponse( ['status' => '200', 'title' => 'Votre categorie a bien été créé'], JsonResponse::HTTP_CREATED ); 
         }

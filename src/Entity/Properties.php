@@ -227,7 +227,7 @@ use App\Resolver\PostPictureResolver;
  *             },
                 
            
- *                 },             
+ *                             
  *          }
  * )
  * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "exact", "categories.title": "exact", "latitude": "exact", "longitude": "exact", "reservations.comments.value": "exact", "address": "partial", "city": "partial"})
