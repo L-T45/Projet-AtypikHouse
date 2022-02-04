@@ -141,7 +141,7 @@ use App\Resolver\PostPictureResolver;
  *          },
  *      itemOperations={
  *          "get"={"normalization_context"={"groups"={"propertiesid:item", "properties:id"}}},       
- *          "put"={"security"= "is_granted('ROLE_OWNER', 'ROLE_ADMIN')"},
+ *          "put"={},
  *          "delete"={},
  *               "dashboard_admin_properties_id"={
  *                      "method"="GET",
@@ -168,35 +168,10 @@ use App\Resolver\PostPictureResolver;
  *                      "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
  *                 },   
  * 
- *                  "postpicture"={
- *                  "method"="POST",
- *                  "path"="postpicture/properties/{id}",
- *                  "deserialize" = false,
- *                  "controller"=App\Requests\CreateProperties::class,
- *                  "denormalization_context"={"groups"={"properties:write"}},
- *                  "openapi_context" = {
- *                  "requestBody" = {
- *                     "content" = {
- *                         "multipart/form-data" = {
- *                             "schema" = {
- *                                 "type" = "object",
- *                                 "properties" = {
- *                                     "file" = {
- *                                         "type" = "array",
- *                                         "items" = {
- *                                             "type" = "string",
- *                                             "format" = "binary"
- *                                         },
- *                                     },
- *                                 },
- *                             },
- *                         },
- *                     },
- *                 },
- *             },
+ *                  
                 
            
- *                 },             
+ *                             
  *          }
  * )
  * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "exact", "categories.title": "exact", "latitude": "exact", "longitude": "exact", "reservations.comments.value": "exact", "address": "partial", "city": "partial"})
