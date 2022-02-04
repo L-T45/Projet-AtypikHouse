@@ -27,12 +27,6 @@ api_decode_JWT_Token_Auth:
   methods: [POST]
   controller: App\Token\DecodeJWTAuth::decodeJwtToken
 
-<<<<<<< HEAD
-dashboard/admin/categories/create:
-    methods: [POST]
-    path: /api/dashboard/admin/categories/create
-    controller: App\Requests\CreateCategories::newCategories
-=======
 #api_register:
 #path: /api/register
 #methods: [POST]
@@ -42,7 +36,6 @@ dashboard/admin/categories/create:
 #     methods: [POST]
 #     path: /api/dashboard/admin/categories/create
 #     controller: App\Requests\CreateCategories::newCategories
->>>>>>> master
 
 delete_user:
   path: /api/dashboard/user/personnal-infos/delete-account
