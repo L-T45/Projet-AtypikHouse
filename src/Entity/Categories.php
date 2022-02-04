@@ -73,7 +73,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
  *                  
+<<<<<<< HEAD
  *               }, 
+=======
+ *               },
+>>>>>>> Routes
  *          }
  * )
  * 
@@ -84,7 +88,7 @@ class Categories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"categories:collection", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "properties:map", "admin:properties", "propertiesid:item", "admin:usersid", "propertiesid:item", "admin:commentsid", "attributes:item", "admin:categattributesid", "admin:categattributes", "admin:categoriesid", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:categories", "attributes:categories"})
+     * @Groups({"categories:collection", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "properties:map", "admin:properties", "propertiesid:item", "admin:usersid", "propertiesid:item", "admin:commentsid", "attributes:item", "admin:categattributesid", "admin:categattributes", "admin:categoriesid", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:categories", "attributes:categories", "categorie:updateattibute"})
      */
     private $id;
 
@@ -115,7 +119,7 @@ class Categories
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * 
+     * @Groups({"categories:collection", "properties:write"}) 
      */
     private $filePath;
 
