@@ -136,7 +136,6 @@ class PropertiesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-<<<<<<< HEAD
 
     /**
       * @return Properties[] Returns an array of Properties objects
@@ -187,6 +186,4 @@ class PropertiesRepository extends ServiceEntityRepository
           ;
       }
     
-=======
->>>>>>> master
 }
