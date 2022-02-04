@@ -39,30 +39,29 @@ class ConversationsRepository extends ServiceEntityRepository
     }
     */
 
-     /**
-      * @return Conversations[] Returns an array of Conversations objects
-      */
-
-
-      public function findAll()
-      {
-          return $this->createQueryBuilder('c')
-              ->select('m.id,m.body,m.created_at,u.firstname,u.lastname,u.picture,c.id')
-              ->leftJoin('c.messages','m')
-              ->leftJoin('m.user','u')
-              ->orderBy('m.id', 'DESC')
-              ->getQuery()
-              ->getResult()
-          ;
-      }
     /**
-    * @return Conversations[] Returns an array of Conversations objects
-    */
+     * @return Conversations[] Returns an array of Conversations objects
+     */
 
-    public function findLatest():array
+
+    public function findAll()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('m.id,m.body,m.created_at,u.firstname,u.lastname,u.picture,c.id')
+            ->leftJoin('c.messages', 'm')
+            ->leftJoin('m.user', 'u')
+            ->orderBy('m.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+    /**
+     * @return Conversations[] Returns an array of Conversations objects
+     */
+
+    public function findLatest(): array
     {
         $qb = $this->createQueryBuilder('c');
-        $qb ->select('c.id as conversations_id,MAX(m.created_at) AS max_messages, m.id as messages_id, m.body, m.created_at, u.id as user_id, u.lastname, u.firstname, u.picture')
+        $qb->select('c.id as conversations_id,MAX(m.created_at) AS max_messages, m.id as messages_id, m.body, m.created_at, u.id as user_id, u.lastname, u.firstname, u.picture')
             ->leftJoin('c.messages', 'm')
             ->leftJoin('m.user', 'u')
             ->orderBy('m.created_at', 'DESC')
@@ -73,13 +72,13 @@ class ConversationsRepository extends ServiceEntityRepository
 
 
     /**
-    * @return Conversations[] Returns an array of Conversations objects
-    */
+     * @return Conversations[] Returns an array of Conversations objects
+     */
 
-    public function findMessagesDetails($id):array
+    public function findMessagesDetails($id): array
     {
         $qb = $this->createQueryBuilder('c');
-        $qb ->select('m.id, m.body, m.created_at')
+        $qb->select('m.id, m.body, m.created_at')
             ->leftJoin('c.messages', 'm', 'WITH', 'c.id = m.conversations_id')
             ->leftJoin('m.user', 'u')
             ->orderBy('m.id', 'DESC')
@@ -88,21 +87,18 @@ class ConversationsRepository extends ServiceEntityRepository
         return $query->getResult();
     }
 
-    
     /**
-    * @return Conversations[] Returns an array of Conversations objects
-    */
+     * @return Conversations[] Returns an array of User objects
+     */
 
-    public function findConversationsByid($id, $lockMode = null, $lockVersion = null)
+    public function findConversationsByUser($id, $lockMode = null, $lockVersion = null)
     {
         $qb = $this->createQueryBuilder('c');
-        $qb ->select('c.id as conversations_id,c.created_at as conversations_created_at,MAX(m.created_at) AS max_messages,m.id as messages_id,m.body,u.id as user_id,u.firstname,u.lastname,u.picture')
-            ->leftJoin('c.messages', 'm')
-            ->leftJoin('m.user', 'u')
-            ->where('c.id = :id')
+        $qb->select('c.id as conversations_id,c.created_at as conversations_created_at, u.firstname,u.lastname,u.picture')
+            ->innerJoin('c.users', 'u')
+            ->where('u.id = :id')
             ->setParameter('id', $id)
-            ->orderBy('m.created_at', 'DESC')
-            ->groupBy('m.id');
+            ->orderBy('c.created_at', 'DESC');
         $query = $qb->getQuery();
         return $query->getResult();
     }
@@ -120,9 +116,9 @@ class ConversationsRepository extends ServiceEntityRepository
     }
     */
 
-      /**
-    * @return Conversations[] Returns an array of Conversations objects
-    */
+    /**
+     * @return Conversations[] Returns an array of Conversations objects
+     */
     public function findByIdToDelete($id, $lockMode = null, $lockVersion = null)
     {
         return $this->createQueryBuilder('u')
@@ -130,7 +126,41 @@ class ConversationsRepository extends ServiceEntityRepository
             ->andWhere('u.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
+    }
+
+    /**
+     * @return Conversations Returns an array of Conversations objects
+     */
+    public function checkIfExist($id1, $id2)
+    {
+
+        $query = $this->createQueryBuilder('c');
+        $query->select('c.id, u.id as user_id')
+            ->leftJoin('c.users', 'u')
+            ->where('u.id = :id1 OR u.id = :id2')
+            // ->andWhere('u.id = :id2')
+            ->setParameter('id1', $id1)
+            ->setParameter('id2', $id2);
+
+        $query = $query->getQuery();
+        return $query->getResult();
+    }
+
+
+    /**
+     * @return Conversations Returns an array of Conversations objects
+     */
+    public function findConvIdByUser($id)
+    {
+
+        $query = $this->createQueryBuilder('c');
+        $query->select('c.id')
+            ->leftJoin('c.users', 'u')
+            ->where('u.id = :id1')
+            ->setParameter('id1', $id);
+
+        $query = $query->getQuery();
+        return $query->getResult();
     }
 }

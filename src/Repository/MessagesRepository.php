@@ -19,22 +19,25 @@ class MessagesRepository extends ServiceEntityRepository
         parent::__construct($registry, Messages::class);
     }
 
-    // /**
-    //  * @return Messages[] Returns an array of Messages objects
-    //  */
-    /*
-    public function findByExampleField($value)
+
+    /**
+     * @return Conversations[] Returns an array of Conversations objects
+     */
+
+    public function findConversationsByid($id, $lockMode = null, $lockVersion = null)
     {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        $qb = $this->createQueryBuilder('m');
+        $qb->select('m.id as messages_id,m.body,u.id as user_id,u.firstname,u.lastname,u.picture, m.created_at')
+            ->leftJoin('m.conversations', 'c')
+            ->leftJoin('m.user', 'u')
+            ->where('c.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('m.created_at', 'DESC');
+
+        $query = $qb->getQuery();
+        return $query->getResult();
     }
-    */
+
 
     /*
     public function findOneBySomeField($value): ?Messages
@@ -48,9 +51,9 @@ class MessagesRepository extends ServiceEntityRepository
     }
     */
 
-       /**
-    * @return Messages[] Returns an array of Messages objects
-    */
+    /**
+     * @return Messages[] Returns an array of Messages objects
+     */
     public function findByIdToDelete($id, $lockMode = null, $lockVersion = null)
     {
         return $this->createQueryBuilder('u')
@@ -58,7 +61,6 @@ class MessagesRepository extends ServiceEntityRepository
             ->andWhere('u.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 }
