@@ -43,13 +43,14 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "method"="POST",
  *                  "path"="properties/{id}/comments",
  *                  "denormalization_context"={"groups"={"comments:reservations", "reservations:comments", "user:comments", "enable_max_depth"=true}}, 
- *                },   
+ *                  "security"= "is_granted('ROLE_USER')",
+ * },   
  *             
  *          },
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"comments:collection", "comments:item"}}},
- *          "put"={},
+ *          "put"={"security"= "is_granted('ROLE_USER')"},
  *          "delete"={},
  * 
  *               "dashboard/user/comments/{id}"={
