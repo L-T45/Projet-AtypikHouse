@@ -225,6 +225,7 @@ use App\Resolver\PostPictureResolver;
  *                     },
  *                 },
  *             },
+ *             },
                 
            
  *                             

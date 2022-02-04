@@ -38,63 +38,6 @@ security:
       pattern: ^/api/token/refresh
       stateless: true
 
-<<<<<<< HEAD
-    # Easy way to control access for large sections of your site
-    # Note: Only the *first* access control that matches will be used
-    access_control:
-        # Paramétrage des droits d'accès au login 
-        - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        # Paramétrage des droits d'accès à l'api 
-
-        # ROUTES DELETES :
-        # Delete User
-        - { path: ^/api/dashboard/user/personnal-infos/delete-account, roles: ROLE_USER}
-        - { path: ^/api/dashboard/admin/users/details/delete, roles: ROLE_ADMIN }
-        # Delete Properties
-        - { path: ^/api/dashboard/owner/properties/delete, roles: ROLE_OWNER }
-        - { path: ^/api/dashboard/admin/properties/delete, roles: ROLE_ADMIN }
-        # Delete PropertiesGallery
-        - { path: ^/api/dashboard/owner/properties/details/galleryphoto/deletepictures, roles: ROLE_OWNER }
-        - { path: ^/api/dashboard/admin/properties/details/galleryphoto/deletepictures, roles: ROLE_ADMIN }
-        # Delete Comments
-        - { path: ^/api/dashboard/user/comments/details/delete, roles: ROLE_USER }
-        - { path: ^/api/dashboard/admin/comments/details/delete, roles: ROLE_ADMIN }
-        # Delete Reservations
-        - { path: ^/api/dashboard/user/reservations/delete, roles: ROLE_USER }
-        - { path: ^/api/dashboard/admin/reservations/delete, roles: ROLE_ADMIN }
-        # Delete Reports
-        - { path: ^/api/dashboard/user/reports/details/delete, roles: ROLE_USER }
-        - { path: ^/api/dashboard/admin/reports/details/delete, roles: ROLE_ADMIN }
-        # Delete Categories
-        - { path: ^/api/dashboard/admin/categories/delete, roles: ROLE_ADMIN }
-        # Delete Attributes
-        - { path: ^/api/dashboard/admin/categories/attributes/delete, roles: ROLE_ADMIN }
-        # Delete Conversations
-        - { path: ^/api/dashboard/admin/conversations/details/delete, roles: ROLE_ADMIN }
-        # Delete Messages
-        - { path: ^/api/dashboard/admin/conversations/details/message/delete, roles: ROLE_ADMIN }
-
-        # ROUTES POSTS :
-        # Post envoyer les paiements
-        - { path: ^/api/send_payment, roles: ROLE_USER } #voir avec Séraph
-        # Post ajouter des attributs
-        - { path: ^/api/dashboard/admin/categories/attributes/create, roles: ROLE_ADMIN } #check
-        # Post ajouter des catégories
-        - { path: ^/api/dashboard/admin/categories/create, roles: ROLE_ADMIN } #attendre modifications liées au chargement d'images dans la base de donné
-        # Post ajouter un commentaire
-        - { path: ^/api/properties/id/comments, roles: ROLE_USER } #check
-        # Post ajouter une propriété
-        - { path: ^/api/dashboard/owner/properties/create, roles: ROLE_OWNER }
-        # Post ajouter une image
-        - { path: ^/api/dashboard/owner/properties/details/galleryphoto/id/addpictures, roles: ROLE_OWNER }
-        # Post envoyé un rapport de propriété
-        - { path: ^/api/properties/id/reports, roles: ROLE_USER }
-        # Post envoyé un rapport de comentaire
-        - { path: ^/api/properties/comments/id/reports, roles: ROLE_USER }
-        # Post envoyé une réservation
-        - { path: ^/api/properties/id/reservations, roles: ROLE_USER }
-=======
     dev:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
@@ -145,4 +88,3 @@ security:
     # ROUTES POSTS :
     # ADD de catégories
     - { path: ^/api/dashboard/admin/categories/create, roles: ROLE_ADMIN }
->>>>>>> master

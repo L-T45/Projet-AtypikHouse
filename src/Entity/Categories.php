@@ -92,7 +92,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "path"="dashboard/admin/categories/{id}",
  *                  "controller"="App\Controller\CategoriesModifier::CategoriesModifier",
  *                  "security"="is_granted('ROLE_ADMIN')",
- *                  "deserialize"=false, 
+ *                  "deserialize"=false,
+ *               },
  *                 
  *          }
  * )
