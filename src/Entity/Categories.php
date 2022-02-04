@@ -73,11 +73,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
  *                  
-<<<<<<< HEAD
  *               }, 
-=======
- *               },
->>>>>>> Routes
  *          }
  * )
  * 
