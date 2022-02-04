@@ -32,7 +32,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories",
  *                  "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
-<<<<<<< HEAD
  *               },
  *                "dashboard/admin/categories/create"={
  *                  "method"="POST",
@@ -75,66 +74,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
  *                  
  *               }, 
-=======
- *               }, 
- * 
- *               "dashboard/admin/categories/create"={
- *                  "method"="POST",
- *                  "path"="dashboard/admin/categories/create",
- *                  "deserialize" = false,
- *                  "controller"="App\Requests\CreateCategories::newCategories",
- *                  "openapi_context" = {
- *                  "requestBody" = {
- *                     "content" = {
- *                         "multipart/form-data" = {
- *                             "schema" = {
- *                                 "type" = "object",
- *                                 "properties" = {
- *                                      "title"={
- *                                          "type" = "string"
- *                                          },
- *                                      "slug"={
- *                                          "type" = "string"
- *                                          },                            
- *                                      "description"={
- *                                          "type" = "string"
- *                                          },
- *                                     "file" = {
- *                                         "type" = "array",
- *                                         "items" = {
- *                                             "type" = "string",
- *                                             "format" = "binary"
- *                                         },
- *                                     },
- *                                 },
- *                             },
- *                         },
- *                     },
- *                 },
- *             },
-                
- *         
- *                  
- *               }, 
- *      
- *                       
- *          },
- * 
- *      itemOperations={
- *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},
- *           
- *          "put"={},
- *          "delete"={},
- *                  
- *                  "dashboard/admin/categories/{id}"={
- *                  "method"="GET",
- *                  "path"="dashboard/admin/categories/{id}",
- *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
- *                  
- *               }, 
- *                 
->>>>>>> master
  *          }
  * )
  * 
