@@ -34,7 +34,7 @@ class SendEmailModifyListEquipements extends AbstractController {
 
     public function PostNewEquipements(MailerInterface $mailer, Request $request){
         // Récupéré tous les OWNER 
-        $findOwners = $this->PropertiesRepository->FindByPropertiesPostEquipements();
+        $findOwners = $this->PropertiesRepository->FindByPropertiesPost();
         $findOwnersCheck = $findOwners;   
         $nbLines = count($findOwners);
 
@@ -57,7 +57,7 @@ class SendEmailModifyListEquipements extends AbstractController {
     }
 
     public function sendEmailChangeEquipementsList(MailerInterface $mailer, Request $request, $nbLines, $findOwners): Response{
-        dd($nbLines, $findOwners);
+        //dd($nbLines, $findOwners);
         for($i = 0; $i < $nbLines; $i++){
             $ownersEmail = $findOwners[$i]['email'];
             $email = (new Email())

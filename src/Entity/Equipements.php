@@ -36,6 +36,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *               "dashboard/admin/equipements/create"={
  *                  "method"="POST",
  *                  "path"="dashboard/admin/equipements/create",
+ *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                  "deserialize" = false, 
+ *                  "controller"="App\Email\SendEmailModifyListEquipements::PostNewEquipements",
  *                  "denormalization_context"={"groups"={"createadmin:proequip", "enable_max_depth"=true}},
  *               },
  *          },
