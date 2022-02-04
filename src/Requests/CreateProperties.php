@@ -127,12 +127,11 @@ class CreateProperties extends AbstractController{
         $capacity = serialize($capacity);
         $capacity = $this->cutChaine($capacity, ':"', '";');
 
-        $postEquipements = $_POST["equipements"]; 
-        $postEquipements = serialize($postEquipements);
-        $postEquipements = $this->cutChaine($postEquipements, ':"', '";'); 
-        $equipements = new Equipements();
-        $equipements = $em->getReference("App\Entity\Equipements", $postEquipements);
+        $equipements = $_POST["equipements"]; 
         //dd($equipements);
+        
+       
+      
 
         $postCategories = $_POST["categories"];
         $postCategories = serialize($postCategories);
@@ -140,11 +139,6 @@ class CreateProperties extends AbstractController{
         $categories = new Categories();
         $categories = $em->getReference("App\Entity\Categories", $postCategories);
 
-        $postPropertiesgallery = $_POST["propertiesgallery"]; 
-        $postPropertiesgallery = serialize($postPropertiesgallery);
-        $postPropertiesgallery = $this->cutChaine($postPropertiesgallery, ':"', '";');
-        $propertiesgallery = new Propertiesgallery();
-        $propertiesgallery = $em->getReference("App\Entity\Propertiesgallery", $postPropertiesgallery);
 
         $postUser = $_POST["user"]; 
         $postUser = serialize($postUser);
@@ -175,13 +169,22 @@ class CreateProperties extends AbstractController{
             $properties->setCountry($country);
             $properties->setCapacity($capacity);
             $properties->setZipCode($zipCode);
-            $properties->addEquipement($equipements);     
+
+            foreach($equipements as $equipement)
+            {
+                
+                $equipement = $em->getReference("App\Entity\Equipements", $equipement);
+                $properties->addEquipement($equipement);
+            }
+              
             $properties->setCategories($categories);
             $properties->setUser($user);  
 
             $manager->persist($properties);
             $manager->flush();
-            return new JsonResponse( ['status' => '200', 'title' => 'Votre location de bien a bien été créé'], JsonResponse::HTTP_CREATED ); 
+            $propertiesid= $properties->getId(); 
+
+            return new JsonResponse( ['status' => '200', 'id'=>$propertiesid,'title' => 'Votre location de bien a bien été créé'], JsonResponse::HTTP_CREATED ); 
         }
         else{
             return new JsonResponse( ['status' => '400', 'title' => 'Bad Request', 'message' => 'Création de votre location de bien impossible car un bien est déjà créé à cette adresse !'], JsonResponse::HTTP_CREATED );
