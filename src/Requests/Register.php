@@ -47,7 +47,6 @@ class Register extends AbstractController
         $user = array();
         $user = new User();
 
-
         // Données du formulaire de register  
         $firstname = $_POST["firstname"];
         $firstname = serialize($firstname);
@@ -93,21 +92,8 @@ class Register extends AbstractController
         $country = serialize($country);
         $country = $this->cutChaine($country, ':"', '";');
 
-<<<<<<< HEAD
-     //$pictures = $_POST["pictures"]; 
-        //$file = $request->files->get('file');
-        //dd($file);
-      //dd($request->files->get('file'));
-        //dd($_FILES);
-    //    $picture = serialize($picture);
-    //     $picture = $this->cutChaine($picture, ':"', '";');
-=======
->>>>>>> master
-
         $file = $request->files->get('file');
-
-
-
+ 
         $this->UserRepository = $UserRepository;
         $findUser = $this->UserRepository->findByEmailCheckIfExist($email);
         $findUserCheck = $findUser;
