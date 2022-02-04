@@ -18,12 +18,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      collectionOperations={
  *            "get"={},
  *            "post"={},
- *                "api_send_payment"={
- *                  "method"="POST",
- *                  "path"="/send_payment",
- *                  "controller"=App\Controller\SendPayment::class
- *                 
- *               },
+ *               
  *             
  *          },
  *      itemOperations={
@@ -88,8 +83,13 @@ class Payments
      */
     private $user;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $stripe_session;
+
     public function __construct()
-    {       
+    {
         $this->created_at = new \DateTime();
     }
 
@@ -176,6 +176,18 @@ class Payments
     public function setUser(?User $user): self
     {
         $this->user = $user;
+
+        return $this;
+    }
+
+    public function getStripeSession(): ?string
+    {
+        return $this->stripe_session;
+    }
+
+    public function setStripeSession(?string $stripe_session): self
+    {
+        $this->stripe_session = $stripe_session;
 
         return $this;
     }

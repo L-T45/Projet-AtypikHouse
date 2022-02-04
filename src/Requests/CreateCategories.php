@@ -43,9 +43,12 @@ class CreateCategories extends AbstractController{
         $slug = serialize($slug);
         $slug = $this->cutChaine($slug, ':"', '";'); 
 
-        $picture = $_POST["picture"]; 
-        $picture = serialize($picture);
-        $picture = $this->cutChaine($picture, ':"', '";');
+        // $picture = $_POST["picture"]; 
+        // $picture = serialize($picture);
+        // $picture = $this->cutChaine($picture, ':"', '";');
+
+        $file = $request->files->get('file');
+        //dd($file);
 
         $description = $_POST["description"]; 
         $description = serialize($description);
@@ -57,7 +60,8 @@ class CreateCategories extends AbstractController{
         
         if($findCategoriesCheck === [])
         { 
-            $categories->setPicture($picture);
+            $categories->setPicture($file);
+            $categories->setFile($file);
             $categories->setTitle($title);
             $categories->setSlug($slug);
             $categories->setDescription($description);

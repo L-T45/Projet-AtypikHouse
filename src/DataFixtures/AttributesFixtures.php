@@ -17,17 +17,15 @@ class AttributesFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
+        $titles = ['Proche de la mer', 'Convient aux enfants', 'Convient aux personnes âgées', 'Escapade romantique', 'Silencieux', 'Au contact de la nature'];
 
-
-        $titles = ['proche de la mer', 'convient aux enfants', 'convient aux personnes âgées', 'Escapade romantique', 'Silencieux', 'Au contact de la nature'];
-
-         // initialisation de l'objet Faker
-         $faker = Faker\Factory::create('fr_FR');
-         $attributes = Array();
+        // initialisation de l'objet Faker
+        $faker = Faker\Factory::create('fr_FR');
+        $attributes = array();
         // create 20 Categories! Bam!
         for ($i = 0; $i < 6; $i++) {
-            
-            $categories[$i] =  $this->getReference('categories_'. $faker->numberBetween(1,8));
+
+            $categories[$i] =  $this->getReference('categories_' . $faker->numberBetween(1, 8));
 
             $attributes[$i] = new Attributes();
             $attributes[$i]->setTitle($titles[$i]);
@@ -36,11 +34,12 @@ class AttributesFixtures extends Fixture implements DependentFixtureInterface
         }
 
         $manager->flush();
-        }
+    }
 
-        public function getDependencies(){
-            return [
-                CategoriesFixtures::class,
-            ];
-        }
+    public function getDependencies()
+    {
+        return [
+            CategoriesFixtures::class,
+        ];
+    }
 }

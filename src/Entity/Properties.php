@@ -57,11 +57,87 @@ use App\Resolver\PostPictureResolver;
  *                  "path"="dashboard/admin/properties",
  *                  "normalization_context"={"groups"={"admin:properties", "enable_max_depth"=true}}, 
  *               }, 
- *               "dashboard_owner_properties_create"={
- *                  "method"="POST", 
+ *              
+ *              "api/dashboard/owner/properties/create"={
+ *                  "method"="POST",
  *                  "path"="dashboard/owner/properties/create",
- *                  "controller"="App\Requests\CreateProperties::newProperties",
- *                  },
+ *                  "deserialize" = false,
+ *                  "controller"=App\Requests\CreateProperties::class,
+ *                  "openapi_context" = {
+ *                  "requestBody" = {
+ *                     "content" = {
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                     "title" ={
+ *                                        "type" = "string"
+ *                                      },
+ *                                     "slug" ={
+ *                                        "type" = "string"
+ *                                      },
+ *                                      "price" ={
+ *                                        "type" = "int"
+ *                                      },
+ *                                       "rooms" ={
+ *                                        "type" = "int"
+ *                                      },
+ *                                       "booking" ={
+ *                                        "type" = "int"
+ *                                      },
+ *                                       "address" ={
+ *                                        "type" = "string"
+ *                                      },
+ *                                       "city" ={
+ *                                        "type" = "string"
+ *                                      }, 
+ *                                       "latitude" ={
+ *                                        "type" = "float"
+ *                                      },
+ *                                       "longitude" ={
+ *                                        "type" = "float"
+ *                                      }, 
+ *                                       "bedrooms" ={
+ *                                        "type" = "int"
+ *                                      },
+ *                                      "surface" ={
+ *                                        "type" = "int"
+ *                                      },
+ *                                      "reference" ={
+ *                                        "type" = "string"
+ *                                      },
+ *                                      "zipCode" ={
+ *                                        "type" = "int"
+ *                                      },
+ *                                      "country" ={
+ *                                        "type" = "string"
+ *                                      },
+ *                                      "picture" ={
+ *                                        "type" = "string"
+ *                                      },
+ *                                      "capacity" ={
+ *                                        "type" = "int"
+ *                                      },
+ *                                     "file" = {
+ *                                         "type" = "array",
+ *                                         "items" = {
+ *                                             "type" = "string",
+ *                                             "format" = "binary"
+ *                                         },
+ *                                     },
+ *                                 },
+ *                             },
+ *                         },
+ *                     },
+ *                 },
+ *             },
+ *                  
+ *               }, 
+ * 
+ * 
+ * 
+ * 
+ * 
  *          },
  *      itemOperations={
  *          "get"={"normalization_context"={"groups"={"propertiesid:item", "properties:id"}}},       
@@ -214,7 +290,6 @@ class Properties
      * @Groups({"properties:item", "owner:propertiesid", "propertiesid:item"})
      */
     private $reference;
-
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"properties:collection", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "owner:reservid", "admin:usersid", "propertiesid:item", "admin:comments", "lastcomments:collection", "admin:commentsid", "read:commentsperso", "admin:properties", "owner:propertiesid", "owner:properties", "reservations:user", "read:commentsid", "categories:item", "comments:item", "user:properties", "propertiesgallery:item", "lastcomments:collection", "read:reservations"})
@@ -295,7 +370,7 @@ class Properties
 
     /**
      * @var File|null
-     * @Vich\UploadableField(mapping="properties_images", fileNameProperty="filePath")
+     * @Vich\UploadableField(mapping="properties_images", fileNameProperty="picture")
      */
     private $file;
 
