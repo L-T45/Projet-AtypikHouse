@@ -21,7 +21,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"reportscategories:collection", "reportscategories:item"}}},
- *          "put"={},
+ *          "put"={"security"= "is_granted('ROLE_USER')"},
  *          "delete"={},
  *          }
  * )

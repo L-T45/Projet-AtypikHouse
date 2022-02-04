@@ -102,7 +102,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"user:collection", "user:item"}}},
- *          "put"={},
+ *          "put"={"security"= "is_granted('ROLE_USER')"},
  *          "patch"={},
  *          "delete"={},
  *                 "api_dashboard_user_payments"={
@@ -183,6 +183,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *               },   
  *                  "dashboard/user/{id}/personal_informations/modifypassword"={
  *                  "method"="PATCH",
+ *                  "deserialize" = false,
+ *                  "security"= "is_granted('ROLE_USER')",
  *                  "path"="dashboard/user/{id}/personal_informations/modifypassword",
  *                  "controller"="App\Controller\ResetPassword::UpdatePwd",
  *                  "denormalization_context"={"groups"={"admin:useridentifiants", "enable_max_depth"=true}},

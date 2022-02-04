@@ -59,40 +59,26 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "deserialize" = false,
  *                  "controller"="App\Requests\CreateCategories::newCategories",
  *                  "openapi_context" = {
- *                  "requestBody" = {
- *                     "content" = {
- *                         "multipart/form-data" = {
- *                             "schema" = {
- *                                 "type" = "object",
- *                                 "properties" = {
- *                                      "title"={
- *                                          "type" = "string"
+ *                      "requestBody" = {
+ *                              "content" = {
+ *                                  "multipart/form-data" = {
+ *                                      "schema" = {
+ *                                          "type" = "object",
+ *                                              "properties" = {
+ *                                                  "file" = {
+ *                                                      "type" = "array",
+ *                                                          "items" = {
+ *                                                              "type" = "string",
+ *                                                              "format" = "binary"
+ *                                                            },
+ *                                                      },
+ *                                                  },
+ *                                              },
  *                                          },
- *                                      "slug"={
- *                                          "type" = "string"
- *                                          },                            
- *                                      "description"={
- *                                          "type" = "string"
- *                                          },
- *                                     "file" = {
- *                                         "type" = "array",
- *                                         "items" = {
- *                                             "type" = "string",
- *                                             "format" = "binary"
- *                                         },
- *                                     },
- *                                 },
- *                             },
- *                         },
- *                     },
- *                 },
- *             },
-                
- *         
- *                  
- *               }, 
- *      
- *                       
+ *                                      },
+ *                                  },
+ *                              },                  
+ *                          },                     
  *          },
  * 
  *      itemOperations={
@@ -108,7 +94,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
  *                  
  *               }, 
- *                 
  *          }
  * )
  * 
@@ -119,7 +104,7 @@ class Categories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"categories:collection", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "properties:map", "admin:properties", "propertiesid:item", "admin:usersid", "propertiesid:item", "admin:commentsid", "attributes:item", "admin:categattributesid", "admin:categattributes", "admin:categoriesid", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:categories", "attributes:categories"})
+     * @Groups({"categories:collection", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "properties:map", "admin:properties", "propertiesid:item", "admin:usersid", "propertiesid:item", "admin:commentsid", "attributes:item", "admin:categattributesid", "admin:categattributes", "admin:categoriesid", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:categories", "attributes:categories", "categorie:updateattibute"})
      */
     private $id;
 
@@ -150,7 +135,7 @@ class Categories
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * 
+     * @Groups({"categories:collection", "properties:write"}) 
      */
     private $filePath;
 

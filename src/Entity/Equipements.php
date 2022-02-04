@@ -36,8 +36,8 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          },
  *      itemOperations={          
  *          "get"={"normalization_context"={"groups"={"equipements:collection", "equipements:item","read:equipements"}}},
- *          "put"={},
  *          "patch"={},
+ *          "put"={"security"= "is_granted('ROLE_ADMIN')"},
  *          "delete"={},
  *              "dashboard/admin/properties/equipments/{id}"={
  *                   "method"="GET",

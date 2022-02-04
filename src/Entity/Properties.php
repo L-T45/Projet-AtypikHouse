@@ -139,9 +139,9 @@ use App\Resolver\PostPictureResolver;
  * 
  *          },
  *      itemOperations={
- *          "get"={"normalization_context"={"groups"={"propertiesid:item", "properties:id"}}},       
- *          "put"={},
+ *          "get"={"normalization_context"={"groups"={"propertiesid:item", "properties:id"}}}, 
  *          "patch"={},
+ *          "put"={"security"= "is_granted('ROLE_OWNER', 'ROLE_ADMIN')"},
  *          "delete"={},
  *                "dashboard_admin_properties_id"={
  *                "method"="GET",

@@ -245,6 +245,9 @@
     "psr/log": {
         "version": "2.0.0"
     },
+    "scienta/doctrine-json-functions": {
+        "version": "5.0.0"
+    },
     "sebastian/cli-parser": {
         "version": "1.0.1"
     },
@@ -713,8 +716,5 @@
     },
     "willdurand/negotiation": {
         "version": "3.0.0"
-    },
-    "gesdinet/jwt-refresh-token-bundle": {
-        "version": "v0.12.0"
     }
 }

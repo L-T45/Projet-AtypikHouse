@@ -34,7 +34,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *          },
  *      itemOperations={
  *          "get"={"normalization_context"={"groups"={"conversations:collection", "conversations:item"}}},
- *          "put"={},
+ *          "put"={"security"= "is_granted('ROLE_USER')"},
  *          "delete"={},            
  *                  "dashboard/user/conversations/{id}"={
  *                  "method"="GET",

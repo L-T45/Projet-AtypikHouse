@@ -30,8 +30,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "denormalization_context"={"groups"={"admin:attributescreate", "attributes:categories", "enable_max_depth"=true}},
  *               },              
  *          },
+<<<<<<< HEAD
  *      itemOperations={ 
  *          "get"={"normalization_context"={"groups"={"attributes:collection", "attributes:item"}}},        
+=======
+ *      itemOperations={
+ * 
+ *          "get"={"normalization_context"={"groups"={"attributes:collection", "attributes:item"}}},
+>>>>>>> master
  *          "put"={},
  *          "delete"={}, 
  *                  "dashboard/admin/categories/attributes/{id}"={
@@ -40,13 +46,23 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "force_eager"=false,
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:categattributesid", "attributes:item", "enable_max_depth"=true}},
+<<<<<<< HEAD
  *               },  
  *                  "dashboard/admin/attibute/{id}"={
+=======
+ *               },
+ *              "dashboard/admin/attibute/{id}"={
+>>>>>>> master
  *                  "method"="PATCH",
  *                  "path"="dashboard/admin/attibute/{id}",
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "deserialize" = false, 
+<<<<<<< HEAD
  *              },        
+=======
+ *              },
+ *               
+>>>>>>> master
  *          }
  * )
  */
@@ -62,7 +78,7 @@ class Attributes
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"attributes:collection", "propertiesid:item", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate"})
+     * @Groups({"attributes:collection", "propertiesid:item", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate", "update:attribute"})
      */
     private $title;
 
@@ -80,11 +96,10 @@ class Attributes
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="attributes")
-     * @Groups({"attributes:item", "admin:categattributes", "admin:categattributesid", "admin:attributescreate"})
+     * @Groups({"attributes:item", "admin:categattributes", "admin:categattributesid", "admin:attributescreate", "update:attribute"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $categories;
-
 
     public function __construct()
     {

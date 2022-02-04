@@ -42,13 +42,10 @@ class Register extends AbstractController
         return substr($string, $ini, $len);
     }
 
-
     public function __invoke(EntityManagerInterface $manager, Request $request, UserPasswordEncoderInterface $encoder, UserRepository $UserRepository): Response
     {
         $user = array();
         $user = new User();
-
-
 
         // Données du formulaire de register  
         $firstname = $_POST["firstname"];
@@ -95,11 +92,8 @@ class Register extends AbstractController
         $country = serialize($country);
         $country = $this->cutChaine($country, ':"', '";');
 
-
         $file = $request->files->get('file');
-
-
-
+ 
         $this->UserRepository = $UserRepository;
         $findUser = $this->UserRepository->findByEmailCheckIfExist($email);
         $findUserCheck = $findUser;

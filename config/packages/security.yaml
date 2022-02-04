@@ -1,52 +1,44 @@
 security:
-    enable_authenticator_manager: true
-    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
-    password_hashers:
-        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
-        App\Entity\User:
-            algorithm: auto
+  enable_authenticator_manager: true
+  # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+  password_hashers:
+    Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: "auto"
+    App\Entity\User:
+      algorithm: auto
 
-    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
-    providers:
-        # used to reload user from session & other features (e.g. switch_user)
-        app_user_provider:
-            entity:
-                class: App\Entity\User
-                property: email
-                
-    firewalls:     
-        login:
-            pattern: ^/api/login$
-            stateless: true
-            json_login:
-                check_path: /api/login
-                success_handler: lexik_jwt_authentication.handler.authentication_success
-                failure_handler: lexik_jwt_authentication.handler.authentication_failure
-        
-        token_refresh:
-            pattern: ^/api/token/refresh
-            stateless: true
+  # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+  providers:
+    # used to reload user from session & other features (e.g. switch_user)
+    app_user_provider:
+      entity:
+        class: App\Entity\User
+        property: email
 
-        api:
-            pattern:   ^/api
-            stateless: true
-            guard:
-                authenticators:
-                    - lexik_jwt_authentication.jwt_token_authenticator
+  firewalls:
+    login:
+      pattern: ^/api/login$
+      stateless: true
+      json_login:
+        check_path: /api/login
+        success_handler: lexik_jwt_authentication.handler.authentication_success
+        failure_handler: lexik_jwt_authentication.handler.authentication_failure
 
-        dev:
-            pattern: ^/(_(profiler|wdt)|css|images|js)/
-            security: false
-        #main:
-            #lazy: true
-            #provider: users_in_memory
+    # token_refresh:
+    #   pattern: ^/api/token/refresh
+    #   stateless: true
 
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#the-firewall
+    api:
+      pattern: ^/api
+      stateless: true
+      guard:
+        authenticators:
+          - lexik_jwt_authentication.jwt_token_authenticator
 
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
+    api_token_refresh:
+      pattern: ^/api/token/refresh
+      stateless: true
 
+<<<<<<< HEAD
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
@@ -102,3 +94,55 @@ security:
         - { path: ^/api/properties/comments/id/reports, roles: ROLE_USER }
         # Post envoyé une réservation
         - { path: ^/api/properties/id/reservations, roles: ROLE_USER }
+=======
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    #main:
+    #lazy: true
+    #provider: users_in_memory
+
+    # activate different ways to authenticate
+    # https://symfony.com/doc/current/security.html#the-firewall
+
+    # https://symfony.com/doc/current/security/impersonating_user.html
+    # switch_user: true
+
+  # Easy way to control access for large sections of your site
+  # Note: Only the *first* access control that matches will be used
+  access_control:
+    # Paramétrage des droits d'accès au login
+    - { path: ^/api/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    - { path: ^/api/token/refresh, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+    # Paramétrage des droits d'accès à l'api
+    # ROUTES DELETES :
+    # Delete User
+    - { path: ^/api/dashboard/user/personnal-infos/delete-account, roles: ROLE_USER }
+    - { path: ^/api/dashboard/admin/users/details/delete, roles: ROLE_ADMIN }
+    # Delete Properties
+    - { path: ^/api/dashboard/owner/properties/delete, roles: ROLE_OWNER }
+    - { path: ^/api/dashboard/admin/properties/delete, roles: ROLE_ADMIN }
+    # Delete PropertiesGallery
+    - { path: ^/api/dashboard/owner/properties/details/galleryphoto/deletepictures, roles: ROLE_OWNER }
+    - { path: ^/api/dashboard/admin/properties/details/galleryphoto/deletepictures, roles: ROLE_ADMIN }
+    # Delete Comments
+    - { path: ^/api/dashboard/user/comments/details/delete, roles: ROLE_USER }
+    - { path: ^/api/dashboard/admin/comments/details/delete, roles: ROLE_ADMIN }
+    # Delete Reservations
+    - { path: ^/api/dashboard/user/reservations/delete, roles: ROLE_USER }
+    - { path: ^/api/dashboard/admin/reservations/delete, roles: ROLE_ADMIN }
+    # Delete Reports
+    - { path: ^/api/dashboard/user/reports/details/delete, roles: ROLE_USER }
+    - { path: ^/api/dashboard/admin/reports/details/delete, roles: ROLE_ADMIN }
+    # Delete Categories
+    - { path: ^/api/dashboard/admin/categories/delete, roles: ROLE_ADMIN }
+    # Delete Attributes
+    - { path: ^/api/dashboard/admin/categories/attributes/delete, roles: ROLE_ADMIN }
+    # Delete Conversations
+    - { path: ^/api/dashboard/admin/conversations/details/delete, roles: ROLE_ADMIN }
+    # Delete Messages
+    - { path: ^/api/dashboard/admin/conversations/details/message/delete, roles: ROLE_ADMIN }
+    # ROUTES POSTS :
+    # ADD de catégories
+    - { path: ^/api/dashboard/admin/categories/create, roles: ROLE_ADMIN }
+>>>>>>> master
