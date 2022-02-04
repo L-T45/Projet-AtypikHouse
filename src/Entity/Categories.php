@@ -32,7 +32,33 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                 "path"="dashboard/admin/categories",
  *                 "security"= "is_granted('ROLE_ADMIN')",
  *                 "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
- *              },                       
+ *              },   
+ *                "dashboard/admin/categories/create"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/admin/categories/create",
+ *                  "deserialize" = false,
+ *                  "controller"="App\Requests\CreateCategories::newCategories",
+ *                  "openapi_context" = {
+*                      "requestBody" = {
+*                              "content" = {
+*                                  "multipart/form-data" = {
+*                                      "schema" = {
+*                                          "type" = "object",
+*                                              "properties" = {
+*                                                  "file" = {
+*                                                      "type" = "array",
+*                                                          "items" = {
+*                                                              "type" = "string",
+*                                                              "format" = "binary"
+*                                                            },
+*                                                      },
+*                                                  },
+*                                              },
+*                                          },
+*                                      },
+*                                  },
+*                              },                  
+*                          },                    
  *          }, 
  *      itemOperations={
  *              "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},           
