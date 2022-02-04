@@ -84,7 +84,7 @@ class CommentsRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->update('App\Entity\Comments', 'c')
             ->set('c.body', ':body')
-            ->where('u.id = :id')
+            ->where('c.id = :id')
             ->setParameter('id', $id)
             ->setParameter('body', $body)
             ->getQuery()
