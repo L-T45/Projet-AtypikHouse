@@ -89,6 +89,46 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
  *                  
  *               }, 
+ * 
+ *                  "dashboard/admin/categories/{id}"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/admin/categories/{id}",
+ *                  "deserialize" = false,
+ *                  "controller"=App\Controller\UpdateCategoriesController::class,
+ *                  "openapi_context" = {
+ *                  "requestBody" = {
+ *                     "content" = {
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                      "title"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                      "slug"={
+ *                                          "type" = "string"
+ *                                          },                            
+ *                                      "description"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                     "file" = {
+ *                                         "type" = "array",
+ *                                         "items" = {
+ *                                             "type" = "string",
+ *                                             "format" = "binary"
+ *                                         },
+ *                                     },
+ *                                 },
+ *                             },
+ *                         },
+ *                     },
+ *                 },
+ *             },
+                
+ *         
+ *                  
+ *               }, 
+ *      
  *                 
  *          }
  * )
