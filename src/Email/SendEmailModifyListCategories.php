@@ -57,7 +57,7 @@ class SendEmailModifyListCategories extends AbstractController {
     }
 
     public function sendEmailChangeCategorieList(MailerInterface $mailer, Request $request, $nbLines, $findOwners): Response{
-        dd($nbLines, $findOwners);
+        //dd($nbLines, $findOwners);
         for($i = 0; $i < $nbLines; $i++){
             $ownersEmail = $findOwners[$i]['email'];
             $email = (new Email())
