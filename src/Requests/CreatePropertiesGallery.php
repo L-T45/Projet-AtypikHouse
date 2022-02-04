@@ -17,7 +17,7 @@ class CreatePropertiesGallery extends AbstractController{
     // Pour le formulaire de création de Gallerie photo
     private $properties;
     private $picture;
-    private $alt;
+   
 
     public function cutChaine($string, $start, $end){
         $string = ' ' . $string;   
@@ -28,10 +28,9 @@ class CreatePropertiesGallery extends AbstractController{
         return substr($string, $ini, $len);
     }
 
-    public function newPropertiesGallery(EntityManagerInterface $manager, Request $request, PropertiesGalleryRepository $PropertiesGalleryRepository): Response
+    public function newPropertiesGallery(EntityManagerInterface $manager, Request $request, PropertiesGalleryRepository $PropertiesGalleryRepository):Response
     {
         $propertiesGallery = Array();
-        $propertiesGallery = new PropertiesGallery();
         $em = $this->getDoctrine()->getManager();
 
         // Données du formulaire de Gallerie photo  
@@ -48,27 +47,21 @@ class CreatePropertiesGallery extends AbstractController{
 
         $file = $request->files->get('file');
         //dd($file);
-
-        $alt = $_POST["alt"]; 
-        $alt = serialize($alt);
-        $alt = $this->cutChaine($alt, ':"', '";');
-
-        $this->PropertiesGalleryRepository = $PropertiesGalleryRepository;
-        $findPropertiesGallery = $this->PropertiesGalleryRepository->findByPropertiesGallery($alt);
-        $findPropertiesGalleryCheck = $findPropertiesGallery;
         
-        if($findPropertiesGalleryCheck === [])
-        { 
+        
+            foreach($file as $single){
+            //dd($single);
+             
+            $propertiesGallery = new PropertiesGallery();
+
             $propertiesGallery->setProperties($properties);
-            $propertiesGallery->setPicture($file);
-            $propertiesGallery->setFile($file);
-            $propertiesGallery->setAlt($alt);
+            $propertiesGallery->setPicture($single);
+            $propertiesGallery->setFile($single);
             $manager->persist($propertiesGallery);
             $manager->flush();
-            return new JsonResponse( ['status' => '200', 'title' => 'Votre gallery photo a bien été créé'], JsonResponse::HTTP_CREATED ); 
-        }
-        else{
-            return new JsonResponse( ['status' => '400', 'title' => 'Bad Request', 'message' => 'Création de votre gallery photo impossible car une gallery photo est déjà créé !'], JsonResponse::HTTP_CREATED );
-        }
+
+            }
+            return new JsonResponse( ['status' => '200','title' => 'Votre galerie de photo a bien été créé'], JsonResponse::HTTP_CREATED ); 
+    
     }
 }

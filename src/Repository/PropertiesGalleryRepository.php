@@ -52,7 +52,7 @@ class PropertiesGalleryRepository extends ServiceEntityRepository
       * @return Properties[] Returns an array of Properties objects
       */
 
-      public function findByPropertiesGallery(string $alt):array
+      public function findByPropertiesGallery($properties):array
       {
           return $this->createQueryBuilder('pg')
           ->select('pg.id')

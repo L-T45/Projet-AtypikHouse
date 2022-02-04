@@ -90,9 +90,9 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  
  *               }, 
  * 
- *                  "dashboard/admin/categories/{id}"={
+ *                  "dashboard/admin/update/categories/{id}"={
  *                  "method"="POST",
- *                  "path"="dashboard/admin/categories/{id}",
+ *                  "path"="dashboard/admin/update/categories/{id}",
  *                  "deserialize" = false,
  *                  "controller"=App\Controller\UpdateCategoriesController::class,
  *                  "openapi_context" = {
