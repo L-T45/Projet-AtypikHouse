@@ -45,6 +45,8 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
                 return ["Maison bulle", 'La "Sphere"', "Chewing-gum", "La maison bulle"];
             case 8:
                 return ["Tipi", "Tente", "Grande tente"];
+            case 9:
+                return ["Maison futuriste", "Maison du futur", "Galactica"];
 
             default:
                 return ['Maison', 'Cabane', 'Palais', 'Maisonnette'];
@@ -63,7 +65,7 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
         // create 20 Properties! Bam!
         for ($i = 1; $i < 150; $i++) {
 
-            $catNbr = $faker->numberBetween(1, 8);
+            $catNbr = $faker->numberBetween(1, 9);
             $category = 'categories_' . $catNbr;
 
 

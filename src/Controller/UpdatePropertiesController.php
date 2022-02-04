@@ -2,21 +2,21 @@
 
 namespace App\Controller;
 
-use App\Entity\Categories;
+use App\Entity\Properties;
 use Symfony\Component\HttpFoundation\Request;
 
 
-class UpdateCategoriesController
+class UpdatePropertiesController
 
 {
 
      public function __invoke(Request $request)
      {
 
-        $categories = $request->attributes->get('data');
+        $properties = $request->attributes->get('data');
         //dd($categories);
-        if(!($categories instanceof Categories)) {
-            throw new \RuntimeException('Catégorie attendue');
+        if(!($properties instanceof Properties)) {
+            throw new \RuntimeException('Propriété attendue');
         }   
         
         
