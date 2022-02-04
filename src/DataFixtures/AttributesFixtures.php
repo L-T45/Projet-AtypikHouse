@@ -30,6 +30,11 @@ class AttributesFixtures extends Fixture implements DependentFixtureInterface
             $attributes[$i] = new Attributes();
             $attributes[$i]->setTitle($titles[$i]);
             $attributes[$i]->setCategories($categories[$i]);
+            $attributes[$i]->setRequired(false);
+            $attributes[$i]->setResponseString(false);
+            $attributes[$i]->setResponseBool(false);
+            $attributes[$i]->setResponseNbr(false);
+            $attributes[$i]->setResponseType(false);
             $manager->persist($attributes[$i]);
         }
 
