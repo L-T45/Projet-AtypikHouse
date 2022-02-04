@@ -18,12 +18,11 @@ use Doctrine\ORM\Query\Expr\Join;
  */
 class PropertiesRepository extends ServiceEntityRepository
 {
-    
+
     public function __construct(ManagerRegistry $registry)
     {
-        
+
         parent::__construct($registry, Properties::class);
-        
     }
 
     // /**
@@ -43,48 +42,63 @@ class PropertiesRepository extends ServiceEntityRepository
     }
     */
 
-      /**
-      * @return Properties[] Returns an array of Properties objects
-      */
+    /**
+     * @return Properties[] Returns an array of Properties objects
+     */
 
-    public function findLatest():array
+    public function findLatest(): array
     {
         return $this->createQueryBuilder('p')
-        ->orderBy('p.id', 'DESC')
-        ->setMaxResults(10)
-        ->getQuery()
-        ->getResult();
+            ->orderBy('p.id', 'DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult();
     }
-    
-     /**
-      * @return Properties[] Returns an array of Properties objects
-      */
 
-      public function findAddress(string $address):array
-      {
-          return $this->createQueryBuilder('p')
-          ->select('p.id')
-          ->andWhere('p.address = :address')
-          ->setParameter('address', $address)
-          ->getQuery()
-          ->getResult();
-      }
+    /**
+     * @return Properties[] Returns an array of Properties objects
+     */
+
+    public function findAddress(string $address): array
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p.id')
+            ->andWhere('p.address = :address')
+            ->setParameter('address', $address)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function findById(int $id)
+    {
+        $prop =  $this->createQueryBuilder('p')
+            ->select('p.price')
+            ->andWhere('p.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+
+        // dd($prop);
+        // dd($prop[0]->price);
+
+        return $prop[0]["price"];
+    }
 
 
 
-     /**
-      * @return Properties[] Returns an array of Properties objects
-      */
+    /**
+     * @return Properties[] Returns an array of Properties objects
+     */
 
-    public function theBestRatedProperty():array
+    public function theBestRatedProperty(): array
     {
         return $this->createQueryBuilder('p')
             ->select('p.id,p.title,r.id,c.value')
             ->innerJoin('p.reservations', 'r')
             ->innerJoin('r.comments', 'c')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
 
     public function findAllWithoutOldComite()
@@ -96,25 +110,23 @@ class PropertiesRepository extends ServiceEntityRepository
             ->leftJoin('fc.comite', 'c')
             ->orderBy('f.nomChefFoyer', 'ASC')
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
-    
 
-    
+
+
     public function findOneBySomeField($value): ?Properties
     {
         return $this->createQueryBuilder('p')
             ->andWhere('p.exampleField = :val')
             ->setParameter('val', $value)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getOneOrNullResult();
     }
 
     /**
-    * @return Properties[] Returns an array of Properties objects
-    */
+     * @return Properties[] Returns an array of Properties objects
+     */
     public function findByIdToDelete($id, $lockMode = null, $lockVersion = null)
     {
         return $this->createQueryBuilder('u')
@@ -122,9 +134,9 @@ class PropertiesRepository extends ServiceEntityRepository
             ->andWhere('u.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getResult()
-        ;
+            ->getResult();
     }
+<<<<<<< HEAD
 
     /**
       * @return Properties[] Returns an array of Properties objects
@@ -175,4 +187,6 @@ class PropertiesRepository extends ServiceEntityRepository
           ;
       }
     
+=======
+>>>>>>> master
 }
