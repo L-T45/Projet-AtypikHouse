@@ -47,7 +47,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"reports:collection", "reports:item"}}},
- *          "put"={},
+ *          "put"={"security"= "is_granted('ROLE_USER')"},
  *          "delete"={},
  * 
  *                  "dashboard/user/reports/{id}"={

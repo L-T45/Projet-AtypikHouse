@@ -19,32 +19,34 @@ class PropertiesGalleryFixtures extends Fixture implements DependentFixtureInter
     public function load(ObjectManager $manager): void
     {
 
-       
-         // initialisation de l'objet Faker
-         $faker = Faker\Factory::create('fr_FR');
-         $properties_gallery = Array();
+
+        // initialisation de l'objet Faker
+        $faker = Faker\Factory::create('fr_FR');
+        $properties_gallery = array();
         // create 20 PropertiesGallery! Bam!
         for ($i = 1; $i < 1001; $i++) {
 
-            $properties[$i] =  $this->getReference('properties_'. $faker->numberBetween(1,149));
+            $properties[$i] =  $this->getReference('properties_' . $faker->numberBetween(1, 149));
 
             $properties_gallery[$i] = new PropertiesGallery();
-            $properties_gallery[$i]->setPicture($faker->numberbetween(1,580).".webp");
+            $properties_gallery[$i]->setPicture($faker->numberbetween(1, 580) . ".webp");
+            $properties_gallery[$i]->setFilePath($faker->numberbetween(1, 580) . ".webp");
             $properties_gallery[$i]->setAlt($faker->text);
             $properties_gallery[$i]->setProperties($properties[$i]);
             $manager->persist($properties_gallery[$i]);
 
-             // On enregistre les galeries dans une référence 
-             $this->addReference('properties_gallery_'. $i, $properties_gallery[$i]);
+            // On enregistre les galeries dans une référence 
+            $this->addReference('properties_gallery_' . $i, $properties_gallery[$i]);
         }
 
         $manager->flush();
-        }
+    }
 
-        public function getDependencies(){
-            return [
-                PropertiesFixtures::class,
+    public function getDependencies()
+    {
+        return [
+            PropertiesFixtures::class,
 
-            ];
-        }
+        ];
+    }
 }

@@ -35,7 +35,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *      itemOperations={
  * 
  *          "get"={"normalization_context"={"groups"={"attributes:collection", "attributes:item"}}},
- *        
  *          "put"={},
  *          "delete"={},
  * 
@@ -45,6 +44,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:categattributesid", "attributes:item", "enable_max_depth"=true}},
  *               },
+ *              "dashboard/admin/attibute/{id}"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/admin/attibute/{id}",
+ *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                  "deserialize" = false, 
+ *              },
  *               
  *          }
  * )
@@ -61,7 +66,7 @@ class Attributes
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"attributes:collection", "propertiesid:item", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate"})
+     * @Groups({"attributes:collection", "propertiesid:item", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate", "update:attribute"})
      */
     private $title;
 
@@ -79,11 +84,10 @@ class Attributes
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="attributes")
-     * @Groups({"attributes:item", "admin:categattributes", "admin:categattributesid", "admin:attributescreate"})
+     * @Groups({"attributes:item", "admin:categattributes", "admin:categattributesid", "admin:attributescreate", "update:attribute"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $categories;
-
 
     public function __construct()
     {

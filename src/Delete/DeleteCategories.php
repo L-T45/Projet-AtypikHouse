@@ -6,7 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Categories;
 use App\Repository\CategoriesRepository;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;  
+use Symfony\Component\HttpFoundation\Response; 
+use Symfony\Component\Mailer\MailerInterface; 
+use App\Email\SendEmailModifyListCategories;
 
 class DeleteCategories extends AbstractController {
 
@@ -14,7 +16,7 @@ class DeleteCategories extends AbstractController {
     private $idCategories;
     private $CategoriesRepository;
 
-    public function DeleteCategories(Request $request, CategoriesRepository $CategoriesRepository): Response{
+    public function DeleteCategories(Request $request, CategoriesRepository $CategoriesRepository, SendEmailModifyListCategories $SendEmail, MailerInterface $mailer): Response{
 
         $data = $request->query->get('id');
         $idCategories = $data;
@@ -23,6 +25,7 @@ class DeleteCategories extends AbstractController {
         $findCategoriesToDelete = $this->CategoriesRepository->findByIdToDelete($idCategories);
 
             if($findCategoriesToDelete =! []){
+                $SendEmail->DeleteCategories($mailer, $request);
                 $response = new Response('Catégorie supprimée',Response::HTTP_OK,['content-type' => 'application/json']);
             }
             else{  

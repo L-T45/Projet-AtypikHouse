@@ -2,31 +2,35 @@
 #    path: /
 #    controller: App\Controller\DefaultController::index
 api_login:
-   path: /api/login
-   methods: [POST]
+  path: /api/login
+  methods: [POST]
 
 gesdinet_jwt_refresh_token:
-  path:       /token/refresh
+  path: /api/token/refresh
   controller: gesdinet.jwtrefreshtoken::refresh
   methods: [POST]
 
-api_send_payment:
-    path: /api/send_payment
-    controller: App\Controller\SendPayment::PayoutAction
-    
+# create_session:
+#   path: /api/send_payment
+#   controller: App\Controller\CreateSessionController::
+
+# api_check_payment:
+#   path: /api/check_payment_session
+#   controller: App\Controller\RetrieveSessionController
+
 api_form_contact:
-    path: /api/form_contact
-    controller: App\Email\SendEmail::sendEmailFormContact
+  path: /api/form_contact
+  controller: App\Email\SendEmail::sendEmailFormContact
 
 api_decode_JWT_Token_Auth:
-    path: /api/login_check
-    methods: [POST]
-    controller: App\Token\DecodeJWTAuth::decodeJwtToken
+  path: /api/login_check
+  methods: [POST]
+  controller: App\Token\DecodeJWTAuth::decodeJwtToken
 
 #api_register:
-    #path: /api/register
-    #methods: [POST]
-    #controller: App\Requests\Register::newUser
+#path: /api/register
+#methods: [POST]
+#controller: App\Requests\Register::newUser
 
 # dashboard/admin/categories/create:
 #     methods: [POST]
@@ -34,87 +38,86 @@ api_decode_JWT_Token_Auth:
 #     controller: App\Requests\CreateCategories::newCategories
 
 delete_user:
-    path: /api/dashboard/user/personnal-infos/delete-account
-    methods: [DELETE]
-    controller: App\Delete\DeleteUser::DeleteAccount
+  path: /api/dashboard/user/personnal-infos/delete-account
+  methods: [DELETE]
+  controller: App\Delete\DeleteUser::DeleteAccount
 
 delete_user_admin:
-    path: /api/dashboard/admin/users/details/delete
-    methods: [DELETE]
-    controller: App\Delete\DeleteUser::DeleteAccount
+  path: /api/dashboard/admin/users/details/delete
+  methods: [DELETE]
+  controller: App\Delete\DeleteUser::DeleteAccount
 
 delete_properties_owner:
-    path: /api/dashboard/owner/properties/delete
-    methods: [DELETE]
-    controller: App\Delete\DeleteProperties::DeleteProperties
+  path: /api/dashboard/owner/properties/delete
+  methods: [DELETE]
+  controller: App\Delete\DeleteProperties::DeleteProperties
 
 delete_properties_galleryphoto_owner:
-    path: /api/dashboard/owner/properties/details/galleryphoto/deletepictures
-    methods: [DELETE]
-    controller: App\Delete\DeletePropertiesGallery::DeletePropertiesGallery
+  path: /api/dashboard/owner/properties/details/galleryphoto/deletepictures
+  methods: [DELETE]
+  controller: App\Delete\DeletePropertiesGallery::DeletePropertiesGallery
 
 delete_properties_galleryphoto_admin:
-    path: /api/dashboard/admin/properties/details/galleryphoto/deletepictures
-    methods: [DELETE]
-    controller: App\Delete\DeletePropertiesGallery::DeletePropertiesGallery
+  path: /api/dashboard/admin/properties/details/galleryphoto/deletepictures
+  methods: [DELETE]
+  controller: App\Delete\DeletePropertiesGallery::DeletePropertiesGallery
 
 delete_properties_admin:
-    path: /api/dashboard/admin/properties/delete
-    methods: [DELETE]
-    controller: App\Delete\DeleteProperties::DeleteProperties
+  path: /api/dashboard/admin/properties/delete
+  methods: [DELETE]
+  controller: App\Delete\DeleteProperties::DeleteProperties
 
 delete_comments_user:
-    path: /api/dashboard/user/comments/details/delete
-    methods: [DELETE]
-    controller: App\Delete\DeleteComments::DeleteComments
+  path: /api/dashboard/user/comments/details/delete
+  methods: [DELETE]
+  controller: App\Delete\DeleteComments::DeleteComments
 
 delete_comments_admin:
-    path: /api/dashboard/admin/comments/details/delete
-    methods: [DELETE]
-    controller: App\Delete\DeleteComments::DeleteComments
+  path: /api/dashboard/admin/comments/details/delete
+  methods: [DELETE]
+  controller: App\Delete\DeleteComments::DeleteComments
 
 delete_reservations_user:
-    path: /api/dashboard/user/reservations/delete
-    methods: [DELETE]
-    controller: App\Delete\DeleteReservations::DeleteReservations
+  path: /api/dashboard/user/reservations/delete
+  methods: [DELETE]
+  controller: App\Delete\DeleteReservations::DeleteReservations
 
 delete_reservations_admin:
-    path: /api/dashboard/admin/reservations/delete
-    methods: [DELETE]
-    controller: App\Delete\DeleteReservations::DeleteReservations
+  path: /api/dashboard/admin/reservations/delete
+  methods: [DELETE]
+  controller: App\Delete\DeleteReservations::DeleteReservations
 
 delete_reports_user:
-    path: /api/dashboard/user/reports/details/delete
-    methods: [DELETE]
-    controller: App\Delete\DeleteReports::DeleteReports
+  path: /api/dashboard/user/reports/details/delete
+  methods: [DELETE]
+  controller: App\Delete\DeleteReports::DeleteReports
 
 delete_reports_admin:
-    path: /api/dashboard/admin/reports/details/delete
-    methods: [DELETE]
-    controller: App\Delete\DeleteReports::DeleteReports
+  path: /api/dashboard/admin/reports/details/delete
+  methods: [DELETE]
+  controller: App\Delete\DeleteReports::DeleteReports
 
 delete_categories:
-    path: /api/dashboard/admin/categories/delete 
-    methods: [DELETE]
-    controller: App\Delete\DeleteCategories::DeleteCategories
+  path: /api/dashboard/admin/categories/delete
+  methods: [DELETE]
+  controller: App\Delete\DeleteCategories::DeleteCategories
 
 delete_attribute:
-    path: /api/dashboard/admin/categories/attributes/delete 
-    methods: [DELETE]
-    controller: App\Delete\DeleteAttribute::DeleteAttribute
+  path: /api/dashboard/admin/categories/attributes/delete
+  methods: [DELETE]
+  controller: App\Delete\DeleteAttribute::DeleteAttribute
 
 delete_conversations:
-    path: /api/dashboard/admin/conversations/details/delete 
-    methods: [DELETE]
-    controller: App\Delete\DeleteConversations::DeleteConversations
+  path: /api/dashboard/admin/conversations/details/delete
+  methods: [DELETE]
+  controller: App\Delete\DeleteConversations::DeleteConversations
 
 delete_messages:
-    path: /api/dashboard/admin/conversations/details/message/delete 
-    methods: [DELETE]
-    controller: App\Delete\DeleteMessages::DeleteMessages
+  path: /api/dashboard/admin/conversations/details/message/delete
+  methods: [DELETE]
+  controller: App\Delete\DeleteMessages::DeleteMessages
 
 delete_equipements:
-    path: /api/dashboard/admin/equipements 
-    methods: [DELETE]
-    controller: App\Delete\DeleteEquipements::DeleteEquipements
-    
+  path: /api/dashboard/admin/equipements
+  methods: [DELETE]
+  controller: App\Delete\DeleteEquipements::DeleteEquipements

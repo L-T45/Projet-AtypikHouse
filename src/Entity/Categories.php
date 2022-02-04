@@ -32,48 +32,33 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories",
  *                  "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
- *               }, 
- * 
- *               "dashboard/admin/categories/create"={
+ *               },
+ *                "dashboard/admin/categories/create"={
  *                  "method"="POST",
  *                  "path"="dashboard/admin/categories/create",
  *                  "deserialize" = false,
  *                  "controller"="App\Requests\CreateCategories::newCategories",
  *                  "openapi_context" = {
- *                  "requestBody" = {
- *                     "content" = {
- *                         "multipart/form-data" = {
- *                             "schema" = {
- *                                 "type" = "object",
- *                                 "properties" = {
- *                                      "title"={
- *                                          "type" = "string"
+ *                      "requestBody" = {
+ *                              "content" = {
+ *                                  "multipart/form-data" = {
+ *                                      "schema" = {
+ *                                          "type" = "object",
+ *                                              "properties" = {
+ *                                                  "file" = {
+ *                                                      "type" = "array",
+ *                                                          "items" = {
+ *                                                              "type" = "string",
+ *                                                              "format" = "binary"
+ *                                                            },
+ *                                                      },
+ *                                                  },
+ *                                              },
  *                                          },
- *                                      "slug"={
- *                                          "type" = "string"
- *                                          },                            
- *                                      "description"={
- *                                          "type" = "string"
- *                                          },
- *                                     "file" = {
- *                                         "type" = "array",
- *                                         "items" = {
- *                                             "type" = "string",
- *                                             "format" = "binary"
- *                                         },
- *                                     },
- *                                 },
- *                             },
- *                         },
- *                     },
- *                 },
- *             },
-                
- *         
- *                  
- *               }, 
- *      
- *                       
+ *                                      },
+ *                                  },
+ *                              },                  
+ *                          },                     
  *          },
  * 
  *      itemOperations={
@@ -89,7 +74,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
  *                  
  *               }, 
- *                 
  *          }
  * )
  * 
@@ -100,7 +84,7 @@ class Categories
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"categories:collection", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "properties:map", "admin:properties", "propertiesid:item", "admin:usersid", "propertiesid:item", "admin:commentsid", "attributes:item", "admin:categattributesid", "admin:categattributes", "admin:categoriesid", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:categories", "attributes:categories"})
+     * @Groups({"categories:collection", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "properties:map", "admin:properties", "propertiesid:item", "admin:usersid", "propertiesid:item", "admin:commentsid", "attributes:item", "admin:categattributesid", "admin:categattributes", "admin:categoriesid", "reservations:user", "owner:propertiesid", "owner:reservid", "admin:categories", "attributes:categories", "categorie:updateattibute"})
      */
     private $id;
 
@@ -110,7 +94,7 @@ class Categories
      */
     private $title;
 
-     /**
+    /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"categories:collection", "categories:item", "admin:categories", "admin:categoriesid", "categories:write", "properties:item", "admin:createcategories"})
      */
@@ -131,7 +115,7 @@ class Categories
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * 
+     * @Groups({"categories:collection", "properties:write"}) 
      */
     private $filePath;
 
@@ -142,7 +126,7 @@ class Categories
     private $fileUrl;
 
 
-     /**
+    /**
      * @ORM\Column(type="text")
      * @Groups({"categories:item","categories:write", "admin:categoriesid", "admin:createcategories"})
      */
@@ -165,7 +149,7 @@ class Categories
      * @ORM\OneToMany(targetEntity=Properties::class, mappedBy="categories")
      * @Groups({"categories:item", "categories:write", "admin:categoriesid"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
-     */ 
+     */
     private $properties;
 
     /**
@@ -180,7 +164,6 @@ class Categories
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
         $this->attributes = new ArrayCollection();
-       
     }
 
     public function getId(): ?int
@@ -321,7 +304,7 @@ class Categories
         return $this;
     }
 
-    
+
     public function getFilePath(): ?string
     {
         return $this->filePath;
@@ -352,7 +335,7 @@ class Categories
         $this->file = $file;
         return $this;
     }
-  
+
     /**
      * @return string|null
      */
@@ -368,8 +351,6 @@ class Categories
     public function setFileUrl(?string $fileUrl): Categories
     {
         $this->fileUrl = $fileUrl;
-        return $this; 
+        return $this;
     }
-
-
 }
