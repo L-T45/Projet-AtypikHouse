@@ -74,4 +74,18 @@ class EquipementsRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+      * @return Equipements[] Returns an array of Properties objects
+      */
+
+      public function findByEquipements(string $title):array
+      {
+          return $this->createQueryBuilder('e')
+          ->select('e.id')
+          ->andWhere('e.title = :title')
+          ->setParameter('title', $title)
+          ->getQuery()
+          ->getResult();
+      }
 }

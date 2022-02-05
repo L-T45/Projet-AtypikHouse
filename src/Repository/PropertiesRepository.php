@@ -185,5 +185,20 @@ class PropertiesRepository extends ServiceEntityRepository
               ->getResult()
           ;
       }
-    
+
+      /**
+      * @return Properties[] Returns an array of Properties objects
+      */
+
+      public function FindByPropertiesDeleteEquipements():array
+      {
+          return $this->createQueryBuilder('p')
+              ->select('u.email')
+              ->innerJoin('p.user', 'u')
+              ->groupBy('u.email')
+              ->getQuery()
+              ->getResult()
+          ;
+      }
+      
 }
