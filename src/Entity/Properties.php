@@ -242,6 +242,7 @@ use App\Resolver\PostPictureResolver;
  *                      "method"="POST",
  *                      "path"= "dashboard/owner/update/properties/{id}",
  *                      "deserialize" = false,
+ *                      "security" = "is_granted('ROLE_OWNER')",
  *                  "controller"=App\Controller\UpdatePropertiesController::class,
  *                  "openapi_context" = {
  *                  "requestBody" = {
