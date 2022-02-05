@@ -168,6 +168,80 @@ use App\Resolver\PostPictureResolver;
  *                      "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
  *                 },   
  * 
+ *                   "dashboard/owner/update/properties/{id}"={
+ *                      "method"="GET",
+ *                      "path"= "dashboard/owner/update/properties/{id}",
+ *                      "deserialize" = false,
+ *                  "controller"=App\Controller\UpdatePropertiesController::class,
+ *                  "openapi_context" = {
+ *                  "requestBody" = {
+ *                     "content" = {
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                      "title"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                      "slug"={
+ *                                          "type" = "string"
+ *                                          },                            
+ *                                      "price"={
+ *                                          "type" = "int"
+ *                                          },
+ *                                      "rooms"={
+ *                                          "type" = "int"
+ *                                          },
+ *                                       "booking"={
+ *                                          "type" = "int"
+ *                                          },
+ *                                        "address"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                        "city"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                        "latitude"={
+ *                                          "type" = "float"
+ *                                          },
+ *                                         "longitude"={
+ *                                          "type" = "float"
+ *                                          },
+ *                                         "bedrooms"={
+ *                                          "type" = "int"
+ *                                          },
+ *                                        "surface"={
+ *                                          "type" = "int"
+ *                                          },
+ *                                       "reference"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                      "zipCode"={
+ *                                          "type" = "int"
+ *                                          },
+ *                                      "country"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                      "capacity"={
+ *                                          "type" = "int"
+ *                                          },
+ *                                     "file" = {
+ *                                         "type" = "array",
+ *                                         "items" = {
+ *                                             "type" = "string",
+ *                                             "format" = "binary"
+ *                                         },
+ *                                     },
+ *                                 },
+ *                             },
+ *                         },
+ *                     },
+ *                 },
+ *             },
+                
+ *         
+ *                  
+ *               }, 
  *                  
                 
            
@@ -363,6 +437,7 @@ class Properties
 
     /**
      * @ORM\OneToMany(targetEntity=AttributesAnswers::class, mappedBy="properties")
+     * @Groups({"propertiesid:item"})
      */
     private $attributesAnswers;
 

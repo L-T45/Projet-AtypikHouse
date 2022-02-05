@@ -21,11 +21,14 @@ class UpdatePropertiesController
         
         
         //dd($_FILES);
-        $categories->setTitle($_POST['title']);
+        $properties->setTitle($_POST['title']);
         //dd($_POST['title']);
-        $categories->setFile($request->files->get('file'));
+        $properties->setPrice($_POST['price']);
+        $properties->addEquipement($_POST['equipements']);
+        $properties->addAttributesAnswer($_POST['attributesanswers']);
+        $properties->setFile($request->files->get('file'));
         //dd($categories);
-        $categories->setUpdatedAt(new \DateTime());
+        $properties->setUpdatedAt(new \DateTime());
         return $categories;
         //dd($properties);
      }

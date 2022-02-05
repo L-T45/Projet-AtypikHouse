@@ -129,6 +129,9 @@ class CreateProperties extends AbstractController{
 
         $equipements = $_POST["equipements"]; 
         //dd($equipements);
+
+        $attributesanswers = $_POST["attributesanswers"];
+        dd($attributesanswers);
         
        
       
@@ -175,6 +178,14 @@ class CreateProperties extends AbstractController{
                 
                 $equipement = $em->getReference("App\Entity\Equipements", $equipement);
                 $properties->addEquipement($equipement);
+            }
+
+            foreach($attributesanswers as $attributesanswer)
+            {
+
+                $attributesanswer = $em->getReference("App\Entity\Equipements", $attributesanswer);
+                $properties->addAttributesAnswer($attributesanswer);
+
             }
               
             $properties->setCategories($categories);
