@@ -169,7 +169,7 @@ use App\Resolver\PostPictureResolver;
  *                 },   
  * 
  *                   "dashboard/owner/update/properties/{id}"={
- *                      "method"="GET",
+ *                      "method"="POST",
  *                      "path"= "dashboard/owner/update/properties/{id}",
  *                      "deserialize" = false,
  *                  "controller"=App\Controller\UpdatePropertiesController::class,
