@@ -56,9 +56,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                                       "email" ={
  *                                        "type" = "string"
  *                                      },
- *                                       "password" ={
- *                                        "type" = "string"
- *                                      },
  *                                       "address" ={
  *                                        "type" = "string"
  *                                      },
@@ -72,9 +69,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                                        "type" = "string"
  *                                      }, 
  *                                       "country" ={
- *                                        "type" = "string"
- *                                      },
- *                                      "picture" ={
  *                                        "type" = "string"
  *                                      },
  *                                     "file" = {
@@ -190,7 +184,36 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "path"="dashboard/user/{id}/conversations",
  *                  "controller"=App\Controller\LastNewConversations::class,
  *                 
- *               },       
+ *               },      
+ * 
+ *                  "dashboard/update/profilepicture/user/{id}"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/update/profilepicture/user/{id}",
+ *                  "controller"=App\Controller\UpdateProfilePictureController::class,
+ *                  "openapi_context" = {
+ *                 "requestBody" = {
+ *                     "content" = {
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                     "file" = {
+ *                                         "type" = "array",
+ *                                         "items" = {
+ *                                             "type" = "string",
+ *                                             "format" = "binary"
+ *                                         },
+ *                                     },
+ *                                 },
+ *                             },
+ *                         },
+ *                     },
+ *                 },
+ *             },
+ *                  
+ *               }, 
+ *                 
+ *                    
  *                  
  *          }
  * )
