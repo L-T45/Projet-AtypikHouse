@@ -11,25 +11,40 @@ use Symfony\Component\HttpFoundation\Response;
 
 class CategoriesModifier extends AbstractController {
 
-    // Pour le formulaire de delete properties
+    // private $idCategory;
+    // private $CategoriesRepository;
+    // private $title;
+    // private $slug;
 
-    private $idUser;
-    private $CategoriesRepository;
-    private $title;
+    // public function UpdateCategories(Request $request, CategoriesRepository $CategoriesRepository): Response{
 
-    public function UpdateCategories(Request $request, UserRepository $UserRepository, UserPasswordEncoderInterface $encoder): Response{
+    //     $category = Array();
+    //     $category = new Categories();
 
-        $category = Array();
-        $category = new Category();
-        $category = $this->getCategory();
+    //     $data = json_decode($request->getContent(), true);
 
-        $data = json_decode($request->getContent(), true);
+    //     $title = $data["title"];
+    //     $slug = $data["slug"];
+    //     $idCategory = $data["id"];
 
-        $title = $data["title"];
-        $idUser = $data["id"];
+    //     $this->CategoriesRepository = $CategoriesRepository;
+    //     $CategoriesTitle = $this->CategoriesRepository->modifier($idCategory, $title, $slug);
 
-        $this->categoryRepository = $categoryRepository;
-        $categoryTitle = $this->categoryRepository->modifier($idUser, $title);
+    //     return $response = new Response('Catégorie modifié avec succès', Response::HTTP_OK,['content-type' => 'application/json']);
+
+    // }
+
+    public function UpdateCategories(Request $request) {
+
+        $data = $request->getContent();
+        $categories = new Categories();
+
+        dd($data['title']);
+        
+        $categories->setTitle($_POST['title']);
+
+        $categories->setUpdatedAt(new \DateTime());
+        return $categories;
 
     }
 
