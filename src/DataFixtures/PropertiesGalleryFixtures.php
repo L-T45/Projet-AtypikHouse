@@ -31,7 +31,6 @@ class PropertiesGalleryFixtures extends Fixture implements DependentFixtureInter
             $properties_gallery[$i] = new PropertiesGallery();
             $properties_gallery[$i]->setPicture($faker->numberbetween(1, 580) . ".webp");
             $properties_gallery[$i]->setFilePath($faker->numberbetween(1, 580) . ".webp");
-            $properties_gallery[$i]->setAlt($faker->text);
             $properties_gallery[$i]->setProperties($properties[$i]);
             $manager->persist($properties_gallery[$i]);
 

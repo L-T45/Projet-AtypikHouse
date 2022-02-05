@@ -96,6 +96,16 @@ class Attributes
      */
     private $attributesAnswers;
 
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $response_type;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $required;
+
     public function __construct()
     {
        
@@ -184,6 +194,30 @@ class Attributes
                 $attributesAnswer->setAttributes(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getResponseType(): ?string
+    {
+        return $this->response_type;
+    }
+
+    public function setResponseType(string $response_type): self
+    {
+        $this->response_type = $response_type;
+
+        return $this;
+    }
+
+    public function getRequired(): ?bool
+    {
+        return $this->required;
+    }
+
+    public function setRequired(bool $required): self
+    {
+        $this->required = $required;
 
         return $this;
     }
