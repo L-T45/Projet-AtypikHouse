@@ -7,6 +7,8 @@ use App\Entity\Attributes;
 use App\Repository\AttributesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;  
+use Symfony\Component\Mailer\MailerInterface; 
+use App\Email\SendEmailModifyListAttributes;
 
 class DeleteAttribute extends AbstractController {
 
@@ -14,7 +16,7 @@ class DeleteAttribute extends AbstractController {
     private $idAttributes;
     private $AttributeRepository;
 
-    public function DeleteAttribute(Request $request, AttributesRepository $AttributesRepository): Response{
+    public function DeleteAttribute(Request $request, AttributesRepository $AttributesRepository, SendEmailModifyListAttributes $SendEmail, MailerInterface $mailer): Response{
 
         $data = $request->query->get('id');
         $idAttributes = $data;
@@ -23,6 +25,7 @@ class DeleteAttribute extends AbstractController {
         $findAttributesToDelete = $this->AttributesRepository->findByIdToDelete($idAttributes);
 
             if($findAttributesToDelete =! []){
+                $SendEmail->DeleteAttributes($mailer, $request);
                 $response = new Response('Attribut supprimé',Response::HTTP_OK,['content-type' => 'application/json']);
             }
             else{  
