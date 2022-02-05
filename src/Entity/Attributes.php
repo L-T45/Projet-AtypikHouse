@@ -97,22 +97,23 @@ class Attributes
     private $attributesAnswers;
 
     /**
+     * @Groups({"admin:attributescategoriesid"})
      * @ORM\Column(type="string", length=20)
      */
     private $response_type;
 
     /**
+     * @Groups({"admin:attributescategoriesid"})
      * @ORM\Column(type="boolean")
      */
     private $required;
 
     public function __construct()
     {
-       
+
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
         $this->attributesAnswers = new ArrayCollection();
-
     }
 
     public function getId(): ?int
