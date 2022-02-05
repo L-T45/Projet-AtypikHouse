@@ -62,13 +62,13 @@ class Attributes
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"attributes:collection", "propertiesid:item", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid"})
+     * @Groups({"attributes:collection", "propertiesid:item", "admin:attributescategoriesid", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"attributes:collection", "propertiesid:item", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate", "update:attribute"})
+     * @Groups({"attributes:collection", "propertiesid:item", "admin:attributescategoriesid", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate", "update:attribute"})
      */
     private $title;
 

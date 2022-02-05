@@ -89,6 +89,15 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
  *                  
  *               }, 
+ *                 
+ *                  "dashboard/admin/attributes/categories/{id}"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/admin/attributes/categories/{id}",
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"admin:attributescategoriesid", "enable_max_depth"=true}},
+ *                  
+ *               }, 
+ *                  
  * 
  *                  "dashboard/admin/update/categories/{id}"={
  *                  "method"="POST",
@@ -210,7 +219,7 @@ class Categories
 
     /**
      * @ORM\OneToMany(targetEntity=Attributes::class, mappedBy="categories")
-     * @Groups({"categories:item", "admin:categoriesid", "propertiesid:item"})
+     * @Groups({"categories:item", "admin:categoriesid", "propertiesid:item", "admin:attributescategoriesid"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $attributes;
