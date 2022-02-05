@@ -146,10 +146,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                                 "properties" = {
  *                                      "title"={
  *                                          "type" = "string"
- *                                          },
- *                                      "slug"={
- *                                          "type" = "string"
- *                                          },                            
+ *                                          },                         
  *                                      "description"={
  *                                          "type" = "string"
  *                                          },

@@ -92,21 +92,4 @@ class CategoriesRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
-    /**
-    * @return Categories[] Returns an array of Categories objects
-    */
-    // public function modifier($id, $title, $slug, $lockMode = null, $lockVersion = null) {
-    //     return $this->createQueryBuilder('c')
-    //         ->update('App\Entity\Categories', 'c')
-    //         ->set('c.title', ':title')
-    //         ->set('c.slug', ':slug')
-    //         ->where('c.id = :id')
-    //         ->setParameter('id', $id)
-    //         ->setParameter('title', $title)
-    //         ->setParameter('slug', $slug)
-    //         ->getQuery()
-    //         ->execute()
-    //         ;                
-    // }
 }
