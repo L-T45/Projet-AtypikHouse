@@ -167,7 +167,7 @@ class Categories
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:item", "categories:write", "admin:categories", "admin:categoriesid", "admin:createcategories"})
+     * @Groups({"categories:item", "categories:write", "admin:categories", "admin:categoriesid", "admin:createcategories", "categories:collection"})
      * 
      */
     private $picture;

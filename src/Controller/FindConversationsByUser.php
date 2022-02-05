@@ -3,25 +3,22 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use App\Repository\UserRepository;
+use App\Repository\ConversationsRepository;
 
 
 class FindConversationsByUser
 {
 
     private $userRepository;
-    
 
-    public function __construct(UserRepository $userRepository)
+
+    public function __construct(ConversationsRepository $convRepo)
     {
-        $this->userRepository = $userRepository;
-        
+        $this->convRepo = $convRepo;
     }
 
     public function __invoke(int $id)
     {
-        return $this->userRepository->findConversationsByUser($id);
+        return $this->convRepo->findConversationsByUser($id);
     }
-
 }
-

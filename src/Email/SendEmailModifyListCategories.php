@@ -27,7 +27,7 @@ class SendEmailModifyListCategories extends AbstractController {
         $nbLines = count($findOwners);
 
         // Envoi de mail aux propriétaires !            
-        if($findOwnersCheck = true) {
+        if($findOwnersCheck != []) {
             $this->sendEmailChangeCategorieList($mailer, $request, $nbLines, $findOwners);
         }
     }
@@ -39,7 +39,7 @@ class SendEmailModifyListCategories extends AbstractController {
         $nbLines = count($findOwners);
 
         // Envoi de mail aux propriétaires !            
-        if($findOwnersCheck = true) {
+        if($findOwnersCheck != []) {
             $this->sendEmailChangeCategorieList($mailer, $request, $nbLines, $findOwners);
         }
     }
@@ -51,7 +51,7 @@ class SendEmailModifyListCategories extends AbstractController {
         $nbLines = count($findOwners);
 
         // Envoi de mail aux propriétaires !            
-        if($findOwnersCheck = true) {
+        if($findOwnersCheck != []) {
             $this->sendEmailChangeCategorieList($mailer, $request, $nbLines, $findOwners);
         }
     }

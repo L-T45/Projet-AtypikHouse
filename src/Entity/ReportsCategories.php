@@ -62,11 +62,11 @@ class ReportsCategories
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"admin:reportsid", "read:reportsid", "admin:reports", "read:reports"})
+     * @Groups({"reportscategories:collection", "admin:reports", "user:reports", "reports:item", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid"})
      */
     private $reportsobject;
 
-   
+
 
     public function __construct()
     {
