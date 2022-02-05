@@ -38,8 +38,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "path"="dashboard/admin/equipements/create",
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "deserialize" = false, 
- *                  "controller"="App\Email\SendEmailModifyListEquipements::PostNewEquipements",
- *                  "denormalization_context"={"groups"={"createadmin:proequip", "enable_max_depth"=true}},
+ *                  "controller"="App\Email\SendEmailModifyListEquipements::PostNewEquipements"
  *               },
  *          },
  *      itemOperations={
@@ -68,7 +67,7 @@ class Equipements
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"equipements:collection", "equipements:write", "owner:propertiesid", "admin:proequip", "propertiesid:item", "createadmin:proequip"})
+     * @Groups({"equipements:collection", "equipements:write", "owner:propertiesid", "admin:proequip", "propertiesid:item"})
      */
     private $title;
 
