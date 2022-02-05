@@ -16,6 +16,8 @@ use App\Entity\User;
 use App\Entity\PropertiesGallery;
 use App\Entity\Categories;
 use App\Entity\Equipements;
+use App\Entity\AttributesAnswers;
+use Attribute;
 
 class CreateProperties extends AbstractController
 {
@@ -129,6 +131,8 @@ class CreateProperties extends AbstractController
         $capacity = serialize($capacity);
         $capacity = $this->cutChaine($capacity, ':"', '";');
 
+
+
         $equipements = [];
         if (isset($_POST["equipements"])) {
             $equipements = $_POST["equipements"];
@@ -137,6 +141,13 @@ class CreateProperties extends AbstractController
 
 
 
+        $attributesanswers = [];
+        if (isset($_POST["attributesanswers"])) {
+
+            $attributesanswers = $_POST["attributesanswers"];
+        }
+        //dd($_POST["attributesanswers"]);
+        //dd($attributesanswers->attributes);
 
         $postCategories = $_POST["categories"];
         $postCategories = serialize($postCategories);
@@ -181,12 +192,35 @@ class CreateProperties extends AbstractController
                     $properties->addEquipement($equipement);
                 }
             }
+
+
             $properties->setCategories($categories);
             $properties->setUser($user);
 
             $manager->persist($properties);
             $manager->flush();
             $propertiesid = $properties->getId();
+            // $propertiesid = 3;
+
+            if ($attributesanswers && count($attributesanswers) > 0) {
+                foreach ($attributesanswers as $attributesanswer) {
+
+                    // dd($attributesanswer["attributes"]);
+                    $AttributesRef = $em->getReference("App\Entity\Attributes", $attributesanswer["attributes"]);
+                    $propertyRef = $em->getReference("App\Entity\Properties", $propertiesid);
+
+
+                    $newAttributes = new AttributesAnswers();
+                    $newAttributes->setProperties($propertyRef);
+                    $newAttributes->setAttributes($AttributesRef);
+                    $newAttributes->setResponseBool($attributesanswer["response_bool"]);
+                    $newAttributes->setResponseString($attributesanswer["response_string"]);
+                    $newAttributes->setResponseNbr(intval($attributesanswer["response_number"]));
+                    $manager->persist($newAttributes);
+                    $manager->flush();
+                }
+            }
+
 
             return new JsonResponse(['status' => '200', 'id' => $propertiesid, 'title' => 'Votre location de bien a bien été créé'], JsonResponse::HTTP_CREATED);
         } else {

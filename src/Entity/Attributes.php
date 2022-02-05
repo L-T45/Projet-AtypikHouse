@@ -62,13 +62,13 @@ class Attributes
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"attributes:collection", "propertiesid:item", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid"})
+     * @Groups({"attributes:collection", "propertiesid:item", "admin:attributescategoriesid", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"attributes:collection", "propertiesid:item", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate", "update:attribute"})
+     * @Groups({"attributes:collection", "propertiesid:item", "admin:attributescategoriesid", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate", "update:attribute"})
      */
     private $title;
 
@@ -97,22 +97,23 @@ class Attributes
     private $attributesAnswers;
 
     /**
+     * @Groups({"admin:attributescategoriesid"})
      * @ORM\Column(type="string", length=20)
      */
     private $response_type;
 
     /**
+     * @Groups({"admin:attributescategoriesid"})
      * @ORM\Column(type="boolean")
      */
     private $required;
 
     public function __construct()
     {
-       
+
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
         $this->attributesAnswers = new ArrayCollection();
-
     }
 
     public function getId(): ?int
