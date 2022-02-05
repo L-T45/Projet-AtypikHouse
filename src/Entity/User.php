@@ -56,9 +56,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                                       "email" ={
  *                                        "type" = "string"
  *                                      },
- *                                       "password" ={
- *                                        "type" = "string"
- *                                      },
  *                                       "address" ={
  *                                        "type" = "string"
  *                                      },
@@ -72,9 +69,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                                        "type" = "string"
  *                                      }, 
  *                                       "country" ={
- *                                        "type" = "string"
- *                                      },
- *                                      "picture" ={
  *                                        "type" = "string"
  *                                      },
  *                                     "file" = {
@@ -195,30 +189,43 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "security"="is_granted('ROLE_USER')",
  *                  "deserialize"=false,
  *               },
- *                  "dashboard/user/{id}/personal_informations/modifypicture"={
- *                  "method"="PATCH",
- *                  "path"="dashboard/user/{id}/personal_informations/modifypicture",
- *                  "security"="is_granted('ROLE_USER')",
- *                  "deserialize"=false,
- *               },  
- *                  "dashboard/admin/users/details/{id}/modifyblock"={
- *                  "method"="PATCH",
- *                  "path"="dashboard/admin/users/details/{id}/modifyblock",
- *                  "security"="is_granted('ROLE_ADMIN')",
- *                  "deserialize"=false,
- *               },  
- *                  "dashboard/admin/user/{id}/block"={
- *                  "method"="PATCH",
- *                  "path"="dashboard/admin/user/{id}/block",
- *                  "security"="is_granted('ROLE_ADMIN')",
- *                  "deserialize"=false,
- *               },       
- *                  "dashboard/admin/user/{id}/deblock"={
- *                  "method"="PATCH",
- *                  "path"="dashboard/admin/user/{id}/deblock",
- *                  "security"="is_granted('ROLE_ADMIN')",
- *                  "deserialize"=false,
- *               },                
+ * 
+ *                 "lastconversations"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/{id}/conversations",
+ *                  "controller"=App\Controller\LastNewConversations::class,
+ *                 
+ *               },      
+ * 
+ *                  "dashboard/update/profilepicture/user/{id}"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/update/profilepicture/user/{id}",
+ *                  "controller"=App\Controller\UpdateProfilePictureController::class,
+ *                  "openapi_context" = {
+ *                 "requestBody" = {
+ *                     "content" = {
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                     "file" = {
+ *                                         "type" = "array",
+ *                                         "items" = {
+ *                                             "type" = "string",
+ *                                             "format" = "binary"
+ *                                         },
+ *                                     },
+ *                                 },
+ *                             },
+ *                         },
+ *                     },
+ *                 },
+ *             },
+ *                  
+ *               }, 
+ *                 
+ *                    
+ *                  
  *          }
  * )
  * @ApiFilter(SearchFilter::class, properties= {"properties.id": "exact", "properties.title": "exact", "lastname": "exact", "firstname" : "exact", "lastname": "partial", "firstname" : "partial"})
