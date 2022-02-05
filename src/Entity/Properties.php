@@ -224,8 +224,94 @@ use App\Resolver\PostPictureResolver;
  *                         },
  *                     },
  *                 },
+ *                   "comments_properties_id"={
+ *                      "method"="GET",
+ *                      "path"= "comments/properties/{id}",
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"properties:comments", "enable_max_depth"=true}}
+ *                 },
+ *                   "dashboard_owner_properties_{id}"={
+ *                      "method"="GET",
+ *                      "path"= "dashboard/owner/properties/{id}",
+ *                      "force_eager"=false,
+ *                      "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
+ *                 },   
+ * 
+ *                   "dashboard/owner/update/properties/{id}"={
+ *                      "method"="POST",
+ *                      "path"= "dashboard/owner/update/properties/{id}",
+ *                      "deserialize" = false,
+ *                  "controller"=App\Controller\UpdatePropertiesController::class,
+ *                  "openapi_context" = {
+ *                  "requestBody" = {
+ *                     "content" = {
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                      "title"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                      "slug"={
+ *                                          "type" = "string"
+ *                                          },                            
+ *                                      "price"={
+ *                                          "type" = "int"
+ *                                          },
+ *                                      "rooms"={
+ *                                          "type" = "int"
+ *                                          },
+ *                                       "booking"={
+ *                                          "type" = "int"
+ *                                          },
+ *                                        "address"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                        "city"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                        "latitude"={
+ *                                          "type" = "float"
+ *                                          },
+ *                                         "longitude"={
+ *                                          "type" = "float"
+ *                                          },
+ *                                         "bedrooms"={
+ *                                          "type" = "int"
+ *                                          },
+ *                                        "surface"={
+ *                                          "type" = "int"
+ *                                          },
+ *                                       "reference"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                      "zipCode"={
+ *                                          "type" = "int"
+ *                                          },
+ *                                      "country"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                      "capacity"={
+ *                                          "type" = "int"
+ *                                          },
+ *                                     "file" = {
+ *                                         "type" = "array",
+ *                                         "items" = {
+ *                                             "type" = "string",
+ *                                             "format" = "binary"
+ *                                         },
+ *                                     },
+ *                                 },
+ *                             },
+ *                         },
+ *                     },
+ *                 },
  *             },
- *             },
+                
+ *         
+ *                  
+ *               }, 
+ *                  
                 
            
  *                             
@@ -418,6 +504,12 @@ class Properties
      */
     private $fileUrl;
 
+    /**
+     * @ORM\OneToMany(targetEntity=AttributesAnswers::class, mappedBy="properties")
+     * @Groups({"propertiesid:item"})
+     */
+    private $attributesAnswers;
+
 
   
 
@@ -430,6 +522,7 @@ class Properties
         $this->comments = new ArrayCollection();
         $this->propertiesGalleries = new ArrayCollection();
         $this->reports = new ArrayCollection();
+        $this->attributesAnswers = new ArrayCollection();
        
 
     }
@@ -841,6 +934,36 @@ class Properties
     {
         $this->fileUrl = $fileUrl;
         return $this; 
+    }
+
+    /**
+     * @return Collection|AttributesAnswers[]
+     */
+    public function getAttributesAnswers(): Collection
+    {
+        return $this->attributesAnswers;
+    }
+
+    public function addAttributesAnswer(AttributesAnswers $attributesAnswer): self
+    {
+        if (!$this->attributesAnswers->contains($attributesAnswer)) {
+            $this->attributesAnswers[] = $attributesAnswer;
+            $attributesAnswer->setProperties($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttributesAnswer(AttributesAnswers $attributesAnswer): self
+    {
+        if ($this->attributesAnswers->removeElement($attributesAnswer)) {
+            // set the owning side to null (unless already changed)
+            if ($attributesAnswer->getProperties() === $this) {
+                $attributesAnswer->setProperties(null);
+            }
+        }
+
+        return $this;
     }
 
 

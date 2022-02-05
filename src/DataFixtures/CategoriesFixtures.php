@@ -18,15 +18,15 @@ class CategoriesFixtures extends Fixture
     {
 
         $titles = [
-            'Château hanté', 'Cabanes suspendues', 'Container', 'Palais', 'Grotte', 'Igloo', 'Maison de hobbit', 'Maisons bulles', 'Tipi'
+            'Château hanté', 'Cabanes suspendues', 'Container', 'Palais', 'Grotte', 'Igloo', 'Maison de hobbit', 'Maisons bulles', 'Tipi', 'Futuriste'
         ];
 
         $slug = [
-            'chateaux-hantees', 'cabanes-suspendues', 'container', 'palais', 'grotte', 'igloo', 'maison-de-hobbit', 'maisons-bulles', 'tipi'
+            'chateaux-hantees', 'cabanes-suspendues', 'container', 'palais', 'grotte', 'igloo', 'maison-de-hobbit', 'maisons-bulles', 'tipi',  'futuriste'
         ];
 
         $pictures = [
-            'chateau-hantee', 'cabane-suspendue', 'container', 'palais', 'grotte', 'igloo', 'maison-de-hobbit', 'maison-bulle', 'tipi'
+            'chateau-hantee', 'cabane-suspendue', 'container', 'palais', 'grotte', 'igloo', 'maison-de-hobbit', 'maison-bulle', 'tipi',  'futuriste'
         ];
 
         //$n=1;
@@ -35,7 +35,7 @@ class CategoriesFixtures extends Fixture
         $faker = Faker\Factory::create('fr_FR');
         $categories = array();
         // create 20 Categories! Bam!
-        for ($i = 1; $i < 9; $i++) {
+        for ($i = 1; $i < 10; $i++) {
             $categories[$i] = new Categories();
             $categories[$i]->setTitle($titles[$i]);
             $categories[$i]->setSlug($slug[$i]);

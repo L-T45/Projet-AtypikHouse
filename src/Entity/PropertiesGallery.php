@@ -45,9 +45,7 @@ use Symfony\Component\Validator\Constraints\Uuid;
  *                             "schema" = {
  *                                 "type" = "object",
  *                                 "properties" = {
- *                                      "alt"={
- *                                          "type" = "string"
- *                                          },
+
  *                                     "file" = {
  *                                         "type" = "array",
  *                                         "items" = {
@@ -95,12 +93,6 @@ class PropertiesGallery
      * @Groups({"propertiesgallery:collection", "propertiesgallery:write", "owner:propertiesid", "properties:item", "propertiesid:item", "galleryphoto:create"})
      */
     private $picture;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"propertiesgallery:collection", "propertiesgallery:write", "galleryphoto:create"})
-     */
-    private $alt;
 
 
      /**
@@ -161,18 +153,6 @@ class PropertiesGallery
     public function setPicture(string $picture): self
     {
         $this->picture = $picture;
-
-        return $this;
-    }
-
-    public function getAlt(): ?string
-    {
-        return $this->alt;
-    }
-
-    public function setAlt(string $alt): self
-    {
-        $this->alt = $alt;
 
         return $this;
     }

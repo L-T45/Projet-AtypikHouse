@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AttributesRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Core\Annotation\ApiResource;
 use \DateTime;
@@ -56,13 +58,13 @@ class Attributes
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"attributes:collection", "propertiesid:item", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid"})
+     * @Groups({"attributes:collection", "propertiesid:item", "admin:attributescategoriesid", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"attributes:collection", "propertiesid:item", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate", "update:attribute"})
+     * @Groups({"attributes:collection", "propertiesid:item", "admin:attributescategoriesid", "categories:item", "admin:categoriesid", "admin:categattributes", "admin:categattributesid", "admin:attributescreate", "update:attribute"})
      */
     private $title;
 
@@ -85,11 +87,27 @@ class Attributes
      */
     private $categories;
 
+    /**
+     * @ORM\OneToMany(targetEntity=AttributesAnswers::class, mappedBy="attributes")
+     */
+    private $attributesAnswers;
+
+    /**
+     * @ORM\Column(type="string", length=20)
+     */
+    private $response_type;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $required;
+
     public function __construct()
     {
        
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
+        $this->attributesAnswers = new ArrayCollection();
 
     }
 
@@ -142,6 +160,60 @@ class Attributes
     public function setCategories(?Categories $categories): self
     {
         $this->categories = $categories;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|AttributesAnswers[]
+     */
+    public function getAttributesAnswers(): Collection
+    {
+        return $this->attributesAnswers;
+    }
+
+    public function addAttributesAnswer(AttributesAnswers $attributesAnswer): self
+    {
+        if (!$this->attributesAnswers->contains($attributesAnswer)) {
+            $this->attributesAnswers[] = $attributesAnswer;
+            $attributesAnswer->setAttributes($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAttributesAnswer(AttributesAnswers $attributesAnswer): self
+    {
+        if ($this->attributesAnswers->removeElement($attributesAnswer)) {
+            // set the owning side to null (unless already changed)
+            if ($attributesAnswer->getAttributes() === $this) {
+                $attributesAnswer->setAttributes(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getResponseType(): ?string
+    {
+        return $this->response_type;
+    }
+
+    public function setResponseType(string $response_type): self
+    {
+        $this->response_type = $response_type;
+
+        return $this;
+    }
+
+    public function getRequired(): ?bool
+    {
+        return $this->required;
+    }
+
+    public function setRequired(bool $required): self
+    {
+        $this->required = $required;
 
         return $this;
     }

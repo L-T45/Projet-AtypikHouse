@@ -2,6 +2,7 @@
 
 namespace App\Email;
 
+use App\Entity\Equipements;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
@@ -9,14 +10,20 @@ use Symfony\Component\Mime\Email;
 use Symfony\Component\HttpFoundation\Request;    
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\PropertiesRepository;
+use App\Repository\EquipementsRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
 class SendEmailModifyListEquipements extends AbstractController {
 
     private $email; 
+    private $postNewEquipement;
+    private $title;
 
-    public function __construct(PropertiesRepository $PropertiesRepository)
+    public function __construct(PropertiesRepository $PropertiesRepository, EquipementsRepository $EquipementsRepository)
     {
         $this->PropertiesRepository = $PropertiesRepository;
+        $this->EquipementsRepository = $EquipementsRepository;
+        
     }
 
     public function UpdateEquipements(MailerInterface $mailer, Request $request){
@@ -27,20 +34,37 @@ class SendEmailModifyListEquipements extends AbstractController {
         $nbLines = count($findOwners);
 
         // Envoi de mail aux propriétaires !            
-        if($findOwnersCheck = true) {
+        if($findOwnersCheck != []) {
             $this->sendEmailChangeEquipementsList($mailer, $request, $nbLines, $findOwners);
         }
     }
 
-    public function PostNewEquipements(MailerInterface $mailer, Request $request){
+    public function PostNewEquipements(MailerInterface $mailer, Request $request, EntityManagerInterface $manager): Response{
         // Récupéré tous les OWNER 
-        $findOwners = $this->PropertiesRepository->FindByPropertiesPostEquipements();
+        $findOwners = $this->PropertiesRepository->FindByPropertiesPost();
         $findOwnersCheck = $findOwners;   
         $nbLines = count($findOwners);
 
         // Envoi de mail aux propriétaires !            
         if($findOwnersCheck = true) {
-            $this->sendEmailChangeEquipementsList($mailer, $request, $nbLines, $findOwners);
+            $data = json_decode($request->getContent(), true);
+            $title = $data['title'];
+            $findEquipements = $this->EquipementsRepository->findByEquipements($title);
+            $findEquipementsCheck = $findEquipements;
+
+            // On check d'abord si un équipement avec le même titre n'est pas déjà créé avant de créer ce nouvel équipement et en avertir les OWNERS!
+            if($findEquipementsCheck === []) {
+                $postNewEquipement = new Equipements();
+                $postNewEquipement->setTitle($title);
+                $manager->persist($postNewEquipement);
+                $manager->flush();
+                
+                $this->sendEmailChangeEquipementsList($mailer, $request, $nbLines, $findOwners);
+                return new Response("Nouveau équipement posté et notifications envoyées aux propriétaires!",Response::HTTP_OK,['content-type' => 'application/json']);    
+            }
+            else{
+                return new Response("Impossible de créer votre nouvel équipement car un équipement du même titre existe déjà!",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);
+            }
         }
     }
 
@@ -51,13 +75,12 @@ class SendEmailModifyListEquipements extends AbstractController {
         $nbLines = count($findOwners);
 
         // Envoi de mail aux propriétaires !            
-        if($findOwnersCheck = true) {
+        if($findOwnersCheck != []) {
             $this->sendEmailChangeEquipementsList($mailer, $request, $nbLines, $findOwners);
         }
     }
 
     public function sendEmailChangeEquipementsList(MailerInterface $mailer, Request $request, $nbLines, $findOwners): Response{
-        dd($nbLines, $findOwners);
         for($i = 0; $i < $nbLines; $i++){
             $ownersEmail = $findOwners[$i]['email'];
             $email = (new Email())
@@ -68,7 +91,7 @@ class SendEmailModifyListEquipements extends AbstractController {
 
             $mailer->send($email);  
         }
-        return new JsonResponse( [ 'status' => '200', 'title' => 'Notifications envoyées'  ], JsonResponse::HTTP_CREATED );    
+        return new Response("Nouveau équipement posté et notifications envoyées aux propriétaires!",Response::HTTP_OK,['content-type' => 'application/json']);
     }
 
 }

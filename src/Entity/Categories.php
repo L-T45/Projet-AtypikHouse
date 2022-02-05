@@ -123,6 +123,55 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  },
  *               },
  *                 
+ *                  "dashboard/admin/attributes/categories/{id}"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/admin/attributes/categories/{id}",
+ *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"admin:attributescategoriesid", "enable_max_depth"=true}},
+ *                  
+ *               }, 
+ *                  
+ * 
+ *                  "dashboard/admin/update/categories/{id}"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/admin/update/categories/{id}",
+ *                  "deserialize" = false,
+ *                  "controller"=App\Controller\UpdateCategoriesController::class,
+ *                  "openapi_context" = {
+ *                  "requestBody" = {
+ *                     "content" = {
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                      "title"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                      "slug"={
+ *                                          "type" = "string"
+ *                                          },                            
+ *                                      "description"={
+ *                                          "type" = "string"
+ *                                          },
+ *                                     "file" = {
+ *                                         "type" = "array",
+ *                                         "items" = {
+ *                                             "type" = "string",
+ *                                             "format" = "binary"
+ *                                         },
+ *                                     },
+ *                                 },
+ *                             },
+ *                         },
+ *                     },
+ *                 },
+ *             },
+                
+ *         
+ *                  
+ *               }, 
+ *      
+ *                 
  *          }
  * )
  * 
@@ -151,7 +200,7 @@ class Categories
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"categories:item", "categories:write", "admin:categories", "admin:categoriesid", "admin:createcategories"})
+     * @Groups({"categories:item", "categories:write", "admin:categories", "admin:categoriesid", "admin:createcategories", "categories:collection"})
      * 
      */
     private $picture;
@@ -203,7 +252,7 @@ class Categories
 
     /**
      * @ORM\OneToMany(targetEntity=Attributes::class, mappedBy="categories")
-     * @Groups({"categories:item", "admin:categoriesid", "propertiesid:item"})
+     * @Groups({"categories:item", "admin:categoriesid", "propertiesid:item", "admin:attributescategoriesid"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $attributes;

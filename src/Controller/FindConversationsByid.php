@@ -3,25 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\Conversations;
-use App\Repository\ConversationsRepository;
+use App\Repository\MessagesRepository;
+
 
 
 class FindConversationsByid
 {
 
-    private $conversationsRepository;
-    
+    private $messagesRepository;
 
-    public function __construct(ConversationsRepository $conversationsRepository)
+
+    public function __construct(MessagesRepository $messagesRepository)
     {
-        $this->conversationsRepository = $conversationsRepository;
-        
+        $this->messagesRepository = $messagesRepository;
     }
 
     public function __invoke(int $id)
     {
-        return $this->conversationsRepository->findConversationsByid($id);
+        return $this->messagesRepository->findConversationsByid($id);
     }
-
 }
-

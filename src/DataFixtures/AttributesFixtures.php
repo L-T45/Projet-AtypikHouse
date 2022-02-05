@@ -17,19 +17,22 @@ class AttributesFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-        $titles = ['Proche de la mer', 'Convient aux enfants', 'Convient aux personnes âgées', 'Escapade romantique', 'Silencieux', 'Au contact de la nature'];
+        $titles = ['Proche de la mer', 'Enfants de quel age ?', 'Convient aux personnes âgées', 'Détails', 'Silencieux', 'Au contact de la nature', 'A combien de mètre du sol', "Sec ou humide ?", "Combien de gardiens ?", "Aux normes", "Description du payasage"];
+        $types = ["boolean", "number", "boolean", "string", "boolean", "boolean", "number", "string", "number", "boolean", "string"];
 
         // initialisation de l'objet Faker
         $faker = Faker\Factory::create('fr_FR');
         $attributes = array();
         // create 20 Categories! Bam!
-        for ($i = 0; $i < 6; $i++) {
+        for ($i = 0; $i < 10; $i++) {
 
-            $categories[$i] =  $this->getReference('categories_' . $faker->numberBetween(1, 8));
+            $categories[$i] =  $this->getReference('categories_' . $faker->numberBetween(1, 9));
 
             $attributes[$i] = new Attributes();
             $attributes[$i]->setTitle($titles[$i]);
+            $attributes[$i]->setResponseType($types[$i]);
             $attributes[$i]->setCategories($categories[$i]);
+            $attributes[$i]->setRequired($faker->boolean());
             $manager->persist($attributes[$i]);
         }
 
