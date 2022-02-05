@@ -33,7 +33,6 @@ class CreatePropertiesGallery extends AbstractController
     public function newPropertiesGallery(EntityManagerInterface $manager, Request $request, PropertiesGalleryRepository $PropertiesGalleryRepository): Response
     {
         $propertiesGallery = array();
-        $em = $this->getDoctrine()->getManager();
 
         // Données du formulaire de Gallerie photo  
 
@@ -41,7 +40,7 @@ class CreatePropertiesGallery extends AbstractController
         $postProperties = serialize($postProperties);
         $postProperties = $this->cutChaine($postProperties, ':"', '";');
         $properties = new Properties();
-        $properties = $em->getReference("App\Entity\Properties", $postProperties);
+        $properties = $manager->getReference("App\Entity\Properties", $postProperties);
 
         // $picture = $_POST["picture"]; 
         // $picture = serialize($picture);
