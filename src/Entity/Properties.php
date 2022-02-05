@@ -62,6 +62,7 @@ use App\Resolver\PostPictureResolver;
  *                  "method"="POST",
  *                  "path"="dashboard/owner/properties/create",
  *                  "deserialize" = false,
+ *                  "security"= "is_granted('ROLE_USER')",
  *                  "controller"=App\Requests\CreateProperties::class,
  *                  "openapi_context" = {
  *                  "requestBody" = {
