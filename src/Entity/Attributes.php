@@ -103,7 +103,7 @@ class Attributes
     private $response_type;
 
     /**
-     * @Groups({"admin:attributescategoriesid"})
+     * @Groups({"admin:attributescategoriesid", "propertiesid:item"})
      * @ORM\Column(type="boolean")
      */
     private $required;
