@@ -102,6 +102,4 @@ class UpdatePropertiesController
         return new JsonResponse(['status' => '200', 'title' => 'Votre bien a été modifié avec succès'], JsonResponse::HTTP_CREATED);
        
      }
-    
-
 }
