@@ -20,7 +20,7 @@ class UserController
         $manager->flush();
 
         if (!($user instanceof User)) {
-            throw new \RuntimeException('Propriété attendue');
+            throw new \RuntimeException('User attendue');
         }
 
         return new JsonResponse(["status" => 200, "message" => "Salut !!"]);
@@ -33,7 +33,7 @@ class UserController
         $manager->flush();
 
         if (!($user instanceof User)) {
-            throw new \RuntimeException('Propriété attendue');
+            throw new \RuntimeException('User attendue');
         }
         return new JsonResponse(["status" => 200, "message" => "Salut !!"]);
     }

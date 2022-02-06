@@ -239,6 +239,9 @@ use App\Resolver\PostPictureResolver;
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
  *                 },
+ * 
+ * 
+ * 
  *                   "dashboard/owner/update/properties/{id}"={
  *                      "method"="POST",
  *                      "path"= "dashboard/owner/update/properties/{id}",
@@ -375,13 +378,13 @@ class Properties
      */
     private $city;
 
-      /**
+    /**
      * @ORM\Column(type="float")
      * @Groups({"propertiesid:item", "properties:item", "owner:propertiesid", "properties:collection"})
      */
     private $latitude;
- 
-      /**
+
+    /**
      * @ORM\Column(type="float")
      * @Groups({"propertiesid:item", "properties:item", "owner:propertiesid", "properties:collection"})
      */
@@ -508,7 +511,7 @@ class Properties
     private $attributesAnswers;
 
 
-  
+
 
     public function __construct()
     {
@@ -520,8 +523,6 @@ class Properties
         $this->propertiesGalleries = new ArrayCollection();
         $this->reports = new ArrayCollection();
         $this->attributesAnswers = new ArrayCollection();
-       
-
     }
 
     public function getId(): ?int
@@ -757,7 +758,7 @@ class Properties
         return $this;
     }
 
-   
+
     /**
      * @return Collection|Reservations[]
      */
@@ -914,7 +915,7 @@ class Properties
         $this->file = $file;
         return $this;
     }
-  
+
     /**
      * @return string|null
      */
@@ -930,7 +931,7 @@ class Properties
     public function setFileUrl(?string $fileUrl): Properties
     {
         $this->fileUrl = $fileUrl;
-        return $this; 
+        return $this;
     }
 
     /**
@@ -962,8 +963,4 @@ class Properties
 
         return $this;
     }
-
-
-
-
 }
