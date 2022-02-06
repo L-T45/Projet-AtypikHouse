@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20220205154751 extends AbstractMigration
+final class Version20220206165940 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -38,8 +38,8 @@ final class Version20220205154751 extends AbstractMigration
         $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, email VARCHAR(180) NOT NULL, roles LONGTEXT NOT NULL COMMENT \'(DC2Type:json)\', password VARCHAR(255) NOT NULL, lastname VARCHAR(255) NOT NULL, phone VARCHAR(15) NOT NULL, address VARCHAR(255) NOT NULL, city VARCHAR(255) NOT NULL, birthdate DATE NOT NULL, zip_code INT NOT NULL, created_at DATETIME NOT NULL, updated_at DATETIME NOT NULL, emailvalidated TINYINT(1) DEFAULT NULL, firstname VARCHAR(255) NOT NULL, country VARCHAR(255) NOT NULL, file_path VARCHAR(255) DEFAULT NULL, picture VARCHAR(255) DEFAULT NULL, is_blocked TINYINT(1) DEFAULT NULL, UNIQUE INDEX UNIQ_8D93D649E7927C74 (email), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('CREATE TABLE user_conversations (user_id INT NOT NULL, conversations_id INT NOT NULL, INDEX IDX_2CDCB6A1A76ED395 (user_id), INDEX IDX_2CDCB6A1FE142757 (conversations_id), PRIMARY KEY(user_id, conversations_id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE attributes ADD CONSTRAINT FK_319B9E70A21214B7 FOREIGN KEY (categories_id) REFERENCES categories (id) ON DELETE CASCADE');
-        $this->addSql('ALTER TABLE attributes_answers ADD CONSTRAINT FK_DCDFCC3C3691D1CA FOREIGN KEY (properties_id) REFERENCES properties (id)');
-        $this->addSql('ALTER TABLE attributes_answers ADD CONSTRAINT FK_DCDFCC3CBAAF4009 FOREIGN KEY (attributes_id) REFERENCES attributes (id)');
+        $this->addSql('ALTER TABLE attributes_answers ADD CONSTRAINT FK_DCDFCC3C3691D1CA FOREIGN KEY (properties_id) REFERENCES properties (id) ON DELETE CASCADE');
+        $this->addSql('ALTER TABLE attributes_answers ADD CONSTRAINT FK_DCDFCC3CBAAF4009 FOREIGN KEY (attributes_id) REFERENCES attributes (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE comments ADD CONSTRAINT FK_5F9E962AA76ED395 FOREIGN KEY (user_id) REFERENCES user (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE comments ADD CONSTRAINT FK_5F9E962AD9A7F869 FOREIGN KEY (reservations_id) REFERENCES reservations (id) ON DELETE CASCADE');
         $this->addSql('ALTER TABLE messages ADD CONSTRAINT FK_DB021E96FE142757 FOREIGN KEY (conversations_id) REFERENCES conversations (id) ON DELETE CASCADE');
