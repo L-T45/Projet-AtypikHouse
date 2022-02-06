@@ -43,7 +43,24 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                     "path"= "properties/comments/{id}/reports",
  *                     "force_eager"=false,
  *                     "denormalization_context"={"groups"={"reports:comments", "comments:reports", "reportscategories:reports", "user:reports", "enable_max_depth"=true}}, 
+ *                },  
+ *  
+ *              "dashboard/admin/approve-report/{id}"={
+ *              "method"="POST",
+ *              "path"= "dashboard/admin/reports/approve/{id}",
+ *              "security"= "is_granted('ROLE_ADMIN')",
+ *              "controller"="App\Controller\ReportsController::approveReport",
  *                },   
+ *              "dashboard/admin/disapprove-report/{id}"={
+ *                     "method"="POST",
+ *                     "path"= "dashboard/admin/reports/disapprove/{id}",
+ *                     "security"= "is_granted('ROLE_ADMIN')",
+ *                     "controller"="App\Controller\ReportsController::disapproveReport",
+ *                },   
+ * 
+ * 
+ * 
+ * 
  *          },
  *      itemOperations={
  * 
@@ -96,7 +113,7 @@ class Reports
      */
     private $reportstate;
 
-      /**
+    /**
      * @ORM\Column(type="text")
      * @Groups({"reports:collection", "propertiesid:item", "reports:write", "read:reports", "read:reportsid", "admin:reports", "admin:reportsid", "reports:properties", "reports:comments"})
      */
@@ -128,7 +145,7 @@ class Reports
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $comments;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="reports")
      * @Groups({"reports:properties", "reports:comments", "admin:reportsid", "read:reportsid", "admin:reports"})
@@ -136,19 +153,18 @@ class Reports
      */
     private $user;
 
-   
 
-  
 
-    
+
+
+
     public function __construct()
     {
-        
-        $this->created_at = new \DateTime();
 
+        $this->created_at = new \DateTime();
     }
 
-   
+
 
     public function getId(): ?int
     {
@@ -238,10 +254,4 @@ class Reports
 
         return $this;
     }
-
-    
-
-   
-
-
 }
