@@ -27,21 +27,75 @@ class UpdatePropertiesController
         $properties = $request->attributes->get('data');
         if (isset($_POST['title'])) {
 
-            $properties->setTitle($_POST['title']);
-            //dd($_POST['title']);
+            if (!($properties instanceof Properties)) {
+                throw new \RuntimeException('Propriété attendue');
+            }
 
+            if (isset($_POST['title'])) {
+                $properties->setTitle($_POST['title']);
+            }
+            if (isset($_POST['category'])) {
+
+                $categoryRef = $this->manager->getReference("App\Entity\Equipements", $_POST['category']);
+                $properties->setCategories($categoryRef);
+                //dd($_POST['title']);
+
+            }
+            $this->manager->persist($properties);
+            $this->manager->flush();
+            return new Response('Propriétés modifiés', Response::HTTP_OK, ['content-type' => 'application/json']);
         }
-        if (isset($_POST['category'])) {
 
-            $categoryRef = $this->manager->getReference("App\Entity\Equipements", $_POST['category']);
-            $properties->setCategories($categoryRef);
-            //dd($_POST['title']);
+        // if(isset($_POST['slug'])) {
+        //     $properties->setSlug($_POST['slug']);
+        // }
+        // if(isset($_POST['price'])) {
+        //     $properties->setPrice($_POST['price']);
+        // }
+        // if(isset($_POST['rooms'])) {
+        //     $properties->setRooms($_POST['rooms']);
+        // }
+        // if(isset($_POST['booking'])) {
+        //     $properties->setBooking($_POST['booking']);
+        // }
+        // if(isset($_POST['address'])) {
+        //     $properties->setAddress($_POST['address']);
+        // }
+        // if(isset($_POST['latitude'])) {
+        //     $properties->setLatitude($_POST['latitude']);
+        // }
+        // if(isset($_POST['longitude'])) {
+        //     $properties->setLongitude($_POST['longitude']);
+        // }
+        // if(isset($_POST['bedrooms'])) {
+        //     $properties->setBedrooms($_POST['bedrooms']);
+        // }
+        // if(isset($_POST['surface'])) {
+        //     $properties->setSurface($_POST['surface']);
+        // }
+        // if(isset($_POST['reference'])) {
+        //     $properties->setReference($_POST['reference']);
+        // }
+        // if(isset($_POST['zipCode'])) {
+        //     $properties->setZipCode($_POST['zipCode']);
+        // }
+        // if(isset($_POST['country'])) {
+        //     $properties->setCountry($_POST['country']);
+        // }
 
-        }
-        $this->manager->persist($properties);
-        $this->manager->flush();
-        return new Response('Propriétés modifiés', Response::HTTP_OK, ['content-type' => 'application/json']);
+
+
     }
+
+
+
+
+
+
+
+
+
+
 
     public function updateAttributesAnswers(Request $request)
     {
@@ -151,6 +205,10 @@ class UpdatePropertiesController
             throw new \RuntimeException('Propriété attendue');
         }
         $properties->setLatitude($post->lat);
+        $properties->setLongitude($post->lat);
+        $properties->setCity($post->lat);
+        $properties->setAddress($post->lat);
+        $properties->setCountry($post->lat);
 
 
 

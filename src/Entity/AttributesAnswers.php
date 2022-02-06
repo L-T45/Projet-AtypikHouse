@@ -42,12 +42,14 @@ class AttributesAnswers
 
     /**
      * @ORM\ManyToOne(targetEntity=Properties::class, inversedBy="attributesAnswers")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $properties;
 
     /**
      * @ORM\ManyToOne(targetEntity=Attributes::class, inversedBy="attributesAnswers")
      * @Groups({"propertiesid:item"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $attributes;
 

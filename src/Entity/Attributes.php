@@ -89,6 +89,7 @@ class Attributes
 
     /**
      * @ORM\OneToMany(targetEntity=AttributesAnswers::class, mappedBy="attributes")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $attributesAnswers;
 
@@ -99,7 +100,7 @@ class Attributes
     private $response_type;
 
     /**
-     * @Groups({"admin:attributescategoriesid"})
+     * @Groups({"admin:attributescategoriesid", "propertiesid:item"})
      * @ORM\Column(type="boolean")
      */
     private $required;

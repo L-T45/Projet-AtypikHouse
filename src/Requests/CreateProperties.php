@@ -11,13 +11,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\PropertiesRepository;
-
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Gesdinet\JWTRefreshTokenBundle\Entity\RefreshToken;
 use App\Entity\User;
 use App\Entity\PropertiesGallery;
 use App\Entity\Categories;
 use App\Entity\Equipements;
 use App\Entity\AttributesAnswers;
 use Attribute;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class CreateProperties extends AbstractController
 {
@@ -43,6 +45,7 @@ class CreateProperties extends AbstractController
     private $categories;
     private $propertiesgallery;
     private $user;
+    private $CheckNewToken;
 
     public function cutChaine($string, $start, $end)
     {
@@ -55,12 +58,10 @@ class CreateProperties extends AbstractController
     }
 
 
-
-    public function __invoke(EntityManagerInterface $manager, Request $request, PropertiesRepository $PropertiesRepository): Response
+    public function __invoke(EntityManagerInterface $manager, Request $request, PropertiesRepository $PropertiesRepository, JWTTokenManagerInterface $JWTManager, RefreshToken $RefreshJWTToken): Response
     {
         $properties = array();
         $properties = new Properties();
-        $em = $this->getDoctrine()->getManager();
 
 
         // Données du formulaire de properties  
@@ -120,18 +121,11 @@ class CreateProperties extends AbstractController
         $country = serialize($country);
         $country = $this->cutChaine($country, ':"', '";');
 
-        // $picture = $_POST["picture"]; 
-        // $picture = serialize($picture);
-        // $picture = $this->cutChaine($picture, ':"', '";');
-
         $file = $request->files->get('file');
-
 
         $capacity = $_POST["capacity"];
         $capacity = serialize($capacity);
         $capacity = $this->cutChaine($capacity, ':"', '";');
-
-
 
         $equipements = [];
         if (isset($_POST["equipements"])) {
@@ -139,28 +133,42 @@ class CreateProperties extends AbstractController
             //dd($equipements);
         }
 
-
-
         $attributesanswers = [];
         if (isset($_POST["attributesanswers"])) {
 
             $attributesanswers = $_POST["attributesanswers"];
         }
-        //dd($_POST["attributesanswers"]);
-        //dd($attributesanswers->attributes);
 
         $postCategories = $_POST["categories"];
         $postCategories = serialize($postCategories);
         $postCategories = $this->cutChaine($postCategories, ':"', '";');
         $categories = new Categories();
-        $categories = $em->getReference("App\Entity\Categories", $postCategories);
-
+        $categories = $manager->getReference("App\Entity\Categories", $postCategories);
 
         $postUser = $_POST["user"];
         $postUser = serialize($postUser);
         $postUser = $this->cutChaine($postUser, ':"', '";');
         $user = new User();
-        $user = $em->getReference("App\Entity\User", $postUser);
+        $user = $manager->getReference("App\Entity\User", $postUser);
+
+
+        // $this->PropertiesRepository = $PropertiesRepository;
+        //     $findPropertiesUser = $this->PropertiesRepository->FindByUserCreateProperties($postUser);
+
+        //     if ($findPropertiesUser[0]['roles'] == ["ROLE_USER"]) {
+        //         $user->setRoles(['ROLE_USER','ROLE_OWNER']);
+        //         $manager->persist($user);
+        //         $manager->flush();
+        //         $NewToken = $JWTManager->create($user);
+        //         $NewRefreshToken = $RefreshJWTToken;
+        //         dd($NewRefreshToken);
+        //         $CheckNewToken = $NewToken;
+        //     }
+        //     else {
+        //         $CheckNewToken = "";
+        //         dd("nop");
+        //     }
+
 
         $this->PropertiesRepository = $PropertiesRepository;
         $findProperties = $this->PropertiesRepository->findAddress($address);
@@ -188,11 +196,10 @@ class CreateProperties extends AbstractController
             if ($equipements && count($equipements) > 0) {
                 foreach ($equipements as $equipement) {
 
-                    $equipement = $em->getReference("App\Entity\Equipements", $equipement);
+                    $equipement = $manager->getReference("App\Entity\Equipements", $equipement);
                     $properties->addEquipement($equipement);
                 }
             }
-
 
             $properties->setCategories($categories);
             $properties->setUser($user);
@@ -200,15 +207,27 @@ class CreateProperties extends AbstractController
             $manager->persist($properties);
             $manager->flush();
             $propertiesid = $properties->getId();
-            // $propertiesid = 3;
+            
+            $this->PropertiesRepository = $PropertiesRepository;
+            $findPropertiesUser = $this->PropertiesRepository->FindByUserCreateProperties($postUser);
 
+            if ($findPropertiesUser[0]['roles'] == ["ROLE_USER"]) {
+                $user->setRoles(['ROLE_USER','ROLE_OWNER']);
+                $manager->persist($user);
+                $manager->flush();
+                $NewToken = $JWTManager->create($user);
+                //$NewRefreshToken = $RefreshToken->create($user);
+                $CheckNewToken = $NewToken;
+            }
+            else {
+                $CheckNewToken = "";
+            }
+    
             if ($attributesanswers && count($attributesanswers) > 0) {
                 foreach ($attributesanswers as $attributesanswer) {
 
-                    // dd($attributesanswer["attributes"]);
-                    $AttributesRef = $em->getReference("App\Entity\Attributes", $attributesanswer["attributes"]);
-                    $propertyRef = $em->getReference("App\Entity\Properties", $propertiesid);
-
+                    $AttributesRef = $manager->getReference("App\Entity\Attributes", $attributesanswer["attributes"]);
+                    $propertyRef = $manager->getReference("App\Entity\Properties", $propertiesid);
 
                     $newAttributes = new AttributesAnswers();
                     $newAttributes->setProperties($propertyRef);
@@ -221,8 +240,14 @@ class CreateProperties extends AbstractController
                 }
             }
 
+            if($CheckNewToken != ""){
+                return new JsonResponse(['status' => '200', 'Properties id' => $propertiesid, "New token" => $NewToken, 'title' => 'Votre location de bien a bien été créé'], JsonResponse::HTTP_CREATED);
+            }
+            else{
+                return new JsonResponse(['status' => '200', 'Properties id' => $propertiesid, 'title' => 'Votre location de bien a bien été créé'], JsonResponse::HTTP_CREATED);
+            }
 
-            return new JsonResponse(['status' => '200', 'id' => $propertiesid, 'title' => 'Votre location de bien a bien été créé'], JsonResponse::HTTP_CREATED);
+            
         } else {
             return new JsonResponse(['status' => '400', 'title' => 'Bad Request', 'message' => 'Création de votre location de bien impossible car un bien est déjà créé à cette adresse !'], JsonResponse::HTTP_CREATED);
         }
