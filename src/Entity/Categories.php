@@ -27,14 +27,13 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *      collectionOperations={
  *            "get"={},
  *            "post"={}, 
- * 
- *             "dashboard/admin/categories"={
- *                  "method"="GET",
- *                  "path"="dashboard/admin/categories",
- *                  "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
- *               }, 
- * 
- *               "dashboard/admin/categories/create"={
+ *            "dashboard/admin/categories"={
+ *                 "method"="GET",
+ *                 "path"="dashboard/admin/categories",
+ *                 "security"= "is_granted('ROLE_ADMIN')",
+ *                 "normalization_context"={"groups"={"admin:categories", "enable_max_depth"=true}},
+ *              },   
+ *                "dashboard/admin/categories/create"={
  *                  "method"="POST",
  *                  "path"="dashboard/admin/categories/create",
  *                  "deserialize" = false,
@@ -77,18 +76,52 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *          },
  * 
  *      itemOperations={
- *            "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},
- *           
+ *          "get"={"normalization_context"={"groups"={"categories:collection", "categories:item"}}},
  *          "put"={},
+ *          "patch"={},
  *          "delete"={},
- *                  
  *                  "dashboard/admin/categories/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/categories/{id}",
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
- *                  
- *               }, 
+ *               },  
+ *                  "dashboard/admin/categories/{id}"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/admin/categories/{id}",
+ *                  "controller"="App\Controller\CategoriesModifier::UpdateCategories",
+ *                  "security"="is_granted('ROLE_ADMIN')",
+ *                  "deserialize"=false,
+ *                  "openapi_context"= {
+ *                      "requestBody" = {
+ *                          "content" = {
+ *                              "multipart/form-data" = {
+ *                                  "schema" = {
+ *                                      "type" = "object",
+ *                                      "properties" = {
+ *                                          "title" = {
+ *                                              "type" = "string"
+ *                                          },
+ *                                          "slug" = {
+ *                                              "type" = "string"
+ *                                          },
+ *                                          "description" = {
+ *                                              "type" = "string"
+ *                                          },
+ *                                          "file" = {
+ *                                              "type" = "array",
+ *                                              "items" = {
+ *                                                  "type" = "string",
+ *                                                  "format" = "binary"
+ *                                              },
+ *                                          },
+ *                                      },
+ *                                  },
+ *                              },
+ *                          },
+ *                      },
+ *                  },
+ *               },
  *                 
  *                  "dashboard/admin/attributes/categories/{id}"={
  *                  "method"="GET",
@@ -103,6 +136,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "method"="POST",
  *                  "path"="dashboard/admin/update/categories/{id}",
  *                  "deserialize" = false,
+ *                  "security" = "is_granted('ROLE_ADMIN')",
  *                  "controller"=App\Controller\UpdateCategoriesController::class,
  *                  "openapi_context" = {
  *                  "requestBody" = {
@@ -113,10 +147,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                                 "properties" = {
  *                                      "title"={
  *                                          "type" = "string"
- *                                          },
- *                                      "slug"={
- *                                          "type" = "string"
- *                                          },                            
+ *                                          },                         
  *                                      "description"={
  *                                          "type" = "string"
  *                                          },

@@ -14,20 +14,28 @@ class UpdateCategoriesController
      {
 
         $categories = $request->attributes->get('data');
-        //dd($categories);
+        
         if(!($categories instanceof Categories)) {
             throw new \RuntimeException('Catégorie attendue');
         }   
         
-        
-        //dd($_FILES);
-        $categories->setTitle($_POST['title']);
-        //dd($_POST['title']);
-        $categories->setFile($request->files->get('file'));
-        //dd($categories);
+        if(isset($_POST['title'])) {
+            $categories->setTitle($_POST['title']);
+        }
+
+        if(isset($_POST['description'])) {
+            $categories->setDescription($_POST['description']);
+        }
+
+        $getFile = $request->files->get('file');
+
+        if(isset($getFile)) {
+            $categories->setFile($getFile);
+            $categories->setPicture($getFile);
+        }
+
         $categories->setUpdatedAt(new \DateTime());
         return $categories;
-        //dd($properties);
      }
 
 }

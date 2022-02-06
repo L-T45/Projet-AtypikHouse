@@ -24,9 +24,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                   "method"="GET",
  *                   "path"="dashboard/admin/equipements",
  *                   "force_eager"=false,
+ *                   "security"= "is_granted('ROLE_ADMIN')",
  *                   "normalization_context"={"groups"={"equipements:collection", "enable_max_depth"=true}}
- *                 },    
- *               
+ *                 },               
  *                  "dashboard/admin/properties/equipements"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/properties/equipements",
@@ -41,17 +41,24 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "controller"="App\Email\SendEmailModifyListEquipements::PostNewEquipements"
  *               },
  *          },
- *      itemOperations={
- *          
+ *      itemOperations={          
  *          "get"={"normalization_context"={"groups"={"equipements:collection", "equipements:item","read:equipements"}}},
+ *          "patch"={},
  *          "put"={"security"= "is_granted('ROLE_ADMIN')"},
  *          "delete"={},
  *              "dashboard/admin/properties/equipments/{id}"={
  *                   "method"="GET",
  *                   "path"="dashboard/admin/properties/equipments/{id}",
  *                   "force_eager"=false,
+ *                   "security"= "is_granted('ROLE_ADMIN')",
  *                   "normalization_context"={"groups"={"equipements:collection", "equipements:item", "enable_max_depth"=true}}
  *                 }, 
+ *                  "dashboard/admin/equipements/{id}"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/admin/equipements/{id}",
+ *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                  "deserialize" = false, 
+ *              },
  *          }
  * )
  */

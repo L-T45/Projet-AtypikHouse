@@ -24,33 +24,29 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *      paginationClientItemsPerPage= true,
  *      collectionOperations={
  *            "get"={},
- *            "post"={},             
- * 
+ *            "post"={},
  *                  "dashboard/admin/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/conversations",
- *                   "controller"=App\Controller\LastNewConversations::class,
- *                  
- *               },
- *             
+ *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                  "controller"=App\Controller\LastNewConversations::class,                
+ *               },            
  *          },
  *      itemOperations={
- * 
  *          "get"={"normalization_context"={"groups"={"conversations:collection", "conversations:item"}}},
  *          "put"={"security"= "is_granted('ROLE_USER')"},
  *          "delete"={},            
- *               "dashboard/user/conversations/{id}"={
+ *                  "dashboard/user/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/conversations/{id}",
- *                  "controller"=App\Controller\FindConversationsByid::class 
- *                  
- *                  
+ *                  "security"= "is_granted('ROLE_USER')",
+ *                  "normalization_context"={"groups"={"user:conversid"}}, *                  
  *               }, 
  *                  "dashboard/admin/conversations/{id}"={
  *                  "method"="GET",
- *                  "path"="dashboard/admin/conversations/{id}",  
- *                  "controller"=App\Controller\FindConversationsByid::class
- *                  
+ *                  "path"="dashboard/admin/conversations/{id}",
+ *                  "security"= "is_granted('ROLE_ADMIN')", 
+ *                  "normalization_context"={"groups"={"admin:conversid"}},                  
  *               }, 
  *          }
  * )

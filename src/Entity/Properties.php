@@ -29,38 +29,37 @@ use App\Resolver\PostPictureResolver;
  *            "get"={},
  *            "post"={},
  *                 "lastnewproperties"={
- *                      "method"="GET",
- *                      "path"="home/lastproperties",
- *                      "controller"=App\Controller\LastNewProperties::class,
- *                      "force_eager"=false,
- *                      "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
+ *                 "method"="GET",
+ *                 "path"="home/lastproperties",
+ *                 "controller"=App\Controller\LastNewProperties::class,
+ *                 "force_eager"=false,
+ *                 "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
+ *                 },
+ *                  "properties_map"={
+ *                  "method"="GET",
+ *                  "path"="properties/map",
+ *                  "force_eager"=false,
+ *                  "pagination_enabled"= false,
+ *                  "normalization_context"={"groups"={"properties:collection", "properties:map", "enable_max_depth"=true}}
+ *                 },
+ *                  "properties_ids"={
+ *                  "method"="GET",
+ *                  "path"="properties/ids",
+ *                  "force_eager"=false,
+ *                  "pagination_enabled"= false,
+ *                  "normalization_context"={"groups"={"properties:ids", "enable_max_depth"=true}}
  *                 }, 
- *                  
- *                   "properties_map"={
- *                      "method"="GET",
- *                      "path"="properties/map",
- *                      "force_eager"=false,
- *                      "pagination_enabled"= false,
- *                      "normalization_context"={"groups"={"properties:collection", "properties:map", "enable_max_depth"=true}}
- *                 }, 
- * 
- *                   "properties_ids"={
- *                      "method"="GET",
- *                      "path"="properties/ids",
- *                      "force_eager"=false,
- *                      "pagination_enabled"= false,
- *                      "normalization_context"={"groups"={"properties:ids", "enable_max_depth"=true}}
- *                 }, 
- * 
  *                  "dashboard/admin/properties"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/properties",
+ *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:properties", "enable_max_depth"=true}}, 
- *               }, 
+ *                 }, 
  *              
  *              "api/dashboard/owner/properties/create"={
  *                  "method"="POST",
  *                  "path"="dashboard/owner/properties/create",
+ *                  "security"= "is_granted('ROLE_USER')",
  *                  "deserialize" = false,
  *                  "controller"=App\Requests\CreateProperties::class,
  *                  "openapi_context" = {
@@ -140,20 +139,92 @@ use App\Resolver\PostPictureResolver;
  * 
  *          },
  *      itemOperations={
- *          "get"={"normalization_context"={"groups"={"propertiesid:item", "properties:id"}}},       
- *          "put"={},
+ *          "get"={"normalization_context"={"groups"={"propertiesid:item", "properties:id"}}}, 
+ *          "patch"={},
+ *          "put"={"security"= "is_granted('ROLE_OWNER', 'ROLE_ADMIN')"},
  *          "delete"={},
- *               "dashboard_admin_properties_id"={
- *                      "method"="GET",
- *                      "path"= "dashboard/admin/properties/{id}",
- *                      "force_eager"=false,
- *                      "normalization_context"={"groups"={"properties:collection", "properties:item", "admin:propertiesid", "enable_max_depth"=true}}
- *                 },
+ *                "dashboard_admin_properties_id"={
+ *                "method"="GET",
+ *                "path"= "dashboard/admin/properties/{id}",
+ *                "force_eager"=false,
+ *                "security"= "is_granted('ROLE_ADMIN')",
+ *                "normalization_context"={"groups"={"properties:collection", "properties:item", "admin:propertiesid", "enable_max_depth"=true}}
+ *                },
  *                "dashboard_user_properties_id"={
- *                      "method"="GET",
- *                      "path"= "dashboard/user/properties/{id}",
- *                      "force_eager"=false,
- *                      "normalization_context"={"groups"={"properties:user", "enable_max_depth"=true}}
+ *                "method"="GET",
+ *                "path"= "dashboard/user/properties/{id}",
+ *                "force_eager"=false,
+ *                "normalization_context"={"groups"={"properties:user", "enable_max_depth"=true}}
+ *                },
+ *                "comments_properties_id"={
+ *                "method"="GET",
+ *                "path"= "comments/properties/{id}",
+ *                "force_eager"=false,
+ *                "normalization_context"={"groups"={"properties:comments", "enable_max_depth"=true}}
+ *                },
+ *                "dashboard_owner_properties_{id}"={
+ *                "method"="GET",
+ *                "path"= "dashboard/owner/properties/{id}",
+ *                "force_eager"=false,
+ *                "security"= "is_granted('ROLE_OWNER')",
+ *                "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
+ *                },  
+ *                "dashboard/owner/properties/details/{id}/modifypropertiesinformations"={
+ *                "method"="PATCH",
+ *                "path"="dashboard/owner/properties/details/{id}/modifypropertiesinformations",
+ *                "security"="is_granted('ROLE_OWNER')",
+ *                "deserialize"=false,
+ *                }, 
+ *                "dashboard/owner/properties/details/{id}/modifypropertiespicture"={
+ *                "method"="PATCH",
+ *                "path"="dashboard/owner/properties/details/{id}/modifypropertiespicture",
+ *                "security"="is_granted('ROLE_OWNER')",
+ *                "deserialize"=false,
+ *                },
+ *                "dashboard/owner/properties/details/{id}/modifypropertiescaracteristics"={
+ *                "method"="PATCH",
+ *                "path"="dashboard/owner/properties/details/{id}/modifypropertiescaracteristics",
+ *                "security"="is_granted('ROLE_OWNER')",
+ *                "deserialize"=false,
+ *                },
+ *                "dashboard/owner/properties/details/{id}/modifypropertiesoptions"={
+ *                "method"="PATCH",
+ *                "path"="dashboard/owner/properties/details/{id}/modifypropertiesoptions",
+ *                "security"="is_granted('ROLE_OWNER')",
+ *                "deserialize"=false,
+ *                },
+ *                "dashboard/owner/properties/details/{id}/modifypropertiesaddress"={
+ *                "method"="PATCH",
+ *                "path"="dashboard/owner/properties/details/{id}/modifypropertiesaddress",
+ *                "security"="is_granted('ROLE_OWNER')",
+ *                "deserialize"=false,
+ *                },
+ *                "postpicture"={
+ *                      "method"="POST",
+ *                      "path"="postpicture/properties/{id}",
+ *                      "deserialize" = false,
+ *                      "controller"=App\Requests\CreateProperties::class,
+ *                      "denormalization_context"={"groups"={"properties:write"}},
+ *                      "openapi_context" = {
+ *                          "requestBody" = {
+ *                              "content" = {
+ *                                  "multipart/form-data" = {
+ *                                      "schema" = {
+ *                                          "type" = "object",
+ *                                          "properties" = {
+ *                                              "file" = {
+ *                                                  "type" = "array",
+ *                                                  "items" = {
+ *                                                      "type" = "string",
+ *                                                      "format" = "binary"
+ *                                                  },
+ *                                              },
+ *                                          },
+ *                                      },
+ *                                  },
+ *                              },
+ *                          },
+ *                      },
  *                 },
  *                   "comments_properties_id"={
  *                      "method"="GET",
@@ -166,87 +237,80 @@ use App\Resolver\PostPictureResolver;
  *                      "path"= "dashboard/owner/properties/{id}",
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
- *                 },   
- * 
+ *                 },
  *                   "dashboard/owner/update/properties/{id}"={
  *                      "method"="POST",
  *                      "path"= "dashboard/owner/update/properties/{id}",
  *                      "deserialize" = false,
- *                  "controller"=App\Controller\UpdatePropertiesController::class,
- *                  "openapi_context" = {
- *                  "requestBody" = {
- *                     "content" = {
- *                         "multipart/form-data" = {
- *                             "schema" = {
- *                                 "type" = "object",
- *                                 "properties" = {
- *                                      "title"={
- *                                          "type" = "string"
+ *                      "security" = "is_granted('ROLE_OWNER')",
+ *                      "controller" = App\Controller\UpdatePropertiesController::class,
+ *                      "openapi_context" = {
+ *                          "requestBody" = {
+ *                              "content" = {
+ *                                  "multipart/form-data" = {
+ *                                      "schema" = {
+ *                                          "type" = "object",
+ *                                          "properties" = {
+ *                                              "title"={
+ *                                                  "type" = "string"
+ *                                                  },
+ *                                                  "slug"={
+ *                                                      "type" = "string"
+ *                                                  },                            
+ *                                                  "price"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "rooms"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "booking"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "address"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "city"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "latitude"={
+ *                                                      "type" = "float"
+ *                                                  },
+ *                                                  "longitude"={
+ *                                                      "type" = "float"
+ *                                                  },
+ *                                                  "bedrooms"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "surface"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "reference"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "zipCode"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "country"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "capacity"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "file" = {
+ *                                                      "type" = "array",
+ *                                                      "items" = {
+ *                                                          "type" = "string",
+ *                                                          "format" = "binary"
+ *                                                      },
+ *                                                  },
+ *                                              },
  *                                          },
- *                                      "slug"={
- *                                          "type" = "string"
- *                                          },                            
- *                                      "price"={
- *                                          "type" = "int"
- *                                          },
- *                                      "rooms"={
- *                                          "type" = "int"
- *                                          },
- *                                       "booking"={
- *                                          "type" = "int"
- *                                          },
- *                                        "address"={
- *                                          "type" = "string"
- *                                          },
- *                                        "city"={
- *                                          "type" = "string"
- *                                          },
- *                                        "latitude"={
- *                                          "type" = "float"
- *                                          },
- *                                         "longitude"={
- *                                          "type" = "float"
- *                                          },
- *                                         "bedrooms"={
- *                                          "type" = "int"
- *                                          },
- *                                        "surface"={
- *                                          "type" = "int"
- *                                          },
- *                                       "reference"={
- *                                          "type" = "string"
- *                                          },
- *                                      "zipCode"={
- *                                          "type" = "int"
- *                                          },
- *                                      "country"={
- *                                          "type" = "string"
- *                                          },
- *                                      "capacity"={
- *                                          "type" = "int"
- *                                          },
- *                                     "file" = {
- *                                         "type" = "array",
- *                                         "items" = {
- *                                             "type" = "string",
- *                                             "format" = "binary"
- *                                         },
- *                                     },
- *                                 },
- *                             },
- *                         },
- *                     },
- *                 },
- *             },
-                
- *         
- *                  
- *               }, 
- *                  
-                
-           
- *                             
- *          }
+ *                                      },
+ *                                  },
+ *                              },
+ *                          },
+ *                      },     
+ *                  }
  * )
  * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "exact", "categories.title": "exact", "latitude": "exact", "longitude": "exact", "reservations.comments.value": "exact", "address": "partial", "city": "partial"})
  * @ApiFilter(RangeFilter::class, properties= {"surface", "rooms", "bedrooms", "price", "capacity"})

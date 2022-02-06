@@ -38,20 +38,20 @@ class CategoriesRepository extends ServiceEntityRepository
     */
 
 
-     /**
-      * @return Categories|null
-      */
+    /**
+    * @return Categories|null
+    */
 
-      public function findPropertiesByCategory($id)
-      {
-          $qb = $this->createQueryBuilder('c');
-          $qb->select('c,p.title')
-             ->innerJoin('c.properties', 'p')
-             ->where('c.id = :id')
-             ->setParameter('id', $id);
-          $query = $qb->getQuery();
-          return $query->getResult();
-      }
+    public function findPropertiesByCategory($id)
+    {
+        $qb = $this->createQueryBuilder('c');
+        $qb->select('c,p.title')
+            ->innerJoin('c.properties', 'p')
+            ->where('c.id = :id')
+            ->setParameter('id', $id);
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
       
       
    
