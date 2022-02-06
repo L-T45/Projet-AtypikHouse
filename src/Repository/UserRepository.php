@@ -134,12 +134,12 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->innerJoin('m.conversations', 'c')
             ->where('u.id = :id')
             ->setParameter('id', $id)
-            ->orderBy('m.created_at', 'DESC')
-            ->groupBy('c.id');
+            ->orderBy('m.created_at', 'DESC');
+          //  ->groupBy('c.id');
         $query = $qb->getQuery();
         return $query->getResult();
     }
-
+    
 
 
     /**

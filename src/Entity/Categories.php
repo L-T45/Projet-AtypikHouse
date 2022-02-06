@@ -219,7 +219,7 @@ class Categories
 
     /**
      * @ORM\OneToMany(targetEntity=Attributes::class, mappedBy="categories")
-     * @Groups({"categories:item", "admin:categoriesid", "propertiesid:item", "admin:attributescategoriesid"})
+     * @Groups({"categories:item", "admin:categoriesid", "admin:attributescategoriesid"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $attributes;
