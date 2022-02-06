@@ -236,87 +236,80 @@ use App\Resolver\PostPictureResolver;
  *                      "path"= "dashboard/owner/properties/{id}",
  *                      "force_eager"=false,
  *                      "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
- *                 },   
- * 
+ *                 },
  *                   "dashboard/owner/update/properties/{id}"={
  *                      "method"="POST",
  *                      "path"= "dashboard/owner/update/properties/{id}",
  *                      "deserialize" = false,
- *                  "controller"=App\Controller\UpdatePropertiesController::class,
- *                  "openapi_context" = {
- *                  "requestBody" = {
- *                     "content" = {
- *                         "multipart/form-data" = {
- *                             "schema" = {
- *                                 "type" = "object",
- *                                 "properties" = {
- *                                      "title"={
- *                                          "type" = "string"
+ *                      "security" = "is_granted('ROLE_OWNER')",
+ *                      "controller" = App\Controller\UpdatePropertiesController::class,
+ *                      "openapi_context" = {
+ *                          "requestBody" = {
+ *                              "content" = {
+ *                                  "multipart/form-data" = {
+ *                                      "schema" = {
+ *                                          "type" = "object",
+ *                                          "properties" = {
+ *                                              "title"={
+ *                                                  "type" = "string"
+ *                                                  },
+ *                                                  "slug"={
+ *                                                      "type" = "string"
+ *                                                  },                            
+ *                                                  "price"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "rooms"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "booking"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "address"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "city"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "latitude"={
+ *                                                      "type" = "float"
+ *                                                  },
+ *                                                  "longitude"={
+ *                                                      "type" = "float"
+ *                                                  },
+ *                                                  "bedrooms"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "surface"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "reference"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "zipCode"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "country"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "capacity"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "file" = {
+ *                                                      "type" = "array",
+ *                                                      "items" = {
+ *                                                          "type" = "string",
+ *                                                          "format" = "binary"
+ *                                                      },
+ *                                                  },
+ *                                              },
  *                                          },
- *                                      "slug"={
- *                                          "type" = "string"
- *                                          },                            
- *                                      "price"={
- *                                          "type" = "int"
- *                                          },
- *                                      "rooms"={
- *                                          "type" = "int"
- *                                          },
- *                                       "booking"={
- *                                          "type" = "int"
- *                                          },
- *                                        "address"={
- *                                          "type" = "string"
- *                                          },
- *                                        "city"={
- *                                          "type" = "string"
- *                                          },
- *                                        "latitude"={
- *                                          "type" = "float"
- *                                          },
- *                                         "longitude"={
- *                                          "type" = "float"
- *                                          },
- *                                         "bedrooms"={
- *                                          "type" = "int"
- *                                          },
- *                                        "surface"={
- *                                          "type" = "int"
- *                                          },
- *                                       "reference"={
- *                                          "type" = "string"
- *                                          },
- *                                      "zipCode"={
- *                                          "type" = "int"
- *                                          },
- *                                      "country"={
- *                                          "type" = "string"
- *                                          },
- *                                      "capacity"={
- *                                          "type" = "int"
- *                                          },
- *                                     "file" = {
- *                                         "type" = "array",
- *                                         "items" = {
- *                                             "type" = "string",
- *                                             "format" = "binary"
- *                                         },
- *                                     },
- *                                 },
- *                             },
- *                         },
- *                     },
- *                 },
- *             },
-                
- *         
- *                  
- *               }, 
- *                  
-                
-           
- *                             
- *          }
+ *                                      },
+ *                                  },
+ *                              },
+ *                          },
+ *                      },     
+ *                  }
  * )
  * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "exact", "categories.title": "exact", "latitude": "exact", "longitude": "exact", "reservations.comments.value": "exact", "address": "partial", "city": "partial"})
  * @ApiFilter(RangeFilter::class, properties= {"surface", "rooms", "bedrooms", "price", "capacity"})

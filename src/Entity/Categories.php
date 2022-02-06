@@ -136,6 +136,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "method"="POST",
  *                  "path"="dashboard/admin/update/categories/{id}",
  *                  "deserialize" = false,
+ *                  "security" = "is_granted('ROLE_ADMIN')",
  *                  "controller"=App\Controller\UpdateCategoriesController::class,
  *                  "openapi_context" = {
  *                  "requestBody" = {
