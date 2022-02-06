@@ -161,7 +161,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},
  *                  
- *               },  
+ *               }, 
+ *  
  *                  "dashboard/admin/users/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users/{id}",
@@ -169,6 +170,23 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "normalization_context"={"groups"={"admin:usersid", "admin:usertest", "enable_max_depth"=true}},
  *                  
  *               },  
+ * 
+ *                  "block-user"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/admin/users/block/{id}", 
+ *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                   "controller"="App\Controller\UserController::blockUser",
+ *               },  
+ *                  "deblock-user"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/admin/users/deblock/{id}", 
+ *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                  "controller"="App\Controller\UserController::deBlockUser",
+ *               },  
+ * 
+ * 
+ * 
+ * 
  * 
  *                "dashboard/user/{id}/personal_informations/modifypassword"={
  *                  "method"="PATCH",
