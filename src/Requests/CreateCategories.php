@@ -56,8 +56,10 @@ class CreateCategories extends AbstractController
         $file = $request->files->get('file');
         //dd($file);
 
-        $attributes = $_POST["dynamic"];
-
+        $attributes = [];
+        if(isset($_POST["dynamic"]) && !empty($_POST["dynamic"])){
+            $attributes = $_POST["dynamic"];
+        }
 
         $description = $_POST["description"];
         $description = serialize($description);
@@ -77,18 +79,19 @@ class CreateCategories extends AbstractController
             $manager->flush();
             $categoriesId = $categories->getId();
 
-            foreach ($attributes as $attribute) {
+            if(count($attributes) != 0){
+                foreach ($attributes as $attribute) {
 
-                $newAttribute = new Attributes();
-                $categoryRef = $manager->getReference("App\Entity\Categories", $categoriesId);
-                $newAttribute->setTitle($attribute['title']);
-                $newAttribute->setCategories($categoryRef);
-                $newAttribute->setRequired($attribute['required']);
-                $newAttribute->setResponseType($attribute['response_type']);
-                $manager->persist($newAttribute);
-                $manager->flush();
+                    $newAttribute = new Attributes();
+                    $categoryRef = $manager->getReference("App\Entity\Categories", $categoriesId);
+                    $newAttribute->setTitle($attribute['title']);
+                    $newAttribute->setCategories($categoryRef);
+                    $newAttribute->setRequired($attribute['required']);
+                    $newAttribute->setResponseType($attribute['response_type']);
+                    $manager->persist($newAttribute);
+                    $manager->flush();
+                }
             }
-
             //  $SendEmail->PostNewCategories($mailer, $request);
 
             return new JsonResponse(['status' => '200', 'title' => 'Votre categorie a bien été créé'], JsonResponse::HTTP_CREATED);

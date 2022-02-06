@@ -221,7 +221,6 @@ class PropertiesRepository extends ServiceEntityRepository
 
       public function FindByUserCreateProperties($idUser):array
       {
-          //dd($idUser);
           return $this->createQueryBuilder('p')
               ->select('u.roles')
               ->innerJoin('p.user', 'u')
@@ -238,7 +237,6 @@ class PropertiesRepository extends ServiceEntityRepository
 
       public function findByCategoriesUsedByProperties($idCategories):array
       {
-          //dd($idUser);
           return $this->createQueryBuilder('p')
           ->select('p.id')
           ->innerJoin('p.categories', 'c')
