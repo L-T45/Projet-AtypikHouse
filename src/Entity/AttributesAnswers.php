@@ -47,6 +47,7 @@ class AttributesAnswers
 
     /**
      * @ORM\ManyToOne(targetEntity=Attributes::class, inversedBy="attributesAnswers")
+     * @Groups({"propertiesid:item"})
      */
     private $attributes;
 

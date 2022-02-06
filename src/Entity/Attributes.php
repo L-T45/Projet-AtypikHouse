@@ -93,7 +93,6 @@ class Attributes
 
     /**
      * @ORM\OneToMany(targetEntity=AttributesAnswers::class, mappedBy="attributes")
-     *  @Groups({"propertiesid:item"})
      */
     private $attributesAnswers;
 
