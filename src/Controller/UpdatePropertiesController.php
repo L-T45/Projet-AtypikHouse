@@ -94,7 +94,6 @@ class UpdatePropertiesController
         }
 
         $properties->setFile($request->files->get('file'));
-        
         $properties->setUpdatedAt(new \DateTime());
         $manager->persist($properties);
         $manager->flush();
@@ -104,4 +103,3 @@ class UpdatePropertiesController
      }
 }
 
-}
