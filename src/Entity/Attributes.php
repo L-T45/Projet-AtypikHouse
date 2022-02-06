@@ -97,7 +97,7 @@ class Attributes
     private $attributesAnswers;
 
     /**
-     * @Groups({"admin:attributescategoriesid"})
+     * @Groups({"admin:attributescategoriesid", "propertiesid:item"})
      * @ORM\Column(type="string", length=20)
      */
     private $response_type;

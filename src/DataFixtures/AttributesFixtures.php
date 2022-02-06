@@ -34,6 +34,8 @@ class AttributesFixtures extends Fixture implements DependentFixtureInterface
             $attributes[$i]->setCategories($categories[$i]);
             $attributes[$i]->setRequired($faker->boolean());
             $manager->persist($attributes[$i]);
+
+            $this->addReference('attributes_' . $i, $attributes[$i]);
         }
 
         $manager->flush();

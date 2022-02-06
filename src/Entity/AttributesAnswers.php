@@ -4,9 +4,13 @@ namespace App\Entity;
 
 use App\Repository\AttributesAnswersRepository;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
+use \DateTime;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=AttributesAnswersRepository::class)
+ * @ApiResource()
  */
 class AttributesAnswers
 {
@@ -14,21 +18,25 @@ class AttributesAnswers
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"propertiesid:item"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Groups({"propertiesid:item"})
      */
     private $response_string;
 
     /**
      * @ORM\Column(type="boolean", nullable=true)
+     * @Groups({"propertiesid:item"})
      */
     private $response_bool;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Groups({"propertiesid:item"})
      */
     private $response_nbr;
 
@@ -39,6 +47,7 @@ class AttributesAnswers
 
     /**
      * @ORM\ManyToOne(targetEntity=Attributes::class, inversedBy="attributesAnswers")
+     * @Groups({"propertiesid:item"})
      */
     private $attributes;
 
