@@ -10,23 +10,22 @@ class PostPictureController
 
 {
 
-     public function __invoke(Request $request)
-     {
+    public function __invoke(Request $request)
+    {
 
         $properties = $request->attributes->get('data');
         //dd($properties);
-        if(!($properties instanceof Properties)) {
+        if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
-        }   
-        
-        
+        }
+
+
         //dd($_FILES);
         $properties->setFile($request->files->get('file'));
-        dd($request->files);
+        // dd($request->files);
         $properties->setUpdatedAt(new \DateTime());
         return $properties;
         //dd($properties);
 
-     }
-
+    }
 }
