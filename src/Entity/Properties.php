@@ -437,6 +437,7 @@ class Properties
 
     /**
      * @ORM\OneToMany(targetEntity=AttributesAnswers::class, mappedBy="properties")
+     * @Groups({"propertiesid:item"})
      */
     private $attributesAnswers;
 

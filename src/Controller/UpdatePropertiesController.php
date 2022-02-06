@@ -25,11 +25,22 @@ class UpdatePropertiesController
             throw new \RuntimeException('Propriété attendue');
         }   
         
+        if(isset($_POST['title'])) {
+            
+            $properties->setTitle($_POST['title']);
+            //dd($_POST['title']);
+
+        }
+       
+         if(isset($_POST['price'])) {
+            
+            $properties->setPrice($_POST['price']);
+            //dd($_POST['price']);
+
+        }
         
-        //dd($_FILES);
-        $properties->setTitle($_POST['title']);
-        //dd($_POST['title']);
-        $properties->setPrice($_POST['price']);
+       
+       // $properties->setPrice($_POST['price']);
         //dd($_POST['price']);
         $equipements = [];
         if(isset($_POST['equipements'])) {
