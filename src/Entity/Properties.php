@@ -439,6 +439,7 @@ class Properties
     /**
      * @ORM\OneToMany(targetEntity=AttributesAnswers::class, mappedBy="properties")
      * @Groups({"propertiesid:item"})
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $attributesAnswers;
 

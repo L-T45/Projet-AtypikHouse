@@ -93,6 +93,7 @@ class Attributes
 
     /**
      * @ORM\OneToMany(targetEntity=AttributesAnswers::class, mappedBy="attributes")
+     * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $attributesAnswers;
 
