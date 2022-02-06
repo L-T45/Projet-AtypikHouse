@@ -34,8 +34,7 @@ use App\Resolver\PostPictureResolver;
  *                 "controller"=App\Controller\LastNewProperties::class,
  *                 "force_eager"=false,
  *                 "normalization_context"={"groups"={"properties:collection", "enable_max_depth"=true}}
- *                 }, 
- *                  
+ *                 },
  *                  "properties_map"={
  *                  "method"="GET",
  *                  "path"="properties/map",
@@ -55,7 +54,7 @@ use App\Resolver\PostPictureResolver;
  *                  "path"="dashboard/admin/properties",
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:properties", "enable_max_depth"=true}}, 
- *               }, 
+ *                 }, 
  *              
  *              "api/dashboard/owner/properties/create"={
  *                  "method"="POST",
@@ -201,29 +200,31 @@ use App\Resolver\PostPictureResolver;
  *                "deserialize"=false,
  *                },
  *                "postpicture"={
- *                "method"="POST",
- *                "path"="postpicture/properties/{id}",
- *                "deserialize" = false,
- *                "controller"=App\Requests\CreateProperties::class,
- *                "denormalization_context"={"groups"={"properties:write"}},
- *                "openapi_context" = {
- *                "requestBody" = {
- *                     "content" = {
- *                         "multipart/form-data" = {
- *                             "schema" = {
- *                                 "type" = "object",
- *                                 "properties" = {
- *                                     "file" = {
- *                                         "type" = "array",
- *                                         "items" = {
- *                                             "type" = "string",
- *                                             "format" = "binary"
- *                                         },
- *                                     },
- *                                 },
- *                             },
- *                         },
- *                     },
+ *                      "method"="POST",
+ *                      "path"="postpicture/properties/{id}",
+ *                      "deserialize" = false,
+ *                      "controller"=App\Requests\CreateProperties::class,
+ *                      "denormalization_context"={"groups"={"properties:write"}},
+ *                      "openapi_context" = {
+ *                          "requestBody" = {
+ *                              "content" = {
+ *                                  "multipart/form-data" = {
+ *                                      "schema" = {
+ *                                          "type" = "object",
+ *                                          "properties" = {
+ *                                              "file" = {
+ *                                                  "type" = "array",
+ *                                                  "items" = {
+ *                                                      "type" = "string",
+ *                                                      "format" = "binary"
+ *                                                  },
+ *                                              },
+ *                                          },
+ *                                      },
+ *                                  },
+ *                              },
+ *                          },
+ *                      },
  *                 },
  *                   "comments_properties_id"={
  *                      "method"="GET",
