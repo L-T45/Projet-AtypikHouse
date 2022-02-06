@@ -186,6 +186,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                 
  *               },      
  * 
+ *           
+ * 
  *                  "dashboard/update/profilepicture/user/{id}"={
  *                  "method"="POST",
  *                  "path"="dashboard/update/profilepicture/user/{id}",
