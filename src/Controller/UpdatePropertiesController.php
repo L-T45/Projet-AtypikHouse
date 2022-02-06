@@ -22,15 +22,6 @@ class UpdatePropertiesController
     }
 
 
-    public function updatePicture(Request $request)
-    {
-        $properties = $request->attributes->get('data');
-
-        $properties->setFile($request->files->get('file'));
-        $this->manager->persist($properties);
-        $this->manager->flush();
-    }
-
     public function updateInfos(Request $request)
     {
         $properties = $request->attributes->get('data');
@@ -40,9 +31,16 @@ class UpdatePropertiesController
             //dd($_POST['title']);
 
         }
+        if (isset($_POST['category'])) {
 
+            $categoryRef = $this->manager->getReference("App\Entity\Equipements", $_POST['category']);
+            $properties->setCategories($categoryRef);
+            //dd($_POST['title']);
+
+        }
         $this->manager->persist($properties);
         $this->manager->flush();
+        return new Response('Propriétés modifiés', Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 
     public function updateAttributesAnswers(Request $request)
