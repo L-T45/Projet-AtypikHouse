@@ -20,10 +20,10 @@ class UpdatePropertiesController
      {
 
         $properties = $request->attributes->get('data');
-        //dd($properties);
+
         if(!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
-        }   
+        }
         
         if(isset($_POST['title'])) {
             
@@ -45,13 +45,14 @@ class UpdatePropertiesController
         $equipements = [];
         if(isset($_POST['equipements'])) {
 
+        $equipements = [];
+
+        if(isset($_POST['equipements'])) {
             $equipements = $_POST['equipements'];
-            //dd($equipements);
         }
 
         if ($equipements && count($equipements) > 0) {
             foreach ($equipements as $equipement) {
-
                 $equipement = $manager->getReference("App\Entity\Equipements", $equipement);
                 $properties->addEquipement($equipement);
             }
@@ -59,36 +60,26 @@ class UpdatePropertiesController
 
        
         $attributesanswers = [];
+
         if(isset($_POST["attributesanswers"])) {
-
             $attributesanswers = $_POST["attributesanswers"];
-            //dd($attributesanswers);
-
         }
 
 
         if($attributesanswers && count($attributesanswers) > 0) {
-            foreach ($attributesanswers as $attributesanswer) {
-       
-
-           $attributesanswer = $manager->getReference("App\Entity\AttributesAnswers", $attributesanswer);
-           $properties->addAttributesAnswer($attributesanswer);
-
-       }
-         
-   }
+            foreach ($attributesanswers as $attributesanswer) {  
+                $attributesanswer = $manager->getReference("App\Entity\AttributesAnswers", $attributesanswer);
+                $properties->addAttributesAnswer($attributesanswer);
+            }
+        }
 
         $properties->setFile($request->files->get('file'));
-        //dd($categories);
+        
         $properties->setUpdatedAt(new \DateTime());
         $manager->persist($properties);
         $manager->flush();
 
         return new JsonResponse(['status' => '200', 'title' => 'Votre bien a été modifié avec succès'], JsonResponse::HTTP_CREATED);
-        //return $categories;
-        //dd($properties);
        
      }
-    
-
 }

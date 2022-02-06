@@ -19,29 +19,14 @@ class AttributesAnswerFixtures extends Fixture implements DependentFixtureInterf
         $attributes = [];
 
 
-        for ($i = 1; $i < 100; $i++) {
-            $RandomObject = $faker->randomElement([1, 2, 3]);
+        for ($i = 1; $i < 400; $i++) {
             $attributes[$i] =  $this->getReference('attributes_' . $faker->numberBetween(1, 9));
-            $properties[$i] = $this->getReference('properties_' . $i);
-
+            $properties[$i] = $this->getReference('properties_' . $faker->numberBetween(1, 140));
             $attribute[$i] = new AttributesAnswers();
 
-            if ($RandomObject === 1) {
-                $attribute[$i]->setResponseBool($faker->boolean());
-                $attribute[$i]->setResponseNbr(null);
-                $attribute[$i]->setResponseString(null);
-            }
-
-            if ($RandomObject === 2) {
-                $attribute[$i]->setResponseBool(null);
-                $attribute[$i]->setResponseNbr($faker->numberBetween($min = 1, $max = 200));
-                $attribute[$i]->setResponseString(null);
-            }
-            if ($RandomObject === 3) {
-                $attribute[$i]->setResponseBool(null);
-                $attribute[$i]->setResponseNbr(null);
-                $attribute[$i]->setResponseString($faker->text(15));
-            }
+            $attribute[$i]->setResponseBool($faker->boolean());
+            $attribute[$i]->setResponseNbr($faker->numberBetween($min = 1, $max = 200));
+            $attribute[$i]->setResponseString($faker->text(25));
 
 
             $attribute[$i]->setAttributes($attributes[$i]);

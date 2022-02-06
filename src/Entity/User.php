@@ -89,6 +89,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                "dashboard/admin/users"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users",
+ *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:users", "enable_max_depth"=true}},                 
  *               },                                 
  *          },
@@ -98,50 +99,58 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *          "put"={"security"= "is_granted('ROLE_USER')"},
  *          "patch"={},
  *          "delete"={},
- *               "api_dashboard_user_payments"={
- *                  "method"="GET",
- *                  "path"="/dashboard/user/{id}/payments",
- *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"read:payments", "enable_max_depth"=true}},    
+ *                 "api_dashboard_user_payments"={
+ *                 "method"="GET",
+ *                 "path"="/dashboard/user/{id}/payments",
+ *                 "force_eager"=false,
+ *                 "normalization_context"={"groups"={"read:payments", "enable_max_depth"=true}},    
  *               },
  *                 "dashboard_user_properties"={
- *                      "method"="GET",
- *                      "path"= "dashboard/user/{id}/properties",
- *                      "force_eager"=false,
- *                      "normalization_context"={"groups"={"user:properties", "enable_max_depth"=true}}
+ *                 "method"="GET",
+ *                 "path"= "dashboard/user/{id}/properties",
+ *                 "force_eager"=false,
+ *                 "normalization_context"={"groups"={"user:properties", "enable_max_depth"=true}}
  *                 },               
- *               "api_dashboard_user_messages"={
+ *                  "api_dashboard_user_messages"={
  *                  "method"="GET",
  *                  "path"="/dashboard/user/{id}/messages",
  *                  "normalization_context"={"groups"={"read:messages"}},
  *               },
- *            
- *                 "dashboard/user/{id}/infos-personnelles"={
+ *                  "dashboard/user/{id}/infos-personnelles"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/infos-personnelles",
+ *                  "security"="is_granted('ROLE_USER')",
  *                  "normalization_context"={"groups"={"read:infosperso", "enable_max_depth"=true}},  
- *               },     
+ *               },
  *                  "dashboard/user/{id}/reservations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/reservations",
+ *                  "security"= "is_granted('ROLE_USER')",
  *                  "normalization_context"={"groups"={"read:reservperso", "enable_max_depth"=true}},
  *               },    
  *                  "dashboard/user/{id}/comments"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/comments",
+ *                  "security"= "is_granted('ROLE_USER')",
  *                  "normalization_context"={"groups"={"read:commentsperso", "enable_max_depth"=true}},  
  *               },  
  *                  "dashboard/user/{id}/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
+<<<<<<< HEAD
+ *                  "security"= "is_granted('ROLE_USER')",
+ *                  "controller"=App\Controller\FindConversationsByUser::class,
+=======
  *                  "normalization_context"={"groups"={"userid:convers", "enable_max_depth"=true}}, 
  *                  
+>>>>>>> 497f13cb4906043806c6a56a51340e1607b9dc84
  *               },  
  *  
  *                  "dashboard/user/{id}/reports"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/reports",
  *                  "force_eager"=false,
+ *                  "security"= "is_granted('ROLE_USER')",
  *                  "normalization_context"={"groups"={"read:reports", "enable_max_depth"=true}}, 
  *                  
  *               },  
@@ -149,19 +158,28 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "method"="GET",
  *                  "path"="dashboard/owner/{id}/properties",
  *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"owner:properties", "enable_max_depth"=true}}, 
- *                  
- *               },  
- *                  
- *                 
+ *                  "security"= "is_granted('ROLE_OWNER')",
+ *                  "normalization_context"={"groups"={"owner:properties", "enable_max_depth"=true}}, *                  
+ *               },                 
  *                  "dashboard/owner/{id}/reservations"={
  *                  "method"="GET",
  *                  "path"="dashboard/owner/{id}/reservations",
  *                  "force_eager"=false,
+<<<<<<< HEAD
+ *                  "security"= "is_granted('ROLE_OWNER')",
+ *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},                  
+ *               },
+ *                  "lastconversations"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/user/{id}/conversations",
+ *                  "controller"=App\Controller\LastNewConversations::class,                 
+ *               },      
+=======
  *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},
  *                  
  *               }, 
  *  
+>>>>>>> 497f13cb4906043806c6a56a51340e1607b9dc84
  *                  "dashboard/admin/users/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users/{id}",
@@ -194,6 +212,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "path"="dashboard/user/{id}/personal_informations/modifypassword",
  *                  "controller"="App\Controller\ResetPassword::UpdatePwd",
  *                  "denormalization_context"={"groups"={"admin:useridentifiants", "enable_max_depth"=true}},
+ *               },                
+ *                  "dashboard/user/{id}/personal_informations/modifyinformations"={
+ *                  "method"="PATCH",
+ *                  "path"="dashboard/user/{id}/personal_informations/modifyinformations",
+ *                  "security"="is_granted('ROLE_USER')",
+ *                  "deserialize"=false,
  *               },
  * 
  *                 "lastconversations"={

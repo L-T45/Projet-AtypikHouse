@@ -63,9 +63,9 @@ class CommentsRepository extends ServiceEntityRepository
     }
     */
 
-     /**
-      * @return Comments[] Returns an array of Comments objects
-      */
+    /**
+    * @return Comments[] Returns an array of Comments objects
+    */
     public function findByIdToDelete($id, $lockMode = null, $lockVersion = null)
     {
         return $this->createQueryBuilder('u')
@@ -75,5 +75,20 @@ class CommentsRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult()
         ;
+    }
+
+    /**
+    * @return Comments[] Returns an array of Comments objects
+    */
+    public function modifier($id, $body, $lockMode = null, $lockVersion = null) {
+        return $this->createQueryBuilder('c')
+            ->update('App\Entity\Comments', 'c')
+            ->set('c.body', ':body')
+            ->where('c.id = :id')
+            ->setParameter('id', $id)
+            ->setParameter('body', $body)
+            ->getQuery()
+            ->execute()
+            ;                
     }
 }
