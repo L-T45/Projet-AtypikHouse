@@ -137,13 +137,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "dashboard/user/{id}/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
-<<<<<<< HEAD
  *                  "security"= "is_granted('ROLE_USER')",
  *                  "controller"=App\Controller\FindConversationsByUser::class,
-=======
  *                  "normalization_context"={"groups"={"userid:convers", "enable_max_depth"=true}}, 
  *                  
->>>>>>> 497f13cb4906043806c6a56a51340e1607b9dc84
  *               },  
  *  
  *                  "dashboard/user/{id}/reports"={
@@ -165,21 +162,17 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "method"="GET",
  *                  "path"="dashboard/owner/{id}/reservations",
  *                  "force_eager"=false,
-<<<<<<< HEAD
  *                  "security"= "is_granted('ROLE_OWNER')",
  *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},                  
  *               },
  *                  "lastconversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
- *                  "controller"=App\Controller\LastNewConversations::class,                 
- *               },      
-=======
+ *                  "controller"=App\Controller\LastNewConversations::class,                     
  *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},
  *                  
  *               }, 
  *  
->>>>>>> 497f13cb4906043806c6a56a51340e1607b9dc84
  *                  "dashboard/admin/users/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users/{id}",
