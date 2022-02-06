@@ -92,7 +92,7 @@ class CreateCategories extends AbstractController
                     $manager->flush();
                 }
             }
-            //  $SendEmail->PostNewCategories($mailer, $request);
+            $SendEmail->PostNewCategories($mailer, $request);
 
             return new JsonResponse(['status' => '200', 'title' => 'Votre categorie a bien été créé'], JsonResponse::HTTP_CREATED);
         } else {
