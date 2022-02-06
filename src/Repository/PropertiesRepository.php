@@ -155,7 +155,6 @@ class PropertiesRepository extends ServiceEntityRepository
           ;
       }
     
-      
     /**
       * @return Properties[] Returns an array of Properties objects
       */
@@ -211,6 +210,23 @@ class PropertiesRepository extends ServiceEntityRepository
               ->select('u.email')
               ->innerJoin('p.user', 'u')
               ->groupBy('u.email')
+              ->getQuery()
+              ->getResult()
+          ;
+      }
+
+      /**
+      * @return Properties[] Returns an array of Properties objects
+      */
+
+      public function FindByUserCreateProperties($idUser):array
+      {
+          //dd($idUser);
+          return $this->createQueryBuilder('p')
+              ->select('u.roles')
+              ->innerJoin('p.user', 'u')
+              ->where('p.user = :user')
+              ->setParameter('user', $idUser)
               ->getQuery()
               ->getResult()
           ;

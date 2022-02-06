@@ -129,7 +129,7 @@ class CreateProperties extends AbstractController
             $equipements = $_POST["equipements"];
             //dd($equipements);
         }
-        
+
         $attributesanswers = [];
         if (isset($_POST["attributesanswers"])) {
 
@@ -141,7 +141,6 @@ class CreateProperties extends AbstractController
         $postCategories = $this->cutChaine($postCategories, ':"', '";');
         $categories = new Categories();
         $categories = $manager->getReference("App\Entity\Categories", $postCategories);
-
 
         $postUser = $_POST["user"];
         $postUser = serialize($postUser);
@@ -180,22 +179,28 @@ class CreateProperties extends AbstractController
                 }
             }
 
-
+            
             $properties->setCategories($categories);
             $properties->setUser($user);
 
             $manager->persist($properties);
             $manager->flush();
             $propertiesid = $properties->getId();
-            // $propertiesid = 3;
+            
+            $this->PropertiesRepository = $PropertiesRepository;
+            $findPropertiesUser = $this->PropertiesRepository->FindByUserCreateProperties($postUser);
 
+            if ($findPropertiesUser[0]['roles'] == 'ROLE_USER') {
+                $user->setRoles(['ROLE_USER','ROLE_OWNER']);
+                $manager->persist($user);
+                $manager->flush();
+            }
+    
             if ($attributesanswers && count($attributesanswers) > 0) {
                 foreach ($attributesanswers as $attributesanswer) {
 
-                    // dd($attributesanswer["attributes"]);
                     $AttributesRef = $manager->getReference("App\Entity\Attributes", $attributesanswer["attributes"]);
                     $propertyRef = $manager->getReference("App\Entity\Properties", $propertiesid);
-
 
                     $newAttributes = new AttributesAnswers();
                     $newAttributes->setProperties($propertyRef);
