@@ -11,13 +11,15 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\PropertiesRepository;
-
+use Lexik\Bundle\JWTAuthenticationBundle\Services\JWTTokenManagerInterface;
+use Gesdinet\JWTRefreshTokenBundle\Entity\RefreshToken;
 use App\Entity\User;
 use App\Entity\PropertiesGallery;
 use App\Entity\Categories;
 use App\Entity\Equipements;
 use App\Entity\AttributesAnswers;
 use Attribute;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 
 class CreateProperties extends AbstractController
 {
@@ -43,6 +45,7 @@ class CreateProperties extends AbstractController
     private $categories;
     private $propertiesgallery;
     private $user;
+    private $CheckNewToken;
 
     public function cutChaine($string, $start, $end)
     {
@@ -55,7 +58,7 @@ class CreateProperties extends AbstractController
     }
 
 
-    public function __invoke(EntityManagerInterface $manager, Request $request, PropertiesRepository $PropertiesRepository): Response
+    public function __invoke(EntityManagerInterface $manager, Request $request, PropertiesRepository $PropertiesRepository, JWTTokenManagerInterface $JWTManager, RefreshToken $RefreshJWTToken): Response
     {
         $properties = array();
         $properties = new Properties();
@@ -148,6 +151,25 @@ class CreateProperties extends AbstractController
         $user = new User();
         $user = $manager->getReference("App\Entity\User", $postUser);
 
+
+        // $this->PropertiesRepository = $PropertiesRepository;
+        //     $findPropertiesUser = $this->PropertiesRepository->FindByUserCreateProperties($postUser);
+
+        //     if ($findPropertiesUser[0]['roles'] == ["ROLE_USER"]) {
+        //         $user->setRoles(['ROLE_USER','ROLE_OWNER']);
+        //         $manager->persist($user);
+        //         $manager->flush();
+        //         $NewToken = $JWTManager->create($user);
+        //         $NewRefreshToken = $RefreshJWTToken;
+        //         dd($NewRefreshToken);
+        //         $CheckNewToken = $NewToken;
+        //     }
+        //     else {
+        //         $CheckNewToken = "";
+        //         dd("nop");
+        //     }
+
+
         $this->PropertiesRepository = $PropertiesRepository;
         $findProperties = $this->PropertiesRepository->findAddress($address);
         $findPropertiesCheck = $findProperties;
@@ -179,7 +201,6 @@ class CreateProperties extends AbstractController
                 }
             }
 
-            
             $properties->setCategories($categories);
             $properties->setUser($user);
 
@@ -190,10 +211,16 @@ class CreateProperties extends AbstractController
             $this->PropertiesRepository = $PropertiesRepository;
             $findPropertiesUser = $this->PropertiesRepository->FindByUserCreateProperties($postUser);
 
-            if ($findPropertiesUser[0]['roles'] == 'ROLE_USER') {
+            if ($findPropertiesUser[0]['roles'] == ["ROLE_USER"]) {
                 $user->setRoles(['ROLE_USER','ROLE_OWNER']);
                 $manager->persist($user);
                 $manager->flush();
+                $NewToken = $JWTManager->create($user);
+                //$NewRefreshToken = $RefreshToken->create($user);
+                $CheckNewToken = $NewToken;
+            }
+            else {
+                $CheckNewToken = "";
             }
     
             if ($attributesanswers && count($attributesanswers) > 0) {
@@ -213,8 +240,14 @@ class CreateProperties extends AbstractController
                 }
             }
 
+            if($CheckNewToken != ""){
+                return new JsonResponse(['status' => '200', 'Properties id' => $propertiesid, "New token" => $NewToken, 'title' => 'Votre location de bien a bien été créé'], JsonResponse::HTTP_CREATED);
+            }
+            else{
+                return new JsonResponse(['status' => '200', 'Properties id' => $propertiesid, 'title' => 'Votre location de bien a bien été créé'], JsonResponse::HTTP_CREATED);
+            }
 
-            return new JsonResponse(['status' => '200', 'id' => $propertiesid, 'title' => 'Votre location de bien a bien été créé'], JsonResponse::HTTP_CREATED);
+            
         } else {
             return new JsonResponse(['status' => '400', 'title' => 'Bad Request', 'message' => 'Création de votre location de bien impossible car un bien est déjà créé à cette adresse !'], JsonResponse::HTTP_CREATED);
         }
