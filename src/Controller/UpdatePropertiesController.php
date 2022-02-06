@@ -26,24 +26,44 @@ class UpdatePropertiesController
         }
         
         if(isset($_POST['title'])) {
-            
             $properties->setTitle($_POST['title']);
-            //dd($_POST['title']);
-
         }
-       
-         if(isset($_POST['price'])) {
-            
+        if(isset($_POST['slug'])) {
+            $properties->setSlug($_POST['slug']);
+        }
+        if(isset($_POST['price'])) {
             $properties->setPrice($_POST['price']);
-            //dd($_POST['price']);
-
         }
-        
-       
-       // $properties->setPrice($_POST['price']);
-        //dd($_POST['price']);
-        $equipements = [];
-        if(isset($_POST['equipements'])) {
+        if(isset($_POST['rooms'])) {
+            $properties->setRooms($_POST['rooms']);
+        }
+        if(isset($_POST['booking'])) {
+            $properties->setBooking($_POST['booking']);
+        }
+        if(isset($_POST['address'])) {
+            $properties->setAddress($_POST['address']);
+        }
+        if(isset($_POST['latitude'])) {
+            $properties->setLatitude($_POST['latitude']);
+        }
+        if(isset($_POST['longitude'])) {
+            $properties->setLongitude($_POST['longitude']);
+        }
+        if(isset($_POST['bedrooms'])) {
+            $properties->setBedrooms($_POST['bedrooms']);
+        }
+        if(isset($_POST['surface'])) {
+            $properties->setSurface($_POST['surface']);
+        }
+        if(isset($_POST['reference'])) {
+            $properties->setReference($_POST['reference']);
+        }
+        if(isset($_POST['zipCode'])) {
+            $properties->setZipCode($_POST['zipCode']);
+        }
+        if(isset($_POST['country'])) {
+            $properties->setCountry($_POST['country']);
+        }
 
         $equipements = [];
 
