@@ -170,15 +170,15 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  
  *               },  
  * 
- *                  "block-user"={
+ *                  "dashboard/admin/block-user/{id}"={
  *                  "method"="POST",
- *                  "path"="dashboard/admin/users/block/{id}", 
+ *                  "path"="dashboard/admin/block-user/{id}", 
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                   "controller"="App\Controller\UserController::blockUser",
  *               },  
- *                  "deblock-user"={
+ *                  "dashboard/admin/deblock-user/{id}"={
  *                  "method"="POST",
- *                  "path"="dashboard/admin/users/deblock/{id}", 
+ *                  "path"="dashboard/admin/deblock-user/{id}", 
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "controller"="App\Controller\UserController::deBlockUser",
  *               },  
