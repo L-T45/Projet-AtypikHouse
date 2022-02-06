@@ -58,13 +58,13 @@ class Conversations
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"conversations:collection", "admin:conversid", "admin:conversationsid", "users:collection", "read:messages", "admin:conversations", "lastconversations:collection", "user:messages", "user:conversations", "admin:users", "user:conversid", "convmessage:create"})
+     * @Groups({"conversations:collection", "userid:convers", "read:convuserid", "admin:conversid", "admin:conversationsid", "users:collection", "read:messages", "admin:conversations", "lastconversations:collection", "user:messages", "user:conversations", "admin:users", "user:conversid", "convmessage:create"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="datetime")
-     * @Groups({"conversations:collection", "admin:conversid", "user:conversid", "user:messages", "user:conversations", "admin:users"})
+     * @Groups({"conversations:collection", "read:convuserid", "admin:conversid", "user:conversid", "user:messages", "user:conversations", "admin:users"})
      */
     private $created_at;
 
@@ -77,7 +77,7 @@ class Conversations
 
     /**
      * @ORM\ManyToMany(targetEntity=User::class, mappedBy="conversations")
-     * @Groups({"conversations:item", "read:conversationsid", "user:conversations", "admin:conversations", "admin:conversationsid", "lastconversations:collection", "admin:usersconv", "user:conversid"})
+     * @Groups({"conversations:item", "read:convuserid", "read:conversationsid", "user:conversations", "admin:conversations", "admin:conversationsid", "lastconversations:collection", "admin:usersconv", "user:conversid"})
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE")
      */
     private $users;

@@ -61,6 +61,7 @@ class CreateSessionController extends AbstractController
 
   /**
    * @Route("/api/send_payment", methods={"POST"})
+   * 
    */
   public function  createSession(Request $request)
   {

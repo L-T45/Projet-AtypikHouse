@@ -137,8 +137,13 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "dashboard/user/{id}/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
+<<<<<<< HEAD
  *                  "security"= "is_granted('ROLE_USER')",
  *                  "controller"=App\Controller\FindConversationsByUser::class,
+=======
+ *                  "normalization_context"={"groups"={"userid:convers", "enable_max_depth"=true}}, 
+ *                  
+>>>>>>> 497f13cb4906043806c6a56a51340e1607b9dc84
  *               },  
  *  
  *                  "dashboard/user/{id}/reports"={
@@ -160,6 +165,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "method"="GET",
  *                  "path"="dashboard/owner/{id}/reservations",
  *                  "force_eager"=false,
+<<<<<<< HEAD
  *                  "security"= "is_granted('ROLE_OWNER')",
  *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},                  
  *               },
@@ -168,14 +174,38 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "path"="dashboard/user/{id}/conversations",
  *                  "controller"=App\Controller\LastNewConversations::class,                 
  *               },      
+=======
+ *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},
+ *                  
+ *               }, 
+ *  
+>>>>>>> 497f13cb4906043806c6a56a51340e1607b9dc84
  *                  "dashboard/admin/users/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/users/{id}",
  *                  "force_eager"=false,
+ *                  "normalization_context"={"groups"={"admin:usersid", "admin:usertest", "enable_max_depth"=true}},
+ *                  
+ *               },  
+ * 
+ *                  "block-user"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/admin/users/block/{id}", 
  *                  "security"= "is_granted('ROLE_ADMIN')",
- *                  "normalization_context"={"groups"={"admin:usersid", "admin:usertest", "enable_max_depth"=true}},                  
- *               },   
- *                  "dashboard/user/{id}/personal_informations/modifypassword"={
+ *                   "controller"="App\Controller\UserController::blockUser",
+ *               },  
+ *                  "deblock-user"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/admin/users/deblock/{id}", 
+ *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                  "controller"="App\Controller\UserController::deBlockUser",
+ *               },  
+ * 
+ * 
+ * 
+ * 
+ * 
+ *                "dashboard/user/{id}/personal_informations/modifypassword"={
  *                  "method"="PATCH",
  *                  "deserialize" = false,
  *                  "security"= "is_granted('ROLE_USER')",
@@ -196,6 +226,8 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "controller"=App\Controller\LastNewConversations::class,
  *                 
  *               },      
+ * 
+ *           
  * 
  *                  "dashboard/update/profilepicture/user/{id}"={
  *                  "method"="POST",
@@ -238,7 +270,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
-     * @Groups({"user:collection", "read:commentsid", "read:reportsid", "read:reports", "user:conversid", "admin:reports", "admin:reportsid", "read:reportsid", "admin:reportsid", "admin:conversid", "user:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations", "usermessage:create"})
+     * @Groups({"user:collection", "user:conversid", "read:commentsid", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "read:reportsid", "admin:reportsid", "admin:conversid", "propertiesid:item", "user:write", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "lastcomments:collection", "properties:item", "read:infosperso", "admin:users", "owner:read", "owner:reservid", "user:messages", "read:messages", "reservations:user", "user:comments", "user:reports", "user:createreservations", "usermessage:create"})
      */
     private $id;
 
@@ -263,7 +295,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "read:commentsid", "read:reportsid", "read:reports", "user:conversid", "admin:reports", "admin:reportsid", "read:reportsid", "admin:conversid", "admin:reportsid", "user:write", "user:conversid", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
+     * @Groups({"comments:item", "user:conversid", "read:commentsid", "read:reportsid", "read:reports", "admin:reports", "admin:reportsid", "read:reportsid", "admin:conversid", "admin:reportsid", "user:write", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reportsid", "admin:reports", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
      */
     private $lastname;
 
@@ -317,7 +349,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
-     * @Groups({"comments:item", "read:commentsid", "read:reportsid", "read:reports", "user:conversid", "admin:reports", "admin:reportsid", "read:reportsid", "admin:conversid", "admin:reportsid", "user:write", "user:conversid", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
+     * @Groups({"comments:item", "user:conversid", "read:commentsid", "read:reportsid", "read:reports", "user:conversid", "admin:reports", "admin:reportsid", "read:reportsid", "admin:conversid", "admin:reportsid", "user:write", "user:conversid", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "user:messages", "read:messages", "conversations:item", "lastcomments:collection", "users:register"})
      */
     private $firstname;
 
@@ -346,7 +378,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"user:collection","comments:item", "read:commentsid", "read:reportsid", "read:reports", "user:conversid", "admin:reports", "admin:reportsid", "read:reportsid", "admin:conversid", "admin:reportsid", "user:write", "user:conversid", "admin:usertest", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection", "users:register"})
+     * @Groups({"user:collection", "user:conversid", "comments:item", "read:commentsid", "read:reportsid", "read:reports", "user:conversid", "admin:reports", "admin:reportsid", "read:reportsid", "admin:conversid", "admin:reportsid", "user:write", "user:conversid", "admin:usertest", "propertiesid:item", "admin:usersconv", "admin:usersid", "propertiesid:item", "reservations:user", "user:conversations", "admin:reports", "admin:reportsid", "admin:commentsid", "reservations:item", "reservations:user", "properties:item", "admin:users", "owner:reservid", "read:infosperso", "payments:item", "user:item", "conversations:item", "user:messages", "lastcomments:collection", "users:register"})
      */
     private $picture;
 
@@ -395,7 +427,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\ManyToMany(targetEntity=Conversations::class, inversedBy="users"))
      * @ORM\JoinColumn(nullable=true, onDelete="CASCADE") 
-     * @Groups({"user:conversations"})
+     * @Groups({"user:conversations", "userid:convers"})
      */
     private $conversations;
 
