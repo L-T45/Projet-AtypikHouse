@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Equipements;
+use App\Entity\Properties;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
+
 
 /**
  * @method Equipements|null find($id, $lockMode = null, $lockVersion = null)
@@ -88,4 +91,22 @@ class EquipementsRepository extends ServiceEntityRepository
           ->getQuery()
           ->getResult();
       }
+
+
+       
+    /**
+      * @return Equipements[] Returns an array of Properties objects
+      */
+
+    public function DeleteEquipementsByProperties($id)
+    {
+        return $this->createQueryBuilder('e')
+            ->delete('e')
+            ->leftJoin('e.properties','p')
+            ->andWhere('p.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

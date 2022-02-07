@@ -10,7 +10,61 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=AttributesAnswersRepository::class)
- * @ApiResource()
+ * @ApiResource(
+ *  normalizationContext={"groups"={"attributesanswers:collection"}},
+ *      denormalizationContext={"groups"={"attributesanswers:write"}},
+ *      collectionOperations={
+ *            "get"={},
+ *            "post"={},
+ * 
+ *                      "updateattributesanswers"={
+ *                      "method"="POST",
+ *                      "path"= "updateattributesanswers",
+ *                      "deserialize" = false,
+ *                      "security" = "is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN')",
+ *                      "controller" ="App\Controller\UpdatePropertiesController::updateAttributesAnswers",
+ *                      "openapi_context" = {
+ *                          "requestBody" = {
+ *                              "content" = {
+ *                                  "multipart/form-data" = {
+ *                                      "schema" = {
+ *                                          "type" = "object",
+ *                                          "properties" = {
+ *                                              "response_string"={
+ *                                                  "type" = "string"
+ *                                                  },
+ *                                                  "response_bool"={
+ *                                                      "type" = "boolean"
+ *                                                  },                            
+ *                                                  "response_nbr"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                
+ *                                                  },
+ *                                              },
+ *                                          },
+ *                                      },
+ *                                  },
+ *                              },
+ *                          },
+ * 
+ *          },
+ *      itemOperations={
+ *          "get"={"normalization_context"={"groups"={"attributesanswers:item"}}}, 
+ *          "patch"={},
+ *          "put"={"security"= "is_granted('ROLE_OWNER', 'ROLE_ADMIN')"},
+ *          "delete"={},
+ * 
+ *                 
+ *     
+ *                  }
+
+ * 
+ * 
+ * 
+ * 
+ * 
+ * )
  */
 class AttributesAnswers
 {
