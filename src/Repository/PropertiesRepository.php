@@ -246,5 +246,21 @@ class PropertiesRepository extends ServiceEntityRepository
           ->getResult()
           ;
       }
+
+      /**
+      * @return Properties[] Returns an array of Properties objects
+      */
+
+      public function findByIdUser($idProperties):array
+      {
+          return $this->createQueryBuilder('p')
+              ->select('u.email')
+              ->innerJoin('p.user', 'u')
+              ->andWhere('p.id = :id')
+              ->setParameter('id', $idProperties)
+              ->getQuery()
+              ->getResult()
+          ;
+      }
       
 }

@@ -7,6 +7,8 @@ use App\Entity\Properties;
 use App\Repository\PropertiesRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;  
+use Symfony\Component\Mailer\MailerInterface; 
+use App\Email\SendEmailModifyProperties;
 
 class DeleteProperties extends AbstractController {
 
@@ -14,20 +16,28 @@ class DeleteProperties extends AbstractController {
     private $idProperties;
     private $PropertiesRepository;
 
-    public function DeleteProperties(Request $request, PropertiesRepository $PropertiesRepository): Response{
+    public function DeleteProperties(Request $request, PropertiesRepository $PropertiesRepository, SendEmailModifyProperties $SendEmail, MailerInterface $mailer): Response{
 
         $data = $request->query->get('id');
         $idProperties = $data;
  
         $this->PropertiesRepository = $PropertiesRepository;
-        $findPropertiesToDelete = $this->PropertiesRepository->findByIdToDelete($idProperties);
+        $findOwnerProperties = $this->PropertiesRepository->findByIdUser($idProperties);
+        $findCheckOwnerProperties = $findOwnerProperties;
 
-            if($findPropertiesToDelete =! []){
-                $response = new Response('Propriété supprimée',Response::HTTP_OK,['content-type' => 'application/json']);
-            }
-            else{  
-                $response = new Response("Une erreur est survenu lors de la suppression de la propriété...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
-            }
-        return $response;
+        if($findCheckOwnerProperties =! []){
+            $ownersEmail = $findOwnerProperties[0]['email'];
+            $this->PropertiesRepository = $PropertiesRepository;
+            $findPropertiesToDelete = $this->PropertiesRepository->findByIdToDelete($idProperties);
+
+                if($findPropertiesToDelete =! []){
+                    $SendEmail->sendEmailModifyProperties($mailer, $request, $ownersEmail);
+                    $response = new Response('Propriété supprimée',Response::HTTP_OK,['content-type' => 'application/json']);
+                }
+                else{  
+                    $response = new Response("Une erreur est survenu lors de la suppression de la propriété...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
+                }
+            return $response;
+        }
     }
 }
