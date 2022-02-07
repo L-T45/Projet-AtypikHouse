@@ -28,7 +28,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "path"="dashboard/admin/reservations",
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:reservations", "enable_max_depth"=true}}, 
- *               },     
+ *               },   
+ * 
+ *               "dashboard/owner/reservations"={
+ *                  "method"="GET",
+ *                  "path"="dashboard/owner/reservations",
+ *                  "security"= "is_granted('ROLE_OWNER')",
+ *                  "normalization_context"={"groups"={"admin:reservations", "enable_max_depth"=true}}, 
+ *               }, 
+ *   
  *               "thebestproperty"={
  *                  "method"="GET",
  *                  "path"="home/bestproperty",
@@ -54,6 +62,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "security"= "is_granted('ROLE_USER')",
  *                  "normalization_context"={"groups"={"reservations:user", "reserv:user"}}
  *                 },
+ * 
  *                 "dashboard/owner/reservations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/owner/reservations/{id}",
