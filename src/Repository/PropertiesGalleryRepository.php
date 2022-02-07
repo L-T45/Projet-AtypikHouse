@@ -75,4 +75,20 @@ class PropertiesGalleryRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    /**
+      * @return PropertiesGallery[] Returns an array of Properties objects
+      */
+
+      public function findByProperties($idPropertiesGallery, $lockMode = null, $lockVersion = null)
+      {
+        return $this->createQueryBuilder('pg')
+            ->select('p.id')
+            ->innerJoin('pg.properties', 'p')
+            ->where('pg.id = :id')
+            ->setParameter('id', $idPropertiesGallery)
+            ->getQuery()
+            ->getResult()
+        ;
+      }
 }
