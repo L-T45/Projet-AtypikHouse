@@ -7,7 +7,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
+use Symfony\Component\Mailer\MailerInterface; 
+use App\Email\SendEmailModifyProperties;
 use App\Entity\Equipements;
 use App\Entity\AttributesAnswers;
 use App\Entity\PropertiesGallery;
@@ -28,10 +29,10 @@ class UpdatePropertiesController
     }
 
 
-    public function updateInfos(Request $request)
+    public function updateInfos(Request $request, SendEmailModifyProperties $SendEmail, MailerInterface $mailer)
     {
         $properties = $request->attributes->get('data');
-        //dd($properties);
+        $idProperties = $properties->getId();
 
             if (!($properties instanceof Properties)) {
                 throw new \RuntimeException('Propriété attendue');
@@ -48,52 +49,28 @@ class UpdatePropertiesController
             }
             $this->manager->persist($properties);
             $this->manager->flush();
-            return new Response('Les informations de la propriété ont été modifiées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+
+            $findOwnerProperties = $this->propertiesrepo->findByIdUser($idProperties);
+            $findCheckOwnerProperties = $findOwnerProperties;
+
+            if($findCheckOwnerProperties =! []){
+                $SendEmail->sendEmailModifyProperties($mailer, $request, $findOwnerProperties);
+                $response =  new Response('Les informations de la propriété ont été modifiées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+            }
+            else{  
+                $response = new Response("Une erreur est survenu lors de la modification des informations de la propriété...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
+            }
+        return $response;
        
     }
-        // if(isset($_POST['slug'])) {
-        //     $properties->setSlug($_POST['slug']);
-        // }
-        // if(isset($_POST['price'])) {
-        //     $properties->setPrice($_POST['price']);
-        // }
-        // if(isset($_POST['rooms'])) {
-        //     $properties->setRooms($_POST['rooms']);
-        // }
-        // if(isset($_POST['booking'])) {
-        //     $properties->setBooking($_POST['booking']);
-        // }
-        // if(isset($_POST['address'])) {
-        //     $properties->setAddress($_POST['address']);
-        // }
-        // if(isset($_POST['latitude'])) {
-        //     $properties->setLatitude($_POST['latitude']);
-        // }
-        // if(isset($_POST['longitude'])) {
-        //     $properties->setLongitude($_POST['longitude']);
-        // }
-        // if(isset($_POST['bedrooms'])) {
-        //     $properties->setBedrooms($_POST['bedrooms']);
-        // }
-        // if(isset($_POST['surface'])) {
-        //     $properties->setSurface($_POST['surface']);
-        // }
-        // if(isset($_POST['reference'])) {
-        //     $properties->setReference($_POST['reference']);
-        // }
-        // if(isset($_POST['zipCode'])) {
-        //     $properties->setZipCode($_POST['zipCode']);
-        // }
-        // if(isset($_POST['country'])) {
-        //     $properties->setCountry($_POST['country']);
-        // }
 
 
-    public function updateAttributesAnswers(Request $request)
+    public function updateAttributesAnswers(Request $request, SendEmailModifyProperties $SendEmail, MailerInterface $mailer)
     {
        
         $data = $_POST["attributesanswer"];
-
+        $properties = $request->attributes->get('data');
+        $idProperties = $properties->getId();
 
         if ($data && count($data) > 0) {
             foreach ($data as $attributesanswer) {
@@ -113,14 +90,25 @@ class UpdatePropertiesController
                 $this->manager->flush();
             }
         }
-       
-        return new Response('Les réponses ont été modifiées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+        
+        $findOwnerProperties = $this->propertiesrepo->findByIdUser($idProperties);
+        $findCheckOwnerProperties = $findOwnerProperties;
+
+            if($findCheckOwnerProperties =! []){
+                $SendEmail->sendEmailModifyProperties($mailer, $request, $findOwnerProperties);
+                $response =  new Response('Les réponses ont été modifiées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+            }
+            else{  
+                $response = new Response("Une erreur est survenu lors de la modification des réponses ...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
+            }
+        return $response;
 
     }
 
-    public function updateCaracteristics(Request $request)
+    public function updateCaracteristics(Request $request, SendEmailModifyProperties $SendEmail, MailerInterface $mailer)
     {
         $properties = $request->attributes->get('data');
+        $idProperties = $properties->getId();
 
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
@@ -152,13 +140,24 @@ class UpdatePropertiesController
 
         $this->manager->persist($properties);
         $this->manager->flush();
-        return new Response('Les caractéristiques de la propriété ont été modifiées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+
+        $findOwnerProperties = $this->propertiesrepo->findByIdUser($idProperties);
+        $findCheckOwnerProperties = $findOwnerProperties;
+
+            if($findCheckOwnerProperties =! []){
+                $SendEmail->sendEmailModifyProperties($mailer, $request, $findOwnerProperties);
+                $response =  new Response('Les caractéristiques de la propriété ont été modifiées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+            }
+            else{  
+                $response = new Response("Une erreur est survenu lors de la modification des caractéristiques de la propriété ...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
+            }
+        return $response;
     }
 
-    public function updateEquipements(Request $request)
+    public function updateEquipements(Request $request, SendEmailModifyProperties $SendEmail, MailerInterface $mailer)
     {
         $properties = $request->attributes->get('data');
-        //dd($properties);
+        $idProperties = $properties->getId();
 
         $propertiesid = $properties->getId();
 
@@ -171,11 +170,6 @@ class UpdatePropertiesController
         if (isset($_POST['equipements'])) {
 
             $equipements = $_POST['equipements'];
-
-            //dd($equipements);
-
-            //$findEquipements = $this->equipementrepo->DeleteEquipementsByProperties($propertiesid);
-            //dd($findEquipements);
 
             $sql = 'DELETE FROM properties_equipements WHERE properties_equipements.properties_id = :id';
 
@@ -193,23 +187,33 @@ class UpdatePropertiesController
         }
         $this->manager->persist($properties);
         $this->manager->flush();
-        return new Response('Equipements modifiés avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+
+        $findOwnerProperties = $this->propertiesrepo->findByIdUser($idProperties);
+        $findCheckOwnerProperties = $findOwnerProperties;
+
+        if($findCheckOwnerProperties =! []){
+            $SendEmail->sendEmailModifyProperties($mailer, $request, $findOwnerProperties);
+            $response =  new Response('Equipements modifiés avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+        }
+        else{  
+            $response = new Response("Une erreur est survenu lors de la modification des Equipements ...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
+        }
+        return $response;
     }
 
 
-    public function insertNewGalleryPictures(Request $request)
+    public function insertNewGalleryPictures(Request $request, SendEmailModifyProperties $SendEmail, MailerInterface $mailer)
     {
 
         $properties = $request->attributes->get('data');
+        $idProperties = $properties->getId();
 
-        //dd($propertiesid);
 
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
         }
 
         $pictures = $request->files->get('pictures');
-        //dd($pictures);
 
         $propertyRef =  $this->manager->getReference("App\Entity\Properties", $properties->getId());
 
@@ -223,18 +227,28 @@ class UpdatePropertiesController
             $this->manager->persist($newGalleryPicture);
             $this->manager->flush();
         }
-        return new Response('Nouvelles photos insérées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+
+        $findOwnerProperties = $this->propertiesrepo->findByIdUser($idProperties);
+        $findCheckOwnerProperties = $findOwnerProperties;
+
+        if($findCheckOwnerProperties =! []){
+            $SendEmail->sendEmailModifyProperties($mailer, $request, $findOwnerProperties);
+            $response =  new Response('Nouvelles photos insérées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+        }
+        else{  
+            $response = new Response("Une erreur est survenu lors de la modification des nouvelles photos ...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
+        }
+        return $response;
     }
 
 
-
-    public function updateLocality(Request $request)
+    public function updateLocality(Request $request, SendEmailModifyProperties $SendEmail, MailerInterface $mailer)
     {
 
         $properties = $request->attributes->get('data');
+        $idProperties = $properties->getId();
         
 
-        //dd($post);
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
         }
@@ -271,6 +285,17 @@ class UpdatePropertiesController
 
         $this->manager->persist($properties);
         $this->manager->flush();
-        return new Response('Localité modifiée avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+
+        $findOwnerProperties = $this->propertiesrepo->findByIdUser($idProperties);
+        $findCheckOwnerProperties = $findOwnerProperties;
+
+        if($findCheckOwnerProperties =! []){
+            $SendEmail->sendEmailModifyProperties($mailer, $request, $findOwnerProperties);
+            $response =  new Response('Localité modifiée avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+        }
+        else{  
+            $response = new Response("Une erreur est survenu lors de la modification de la Localité...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
+        }
+        return $response;
     }
 }

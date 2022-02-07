@@ -18,7 +18,6 @@ class UpdateProfilePictureController
      {
 
         $user = $request->attributes->get('data');
-        //dd($user);
         if(!($user instanceof user)) {
             throw new \RuntimeException('User attendu');
         }   

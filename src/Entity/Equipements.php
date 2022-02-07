@@ -53,12 +53,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                   "security"= "is_granted('ROLE_ADMIN')",
  *                   "normalization_context"={"groups"={"equipements:collection", "equipements:item", "enable_max_depth"=true}}
  *                 }, 
- *                  "dashboard/admin/equipements/{id}"={
- *                  "method"="PATCH",
- *                  "path"="dashboard/admin/equipements/{id}",
- *                  "security"= "is_granted('ROLE_ADMIN')",
- *                  "deserialize" = false, 
- *              },
  *          }
  * )
  */
