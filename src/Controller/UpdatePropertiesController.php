@@ -33,65 +33,33 @@ class UpdatePropertiesController
         $properties = $request->attributes->get('data');
         //dd($properties);
 
+        $post = json_decode($request->getContent(), true);
+        //   dd($post["title"]);
+
+
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
         }
 
-        if (isset($_POST['title'])) {
-            $properties->setTitle($_POST['title']);
+        if (isset($post["title"])) {
+            $properties->setTitle($post["title"]);
         }
-        if (isset($_POST['category'])) {
+        if (isset($post['category'])) {
 
-            $categoryRef = $this->manager->getReference("App\Entity\Categories", $_POST['category']);
+            $categoryRef = $this->manager->getReference("App\Entity\Categories", $post['category']);
             $properties->setCategories($categoryRef);
         }
         $this->manager->persist($properties);
         $this->manager->flush();
         return new Response('Les informations de la propriété ont été modifiées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
     }
-    // if(isset($_POST['slug'])) {
-    //     $properties->setSlug($_POST['slug']);
-    // }
-    // if(isset($_POST['price'])) {
-    //     $properties->setPrice($_POST['price']);
-    // }
-    // if(isset($_POST['rooms'])) {
-    //     $properties->setRooms($_POST['rooms']);
-    // }
-    // if(isset($_POST['booking'])) {
-    //     $properties->setBooking($_POST['booking']);
-    // }
-    // if(isset($_POST['address'])) {
-    //     $properties->setAddress($_POST['address']);
-    // }
-    // if(isset($_POST['latitude'])) {
-    //     $properties->setLatitude($_POST['latitude']);
-    // }
-    // if(isset($_POST['longitude'])) {
-    //     $properties->setLongitude($_POST['longitude']);
-    // }
-    // if(isset($_POST['bedrooms'])) {
-    //     $properties->setBedrooms($_POST['bedrooms']);
-    // }
-    // if(isset($_POST['surface'])) {
-    //     $properties->setSurface($_POST['surface']);
-    // }
-    // if(isset($_POST['reference'])) {
-    //     $properties->setReference($_POST['reference']);
-    // }
-    // if(isset($_POST['zipCode'])) {
-    //     $properties->setZipCode($_POST['zipCode']);
-    // }
-    // if(isset($_POST['country'])) {
-    //     $properties->setCountry($_POST['country']);
-    // }
 
 
     public function updateAttributesAnswers(Request $request)
     {
 
-        $data = $_POST["attributesanswer"];
-
+        $post = json_decode($request->getContent(), true);
+        $data = $post["attributesanswer"];
 
         if ($data && count($data) > 0) {
             foreach ($data as $attributesanswer) {
@@ -119,32 +87,34 @@ class UpdatePropertiesController
     {
         $properties = $request->attributes->get('data');
 
+        $post = json_decode($request->getContent(), true);
+
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
         }
 
-        if (isset($_POST['price'])) {
+        if (isset($post['price'])) {
 
-            $properties->setPrice($_POST['price']);
+            $properties->setPrice($post['price']);
         }
 
-        if (isset($_POST['rooms'])) {
+        if (isset($post['rooms'])) {
 
-            $properties->setRooms($_POST['rooms']);
+            $properties->setRooms($post['rooms']);
         }
-        if (isset($_POST['capacity'])) {
+        if (isset($post['capacity'])) {
 
-            $properties->setCapacity($_POST['capacity']);
-        }
-
-        if (isset($_POST['bedrooms'])) {
-
-            $properties->setBedrooms($_POST['bedrooms']);
+            $properties->setCapacity($post['capacity']);
         }
 
-        if (isset($_POST['surface'])) {
+        if (isset($post['bedrooms'])) {
 
-            $properties->setSurface($_POST['surface']);
+            $properties->setBedrooms($post['bedrooms']);
+        }
+
+        if (isset($post['surface'])) {
+
+            $properties->setSurface($post['surface']);
         }
 
         $this->manager->persist($properties);
@@ -156,18 +126,18 @@ class UpdatePropertiesController
     {
         $properties = $request->attributes->get('data');
         //dd($properties);
-
         $propertiesid = $properties->getId();
 
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
         }
 
+        $post = json_decode($request->getContent(), true);
         $equipements = [];
 
-        if (isset($_POST['equipements'])) {
+        if (isset($post['equipements'])) {
 
-            $equipements = $_POST['equipements'];
+            $equipements = $post['equipements'];
 
             //dd($equipements);
 
@@ -205,7 +175,7 @@ class UpdatePropertiesController
         }
 
         $pictures = $request->files->get('pictures');
-        //dd($pictures);
+        // dd($pictures);
 
         $propertyRef =  $this->manager->getReference("App\Entity\Properties", $properties->getId());
 
@@ -228,36 +198,36 @@ class UpdatePropertiesController
     {
 
         $properties = $request->attributes->get('data');
-
+        $post = json_decode($request->getContent(), true);
 
         //dd($post);
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
         }
 
-        if (isset($_POST["latitude"])) {
+        if (isset($post["latitude"])) {
 
-            $properties->setLatitude($_POST["latitude"]);
+            $properties->setLatitude($post["latitude"]);
         }
 
-        if (isset($_POST["longitude"])) {
+        if (isset($post["longitude"])) {
 
-            $properties->setLongitude($_POST["longitude"]);
+            $properties->setLongitude($post["longitude"]);
         }
 
-        if (isset($_POST["city"])) {
+        if (isset($post["city"])) {
 
-            $properties->setCity($_POST["city"]);
+            $properties->setCity($post["city"]);
         }
 
-        if (isset($_POST["address"])) {
+        if (isset($post["address"])) {
 
-            $properties->setAddress($_POST["address"]);
+            $properties->setAddress($post["address"]);
         }
 
-        if (isset($_POST["country"])) {
+        if (isset($post["country"])) {
 
-            $properties->setCountry($_POST["country"]);
+            $properties->setCountry($post["country"]);
         }
 
         $this->manager->persist($properties);
@@ -282,9 +252,7 @@ class UpdatePropertiesController
         $properties->setUpdatedAt(new \DateTime());
         $this->manager->persist($properties);
         $this->manager->flush();
-        
+
         return new Response('La photo de la propriété a été modifiée avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
     }
-
-
 }
