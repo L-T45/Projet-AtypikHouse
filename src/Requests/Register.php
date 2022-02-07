@@ -14,6 +14,8 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\File\File;
+use App\Email\SendEmailRegister;
+use Symfony\Component\Mailer\MailerInterface;
 
 class Register extends AbstractController
 {
@@ -42,7 +44,7 @@ class Register extends AbstractController
         return substr($string, $ini, $len);
     }
 
-    public function __invoke(EntityManagerInterface $manager, Request $request, UserPasswordEncoderInterface $encoder, UserRepository $UserRepository): Response
+    public function __invoke(EntityManagerInterface $manager, Request $request, UserPasswordEncoderInterface $encoder, UserRepository $UserRepository, SendEmailRegister $SendEmail, MailerInterface $mailer): Response
     {
         $user = array();
         $user = new User();
@@ -118,6 +120,8 @@ class Register extends AbstractController
 
             $manager->persist($user);
             $manager->flush();
+
+            $SendEmail->sendEmailRegister($mailer, $request);
             return new JsonResponse(['status' => '200', 'title' => 'Votre compte a bien été créé'], JsonResponse::HTTP_CREATED);
         } else {
             return new JsonResponse(['status' => '400', 'title' => 'Bad Request', 'message' => 'Un utilisateur est déjà créé avec cette adresse mail !'], JsonResponse::HTTP_CREATED);

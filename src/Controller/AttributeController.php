@@ -21,7 +21,6 @@ class AttributeController
     {
 
         $post = json_decode($request->getContent(), true);
-        dd($post);
         $categoryRef = $manager->getReference("App\Entity\Categories", $post["categories"]);
         $newAtttibute = new Attributes();
         $newAtttibute->setTitle($post["title"]);
