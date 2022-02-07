@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Categories;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 
@@ -10,32 +12,30 @@ class UpdateCategoriesController
 
 {
 
-     public function __invoke(Request $request)
-     {
+    public function __invoke(Request $request, EntityManagerInterface $manager)
+    {
 
         $categories = $request->attributes->get('data');
-        
-        if(!($categories instanceof Categories)) {
+        if (!($categories instanceof Categories)) {
             throw new \RuntimeException('Catégorie attendue');
-        }   
-        
-        if(isset($_POST['title'])) {
+        }
+
+        if (isset($_POST['title'])) {
             $categories->setTitle($_POST['title']);
         }
 
-        if(isset($_POST['description'])) {
+        if (isset($_POST['description'])) {
             $categories->setDescription($_POST['description']);
         }
 
-        $getFile = $request->files->get('file');
 
-        if(isset($getFile)) {
-            $categories->setFile($getFile);
-            $categories->setPicture($getFile);
-        }
-
+        $categories->setFile($request->files->get('file'));
         $categories->setUpdatedAt(new \DateTime());
-        return $categories;
-     }
 
+        $manager->persist($categories);
+        $manager->flush();
+
+
+        return new JsonResponse(['status' => '200', 'title' => 'La catégorie a bien été modifiée !'], JsonResponse::HTTP_CREATED);
+    }
 }
