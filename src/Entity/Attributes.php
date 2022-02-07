@@ -25,12 +25,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "force_eager"=false,
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:categattributes", "enable_max_depth"=true}},
- *               }, 
- *             "dashboard/admin/categories/attributes/create"={
- *                  "method"="POST",
- *                  "path"="dashboard/admin/categories/attributes/create",
- *                  "denormalization_context"={"groups"={"admin:attributescreate", "attributes:categories", "enable_max_depth"=true}},
- *               },              
+ *               },           
  *          },
  *      itemOperations={ 
  *          "get"={"normalization_context"={"groups"={"attributes:collection", "attributes:item"}}},        
@@ -43,13 +38,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "normalization_context"={"groups"={"admin:categattributesid", "attributes:item", "enable_max_depth"=true}},
  *               },  
- *                  "dashboard/admin/attibute/{id}"={
- *                  "method"="PATCH",
- *                  "path"="dashboard/admin/attibute/{id}",
- *                  "security"= "is_granted('ROLE_ADMIN')",
- *                  "deserialize" = false, 
- *              },   
- * 
  *              "dashboard/admin/attributes/update/{id}"={
  *                  "method"="POST",
  *                  "path"="dashboard/admin/attributes/update/{id}", 

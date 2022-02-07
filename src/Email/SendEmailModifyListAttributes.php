@@ -39,7 +39,7 @@ class SendEmailModifyListAttributes extends AbstractController {
         }
     }
 
-    public function PostNewAttributes(MailerInterface $mailer, Request $request, EntityManagerInterface $manager): Response{
+    public function PostNewAttributes(MailerInterface $mailer, Request $request){
         // Récupéré tous les OWNER 
         $findOwners = $this->PropertiesRepository->FindByPropertiesPost();
         $findOwnersCheck = $findOwners;   
@@ -47,24 +47,7 @@ class SendEmailModifyListAttributes extends AbstractController {
 
         // Envoi de mail aux propriétaires !            
         if($findOwnersCheck = true) {
-            $data = json_decode($request->getContent(), true);
-            $title = $data['title'];
-            $findAttributes = $this->AttributesRepository->findByAttributes($title);
-            $findAttributesCheck = $findAttributes;
-
-            // On check d'abord si un équipement avec le même titre n'est pas déjà créé avant de créer ce nouvel équipement et en avertir les OWNERS!
-            if($findAttributesCheck === []) {
-                $postNewEquipement = new Attributes();
-                $postNewEquipement->setTitle($title);
-                $manager->persist($postNewEquipement);
-                $manager->flush();
-                
-                $this->sendEmailChangeAttributesList($mailer, $request, $nbLines, $findOwners);
-                return new Response("Nouveau attribut posté et notifications envoyées aux propriétaires!",Response::HTTP_OK,['content-type' => 'application/json']);    
-            }
-            else{
-                return new Response("Impossible de créer votre nouvel attribut car un attribut du même titre existe déjà!",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);
-            }
+            $this->sendEmailChangeAttributesList($mailer, $request, $nbLines, $findOwners);
         }
     }
 
