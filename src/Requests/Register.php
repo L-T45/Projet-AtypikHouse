@@ -115,7 +115,6 @@ class Register extends AbstractController
             $user->setCountry($country);
             $user->setPicture($file);
             $user->setFile($file);
-            //$user->addComment([]);
             $user->setIsBlocked(0);
 
             $manager->persist($user);
