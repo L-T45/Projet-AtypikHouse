@@ -15,8 +15,10 @@ class ReportsController
     public function approveReport(Request $request, EntityManagerInterface $manager)
     {
         $report = $request->attributes->get('data');
-        dd($report);
+
         $report->setReportState("Accepté");
+
+
         $manager->persist($report);
         $manager->flush();
 
@@ -32,8 +34,8 @@ class ReportsController
     {
 
         $report = $request->attributes->get('data');
-        dd($report);
-        $report->setReportState("rejeté");
+
+        $report->setReportState("Rejeté");
         $manager->persist($report);
         $manager->flush();
 
@@ -41,6 +43,6 @@ class ReportsController
             throw new \RuntimeException('User attendue');
         }
 
-        return new Response('Signalement approuvé avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+        return new Response('Signalement désapprouvé avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 }

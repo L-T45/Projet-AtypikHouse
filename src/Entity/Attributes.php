@@ -48,7 +48,16 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                  "path"="dashboard/admin/attibute/{id}",
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "deserialize" = false, 
- *              },        
+ *              },   
+ * 
+ *              "dashboard/admin/attributes/update/{id}"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/admin/attributes/update/{id}", 
+ *                  "security"= "is_granted('ROLE_ADMIN')",
+ *                  "controller"="App\Controller\AttributeController::updateAttribute",
+ *               },  
+ * 
+ *      
  *          }
  * )
  */
