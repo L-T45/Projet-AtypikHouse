@@ -86,42 +86,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "force_eager"=false,
  *                  "normalization_context"={"groups"={"admin:categoriesid", "enable_max_depth"=true}},
  *               },  
- *                  "dashboard/admin/categories/{id}"={
- *                  "method"="PATCH",
- *                  "path"="dashboard/admin/categories/{id}",
- *                  "controller"="App\Controller\CategoriesModifier::UpdateCategories",
- *                  "security"="is_granted('ROLE_ADMIN')",
- *                  "deserialize"=false,
- *                  "openapi_context"= {
- *                      "requestBody" = {
- *                          "content" = {
- *                              "multipart/form-data" = {
- *                                  "schema" = {
- *                                      "type" = "object",
- *                                      "properties" = {
- *                                          "title" = {
- *                                              "type" = "string"
- *                                          },
- *                                          "slug" = {
- *                                              "type" = "string"
- *                                          },
- *                                          "description" = {
- *                                              "type" = "string"
- *                                          },
- *                                          "file" = {
- *                                              "type" = "array",
- *                                              "items" = {
- *                                                  "type" = "string",
- *                                                  "format" = "binary"
- *                                              },
- *                                          },
- *                                      },
- *                                  },
- *                              },
- *                          },
- *                      },
- *                  },
- *               },
  *                 
  *                  "dashboard/admin/attributes/categories/{id}"={
  *                  "method"="GET",
@@ -131,7 +95,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  
  *               }, 
  *                  
- * 
  *                  "dashboard/admin/update/categories/{id}"={
  *                  "method"="POST",
  *                  "path"="dashboard/admin/update/categories/{id}",

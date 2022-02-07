@@ -200,34 +200,8 @@ use App\Resolver\PostPictureResolver;
  *                "security"="is_granted('ROLE_OWNER')",
  *                "deserialize"=false,
  *                },
- *                "postpicture"={
- *                      "method"="POST",
- *                      "path"="postpicture/properties/{id}",
- *                      "deserialize" = false,
- *                      "controller"=App\Requests\CreateProperties::class,
- *                      "denormalization_context"={"groups"={"properties:write"}},
- *                      "openapi_context" = {
- *                          "requestBody" = {
- *                              "content" = {
- *                                  "multipart/form-data" = {
- *                                      "schema" = {
- *                                          "type" = "object",
- *                                          "properties" = {
- *                                              "file" = {
- *                                                  "type" = "array",
- *                                                  "items" = {
- *                                                      "type" = "string",
- *                                                      "format" = "binary"
- *                                                  },
- *                                              },
- *                                          },
- *                                      },
- *                                  },
- *                              },
- *                          },
- *                      },
- *                 },
- *                   "comments_properties_id"={
+ * 
+ *                      "comments_properties_id"={
  *                      "method"="GET",
  *                      "path"= "comments/properties/{id}",
  *                      "force_eager"=false,
@@ -240,13 +214,11 @@ use App\Resolver\PostPictureResolver;
  *                      "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
  *                 },
  * 
- * 
- * 
- *                   "dashboard/owner/update/properties/{id}"={
+ *                   "dashboard/update/properties/{id}"={
  *                      "method"="POST",
- *                      "path"= "dashboard/owner/update/properties/{id}",
+ *                      "path"= "dashboard/update/properties/{id}",
  *                      "deserialize" = false,
- *                      "security" = "is_granted('ROLE_OWNER')",
+ *                      "security" = "is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN')",
  *                      "controller" = App\Controller\UpdatePropertiesController::class,
  *                      "openapi_context" = {
  *                          "requestBody" = {
@@ -313,7 +285,374 @@ use App\Resolver\PostPictureResolver;
  *                                  },
  *                              },
  *                          },
- *                      },     
+ *                      }, 
+ * 
+ *                      "updateinfos/properties/{id}"={
+ *                      "method"="POST",
+ *                      "path"= "updateinfos/properties/{id}",
+ *                      "deserialize" = false,
+ *                      "security" = "is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN')",
+ *                      "controller" = "App\Controller\UpdatePropertiesController::updateInfos",
+ *                      "openapi_context" = {
+ *                          "requestBody" = {
+ *                              "content" = {
+ *                                  "multipart/form-data" = {
+ *                                      "schema" = {
+ *                                          "type" = "object",
+ *                                          "properties" = {
+ *                                              "title"={
+ *                                                  "type" = "string"
+ *                                                  },
+ *                                                  "slug"={
+ *                                                      "type" = "string"
+ *                                                  },                            
+ *                                                  "price"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "rooms"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "booking"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "address"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "city"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "latitude"={
+ *                                                      "type" = "float"
+ *                                                  },
+ *                                                  "longitude"={
+ *                                                      "type" = "float"
+ *                                                  },
+ *                                                  "bedrooms"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "surface"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "reference"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "zipCode"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "country"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "capacity"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "file" = {
+ *                                                      "type" = "array",
+ *                                                      "items" = {
+ *                                                          "type" = "string",
+ *                                                          "format" = "binary"
+ *                                                      },
+ *                                                  },
+ *                                              },
+ *                                          },
+ *                                      },
+ *                                  },
+ *                              },
+ *                          },
+ *                      }, 
+ * 
+ * 
+ *                      "dashboard/updatecaracteristics/properties/{id}"={
+ *                      "method"="POST",
+ *                      "path"= "dashboard/updatecaracteristics/properties/{id}",
+ *                      "deserialize" = false,
+ *                      "security" = "is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN')",
+ *                      "controller" ="App\Controller\UpdatePropertiesController::updateCaracteristics",
+ *                      "openapi_context" = {
+ *                          "requestBody" = {
+ *                              "content" = {
+ *                                  "multipart/form-data" = {
+ *                                      "schema" = {
+ *                                          "type" = "object",
+ *                                          "properties" = {
+ *                                              "title"={
+ *                                                  "type" = "string"
+ *                                                  },
+ *                                                  "slug"={
+ *                                                      "type" = "string"
+ *                                                  },                            
+ *                                                  "price"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "rooms"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "booking"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "address"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "city"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "latitude"={
+ *                                                      "type" = "float"
+ *                                                  },
+ *                                                  "longitude"={
+ *                                                      "type" = "float"
+ *                                                  },
+ *                                                  "bedrooms"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "surface"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "reference"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "zipCode"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "country"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "capacity"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "file" = {
+ *                                                      "type" = "array",
+ *                                                      "items" = {
+ *                                                          "type" = "string",
+ *                                                          "format" = "binary"
+ *                                                      },
+ *                                                  },
+ *                                              },
+ *                                          },
+ *                                      },
+ *                                  },
+ *                              },
+ *                          },
+ *                      }, 
+ * 
+ *                      "dashboard/updateequipements/properties/{id}"={
+ *                      "method"="POST",
+ *                      "path"= "dashboard/updateequipements/properties/{id}",
+ *                      "deserialize" = false,
+ *                      "security" = "is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN')",
+ *                      "controller" ="App\Controller\UpdatePropertiesController::updateEquipements",
+ *                      "openapi_context" = {
+ *                          "requestBody" = {
+ *                              "content" = {
+ *                                  "multipart/form-data" = {
+ *                                      "schema" = {
+ *                                          "type" = "object",
+ *                                          "properties" = {
+ *                                              "title"={
+ *                                                  "type" = "string"
+ *                                                  },
+ *                                                  "slug"={
+ *                                                      "type" = "string"
+ *                                                  },                            
+ *                                                  "price"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "rooms"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "booking"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "address"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "city"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "latitude"={
+ *                                                      "type" = "float"
+ *                                                  },
+ *                                                  "longitude"={
+ *                                                      "type" = "float"
+ *                                                  },
+ *                                                  "bedrooms"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "surface"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "reference"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "zipCode"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "country"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "capacity"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "file" = {
+ *                                                      "type" = "array",
+ *                                                      "items" = {
+ *                                                          "type" = "string",
+ *                                                          "format" = "binary"
+ *                                                      },
+ *                                                  },
+ *                                              },
+ *                                          },
+ *                                      },
+ *                                  },
+ *                              },
+ *                          },
+ *                      }, 
+ *      
+ *                      "dashboard/updatenewgallerypictures/properties/{id}"={
+ *                      "method"="POST",
+ *                      "path"= "dashboard/updatenewgallerypictures/properties/{id}",
+ *                      "deserialize" = false,
+ *                      "security" = "is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN')",
+ *                      "controller" ="App\Controller\UpdatePropertiesController::insertNewGalleryPictures",
+ *                      "openapi_context" = {
+ *                          "requestBody" = {
+ *                              "content" = {
+ *                                  "multipart/form-data" = {
+ *                                      "schema" = {
+ *                                          "type" = "object",
+ *                                          "properties" = {
+ *                                              "title"={
+ *                                                  "type" = "string"
+ *                                                  },
+ *                                                  "slug"={
+ *                                                      "type" = "string"
+ *                                                  },                            
+ *                                                  "price"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "rooms"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "booking"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "address"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "city"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "latitude"={
+ *                                                      "type" = "float"
+ *                                                  },
+ *                                                  "longitude"={
+ *                                                      "type" = "float"
+ *                                                  },
+ *                                                  "bedrooms"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "surface"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "reference"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "zipCode"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "country"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "capacity"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "file" = {
+ *                                                      "type" = "array",
+ *                                                      "items" = {
+ *                                                          "type" = "string",
+ *                                                          "format" = "binary"
+ *                                                      },
+ *                                                  },
+ *                                              },
+ *                                          },
+ *                                      },
+ *                                  },
+ *                              },
+ *                          },
+ *                      }, 
+ * 
+ *                      "dashboard/updatelocality/properties/{id}"={
+ *                      "method"="POST",
+ *                      "path"= "dashboard/updatelocality/properties/{id}",
+ *                      "deserialize" = false,
+ *                      "security" = "is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN')",
+ *                      "controller" ="App\Controller\UpdatePropertiesController::updateLocality",
+ *                      "openapi_context" = {
+ *                          "requestBody" = {
+ *                              "content" = {
+ *                                  "multipart/form-data" = {
+ *                                      "schema" = {
+ *                                          "type" = "object",
+ *                                          "properties" = {
+ *                                              "title"={
+ *                                                  "type" = "string"
+ *                                                  },
+ *                                                  "slug"={
+ *                                                      "type" = "string"
+ *                                                  },                            
+ *                                                  "price"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "rooms"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "booking"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "address"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "city"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "latitude"={
+ *                                                      "type" = "float"
+ *                                                  },
+ *                                                  "longitude"={
+ *                                                      "type" = "float"
+ *                                                  },
+ *                                                  "bedrooms"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "surface"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "reference"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "zipCode"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "country"={
+ *                                                      "type" = "string"
+ *                                                  },
+ *                                                  "capacity"={
+ *                                                      "type" = "int"
+ *                                                  },
+ *                                                  "file" = {
+ *                                                      "type" = "array",
+ *                                                      "items" = {
+ *                                                          "type" = "string",
+ *                                                          "format" = "binary"
+ *                                                      },
+ *                                                  },
+ *                                              },
+ *                                          },
+ *                                      },
+ *                                  },
+ *                              },
+ *                          },
+ *                      }, 
+ *     
  *                  }
  * )
  * @ApiFilter(SearchFilter::class, properties= {"categories.id": "exact", "equipements.title": "exact", "categories.title": "exact", "latitude": "exact", "longitude": "exact", "reservations.comments.value": "exact", "address": "partial", "city": "partial"})

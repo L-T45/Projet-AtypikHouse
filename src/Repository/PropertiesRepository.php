@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Properties;
+use App\Entity\Equipements;
 use App\Entity\Reservations;
 use App\Entity\Categories;
 use App\Entity\Comments;
@@ -68,6 +69,23 @@ class PropertiesRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @return Properties[] Returns an array of Properties objects
+     */
+
+    public function findEquipementsByProperties($id)
+    {
+        return $this->createQueryBuilder('p')
+            ->select('e.id, e.title')
+            ->innerJoin('p.equipements','e')
+            ->andWhere('p.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
+    }
+
+    
 
 
     public function findById(int $id)

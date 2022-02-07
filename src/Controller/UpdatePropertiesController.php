@@ -11,21 +11,27 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Entity\Equipements;
 use App\Entity\AttributesAnswers;
 use App\Entity\PropertiesGallery;
+use App\Repository\AttributesAnswersRepository;
+use App\Repository\PropertiesRepository;
+use App\Repository\EquipementsRepository;
 
 class UpdatePropertiesController
 
 {
 
-    public function __construct(EntityManagerInterface $manager)
+    public function __construct(EntityManagerInterface $manager, AttributesAnswersRepository $attributesanswersrepo,PropertiesRepository $propertiesrepo, EquipementsRepository $equipementsrepo)
     {
         $this->manager = $manager;
+        $this->attributesanswersrepo = $attributesanswersrepo;
+        $this->propertiesrepo = $propertiesrepo;
+        $this->equipementrepo = $equipementsrepo;
     }
 
 
     public function updateInfos(Request $request)
     {
         $properties = $request->attributes->get('data');
-        if (isset($_POST['title'])) {
+        //dd($properties);
 
             if (!($properties instanceof Properties)) {
                 throw new \RuntimeException('Propriété attendue');
@@ -36,16 +42,15 @@ class UpdatePropertiesController
             }
             if (isset($_POST['category'])) {
 
-                $categoryRef = $this->manager->getReference("App\Entity\Equipements", $_POST['category']);
+                $categoryRef = $this->manager->getReference("App\Entity\Categories", $_POST['category']);
                 $properties->setCategories($categoryRef);
-                //dd($_POST['title']);
 
             }
             $this->manager->persist($properties);
             $this->manager->flush();
-            return new Response('Propriétés modifiés', Response::HTTP_OK, ['content-type' => 'application/json']);
-        }
-
+            return new Response('Les informations de la propriété ont été modifiées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+       
+    }
         // if(isset($_POST['slug'])) {
         //     $properties->setSlug($_POST['slug']);
         // }
@@ -84,86 +89,111 @@ class UpdatePropertiesController
         // }
 
 
-
-    }
-
-
-
-
-
-
-
-
-
-
-
     public function updateAttributesAnswers(Request $request)
     {
-        $properties = $request->attributes->get('data');
-
-        $attributesanswers = [];
-
-        if (isset($_POST["attributesanswers"])) {
-            $attributesanswers = $_POST["attributesanswers"];
-        }
+       
+        $data = $_POST["attributesanswer"];
 
 
-        if ($attributesanswers && count($attributesanswers) > 0) {
-            foreach ($attributesanswers as $attributesanswer) {
-                $attributesanswer = $this->manager->getReference("App\Entity\AttributesAnswers", $attributesanswer);
-                $properties->addAttributesAnswer($attributesanswer);
+        if ($data && count($data) > 0) {
+            foreach ($data as $attributesanswer) {
+                $answer = Array();
+                $answer = new AttributesAnswers();
+                $attributesid = $attributesanswer["id"];
+                
+             
+                $answer = $this->attributesanswersrepo->findAttributesAnswersByid($attributesid);
+                $answer= $answer[0];
+
+                
+                $answer->setResponseString($attributesanswer["response_string"]);
+                $answer->setResponseBool($attributesanswer["response_bool"]);
+                $answer->setResponseNbr($attributesanswer["response_nbr"]);
+                $this->manager->persist($answer);
+                $this->manager->flush();
             }
         }
+       
+        return new Response('Les réponses ont été modifiées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
 
-
-        if (!($properties instanceof Properties)) {
-            throw new \RuntimeException('Propriété attendue');
-        }
-        $this->manager->persist($properties);
-        $this->manager->flush();
     }
 
     public function updateCaracteristics(Request $request)
     {
         $properties = $request->attributes->get('data');
-        if (isset($_POST['price'])) {
-
-            $properties->setPrice($_POST['price']);
-        }
-        $this->manager->persist($properties);
-        $this->manager->flush();
 
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
         }
+
+        if (isset($_POST['price'])) {
+
+            $properties->setPrice($_POST['price']);
+        }
+
+        if (isset($_POST['rooms'])) {
+
+            $properties->setRooms($_POST['rooms']);
+        }
+        if (isset($_POST['capacity'])) {
+
+            $properties->setCapacity($_POST['capacity']);
+        }
+
+        if (isset($_POST['bedrooms'])) {
+
+            $properties->setBedrooms($_POST['bedrooms']);
+        }
+
+        if (isset($_POST['surface'])) {
+
+            $properties->setSurface($_POST['surface']);
+        }
+
+        $this->manager->persist($properties);
+        $this->manager->flush();
+        return new Response('Les caractéristiques de la propriété ont été modifiées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 
     public function updateEquipements(Request $request)
     {
         $properties = $request->attributes->get('data');
+        //dd($properties);
+
+        $propertiesid = $properties->getId();
 
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
         }
+
         $equipements = [];
+
         if (isset($_POST['equipements'])) {
 
-            $equipements = [];
+            $equipements = $_POST['equipements'];
 
-            if (isset($_POST['equipements'])) {
-                $equipements = $_POST['equipements'];
-            }
+            //dd($equipements);
 
+            //$findEquipements = $this->equipementrepo->DeleteEquipementsByProperties($propertiesid);
+            //dd($findEquipements);
+
+            $sql = 'DELETE FROM properties_equipements WHERE properties_equipements.properties_id = :id';
+
+            $stmt = $this->manager->getConnection()->prepare($sql);
+            $result = $stmt->executeQuery(['id'=>$propertiesid])->fetchAllAssociative();
+        
+          
             if ($equipements && count($equipements) > 0) {
                 foreach ($equipements as $equipement) {
                     $equipement = $this->manager->getReference("App\Entity\Equipements", $equipement);
                     $properties->addEquipement($equipement);
+                    
                 }
             }
         }
         $this->manager->persist($properties);
         $this->manager->flush();
-        return new Response('Equipements modifiés', Response::HTTP_OK, ['content-type' => 'application/json']);
+        return new Response('Equipements modifiés avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 
 
@@ -171,25 +201,29 @@ class UpdatePropertiesController
     {
 
         $properties = $request->attributes->get('data');
+
+        //dd($propertiesid);
+
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
         }
-        $post = json_decode($request->getContent(), true);
+
         $pictures = $request->files->get('pictures');
+        //dd($pictures);
 
-        $propertyRef =  $this->manager->getReference("App\Entity\Properties", $post["categories"]);
+        $propertyRef =  $this->manager->getReference("App\Entity\Properties", $properties->getId());
 
-        foreach ($pictures as $key => $value) {
+        foreach ($pictures as $picture) {
 
             $newGalleryPicture = new PropertiesGallery();
-            $newGalleryPicture->getProperties($propertyRef);
-            $newGalleryPicture->setFile($value);
+            $newGalleryPicture->setProperties($propertyRef);
+            $newGalleryPicture->setFile($picture);
 
 
             $this->manager->persist($newGalleryPicture);
             $this->manager->flush();
         }
-        return new Response('Nouvelles photos bien insérées', Response::HTTP_OK, ['content-type' => 'application/json']);
+        return new Response('Nouvelles photos insérées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 
 
@@ -198,23 +232,45 @@ class UpdatePropertiesController
     {
 
         $properties = $request->attributes->get('data');
-        $post = json_decode($request->getContent(), true);
+        
 
-        dd($post);
+        //dd($post);
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
         }
-        $properties->setLatitude($post->lat);
-        $properties->setLongitude($post->lat);
-        $properties->setCity($post->lat);
-        $properties->setAddress($post->lat);
-        $properties->setCountry($post->lat);
 
+        if(isset($_POST["latitude"])) {
 
+            $properties->setLatitude($_POST["latitude"]);
 
+        }
+
+        if(isset($_POST["longitude"])) {
+
+            $properties->setLongitude($_POST["longitude"]);
+
+        }
+
+        if(isset($_POST["city"])) {
+
+            $properties->setCity($_POST["city"]);
+
+        }
+
+        if(isset($_POST["address"])) {
+
+            $properties->setAddress($_POST["address"]);
+
+        }
+
+        if(isset($_POST["country"])) {
+
+            $properties->setCountry($_POST["country"]);
+
+        }
 
         $this->manager->persist($properties);
         $this->manager->flush();
-        return new Response('Localité modifié avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+        return new Response('Localité modifiée avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 }
