@@ -163,12 +163,12 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "security"= "is_granted('ROLE_OWNER')",
  *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},                  
  *               },
- *                  "lastconversations"={
+ * 
+ *                  "dashboard/user/{id}/conversations"={
  *                  "method"="GET",
  *                  "path"="dashboard/user/{id}/conversations",
- *                  "controller"=App\Controller\LastNewConversations::class,                     
- *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},
- *                  
+ *                  "security"= "is_granted('ROLE_USER')",
+ *                    "controller"="App\Controller\ConversationController::findConversationByUser",                   
  *               }, 
  *  
  *                  "dashboard/admin/users/{id}"={
@@ -210,13 +210,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "controller"="App\Controller\ResetPassword::UpdatePwd",
  *                  "denormalization_context"={"groups"={"admin:useridentifiants", "enable_max_depth"=true}},
  *               },
- * 
- *                 "lastconversations"={
- *                  "method"="GET",
- *                  "path"="dashboard/user/{id}/conversations",
- *                  "controller"=App\Controller\LastNewConversations::class,
- *                 
- *               },      
+ *      
  * 
  *           
  * 

@@ -56,9 +56,9 @@ use App\Resolver\PostPictureResolver;
  *                  "normalization_context"={"groups"={"admin:properties", "enable_max_depth"=true}}, 
  *                 }, 
  *              
- *              "api/dashboard/owner/properties/create"={
+ *              "api/dashboard/properties/create"={
  *                  "method"="POST",
- *                  "path"="dashboard/owner/properties/create",
+ *                  "path"="dashboard/properties/create",
  *                  "security"= "is_granted('ROLE_USER')",
  *                  "deserialize" = false,
  *                  "security"= "is_granted('ROLE_USER')",
@@ -622,6 +622,35 @@ use App\Resolver\PostPictureResolver;
  *                              },
  *                          },
  *                      }, 
+ *                              
+ *                  "dashboard/updatepicture/properties/{id}"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/updatepicture/properties/{id}",
+ *                  "deserialize" = false,
+ *                  "security" = "is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN')",
+ *                  "controller"="App\Controller\UpdatePropertiesController::updatepicture",
+ *                  "openapi_context" = {
+ *                  "requestBody" = {
+ *                     "content" = {
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                     "file" = {
+ *                                         "type" = "array",
+ *                                         "items" = {
+ *                                             "type" = "string",
+ *                                             "format" = "binary"
+ *                                         },
+ *                                     },
+ *                                 },
+ *                             },
+ *                         },
+ *                     },
+ *                 },
+ *             },
+ *                  
+ *               }, 
  *     
  *                  }
  * )

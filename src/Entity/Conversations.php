@@ -31,23 +31,30 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "controller"=App\Controller\LastNewConversations::class,                
  *               },            
+ *                       
  *          },
  *      itemOperations={
  *          "get"={"normalization_context"={"groups"={"conversations:collection", "conversations:item"}}},
  *          "put"={"security"= "is_granted('ROLE_USER')"},
  *          "delete"={},            
- *                  "dashboard/user/conversations/{id}"={
+ *    
+ *                 
+ *                "dashboard/user/details/conversations/{id}"={
  *                  "method"="GET",
- *                  "path"="dashboard/user/conversations/{id}",
+ *                  "path"="dashboard/user/details/conversations/{id}",
  *                  "security"= "is_granted('ROLE_USER')",
- *                  "normalization_context"={"groups"={"user:conversid"}}, *                  
- *               }, 
+ *                  "controller"="App\Controller\ConversationController::findMessages",                
+ *               },
+ * 
  *                  "dashboard/admin/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/conversations/{id}",
  *                  "security"= "is_granted('ROLE_ADMIN')", 
  *                  "normalization_context"={"groups"={"admin:conversid"}},                  
  *               }, 
+ * 
+ * 
+ * 
  *          }
  * )
  * @ApiFilter(OrderFilter::class, properties= {"created_at": "ASC", "created_at": "DESC", "messages.created_at": "DESC", "messages.created_at": "ASC" })
@@ -87,7 +94,6 @@ class Conversations
         $this->messages = new ArrayCollection();
         $this->created_at = new \DateTime();
         $this->users = new ArrayCollection();
-        
     }
 
     public function getId(): ?int
