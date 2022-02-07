@@ -36,6 +36,24 @@ class AttributesAnswersRepository extends ServiceEntityRepository
     }
     */
 
+    /**
+     * @return AttributesAnswers[] Returns an array of AttributesAnswers objects
+    */
+    
+    public function findAttributesAnswersByid($id)
+    {
+        return $this->createQueryBuilder('a')
+            ->select('a')
+            ->andWhere('a.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+
+    
+
     /*
     public function findOneBySomeField($value): ?AttributesAnswers
     {
