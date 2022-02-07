@@ -43,7 +43,6 @@ class UpdatePropertiesController
         }
         if (isset($_POST['category'])) {
 
-<<<<<<< HEAD
                 $categoryRef = $this->manager->getReference("App\Entity\Categories", $_POST['category']);
                 $properties->setCategories($categoryRef);
 
@@ -64,51 +63,6 @@ class UpdatePropertiesController
         return $response;
        
     }
-=======
-            $categoryRef = $this->manager->getReference("App\Entity\Categories", $_POST['category']);
-            $properties->setCategories($categoryRef);
-        }
-        $this->manager->persist($properties);
-        $this->manager->flush();
-        return new Response('Les informations de la propriété ont été modifiées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
-    }
-    // if(isset($_POST['slug'])) {
-    //     $properties->setSlug($_POST['slug']);
-    // }
-    // if(isset($_POST['price'])) {
-    //     $properties->setPrice($_POST['price']);
-    // }
-    // if(isset($_POST['rooms'])) {
-    //     $properties->setRooms($_POST['rooms']);
-    // }
-    // if(isset($_POST['booking'])) {
-    //     $properties->setBooking($_POST['booking']);
-    // }
-    // if(isset($_POST['address'])) {
-    //     $properties->setAddress($_POST['address']);
-    // }
-    // if(isset($_POST['latitude'])) {
-    //     $properties->setLatitude($_POST['latitude']);
-    // }
-    // if(isset($_POST['longitude'])) {
-    //     $properties->setLongitude($_POST['longitude']);
-    // }
-    // if(isset($_POST['bedrooms'])) {
-    //     $properties->setBedrooms($_POST['bedrooms']);
-    // }
-    // if(isset($_POST['surface'])) {
-    //     $properties->setSurface($_POST['surface']);
-    // }
-    // if(isset($_POST['reference'])) {
-    //     $properties->setReference($_POST['reference']);
-    // }
-    // if(isset($_POST['zipCode'])) {
-    //     $properties->setZipCode($_POST['zipCode']);
-    // }
-    // if(isset($_POST['country'])) {
-    //     $properties->setCountry($_POST['country']);
-    // }
->>>>>>> master
 
 
     public function updateAttributesAnswers(Request $request, SendEmailModifyProperties $SendEmail, MailerInterface $mailer)
@@ -136,7 +90,6 @@ class UpdatePropertiesController
                 $this->manager->flush();
             }
         }
-<<<<<<< HEAD
         
         $findOwnerProperties = $this->propertiesrepo->findByIdUser($idProperties);
         $findCheckOwnerProperties = $findOwnerProperties;
@@ -149,8 +102,6 @@ class UpdatePropertiesController
                 $response = new Response("Une erreur est survenu lors de la modification des réponses ...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
             }
         return $response;
-=======
->>>>>>> master
 
         return new Response('Les réponses ont été modifiées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
     }
@@ -295,12 +246,8 @@ class UpdatePropertiesController
     {
 
         $properties = $request->attributes->get('data');
-<<<<<<< HEAD
         $idProperties = $properties->getId();
         
-=======
-
->>>>>>> master
 
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
