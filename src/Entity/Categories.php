@@ -95,7 +95,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  
  *               }, 
  *                  
- * 
  *                  "dashboard/admin/update/categories/{id}"={
  *                  "method"="POST",
  *                  "path"="dashboard/admin/update/categories/{id}",
