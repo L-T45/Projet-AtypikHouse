@@ -273,4 +273,27 @@ class UpdatePropertiesController
         $this->manager->flush();
         return new Response('Localité modifiée avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
     }
+
+
+
+    public function updatepicture(Request $request)
+    {
+
+        $properties = $request->attributes->get('data');
+
+        //dd($propertiesid);
+
+        if (!($properties instanceof Properties)) {
+            throw new \RuntimeException('Propriété attendue');
+        }
+
+        $properties->setFile($request->files->get('picture'));
+        $properties->setUpdatedAt(new \DateTime());
+        $this->manager->persist($properties);
+        $this->manager->flush();
+        
+        return new Response('La photo de la propriété a été modifiée avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+    }
+
+
 }
