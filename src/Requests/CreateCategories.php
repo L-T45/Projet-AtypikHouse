@@ -37,6 +37,7 @@ class CreateCategories extends AbstractController
 
     public function newCategories(EntityManagerInterface $manager, Request $request, CategoriesRepository $CategoriesRepository, SendEmailModifyListCategories $SendEmail, MailerInterface $mailer, UserRepository $UserRepository): Response
     {
+        $SendEmail->PostNewCategories($mailer, $request);
         $categories = array();
         $categories = new Categories();
 

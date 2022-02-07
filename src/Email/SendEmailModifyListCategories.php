@@ -35,7 +35,7 @@ class SendEmailModifyListCategories extends AbstractController {
     public function PostNewCategories(MailerInterface $mailer, Request $request){
         // Récupéré tous les OWNER 
         $findOwners = $this->PropertiesRepository->FindByPropertiesPost();
-        $findOwnersCheck = $findOwners;   
+        $findOwnersCheck = $findOwners;
         $nbLines = count($findOwners);
 
         // Envoi de mail aux propriétaires !            
