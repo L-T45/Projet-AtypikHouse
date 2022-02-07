@@ -34,14 +34,18 @@ class UpdatePropertiesController
         $properties = $request->attributes->get('data');
         $idProperties = $properties->getId();
 
+        $post = json_decode($request->getContent(), true);
+        //   dd($post["title"]);
+
+
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
         }
 
-        if (isset($_POST['title'])) {
-            $properties->setTitle($_POST['title']);
+        if (isset($post["title"])) {
+            $properties->setTitle($post["title"]);
         }
-        if (isset($_POST['category'])) {
+        if (isset($post['category'])) {
 
                 $categoryRef = $this->manager->getReference("App\Entity\Categories", $_POST['category']);
                 $properties->setCategories($categoryRef);
@@ -68,9 +72,10 @@ class UpdatePropertiesController
     public function updateAttributesAnswers(Request $request, SendEmailModifyProperties $SendEmail, MailerInterface $mailer)
     {
 
-        $data = $_POST["attributesanswer"];
         $properties = $request->attributes->get('data');
         $idProperties = $properties->getId();
+        $post = json_decode($request->getContent(), true);
+        $data = $post["attributesanswer"];
 
         if ($data && count($data) > 0) {
             foreach ($data as $attributesanswer) {
@@ -111,32 +116,34 @@ class UpdatePropertiesController
         $properties = $request->attributes->get('data');
         $idProperties = $properties->getId();
 
+        $post = json_decode($request->getContent(), true);
+
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
         }
 
-        if (isset($_POST['price'])) {
+        if (isset($post['price'])) {
 
-            $properties->setPrice($_POST['price']);
+            $properties->setPrice($post['price']);
         }
 
-        if (isset($_POST['rooms'])) {
+        if (isset($post['rooms'])) {
 
-            $properties->setRooms($_POST['rooms']);
+            $properties->setRooms($post['rooms']);
         }
-        if (isset($_POST['capacity'])) {
+        if (isset($post['capacity'])) {
 
-            $properties->setCapacity($_POST['capacity']);
-        }
-
-        if (isset($_POST['bedrooms'])) {
-
-            $properties->setBedrooms($_POST['bedrooms']);
+            $properties->setCapacity($post['capacity']);
         }
 
-        if (isset($_POST['surface'])) {
+        if (isset($post['bedrooms'])) {
 
-            $properties->setSurface($_POST['surface']);
+            $properties->setBedrooms($post['bedrooms']);
+        }
+
+        if (isset($post['surface'])) {
+
+            $properties->setSurface($post['surface']);
         }
 
         $this->manager->persist($properties);
@@ -166,11 +173,12 @@ class UpdatePropertiesController
             throw new \RuntimeException('Propriété attendue');
         }
 
+        $post = json_decode($request->getContent(), true);
         $equipements = [];
 
-        if (isset($_POST['equipements'])) {
+        if (isset($post['equipements'])) {
 
-            $equipements = $_POST['equipements'];
+            $equipements = $post['equipements'];
 
             $sql = 'DELETE FROM properties_equipements WHERE properties_equipements.properties_id = :id';
 
@@ -249,33 +257,35 @@ class UpdatePropertiesController
         $idProperties = $properties->getId();
         
 
+        $post = json_decode($request->getContent(), true);
+
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
         }
 
-        if (isset($_POST["latitude"])) {
+        if (isset($post["latitude"])) {
 
-            $properties->setLatitude($_POST["latitude"]);
+            $properties->setLatitude($post["latitude"]);
         }
 
-        if (isset($_POST["longitude"])) {
+        if (isset($post["longitude"])) {
 
-            $properties->setLongitude($_POST["longitude"]);
+            $properties->setLongitude($post["longitude"]);
         }
 
-        if (isset($_POST["city"])) {
+        if (isset($post["city"])) {
 
-            $properties->setCity($_POST["city"]);
+            $properties->setCity($post["city"]);
         }
 
-        if (isset($_POST["address"])) {
+        if (isset($post["address"])) {
 
-            $properties->setAddress($_POST["address"]);
+            $properties->setAddress($post["address"]);
         }
 
-        if (isset($_POST["country"])) {
+        if (isset($post["country"])) {
 
-            $properties->setCountry($_POST["country"]);
+            $properties->setCountry($post["country"]);
         }
 
         $this->manager->persist($properties);
