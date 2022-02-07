@@ -17,16 +17,18 @@ class SendEmailModifyProperties extends AbstractController {
 
     private $email; 
 
-    public function sendEmailModifyProperties(MailerInterface $mailer, Request $request, $ownersEmail): Response{
+    public function sendEmailModifyProperties(MailerInterface $mailer, Request $request, $findOwnerProperties): Response{
+        if($findCheckOwnerProperties =! []){
+            
+            $ownersEmail = $findOwnerProperties[0]['email'];
+            $email = (new Email())
+            ->from('atypikhouse.communication@gmail.com')
+            ->to($ownersEmail) 
+            ->subject("Modification de l'un de vos biens")
+            ->text("Bonjour à vous propriétaire !"."\n"."\n"."Nous vous informons que l'un de vos bien a été modifié ou supprimé.");
 
-        $email = (new Email())
-        ->from('atypikhouse.communication@gmail.com')
-        ->to($ownersEmail) 
-        ->subject("Modification de l'un de vos biens")
-        ->text("Bonjour à vous propriétaire !"."\n"."\n"."Nous vous informons que l'un de vos bien a été modifié ou supprimé.");
-
-        $mailer->send($email);  
-        return new Response("Nouveau équipement posté et notifications envoyées aux propriétaires!",Response::HTTP_OK,['content-type' => 'application/json']);
+            $mailer->send($email);  
+            return new Response("Nouveau équipement posté et notifications envoyées aux propriétaires!",Response::HTTP_OK,['content-type' => 'application/json']);
+        }
     }
-
 }

@@ -24,20 +24,17 @@ class DeleteProperties extends AbstractController {
         $this->PropertiesRepository = $PropertiesRepository;
         $findOwnerProperties = $this->PropertiesRepository->findByIdUser($idProperties);
         $findCheckOwnerProperties = $findOwnerProperties;
+        
+        $this->PropertiesRepository = $PropertiesRepository;
+        $findPropertiesToDelete = $this->PropertiesRepository->findByIdToDelete($idProperties);
 
-        if($findCheckOwnerProperties =! []){
-            $ownersEmail = $findOwnerProperties[0]['email'];
-            $this->PropertiesRepository = $PropertiesRepository;
-            $findPropertiesToDelete = $this->PropertiesRepository->findByIdToDelete($idProperties);
-
-                if($findPropertiesToDelete =! []){
-                    $SendEmail->sendEmailModifyProperties($mailer, $request, $ownersEmail);
-                    $response = new Response('Propriété supprimée',Response::HTTP_OK,['content-type' => 'application/json']);
-                }
-                else{  
-                    $response = new Response("Une erreur est survenu lors de la suppression de la propriété...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
-                }
-            return $response;
+        if($findPropertiesToDelete =! []){
+            $SendEmail->sendEmailModifyProperties($mailer, $request, $findOwnerProperties);
+            $response = new Response('Propriété supprimée',Response::HTTP_OK,['content-type' => 'application/json']);
         }
+        else{  
+            $response = new Response("Une erreur est survenu lors de la suppression de la propriété...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
+        }
+        return $response;
     }
 }
