@@ -652,6 +652,35 @@ use App\Resolver\PostPictureResolver;
  *                              },
  *                          },
  *                      }, 
+ *                              
+ *                  "dashboard/updatepicture/properties/{id}"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/updatepicture/properties/{id}",
+ *                  "deserialize" = false,
+ *                  "security" = "is_granted('ROLE_OWNER') or is_granted('ROLE_ADMIN')",
+ *                  "controller"="App\Controller\UpdatePropertiesController::updatepicture",
+ *                  "openapi_context" = {
+ *                  "requestBody" = {
+ *                     "content" = {
+ *                         "multipart/form-data" = {
+ *                             "schema" = {
+ *                                 "type" = "object",
+ *                                 "properties" = {
+ *                                     "file" = {
+ *                                         "type" = "array",
+ *                                         "items" = {
+ *                                             "type" = "string",
+ *                                             "format" = "binary"
+ *                                         },
+ *                                     },
+ *                                 },
+ *                             },
+ *                         },
+ *                     },
+ *                 },
+ *             },
+ *                  
+ *               }, 
  *     
  *                  }
  * )
