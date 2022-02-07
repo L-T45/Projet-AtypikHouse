@@ -296,12 +296,11 @@ class UpdatePropertiesController
 
 
 
-    public function updatepicture(Request $request)
+    public function updatepicture(Request $request, SendEmailModifyProperties $SendEmail, MailerInterface $mailer)
     {
 
         $properties = $request->attributes->get('data');
-
-        //dd($propertiesid);
+        $idProperties = $properties->getId();
 
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
@@ -311,9 +310,17 @@ class UpdatePropertiesController
         $properties->setUpdatedAt(new \DateTime());
         $this->manager->persist($properties);
         $this->manager->flush();
-        
-        return new Response('La photo de la propriété a été modifiée avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+
+        $findOwnerProperties = $this->propertiesrepo->findByIdUser($idProperties);
+        $findCheckOwnerProperties = $findOwnerProperties;
+
+        if($findCheckOwnerProperties =! []){
+            $SendEmail->sendEmailModifyProperties($mailer, $request, $findOwnerProperties);
+            $response =  new Response('La photo de la propriété a été modifiée avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
+        }
+        else{  
+            $response = new Response("Une erreur est survenu lors de la modification de la photo de la propriété...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
+        }
+        return $response;
     }
-
-
 }
