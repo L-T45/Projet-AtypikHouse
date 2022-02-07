@@ -53,11 +53,13 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *                   "security"= "is_granted('ROLE_ADMIN')",
  *                   "normalization_context"={"groups"={"equipements:collection", "equipements:item", "enable_max_depth"=true}}
  *                 }, 
- *                  "dashboard/admin/equipements/{id}"={
- *                  "method"="PATCH",
- *                  "path"="dashboard/admin/equipements/{id}",
+ *                 
+ *                   "dashboard/admin/equipements/update/{id}"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/admin/equipements/update/{id}",
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "deserialize" = false, 
+ *                  "controller"="App\Controller\EquipementController::updateEquipement"
  *              },
  *          }
  * )
@@ -172,5 +174,4 @@ class Equipements
 
         return $this;
     }
-
 }
