@@ -220,10 +220,10 @@ class CreateProperties extends AbstractController
             }
 
             if($CheckNewToken != ""){
-                return new JsonResponse(['status' => '200', 'Properties id' => $propertiesid, "New token" => $NewToken, 'title' => 'Votre location de bien a bien été créé'], JsonResponse::HTTP_CREATED);
+                return new JsonResponse(['status' => '200', 'id' => $propertiesid, "token" => $NewToken, 'title' => 'Votre location de bien a bien été créé'], JsonResponse::HTTP_CREATED);
             }
             else{
-                return new JsonResponse(['status' => '200', 'Properties id' => $propertiesid, 'title' => 'Votre location de bien a bien été créé'], JsonResponse::HTTP_CREATED);
+                return new JsonResponse(['status' => '200', 'id' => $propertiesid, 'title' => 'Votre location de bien a bien été créé'], JsonResponse::HTTP_CREATED);
             }
 
             
