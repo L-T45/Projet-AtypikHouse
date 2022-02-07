@@ -192,6 +192,15 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "controller"="App\Controller\UserController::deBlockUser",
  *               },  
  * 
+ *                  "dashboard/user/modify-informations/{id}"={
+ *                  "method"="POST",
+ *                  "path"="dashboard/user/modify-informations/{id}", 
+ *                  "security"= "is_granted('ROLE_USER')",
+ *                  "controller"="App\Controller\UserController::modifyInformations",
+ *               },  
+ * 
+ * 
+ * 
  * 
  *                "dashboard/user/{id}/personal_informations/modifypassword"={
  *                  "method"="PATCH",

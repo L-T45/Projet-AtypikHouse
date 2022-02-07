@@ -45,18 +45,7 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                     "denormalization_context"={"groups"={"reports:comments", "comments:reports", "reportscategories:reports", "user:reports", "enable_max_depth"=true}}, 
  *                },  
  *  
- *              "dashboard/admin/approve-report/{id}"={
- *              "method"="POST",
- *              "path"= "dashboard/admin/reports/approve/{id}",
- *              "security"= "is_granted('ROLE_ADMIN')",
- *              "controller"="App\Controller\ReportsController::approveReport",
- *                },   
- *              "dashboard/admin/disapprove-report/{id}"={
- *                     "method"="POST",
- *                     "path"= "dashboard/admin/reports/disapprove/{id}",
- *                     "security"= "is_granted('ROLE_ADMIN')",
- *                     "controller"="App\Controller\ReportsController::disapproveReport",
- *                },   
+ *           
  * 
  * 
  * 
@@ -86,12 +75,22 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "security"="is_granted('ROLE_USER')",
  *                  "deserialize"=false,
  *               },
- *                  "dashboard/admin/reports/details/{id}/approve"={
- *                  "method"="PATCH",
- *                  "path"="dashboard/admin/reports/details/{id}/approve",
- *                  "security"="is_granted('ROLE_ADMIN')",
- *                  "deserialize"=false,
- *               },
+ * 
+ *     "dashboard/admin/reports/approve/{id}"={
+ *              "method"="POST",
+ *              "path"= "dashboard/admin/reports/approve/{id}",
+ *              "security"= "is_granted('ROLE_ADMIN')",
+ *              "controller"="App\Controller\ReportsController::approveReport",
+ *                },   
+ *              "dashboard/admin/reports/disapprove/{id}"={
+ *                     "method"="POST",
+ *                     "path"= "dashboard/admin/reports/disapprove/{id}",
+ *                     "security"= "is_granted('ROLE_ADMIN')",
+ *                     "controller"="App\Controller\ReportsController::disapproveReport",
+ *                },  
+ * 
+ * 
+ *    
  *          }
  * )
  * @ApiFilter(SearchFilter::class, properties= {""})

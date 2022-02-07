@@ -81,7 +81,7 @@ class PropertiesFixtures extends Fixture implements DependentFixtureInterface
             $properties[$i]->setAddress($faker->streetAddress);
             $properties[$i]->setBooking($faker->randomDigitNotNull);
             $properties[$i]->setCity($faker->city);
-            $properties[$i]->setLatitude($this->randomNumber(44.152078777981049, 49.469607001575156, 10));
+            $properties[$i]->setLatitude($this->randomNumber(44.152078777981049, 48.469607001575156, 10));
             $properties[$i]->setLongitude($this->randomNumber(-1.265935156428336, 5.463689062678336, 10));
             $properties[$i]->setBedrooms($faker->randomDigitNotNull);
             $properties[$i]->setSurface($faker->numberBetween($min = 1, $max = 853));
