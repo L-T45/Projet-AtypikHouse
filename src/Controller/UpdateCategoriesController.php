@@ -6,13 +6,15 @@ use App\Entity\Categories;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use App\Email\SendEmailModifyListCategories;
+use Symfony\Component\Mailer\MailerInterface;
 
 
 class UpdateCategoriesController
 
 {
 
-    public function __invoke(Request $request, EntityManagerInterface $manager)
+    public function __invoke(Request $request, EntityManagerInterface $manager, SendEmailModifyListCategories $SendEmail, MailerInterface $mailer)
     {
 
         $categories = $request->attributes->get('data');
@@ -35,7 +37,7 @@ class UpdateCategoriesController
         $manager->persist($categories);
         $manager->flush();
 
-
+        $SendEmail->UpdateCategorie($mailer, $request);
         return new JsonResponse(['status' => '200', 'title' => 'La catégorie a bien été modifiée !'], JsonResponse::HTTP_CREATED);
     }
 }

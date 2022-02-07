@@ -37,7 +37,6 @@ class CreateCategories extends AbstractController
 
     public function newCategories(EntityManagerInterface $manager, Request $request, CategoriesRepository $CategoriesRepository, SendEmailModifyListCategories $SendEmail, MailerInterface $mailer, UserRepository $UserRepository): Response
     {
-        $SendEmail->PostNewCategories($mailer, $request);
         $categories = array();
         $categories = new Categories();
 
@@ -50,12 +49,7 @@ class CreateCategories extends AbstractController
         $slug = serialize($slug);
         $slug = $this->cutChaine($slug, ':"', '";');
 
-        // $picture = $_POST["picture"]; 
-        // $picture = serialize($picture);
-        // $picture = $this->cutChaine($picture, ':"', '";');
-
         $file = $request->files->get('file');
-        //dd($file);
 
         $attributes = [];
         if(isset($_POST["dynamic"]) && !empty($_POST["dynamic"])){
