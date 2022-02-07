@@ -26,10 +26,9 @@ class SendEmailModifyListEquipements extends AbstractController {
         
     }
 
-    public function UpdateEquipements(MailerInterface $mailer, Request $request){
-        $id = $_POST['id'];
+    public function UpdateEquipements(MailerInterface $mailer, Request $request, $idEquipement){
         // Récupéré tous les OWNER  
-        $findOwners = $this->PropertiesRepository->FindByPropertiesUpdateEquipements($id);
+        $findOwners = $this->PropertiesRepository->FindByPropertiesUpdateEquipements($idEquipement);
         $findOwnersCheck = $findOwners;   
         $nbLines = count($findOwners);
 
