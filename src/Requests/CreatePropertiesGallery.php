@@ -10,7 +10,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\PropertiesGalleryRepository;
+use App\Repository\PropertiesRepository;
 use App\Entity\Properties;
+use Symfony\Component\Mailer\MailerInterface; 
+use App\Email\SendEmailModifyProperties;
 
 class CreatePropertiesGallery extends AbstractController
 {
@@ -30,7 +33,7 @@ class CreatePropertiesGallery extends AbstractController
         return substr($string, $ini, $len);
     }
 
-    public function newPropertiesGallery(EntityManagerInterface $manager, Request $request, PropertiesGalleryRepository $PropertiesGalleryRepository): Response
+    public function newPropertiesGallery(EntityManagerInterface $manager, Request $request, PropertiesRepository $PropertiesRepository, PropertiesGalleryRepository $PropertiesGalleryRepository, SendEmailModifyProperties $SendEmail, MailerInterface $mailer): Response
     {
         $propertiesGallery = array();
 
@@ -42,16 +45,9 @@ class CreatePropertiesGallery extends AbstractController
         $properties = new Properties();
         $properties = $manager->getReference("App\Entity\Properties", $postProperties);
 
-        // $picture = $_POST["picture"]; 
-        // $picture = serialize($picture);
-        // $picture = $this->cutChaine($picture, ':"', '";');
-
         $file = $request->files->get('file');
-        // dd($file);
-
 
         foreach ($file as $single) {
-            //dd($single);
 
             $propertiesGallery = new PropertiesGallery();
 
@@ -60,7 +56,19 @@ class CreatePropertiesGallery extends AbstractController
             $propertiesGallery->setFile($single);
             $manager->persist($propertiesGallery);
             $manager->flush();
+
+            $this->PropertiesRepository = $PropertiesRepository;
+            $findOwnerProperties = $this->PropertiesRepository->findByIdUser($properties);
+            $findCheckOwnerProperties = $findOwnerProperties;
+
+            if($findCheckOwnerProperties =! []){
+                $SendEmail->sendEmailModifyProperties($mailer, $request, $findOwnerProperties);
+                $response = new Response('Photo(s) ajoutée(s)',Response::HTTP_OK,['content-type' => 'application/json']);
+            }
+            else{  
+                $response = new Response("Une erreur est survenu lors de l'ajout de la/les photo(s)...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
+            }
         }
-        return new JsonResponse(['status' => '200', 'title' => 'Votre galerie de photo a bien été créé'], JsonResponse::HTTP_CREATED);
+        return $response;
     }
 }

@@ -25,7 +25,6 @@ class DeletePropertiesGallery extends AbstractController {
         $this->PropertiesGalleryRepository = $PropertiesGalleryRepository;
         $findIdProperties = $this->PropertiesGalleryRepository->findByProperties($idPropertiesGallery);
         $findCheckProperties = $findIdProperties;
-        
 
         if($findCheckProperties =! []){
             $this->PropertiesRepository = $PropertiesRepository;
