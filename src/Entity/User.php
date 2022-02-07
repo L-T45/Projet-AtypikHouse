@@ -163,12 +163,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "security"= "is_granted('ROLE_OWNER')",
  *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},                  
  *               },
- *                  "lastconversations"={
+ *                  "dashboard/user/conversations/{id}"={
  *                  "method"="GET",
- *                  "path"="dashboard/user/{id}/conversations",
- *                  "controller"=App\Controller\LastNewConversations::class,                     
- *                  "normalization_context"={"groups"={"owner:reservations", "enable_max_depth"=true}},
- *                  
+ *                  "path"="dashboard/user/conversations/{id}",
+ *                  "security"= "is_granted('ROLE_USER')",
+ *                    "controller"="App\Controller\ConversationController::findConversationByUser",                   
  *               }, 
  *  
  *                  "dashboard/admin/users/{id}"={

@@ -30,18 +30,22 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  *                  "path"="dashboard/admin/conversations",
  *                  "security"= "is_granted('ROLE_ADMIN')",
  *                  "controller"=App\Controller\LastNewConversations::class,                
- *               },            
+ *               },    
+ *         
+ *                          
  *          },
  *      itemOperations={
  *          "get"={"normalization_context"={"groups"={"conversations:collection", "conversations:item"}}},
  *          "put"={"security"= "is_granted('ROLE_USER')"},
  *          "delete"={},            
- *                  "dashboard/user/conversations/{id}"={
- *                  "method"="GET",
- *                  "path"="dashboard/user/conversations/{id}",
- *                  "security"= "is_granted('ROLE_USER')",
- *                  "normalization_context"={"groups"={"user:conversid"}}, *                  
- *               }, 
+              
+ *           "dashboard/user/conversations/{id}"={
+ *           "method"="GET",
+ *           "path"="dashboard/user/conversations/{id}",
+ *           "security"= "is_granted('ROLE_USER')",
+ *           "controller"="App\Controller\ConversationController::findConversationByUser", 
+ * },
+ * 
  *                  "dashboard/admin/conversations/{id}"={
  *                  "method"="GET",
  *                  "path"="dashboard/admin/conversations/{id}",
@@ -87,7 +91,6 @@ class Conversations
         $this->messages = new ArrayCollection();
         $this->created_at = new \DateTime();
         $this->users = new ArrayCollection();
-        
     }
 
     public function getId(): ?int

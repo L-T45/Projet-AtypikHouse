@@ -99,8 +99,8 @@ class ConversationsRepository extends ServiceEntityRepository
             ->leftJoin('c.messages', 'm')
             ->where('u.id = :id')
             ->setParameter('id', $id);
-            // ->groupBy('c.id');
-          //  ->orderBy('c.created_at', 'DESC');
+        // ->groupBy('c.id');
+        //  ->orderBy('c.created_at', 'DESC');
         $query = $qb->getQuery();
         return $query->getResult();
     }
@@ -161,6 +161,24 @@ class ConversationsRepository extends ServiceEntityRepository
             ->leftJoin('c.users', 'u')
             ->where('u.id = :id1')
             ->setParameter('id1', $id);
+
+        $query = $query->getQuery();
+        return $query->getResult();
+    }
+    /**
+     * @return Conversations Returns an array of Conversations objects
+     */
+    public function findConvsByUser($ids)
+    {
+
+
+        //  $ids = [50, 2]; // Array of your values
+
+
+        $query = $this->createQueryBuilder('c');
+        $query->select('c.id, c.created_at, u.id as user_id,u.firstname, u.lastname, u.picture')
+            ->leftJoin('c.users', 'u')
+            ->add('where', $query->expr()->in('c.id', $ids));
 
         $query = $query->getQuery();
         return $query->getResult();

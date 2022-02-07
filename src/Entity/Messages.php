@@ -30,13 +30,10 @@ use Symfony\Component\Serializer\Annotation\Groups;
  *          "get"={"normalization_context"={"groups"={"messages:collection", "messages:item"}}},
  *          "put"={"security"= "is_granted('ROLE_USER')"},
  *          "delete"={},
- *           "api_dashboard_user_messages"={
- *                  "method"="GET",
- *                  "path"="/dashboard/user/messages/{id}",
- *                  "force_eager"=false,
- *                  "normalization_context"={"groups"={"user:messages", "enable_max_depth"=true}},
- *                 
- *               },
+ * 
+ * 
+ *          
+
  *          }
  * )
  */
@@ -77,7 +74,7 @@ class Messages
     private $user;
 
     public function __construct()
-    {      
+    {
         $this->created_at = new \DateTime();
     }
 

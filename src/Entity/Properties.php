@@ -56,9 +56,9 @@ use App\Resolver\PostPictureResolver;
  *                  "normalization_context"={"groups"={"admin:properties", "enable_max_depth"=true}}, 
  *                 }, 
  *              
- *              "api/dashboard/owner/properties/create"={
+ *              "api/dashboard/properties/create"={
  *                  "method"="POST",
- *                  "path"="dashboard/owner/properties/create",
+ *                  "path"="dashboard/properties/create",
  *                  "security"= "is_granted('ROLE_USER')",
  *                  "deserialize" = false,
  *                  "security"= "is_granted('ROLE_USER')",

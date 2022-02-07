@@ -33,9 +33,9 @@ use Symfony\Component\Validator\Constraints\Uuid;
  *                  "controller"="App\Requests\CreatePropertiesGallery::newPropertiesGallery" ,   
  *                }, 
  * 
- *                "dashboard/owner/propertiesgallery/create"={
+ *                "dashboard/propertiesgallery/create"={
  *                  "method"="POST",
- *                  "path"="dashboard/owner/propertiesgallery/create",
+ *                  "path"="dashboard/propertiesgallery/create",
  *                  "deserialize" = false,
  *                  "controller"="App\Requests\CreatePropertiesGallery::newPropertiesGallery",
  *                  "openapi_context" = {
@@ -95,7 +95,7 @@ class PropertiesGallery
     private $picture;
 
 
-     /**
+    /**
      * @var File|null
      * @Vich\UploadableField(mapping="gallery_images", fileNameProperty="picture")
      */
@@ -135,7 +135,7 @@ class PropertiesGallery
 
     public function __construct()
     {
-       
+
         $this->created_at = new \DateTime();
         $this->updated_at = new \DateTime();
     }
@@ -181,7 +181,7 @@ class PropertiesGallery
         return $this;
     }
 
-   
+
 
     public function getDescription(): ?string
     {
@@ -208,7 +208,7 @@ class PropertiesGallery
     }
 
 
-      
+
     public function getFilePath(): ?string
     {
         return $this->filePath;
@@ -239,7 +239,7 @@ class PropertiesGallery
         $this->file = $file;
         return $this;
     }
-  
+
     /**
      * @return string|null
      */
@@ -255,6 +255,6 @@ class PropertiesGallery
     public function setFileUrl(?string $fileUrl): PropertiesGallery
     {
         $this->fileUrl = $fileUrl;
-        return $this; 
+        return $this;
     }
 }
