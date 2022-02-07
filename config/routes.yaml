@@ -1,6 +1,3 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
 api_login:
   path: /api/login
   methods: [POST]
@@ -9,14 +6,6 @@ gesdinet_jwt_refresh_token:
   path: /api/token/refresh
   controller: gesdinet.jwtrefreshtoken::refresh
   methods: [POST]
-
-# create_session:
-#   path: /api/send_payment
-#   controller: App\Controller\CreateSessionController::
-
-# api_check_payment:
-#   path: /api/check_payment_session
-#   controller: App\Controller\RetrieveSessionController
 
 api_form_contact:
   path: /api/form_contact
