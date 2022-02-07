@@ -33,10 +33,7 @@ class UpdatePropertiesController
     {
         $properties = $request->attributes->get('data');
         $idProperties = $properties->getId();
-
         $post = json_decode($request->getContent(), true);
-        //   dd($post["title"]);
-
 
         if (!($properties instanceof Properties)) {
             throw new \RuntimeException('Propriété attendue');
@@ -107,8 +104,6 @@ class UpdatePropertiesController
                 $response = new Response("Une erreur est survenu lors de la modification des réponses ...",Response::HTTP_BAD_REQUEST,['content-type' => 'application/json']);     
             }
         return $response;
-
-        return new Response('Les réponses ont été modifiées avec succès', Response::HTTP_OK, ['content-type' => 'application/json']);
     }
 
     public function updateCaracteristics(Request $request, SendEmailModifyProperties $SendEmail, MailerInterface $mailer)
