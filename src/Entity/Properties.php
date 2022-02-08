@@ -168,36 +168,6 @@ use App\Resolver\PostPictureResolver;
  *                "force_eager"=false,
  *                "security"= "is_granted('ROLE_OWNER')",
  *                "normalization_context"={"groups"={"owner:propertiesid", "enable_max_depth"=true}}
- *                },  
- *                "dashboard/owner/properties/details/{id}/modifypropertiesinformations"={
- *                "method"="PATCH",
- *                "path"="dashboard/owner/properties/details/{id}/modifypropertiesinformations",
- *                "security"="is_granted('ROLE_OWNER')",
- *                "deserialize"=false,
- *                }, 
- *                "dashboard/owner/properties/details/{id}/modifypropertiespicture"={
- *                "method"="PATCH",
- *                "path"="dashboard/owner/properties/details/{id}/modifypropertiespicture",
- *                "security"="is_granted('ROLE_OWNER')",
- *                "deserialize"=false,
- *                },
- *                "dashboard/owner/properties/details/{id}/modifypropertiescaracteristics"={
- *                "method"="PATCH",
- *                "path"="dashboard/owner/properties/details/{id}/modifypropertiescaracteristics",
- *                "security"="is_granted('ROLE_OWNER')",
- *                "deserialize"=false,
- *                },
- *                "dashboard/owner/properties/details/{id}/modifypropertiesoptions"={
- *                "method"="PATCH",
- *                "path"="dashboard/owner/properties/details/{id}/modifypropertiesoptions",
- *                "security"="is_granted('ROLE_OWNER')",
- *                "deserialize"=false,
- *                },
- *                "dashboard/owner/properties/details/{id}/modifypropertiesaddress"={
- *                "method"="PATCH",
- *                "path"="dashboard/owner/properties/details/{id}/modifypropertiesaddress",
- *                "security"="is_granted('ROLE_OWNER')",
- *                "deserialize"=false,
  *                },
  *                "postpicture"={
  *                      "method"="POST",

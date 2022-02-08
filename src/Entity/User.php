@@ -176,33 +176,30 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *                  "normalization_context"={"groups"={"admin:usersid", "admin:usertest", "enable_max_depth"=true}},                  
  *               },   
  *                  "dashboard/user/{id}/personal_informations/modifypassword"={
- *                  "method"="PATCH",
- *                  "deserialize" = false,
- *                  "security"= "is_granted('ROLE_USER')",
- *                  "path"="dashboard/user/{id}/personal_informations/modifypassword",
- *                  "controller"="App\Controller\ResetPassword::UpdatePwd",
- *                  "denormalization_context"={"groups"={"admin:useridentifiants", "enable_max_depth"=true}},
+ *                      "method"="PATCH",
+ *                      "deserialize" = false,
+ *                      "security"= "is_granted('ROLE_USER')",
+ *                      "path"="dashboard/user/{id}/personal_informations/modifypassword",
+ *                      "controller"="App\Controller\ResetPassword::UpdatePwd",
+ *                      "denormalization_context"={"groups"={"admin:useridentifiants", "enable_max_depth"=true}},
  *               },                
  *                  "dashboard/user/{id}/personal_informations/modifyinformations"={
- *                  "method"="PATCH",
- *                  "path"="dashboard/user/{id}/personal_informations/modifyinformations",
- *                  "security"="is_granted('ROLE_USER')",
- *                  "deserialize"=false,
+ *                      "method"="PATCH",
+ *                      "path"="dashboard/user/{id}/personal_informations/modifyinformations",
+ *                      "security"="is_granted('ROLE_USER')",
+ *                      "deserialize"=false,
  *               },
- * 
  *                 "lastconversations"={
- *                  "method"="GET",
- *                  "path"="dashboard/user/{id}/conversations",
- *                  "controller"=App\Controller\LastNewConversations::class,
- *                 
- *               },      
- * 
+ *                      "method"="GET",
+ *                      "path"="dashboard/user/{id}/conversations",
+ *                      "controller"=App\Controller\LastNewConversations::class,
+ *               },
  *                  "dashboard/update/profilepicture/user/{id}"={
  *                  "method"="POST",
  *                  "path"="dashboard/update/profilepicture/user/{id}",
  *                  "controller"=App\Controller\UpdateProfilePictureController::class,
  *                  "openapi_context" = {
- *                 "requestBody" = {
+ *                  "requestBody" = {
  *                     "content" = {
  *                         "multipart/form-data" = {
  *                             "schema" = {

@@ -16,8 +16,8 @@ class UpdatePropertiesController
 
 {
 
-     public function __invoke(EntityManagerInterface $manager, Request $request):Response
-     {
+    public function __invoke(EntityManagerInterface $manager, Request $request):Response
+    {
 
         $properties = $request->attributes->get('data');
 
@@ -101,5 +101,5 @@ class UpdatePropertiesController
 
         return new JsonResponse(['status' => '200', 'title' => 'Votre bien a été modifié avec succès'], JsonResponse::HTTP_CREATED);
        
-     }
-}
+    }
+} 
